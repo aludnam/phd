@@ -1,0 +1,116 @@
+%%%%%%%%%%%%%%%%%%%%%%%%
+%% Sample use of the infthesis class to prepare a thesis. This can be used as 
+%% a template to produce your own thesis.
+%%
+%% The title, abstract and so on are taken from Martin Reddy's csthesis class
+%% documentation.
+%%
+%% MEF, October 2002
+%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%
+%% Load the class. Put any options that you want here (see the documentation
+%% for the list of options). The following are samples for each type of
+%% thesis:
+%%
+%% Note: you can also specify any of the following options:
+%%  logo: put a University of Edinburgh logo onto the title page
+%%  frontabs: put the abstract onto the title page
+%%  deptreport: produce a title page that fits into a Computer Science departmental cover [not sure if this actually works]
+%%  singlespacing, fullspacing, doublespacing: choose line spacing
+%%  oneside, twoside: specify a one-sided or two-sided thesis
+%%  10pt, 11pt, 12pt: choose a font size
+%%  centrechapter, leftchapter, rightchapter: alignment of chapter headings
+%%  sansheadings, normalheadings: headings and captions in sans-serif  (default) or in the same font as the rest of the thesis
+%%  [no]listsintoc: put list of figures/tables in table of contents (default:  not)
+%%  romanprepages, plainprepages: number the preliminary pages with Roman  numerals (default) or consecutively with the rest of the thesis
+%%  parskip: don't indent paragraphs, put a blank line between instead
+%%  abbrevs: define a list of useful abbreviations (see documentation)
+%%  draft: produce a single-spaced, double-sided thesis with narrow margins
+%%
+%% For a PhD thesis -- you must also specify a research institute:
+%\documentclass[phd,ianc,twoside,logo]{infthesis}
+\documentclass[phd,ianc,twoside,logo,leftchapter,oneside]{infthesis}
+
+%% Put any \usepackage commands you want to use right here; the following is an example:
+% \usepackage{natbib}
+\usepackage{graphicx}
+\usepackage{subfig}
+\usepackage{algorithm}
+\usepackage{ifthen} 
+\usepackage{bm}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{color}
+\usepackage[colorlinks=true, pdfstartview=FitV, linkcolor=blue, citecolor=green, urlcolor=blue,pagebackref]{hyperref}
+%\usepackage{setspace}
+
+
+
+\newboolean{includefigs} 
+\newboolean{printpreliminary}
+\setboolean{includefigs}{true} % set to {false} to make output without figures
+\setboolean{printpreliminary}{false} % set to {false} to make preliminary section visible
+
+\newcommand{\fix}{\marginpar{FIX}}
+\newcommand{\new}{\marginpar{NEW}}
+\newcommand{\home}{/Users/ondrejmandula/}
+\newcommand{\qd}{\home project/data/qdots/}
+\newcommand{\bfone}{\mathbf{1}}
+\newcommand{\cut}[1]{}
+\newcommand{\unit}[1]{\ensuremath{\, \mathrm{#1}}}
+\newcommand{\condcomment}[2]{\ifthenelse{#1}{#2}{}}
+
+
+%% Information about the title, etc.
+\title{How I Did It}
+\author{Victor von Frankenstein}
+
+% \submityear{1785}
+% \graduationdate{February 1786}
+
+
+\abstract{%
+    This doctoral thesis will present the results of my work into the
+    reanimation of lifeless human tissues.
+}
+
+%% Now we start with the actual document.
+\begin{document}
+
+%% First, the preliminary pages
+\condcomment{\boolean{printpreliminary}}
+{
+\begin{preliminary}
+
+\maketitle
+
+\begin{acknowledgements}
+Many thanks to my mummy for the numerous packed lunches; and of course to
+Igor, my faithful lab assistant.
+\end{acknowledgements}
+
+\standarddeclaration
+% \dedication{To my mummy.}
+\tableofcontents
+% \listoffigures
+% \listoftables
+
+\end{preliminary}
+}
+
+\include{chap1}
+% \include{chap2}
+
+%\appendix
+%\include{appendix1}
+
+%\bibliographystyle{apalike}
+\bibliographystyle{unsrt}
+
+
+%% If you want the bibliography single-spaced (which is allowed), uncomment the next line.
+\singlespace
+\bibliography{\home Documents/References/Microscopy,\home Documents/References/QuantumDots,\home Documents/References/MachineLearning}
+%,\home Documents/References/LM_OverlappingSources,\home Documents/References/Microscopy-LM_OverlappingSources}
+\end{document}
