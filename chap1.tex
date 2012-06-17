@@ -5,7 +5,7 @@
 \small
 {
 \clearpage
-\section{Structure}
+\section*{Structure}
 \begin{enumerate}
 	\item
 	Intro LM, overlapping sources and NMF. Main competitors 3B \cite{Cox2011}, CSSTORM \cite{Zhu2012} and SOFI \cite{Dertinger2009}.	
@@ -59,7 +59,7 @@
 \end{enumerate}
 %==========================================
 \clearpage
-\section{Working plan}
+\section*{Working plan}
 \begin{enumerate}
 	\item
 	Introduction from the the previous paper drafts.
@@ -97,13 +97,14 @@
 
 \subsection{Localisatoin microscopy}
 
-Loclisation microscopy (LM) is a conceptually simple and accessible technique for superresolution imaging of fluorescent samples. LM takes as input a stack of images containing a number of fluorescent sources with time-varying intensity and identify the locations and point-spread functions (PSFs) of these sources. If the sources are attached to structures of interest (e.g.\ in biological samples), then this provides useful information about the target structures. By exploiting multiple images of time-varying sources, LM can achieve a resolution beyond the classical diffraction limit of $\sim \lambda/2$ \cite{Abbe1873}, where $\lambda$ is the wavelength of the light source. Provided enough photons are collected, the localization of an individual source can be an order of magnitude below $\lambda/2$ \cite{Ober2004}, meaning that sources whose point spread functions overlap heavily can be resolved. See \autoref{fig:Iterative restarts}, \ref{fig:Real-data-QDrandom} and \ref{fig:Real-data-patch-B24} for examples.
+Loclisation microscopy (LM) is a conceptually simple and accessible technique for superresolution imaging of fluorescent samples. LM takes as input a stack of images containing a number of fluorescent sources with time-varying intensity and identify the locations and point-spread functions (PSFs) of these sources. If the sources are attached to structures of interest (e.g.\ in biological samples), then this provides useful information about the target structures. By exploiting multiple images of time-varying sources, LM can achieve a resolution beyond the classical diffraction limit of $\sim \lambda/2$ \cite{Abbe1873}, where $\lambda$ is the wavelength of the light source. Provided enough photons are collected, the localization of an individual source can be an order of magnitude below $\lambda/2$ \cite{Ober2004}, meaning that sources whose point spread functions overlap heavily can be resolved. 
+%See \autoref{fig:Iterative restarts}, \autoref{fig:Real-data-QDrandom} and \autoref{fig:Real-data-patch-B24} for examples.
 
 LM techniques are based on sources with transition between bright (ON) and dark (OFF) states. Fluorescent proteins or organic dyes are used as fluorophores in the standard techniques (fPALM \cite{Hess2006}, STORM \cite{Rust2006}). The density of the ON sources in each captured frame can be controlled by photo-switching and must be optimised experimentally. High density of ON fluorophores results in overlapping sources and complicates localization (overlapping sources are usually discarded), whereas low density leads to a excessive total acquisition time. Several thousands frames are typically required for an image reconstruction.
 
 \section{Overlapping sources}
 
-Several techniques dealing with overlapping sources have been proposed recently. Most of them model the observed date from known image of a single source, so called point spread function (PSF). All the sources in the data are assumed to share the same PSF. The most direct method tries to fit multiple PSFs into each frame of the dataset \cite{Huang2011}, make use of compressed sampling to recover the sparse vector representing the fluorophores distribution \cite{Zhu2012} or applies iterative fitting and subtracting procedure (DAOSTORM algorithm \cite{Holden2011}). Modelling the whole dataset from known PSF with MAP fitting \cite{Harrington2008} or by Bayesian analysis of the source intermittence \cite{Cox2011} has been proposed.
+Several techniques dealing with overlapping sources have been proposed recently. Most of them model the observed date from known image of a single source, so called point spread function (PSF). All the sources in the data are assumed to share the same PSF. The most direct method tries to fit multiple PSFs into each frame of the dataset \cite{Huang2011}, make use of compressed sampling to recover the sparse vector representing the fluorophores distribution \cite{Zhu2012} or applies iterative fitting and subtracting procedure (DAOSTORM algorithm \cite{Holden2011}). Modelling the whole dataset from known PSF with maximum aposterioiry (MAP) fitting \cite{Harrington2008} or by Bayesian analysis of the source intermittence \cite{Cox2011} has been proposed. However, these methods assume all the sources to have a PSF with identical shape and therefore they can problematic to use when multiple overlaping PSFs with different shapes are present in the data, for example in three dimensional samples (see \autoref{fig:Simulted-PSF-different-focal-depths}). 
 
 \section{Quantum dots for localisation microscopy}
 
@@ -134,37 +135,33 @@ Non-negative matrix factorization (NMF) \cite{Lee1999,Lee2001} is a natural mode
 
 Consider a $N\times T$ data matrix $\bm{D}$, where $N$ is the number of pixels in each frame, and $T$ is the number of time frames. All entries in $\bm{D}$ are non-negative, i.e.\ $d_{xt}\geq 0$. Under the NMF model, the expectation value of the $\bm{D}$ is assumed to be decomposed into a $N\times K$ spatial component matrix $\bm{W}$ (images of the $K$ individual sources) and the $K\times T$ temporal component matrix $\bm{H}$ (the intensities of the sources):
 
-\begin{equation}
-	\begin{alignedat}{1}
-		\mathbb{E}\left[\bm{D}\right] & =\bm{WH};\;\mbox{\ensuremath{w_{xk},\, h_{kt}\geq0}}
-	\end{alignedat}
-	\label{eq:NMF model}
-\end{equation}
-
+\[
+\mathbb{E}\left[\bm{D}\right]=\bm{WH};\;w_{xk},\, h_{kt}\geq0
+\label{eq:NMF model}
+\]
+%
 or in element-wise form
-
-\begin{equation}
-	\mathbb{E}\left[d_{xk}\right]=\sum_{k=1}^{K}w_{xk}h_{kt};\;\mbox{\ensuremath{w_{xk},\, h_{kt}\geq0}}
-	\label{eq:NMF model - elemen-wise}
-\end{equation}
+%
+\[
+\mathbb{E}\left[d_{xk}\right]=\sum_{k=1}^{K}w_{xk}h_{kt};\;w_{xk},\, h_{kt}\geq0
+\label{eq:NMF model - elemen-wise}
+\]
 
 The predominant noise model in microscopy imaging is Poisson noise \cite{PawleyHandbook2006}. Therefore the log-likelihood function can be expressed as
 
-\begin{equation}
-	\log p(\bm{D}|\bm{W},\bm{H})=\sum_{xt}\left(d_{xt}\log\sum_{k=1}^{K}w_{xk}h_{kt}-\sum_{k=1}^{K}w_{xk}h_{kt}\right)+C_{1},
-	\label{eq:NMF model likelihood}
-\end{equation}
+\[
+\log p(\bm{D}|\bm{W},\bm{H})=\sum_{xt}\left(d_{xt}\log\sum_{k=1}^{K}w_{xk}h_{kt}-\sum_{k=1}^{K}w_{xk}h_{kt}\right)+C_{1},
+\label{eq:NMF model likelihood}
+\]
 
 where $C_{1}$ is independent of $\bm{W}$and $\bm{H}$. 
 
 The Lee and Seung NMF algorithm \cite{Lee2001} minimises the divergence between the data and the NMF model
 
-\begin{equation}
-	\begin{alignedat}{1}
-		\mbox{KL}(\bm{D}\parallel\bm{WH}) & =-\sum_{xt}\left(d_{xt}\log\sum_{k=1}^{K}w_{xk}h_{kt}-\sum_{k=1}^{K}w_{xk}h_{kt}\right)+C_{2}
-	\end{alignedat}
-	\label{eq:KL divergence}
-\end{equation}
+\[
+\mbox{KL}(\bm{D}\parallel\bm{WH})=-\sum_{xt}\left(d_{xt}\log\sum_{k=1}^{K}w_{xk}h_{kt}-\sum_{k=1}^{K}w_{xk}h_{kt}\right)+C_{2}
+\label{eq:KL divergence}
+\]
 
 where $C_{2}$ is independent of $\bm{W}$and $\bm{H}$. Comparison with the log-likelihood eq.~\eqref{eq:NMF model likelihood} shows that the minimum of the divergence with positivity constrains on $\bm{W}$ and $\bm{H}$ is equivalent to the maximum of the log-likelihood. 
 
@@ -172,8 +169,13 @@ There is a scaling indeterminacy between $\bm{W}$ and $\bm{H}$ in the NMF model.
 
 The NMF model is fitted to data iteratively using multiplicative updates for $\bm{H}$ and $\bm{W}$ sequentially \cite{Lee2001}. Note that the divergence (\autoref{eq:KL divergence}) is convex wrt $\bm{H}$ and $\bm{W}$ individually, but not in both variables together \cite{Lee2001}, leading to local optima.
 
+\subsection{NMF for localisatoin microscopy - main points}
+
+% is a correct mode. it can deal with overlapping sources. It takes the reapearence of the sources into account, it can recover sources with different PSFs.
+
 \subsection{Comparison NMF to the Richardson Lucy deconvolution}
 
+There is a link between NMF and classical Richadson-Lucy deconvolution. 
 %This is from DecovolutionNotes.lyx file.
 An observed `blurred' (diffraction limited) image $\bm{i}$ ($N\times1$ vector) can expressed as a (discretised) convolution 
 
@@ -183,13 +185,14 @@ i_{x}=\sum_{j=1}^{N}o_{j}w_{x-j},
 
 where $\bm{o}$ ($N\times1$) is the original (unblurred) object which represents locations and intensities of fluorescent sources. $\bm{w}$ ($N\times1$) is an image of point spread function (PSF) centred in the middle of the image. Richardson \cite{Richardson1972} and Lucy \cite{Lucy1974} published an iterative deconvolution technique for astronomical images with known PSF. They used Bayes theorem as a `hint' for an iterative update of $\bm{o}$. This update is usually referred to as Richardson-Lucy (RL) deconvolution algorithm and is identical to the Lee-Seung NMF update with generalised KL-divergence objective function \cite{Lee2001}. 
 
-However, $\bm{o}$ and $\bm{w}$ represent different objects then the matrices $\bm{W}$ and $\bm{H}$ in the NMF model. In the RL deconvolution one PSF $\bm{w}$ is shared by all sources. In the NMF each source has its own PSF (columns of $\bm{W}$). 
-
 Holmes \cite{Holmes:92} derived the RL updates based on maximum likelihood estimation of the model with Poisson noise using the expectation-maximisation algorithm. He also proposed an update for $\bm{w}$ so that the method can be used as a blind deconvolution algorithm (PSF is not known). This is sometimes referred to as a `blind RL algorithm'. The updates for $\bm{o}$ and $\bm{w}$ are technically identical to the Lee and Seung NMF updates (KL divergence as an objective function). 
+
+However, (blind) RL deconvolution solves a different problem then NMF. In the RL deconvolution one PSF $\bm{w}$ is shared by all sources. The deconvolution is performed for each frame separately, independent on the rest of the dataset. NMF models the whole dataset as a collecton of individual (and in general different) PSFs (columnes of $\bm{W}$ each changing intenisty over time (rows of $\bm{H}$. A source which appears in $n$ different frames is treated as $n$ different individual sources by RL, while NMF can identify it as a single source apearing in $n$ frames by putting $n$ non-zeros entries in the approproate row of $\bm{H}$. 
 
 Modified updates imposing radial symmetry constraints on PSF were also proposed. There exist several modified updates derived using EM algorithm which impose some constraints on $\bm{o}$ or $\bm{w}$. \cite{Joshi:93} gives updates where Good's roughness measure ($\int\frac{\left|\nabla f(x)\right|^{2}}{f(x)}dx$) on the original image $\bm{o}$ is used as a regularisation term. This biases the solution towards the `smooth' images and avoids speckle artefacts in the reconstructions that are sometimes experienced in deconvolution methods. 
 
 \cite{Fish:95} use RL `blind' algorithm (updates on both $\bm{o}$ and $\bm{w}$) but after some number of iterations they fit some approximation of the PSF to the estimated $\bm{w}$ and uses this fit as a new $\bm{w}$. They claim that in noisy images this `semi-blind' deconvolution can perform better than the one with known PSF. The comparison of the regularised RL versions and some other deconvolution techniques has been shown in \cite{Kempen1997BA,Verveer1999}. RL usually performs well for noisy images.
+
 %==========================================
 
 \section{Related work\label{sec:Related}}
