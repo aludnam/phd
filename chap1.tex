@@ -1,5 +1,6 @@
 %!TEX root =  thesis.tex
 \chapter{Non-negative matrix factorisation in localisation microscopy}
+Version: \today \ \currenttime \fix % Comment this line out when finished
 
 %==========================================
 \small
@@ -31,7 +32,7 @@
 		\item
 		Local optima.
 		\item
-		Iterative partial restarts - address local optima + weak indirect enhancing sparsity (discuss Hoyer's sparse NMF \cite{Hoyer2004}). 
+		Iterative partial restarts - address local optima + weak indirect enhancing sparsity (discuss Hoyer's sparse NMF \cite{Hoyer2004} \texttt{S433}). 
 		Number of sources $K$ can be overestimated but $K$ estimation needs  a classifier which determines whether the source is good or not. 
 		Show linear classifier performance. 	
 	\end{itemize}	
@@ -64,12 +65,12 @@
 	\item
 	Introduction from the the previous paper drafts.
 	\item
-	Discussion of Hoyer's sparse NMF.  Show on simulated in focus PSF - all have the same sparsity. (Real data with Hoyer in \texttt{S402}).
+	Discussion of Hoyer's sparse NMF.  Show on simulated in focus PSF - all have the same sparsity. (Simulated data with in-focus PSF randomly scattered \texttt{S433}, with different PSFs \texttt{S401}. Real data with Hoyer in \texttt{S402}).
 	\item
 	Software issues.
 	\begin{itemize}
 		\item
-		Make 3B software work! ugh.
+		Make 3B software work! ugh. (done)
 		\item
 		Turn CSSTORM output to locations. Adjust scanning window (or simulations) such that it fits...
 		\item
@@ -102,18 +103,18 @@ Loclisation microscopy (LM) is a conceptually simple and accessible technique fo
 
 LM techniques are based on sources with transition between bright (ON) and dark (OFF) states. Fluorescent proteins or organic dyes are used as fluorophores in the standard techniques (fPALM \cite{Hess2006}, STORM \cite{Rust2006}). The density of the ON sources in each captured frame can be controlled by photo-switching and must be optimised experimentally. High density of ON fluorophores results in overlapping sources and complicates localization (overlapping sources are usually discarded), whereas low density leads to a excessive total acquisition time. Several thousands frames are typically required for an image reconstruction.
 
-\section{Overlapping sources}
+\subsection{Overlapping sources}
 
-Several techniques dealing with overlapping sources have been proposed recently. Most of them model the observed date from known image of a single source, so called point spread function (PSF). All the sources in the data are assumed to share the same PSF. The most direct method tries to fit multiple PSFs into each frame of the dataset \cite{Huang2011}, make use of compressed sampling to recover the sparse vector representing the fluorophores distribution \cite{Zhu2012} or applies iterative fitting and subtracting procedure (DAOSTORM algorithm \cite{Holden2011}). Modelling the whole dataset from known PSF with maximum aposterioiry (MAP) fitting \cite{Harrington2008} or by Bayesian analysis of the source intermittence \cite{Cox2011} has been proposed. However, these methods assume all the sources to have a PSF with identical shape and therefore they can problematic to use when multiple overlaping PSFs with different shapes are present in the data, for example in three dimensional samples (see \autoref{fig:Simulted-PSF-different-focal-depths}). 
+Several techniques dealing with overlapping sources have been proposed recently. Most of them model the observed date from known image of a single source, so called point spread function (PSF). All the sources in the data are assumed to share the same PSF. The most direct method tries to fit multiple PSFs into each frame of the dataset \cite{Huang2011}, make use of compressed sampling to recover the sparse vector representing the fluorophores distribution \cite{Zhu2012} or applies iterative fitting and subtracting procedure (DAOSTORM algorithm \cite{Holden2011}). Modelling the whole dataset from known PSF with maximum aposterioiry (MAP) fitting \cite{Harrington2008} or by Bayesian analysis of the source intermittence \cite{Cox2011} has been proposed. However, these methods assume all the sources to have a PSF with identical shape and therefore they can be problematic to use when multiple overlaping PSFs with different shapes are present in the data, for example in three dimensional samples (see \autoref{fig:Simulted-PSF-different-focal-depths}). 
 
-\section{Quantum dots for localisation microscopy}
+\subsection{Quantum dots for localisation microscopy}
 
 In last years there has been interest in using quantum dots (QDs) as sources for localization microscopy. QDs are an order of magnitude brighter compared to the organic dyes or fluorescent proteins used in conventional LM \cite{Resch-Genger2008}. Under continuous excitation QDs exhibit a stochastic blinking between ON and OFF states. Excellent photo-stability, low cyto-toxicity and distinctive spectral properties make QDs very attractive for biological research. However, the stochastic blinking of QDs is impractical for standard LM techniques because the rate of switching, and hence the density of ON sources, is difficult to control. Thus QD-labeled data typically consist of highly overlapping sources which cannot be localised with standard techniques.
 
 Independent component analysis (ICA) of the QD data has been used for separating the overlapping QDs \cite{Lidke2005}. ICA allows each sources to have a different individual PSF. However, ICA model allows negative entries in the individual PSFs and does not account for noise in the measured data which can make recovery of the individual sources difficult in realistic noise levels. 
 
 Another method analyses the higher order statistic of the intensity fluctuation (SOFI) and provides provides resolution improvement \cite{Dertinger2010b}. The intensity values in the SOFI image, however, reflect the fluctuation behaviour, rather than the strength of the emitters. Sources which do not blink will not appear in the SOFI image.
-% Ted balanced SOFI paper to read!
+% The balanced SOFI paper to read!
 
 We propose non-negative matrix factorization (NMF) \cite{Lee1999} as a natural model for solving the localization microscopy problem for QD-labeled data. NMF can separate the individual highly overlapping sources. Moreover, NMF allows recovery of different shapes of individual sources, a situation that can arise in a real microscopic data when aberrations are present or when the sources are not in one focal plane (\autoref{fig:Simulted-PSF-different-focal-depths}). 
 
@@ -130,7 +131,12 @@ We propose non-negative matrix factorization (NMF) \cite{Lee1999} as a natural m
 
 %==========================================
 
-\section{NMF as a natural model for QD data\label{sec: NMF}}
+\section{Non-negative  matrix factorisation}
+Non-negative matrix factorisation (NMF) is a well established machine larning technique \cite{Lee1999,Lee2001}. 
+
+%==========================================
+
+\subsection{NMF as a natural model for QD data\label{sec: NMF}}
 Non-negative matrix factorization (NMF) \cite{Lee1999,Lee2001} is a natural model for QD data. NMF decomposes a movie of the blinking QDs into spatial and temporal parts, i.e.\ time independent emission profiles of the individual sources and fluctuating intensities of each source, respectively. NMF imposes non-negativity constraints on both the spatial and the temporal components which are natural constraints for the source profiles and intensities of blinking QDs.
 
 Consider a $N\times T$ data matrix $\bm{D}$, where $N$ is the number of pixels in each frame, and $T$ is the number of time frames. All entries in $\bm{D}$ are non-negative, i.e.\ $d_{xt}\geq 0$. Under the NMF model, the expectation value of the $\bm{D}$ is assumed to be decomposed into a $N\times K$ spatial component matrix $\bm{W}$ (images of the $K$ individual sources) and the $K\times T$ temporal component matrix $\bm{H}$ (the intensities of the sources):
@@ -169,9 +175,21 @@ There is a scaling indeterminacy between $\bm{W}$ and $\bm{H}$ in the NMF model.
 
 The NMF model is fitted to data iteratively using multiplicative updates for $\bm{H}$ and $\bm{W}$ sequentially \cite{Lee2001}. Note that the divergence (\autoref{eq:KL divergence}) is convex wrt $\bm{H}$ and $\bm{W}$ individually, but not in both variables together \cite{Lee2001}, leading to local optima.
 
+%==========================================
+
+\subsection{Related work\label{sec:Related}}
+
+NMF with an explicit sparsity constraints has been developed by Hoyer  \cite{Hoyer2004}. A specific constraints on sparsity on the columns of $\bm{W}$ are imposed during the optimization. All the estimated $\bm{w}_{k}$s have an identical `sparsness' (defined in  \cite{Hoyer2004}) which might be restrictive when out-of-focsu PSFs are present.  For example, the in focus PSF in \autoref{fig:Simulted-PSF-different-focal-depths} has Hoyer's sparsity $s=0.83$ while the PSF from $1 \unit{\mu m}$ out-of-focus plane has $s=0.4$ and the PSF from $1.8 \unit{\mu m}$ out-of-focus plane  has $s=0.1$.
+
+Ondrej: make sure to explain why other methods don't solve our problem. \fix
+
+%==========================================
+
 \subsection{NMF for localisatoin microscopy - main points}
 
-% is a correct mode. it can deal with overlapping sources. It takes the reapearence of the sources into account, it can recover sources with different PSFs.
+is a correct mode. it can deal with overlapping sources. It takes the reapearence of the sources into account, it can recover sources with different PSFs.
+
+%==========================================
 
 \subsection{Comparison NMF to the Richardson Lucy deconvolution}
 
@@ -187,19 +205,12 @@ where $\bm{o}$ ($N\times1$) is the original (unblurred) object which represents 
 
 Holmes \cite{Holmes:92} derived the RL updates based on maximum likelihood estimation of the model with Poisson noise using the expectation-maximisation algorithm. He also proposed an update for $\bm{w}$ so that the method can be used as a blind deconvolution algorithm (PSF is not known). This is sometimes referred to as a `blind RL algorithm'. The updates for $\bm{o}$ and $\bm{w}$ are technically identical to the Lee and Seung NMF updates (KL divergence as an objective function). 
 
-However, (blind) RL deconvolution solves a different problem then NMF. In the RL deconvolution one PSF $\bm{w}$ is shared by all sources. The deconvolution is performed for each frame separately, independent on the rest of the dataset. NMF models the whole dataset as a collecton of individual (and in general different) PSFs (columnes of $\bm{W}$ each changing intenisty over time (rows of $\bm{H}$. A source which appears in $n$ different frames is treated as $n$ different individual sources by RL, while NMF can identify it as a single source apearing in $n$ frames by putting $n$ non-zeros entries in the approproate row of $\bm{H}$. 
+However, (blind) RL deconvolution solves a different problem then NMF. RL deconvolution estimates one PSF ($\bm{w}$) which is shared by all sources. The deconvolution is performed for each frame separately, independent on the rest of the dataset. NMF models the whole dataset as a collecton of individual (and in general different) PSFs (columnes of $\bm{W}$ each changing intenisty over time (rows of $\bm{H}$. While one source which appears in $n$ different frames is treated as $n$ different individual sources by RL, NMF can identify it as a single source apearing in $n$ frames. 
 
 Modified updates imposing radial symmetry constraints on PSF were also proposed. There exist several modified updates derived using EM algorithm which impose some constraints on $\bm{o}$ or $\bm{w}$. \cite{Joshi:93} gives updates where Good's roughness measure ($\int\frac{\left|\nabla f(x)\right|^{2}}{f(x)}dx$) on the original image $\bm{o}$ is used as a regularisation term. This biases the solution towards the `smooth' images and avoids speckle artefacts in the reconstructions that are sometimes experienced in deconvolution methods. 
 
 \cite{Fish:95} use RL `blind' algorithm (updates on both $\bm{o}$ and $\bm{w}$) but after some number of iterations they fit some approximation of the PSF to the estimated $\bm{w}$ and uses this fit as a new $\bm{w}$. They claim that in noisy images this `semi-blind' deconvolution can perform better than the one with known PSF. The comparison of the regularised RL versions and some other deconvolution techniques has been shown in \cite{Kempen1997BA,Verveer1999}. RL usually performs well for noisy images.
 
-%==========================================
-
-\section{Related work\label{sec:Related}}
-
-NMF with an explicit sparsity constraints has been developed by Hoyer  \cite{Hoyer2004}. A specific constraints on sparsity on the columns of $\bm{W}$ are imposed during the optimization. All the estimated $\bm{w}_{k}$s have an identical `sparsness' (defined in  \cite{Hoyer2004}) which might be restrictive when out-of-focsu PSFs are present.  For example, the in focus PSF in \autoref{fig:Simulted-PSF-different-focal-depths} has Hoyer's sparsity $s=0.83$ while the PSF from $1 \unit{\mu m}$ out-of-focus plane has $s=0.4$ and the PSF from $1.8 \unit{\mu m}$ out-of-focus plane  has $s=0.1$.
-
-Ondrej: make sure to explain why other methods don't solve our problem. \fix
 
 %==========================================
 
