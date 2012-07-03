@@ -30,10 +30,10 @@
 %%
 %% For a PhD thesis -- you must also specify a research institute:
 %\documentclass[phd,ianc,twoside,logo]{infthesis}
-\documentclass[phd,ianc,twoside,logo,leftchapter,oneside,12pt]{infthesis}
+\documentclass[phd,ianc,oneside,logo,leftchapter,12pt,doublespacing]{infthesis}
 
 %% Put any \usepackage commands you want to use right here; the following is an example:
-% \usepackage{natbib}
+\usepackage{natbib}
 \usepackage{graphicx}
 \usepackage{subfig}
 \usepackage{algorithm}
@@ -42,12 +42,15 @@
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{color}
-\usepackage[colorlinks=true, pdfstartview=FitV, linkcolor=blue, citecolor=green, urlcolor=blue,pagebackref]{hyperref}
+\usepackage[colorlinks=true, pdfstartview=FitV, linkcolor=blue, citecolor=black, urlcolor=blue,pagebackref]{hyperref}
 \usepackage{datetime}
+\usepackage{lineno}
 
-%\usepackage{setspace}
+\linenumbers
 
-
+\def\figureautorefname{Fig.}
+\def\equationautorefname{Eq.}
+\def\algorithmautorefname{Algorithm}
 
 \newboolean{includefigs} 
 \newboolean{printpreliminary}
@@ -62,7 +65,6 @@
 \newcommand{\cut}[1]{}
 \newcommand{\unit}[1]{\ensuremath{\, \mathrm{#1}}}
 \newcommand{\condcomment}[2]{\ifthenelse{#1}{#2}{}}
-
 
 %% Information about the title, etc.
 \title{How I Did It}
@@ -82,6 +84,12 @@
 
 %% First, the preliminary pages
 \begin{preliminary}
+%================================
+ % Comment this line out when finished
+\noindent Version: \today \ \currenttime \fix\\
+Up to date version on:\\ 
+\url{https://www.dropbox.com/s/5dtktv8cygan971/thesis.pdf}
+%================================
 \condcomment{\boolean{printpreliminary}}
 {
 \maketitle
@@ -94,13 +102,13 @@ Igor, my faithful lab assistant.
 \standarddeclaration
 % \dedication{To my mummy.}
 }
+{
+\singlespace
 \tableofcontents
+}
 % \listoffigures
 % \listoftables
-
 \end{preliminary}
-
-
 
 \include{chap1}
 % \include{chap2}
@@ -115,5 +123,4 @@ Igor, my faithful lab assistant.
 %% If you want the bibliography single-spaced (which is allowed), uncomment the next line.
 \singlespace
 \bibliography{\home Documents/References/Microscopy,\home Documents/References/QuantumDots,\home Documents/References/MachineLearning,\home Documents/References/Deconvolution}
-%,\home Documents/References/LM_OverlappingSources,\home Documents/References/Microscopy-LM_OverlappingSources}
 \end{document}
