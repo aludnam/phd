@@ -555,7 +555,7 @@ The estimated sources can greatly vary in quality. While some $\bm{w}$'s are cre
 	\label{fig:good w}	
 \end{figure}
 
-In the situation were all sources are expected to be in-focus and therefore have a fairly compact PSF with one global maximum (\autoref{fig:Simulted-PSF-different-focal-depths} left) we can use a simple procedure for identifying reasonable $\bm{w}$s:
+In the situation were all the sources are expected to be in-focus and therefore have a fairly compact PSF with one global maximum (\autoref{fig:Simulted-PSF-different-focal-depths} left) we can use a simple procedure for identifying reasonable $\bm{w}$s:
 %
 \begin{enumerate}
 	\item
@@ -636,7 +636,7 @@ To visualise the results of the NMF procedure we can use two different methods:
 	
 	In terms of NMF procedure, this method replaces the credible estimated $\bm{w}$s with ideal, sub-resolution PSFs. The intensity values for each source can be estimated from the intensity time profiles of each source (rows of $\bm{H}$). 	
 	\item
-	We can use the estimated sources $\bm{w}$ directly without replacing them with their ``ideal'' PSFs. By taking the power $p>1$ of the estimated sources $\bm{w}^{p}$ we achieve a ``shrining'' of the individual $\bm{w}$ while keeping some characteristics of each source's shape (elongation along a certain direction, for example). If we normalise the $L_{1}$ norm of $\bm{w}^{p}$ to 1, we can reconstruct a ``super-resolution'' image by summing all $\bm{w_{k}}^{p}$, weighted by the corresponding mean intensity $\unit{mean}(\bm{h_{k}})$.
+	We can use the estimated sources $\bm{w}$ directly without replacing them with their ``ideal'' PSFs. By taking the power $p>1$ of the estimated sources $\bm{w}^{p}$ we achieve a ``shrinking'' of the individual $\bm{w}$ while keeping some characteristics of each source's shape (elongation along a certain direction, for example). If we normalise the $L_{1}$ norm of $\bm{w}^{p}$ to 1, we can reconstruct a ``super-resolution'' image by summing all $\bm{w_{k}}^{p}$, weighted by the corresponding mean intensity $\unit{mean}(\bm{h_{k}})$.
 \end{enumerate}
 
 %==========================================
@@ -792,16 +792,21 @@ Several frames from a simulated dataset of randomly scattered sources with defin
 \end{figure} 
 
 %==========================================
-\subsection{Slanted bar - out of focus PSF\label{sub:Simul bar}}
-A simulation of a slanted 
 
+\subsection{Artificial structure: hash symbol\label{sub:Simul hash}}
+
+%==========================================
+
+\subsection{Slanted bar - out of focus PSF\label{sub:Simul bar}}
 
 %==========================================
 %==========================================
 
 \clearpage
 \section{Results \label{sec:results}}
-Results of the simulated data are presented first. Average precision described in \autoref{sub:AP} is used as a performance measure. 
+We used simulated data for exploring the behaviour of the NMF in different experimental regimes. AP and estmated density (described in \autoref{sec:evaluation}) were used as quantitative quality assesments of the algorithm performance. We also used the simulated dataset for comparing NMF witih other techniques dealing with overlapping sources. 
+
+We applied the NMF on real datasets. A randomly scattered out-of-focus PSF were used to demonstrated the ability of NMF to recover different individual sources. Tubulin structures labeled with QDs were used as a biologically relevant sample. 
 
 %==========================================
 
@@ -819,7 +824,7 @@ The performance of the algorithm for different source densities and three differ
 	\includegraphics[scale=\sizef]{\qd S455/images/blinkmatS450}}
 	\subfloat[telegraph oversampled ($\gamma$)]{
 	\includegraphics[scale=\sizef]{\qd S455/images/blinkmatS455}}	
-	\caption{Examples of blinking behaviour (50 points out of 1000).}
+	\caption{Examples of blinking behaviour of one source (50 points out of 1000).}
 	\label{fig:blinking}
 \end{figure}
 
@@ -861,22 +866,59 @@ The average precision (\autoref{sub:AP}) for the four blinking behaviours from \
 %==========================================
 
 \subsection{Simulated data: effect of the number of frames}
-Simulated data of randomly scattered sources (\autoref{sec:simulations}) were used to evaluate effect of the number of frames in dataset. We used a dataset with $1000$ frames and used first $[50,\,100,\,200,\,500,\, 1000]$ frames for evaluation. The achieved average precision (AP) for three different densities of the sources are shown in \autoref{fig:AP on frames}. 
+%Simulated data of randomly scattered sources (\autoref{sec:simulations}) were used to evaluate effect of the number of frames in dataset. We used a dataset with $3000$ frames and used first $[50,\,100,\,200,\,500,\, 1000]$ frames for evaluation. The achieved average precision (AP) for three different densities of the sources are shown in \autoref{fig:AP on frames}. 
+%%
+%\begin{figure}[!h]
+%	\newcommand{\sizef}{.7}
+%	\centering
+%	\includegraphics[scale=\sizef]{\qd S486/figures/APS486S476S481}
+%	\caption{Average Precision}
+%	\label{fig:AP on frames}
+%\end{figure}
 %
+%For low densities ($10\unit{\mu m^{-2}}$) the results reach the plateau AP about $90\%$ for 100 frames (blue curve in \autoref{fig:AP on frames}). Adding more frames does not increase AP.
+
+What is the optimal way of acquiring data when we have a limited total acquisition time? Is it better to use longer acquisition time per frame to acquire smaller number of frames with better signal-to-noise ratio in each frame? Or rather use as fast acquisition as possible acquiring many frames? 
+
+\begin{figure}[!htb]	
+	\newcommand{\widthfig}{1\textwidth}
+	\centering	
+	\subfloat[original data]{
+	\includegraphics[width=\widthfig]{\qd S537/figures/dpixc_1to8_subf1}}
+	
+	\subfloat[subsampled $2\times$]{
+	\includegraphics[width=\widthfig]{\qd S537/figures/dpixc_1to8_subf2}}
+	
+	\subfloat[subsampled $10\times$]{
+	\includegraphics[width=\widthfig]{\qd S537/figures/dpixc_1to8_subf10}}
+	
+%	\subfloat[subsampled $20\times$]{
+%	\includegraphics[width=\widthfig]{\qd S537/figures/dpixc_1to8_subf20}}		
+	\caption{First eight frames of subsampled simulated data. }
+	\label{fig:subsampled data}
+\end{figure} 
+
+To address these question we tested the algorithm on simulated data of randomly scattered sources (\autoref{sec:simulations}). The parameters of the simulation were taken from \autoref{tab:Simulations parameters} but the maximum of the sources' intensity ($\max(n_{phot})$ was set to 300. This represent weak sources of fast acquisition time. The telegraph process \autoref{fig:blinking}c was used for simulated intensity profiles. 
+
+Several frames of the dataset are shown in \autoref{fig:subsampled data}a. From the dataset of $1000$ frames we generated four more datasets by subsampling the data $q=2,\,5,\,10$ and $20$ times by summing the $q$ subsequent frames. If  we neglect the read-out noise of the camera, this correspond to data taken with $q$ times longer acquisition time per frame. The subsampled data consist of $1000/q$ frames. Several frames of the subsampled data for $q=2$ and $10$ are shown in \autoref{fig:subsampled data}b,c, respectively. 
+
 \begin{figure}[!h]
-	\newcommand{\sizef}{.7}
 	\centering
-	\includegraphics[scale=\sizef]{\qd S486/figures/APS486S476S481}
-	\caption{Average Precision}
-	\label{fig:AP on frames}
+	\newcommand{\wf}{.9\textwidth}
+	\subfloat[Average precisoin]{
+	\includegraphics[width=\wf]{\qd S537/figures/APS537S527S532}}\\
+	\caption{Average precision as a function of number of subsampled frames.}
+	\label{fig:AP subsampled}
 \end{figure}
 
-For low densities ($10\unit{\mu m^{-2}}$) the results reach the plateau AP about $90\%$ for 100 frames (blue curve in \autoref{fig:AP on frames}). Adding more frames does not increase AP.
+AP computed for NMF evaluated data for three different source densities is shown in \autoref{fig:AP subsampled}. 
 
-\emph{show resampled data S513} \fix
+The subsampling of the data gives higher singna-to-noise rate in each frame, however the sources appear to be more in the ``ON'' state because of their ``OFF'' periods get averaged out. 
+
+\emph{Maybe rather try this experiment with uniform random blinking. Because here the blinking rate is set to 0.5 (every other frame switch) and therefore any subsampling makes it worse.}
 
 %==========================================
-
+\clearpage
 \subsection{Simulated data: comparison with other methods} %Main competitors 3B \cite{Cox2011}, CSSTORM \cite{Zhu2012} and SOFI \cite{Dertinger2009}.	
 %
 \begin{figure}[!h]
@@ -893,9 +935,9 @@ For low densities ($10\unit{\mu m^{-2}}$) the results reach the plateau AP about
 
 We used simulated data of randomly scattered overlapping sources (\autoref{sub:Simul random}) to compare the performance of the NMF with CSSTORM \cite{Zhu2012}, and 3B analysis \cite{Cox2011}, where the code is freely available. 
 
-Four datastets with densities $10,\,20,\,30$ and $40\unit{sources/\mu m^{2}}$ were used. An empty margin of three pixels was left along every edge of the frames to ensure all there are no partially missing PSFs. The sum projection of the dataset is shown in \autoref{fig:wf demo}. Several individual data frames are shown in \autoref{fig:simulated data random} and shows highly overlapping sources in each frame. For CSSTORM and 3B evaluation the true background value ($100 \unit{photons/pixel}$) was subtracted before evaluation, clipping the negative values.
+Four data-stets with densities $10,\,20,\,30$ and $40\unit{sources/\mu m^{2}}$ were used. An empty margin of three pixels was left along every edge of the frames to ensure all there are no partially missing PSFs. The sum projection of the dataset is shown in \autoref{fig:wf demo}. Several individual data frames are shown in \autoref{fig:simulated data random} and shows highly overlapping sources in each frame. For CSSTORM and 3B evaluation the true background value ($100 \unit{photons/pixel}$) was subtracted before evaluation, clipping the negative values.
 
-The  results of the NMF algorithm are shown as blue curves in \autoref{fig:comparison AP,dens}. The visualisation of the results (\autoref{sub:visualisation}) for datasets with four different densiteis is shown in \autoref{fig:NMF demo}. 
+The  results of the NMF algorithm are shown as blue curves in \autoref{fig:comparison AP,dens}. The visualisation of the results (\autoref{sub:visualisation}) for datasets with four different densities is shown in \autoref{fig:NMF demo}. 
 
 CSSTORM processes each input frame individually,independent on the rest of the dataset. The output for each frame is a ``high resolution'' frame showing the possible positions of the sources on a sub-pixel grid (8 times oversampled). As described in \cite{Zhu2012} we estimated a position of each source as an centre of mass of the small clusters formed on a sub-pixel grid. The AP (as a mean of AP from individual frames ) and the estimated density (as a maximum of estimated densities from individual frames) are denoted as CSSTORMind and are shown as red curves in \autoref{fig:comparison AP,dens}.
 
@@ -903,7 +945,7 @@ We also processed a sum of all output frames which summarises all the estimated 
 
 The results in \autoref{fig:comparison AP,dens} suggest that CSSTORM cannot recover enough sources in individual frames (red curves). The density is severely underestimated which leads to many FN and therefore low recall values (\autoref{eq:TP,FN}) which penalises AP (\autoref{fig:PRcurve}). However, CSSTORM recovers some subset of the sources in each frame and the the sum projection show dramatically improved AP and density estimation. It should be noted, however, that the estimated density and AP from the sum projection is highly dependent on the threshold for considering local maxima (see above).
 
-We also used 3B analysis for comparison. The prior parameters were adjusted to correspon the the true values (\texttt{blur.mu=0.37261, blur.sigma=0.1}). The true number of sources was used as an initial number of spots (\texttt{intensity.rel\_sigma=}$K_{true}$).
+We also used 3B analysis for comparison. The prior parameters were adjusted to correspond the the true values (\texttt{blur.mu=0.37261, blur.sigma=0.1}). The true number of sources was used as an initial number of spots (\texttt{intensity.rel\_sigma=}$K_{true}$).
 
 The output coordinates of the 3B analysis were placed on $100\times$ oversampled grid and convolved with a gaussian ($\sigma=10$). The resulting image is shown in \autoref{fig:3B demo}. 
 
@@ -1012,7 +1054,7 @@ The results of NMF, CSSTORM and 3B for different densities of randomly scattered
 
 %\emph{Aren't the bars under the $\bm{w}_{k}$ confusing? They are representing the maximum of $\bm{w}_{k}$ not their maxumim intensity (estimated from $\bm{h}_{k}$} \fix)
 
-We present results on simulated data of eight blinking QDs attached to a bar slanting in depth, see \autoref{fig:Data-true-estimations}a. The individual QDs were separated by 200 nm and the axial difference between the tips of the bar was $1600$ nm. Other parameters of the simulation are: emission wavelength 625 nm, numerical aperture 1.3, refractive index 1.5, edge size of a pixel in the image plane 100 nm, $T=500$, mean number of photons per source 1500, background photons/pixel 70, uniform distribution of blinking. 
+We applied NMF to simulated data of eight blinking QDs attached to a bar slanting in depth, see \autoref{fig:Data-true-estimations}a. The individual QDs were separated by 200 nm and the axial difference between the tips of the bar was $1600$ nm. Other parameters of the simulation are: emission wavelength 625 nm, numerical aperture 1.3, refractive index 1.5, edge size of a pixel in the image plane 100 nm, $T=500$, mean number of photons per source 1500, background photons/pixel 70, uniform distribution of blinking. 
 
 The true sources (individual PSFs) are shown in \autoref{fig:Data-true-estimations}b and their noisy version (obtained from the frame with the maximum intensity of each source) is shown in \autoref{fig:Data-true-estimations}c.
 
@@ -1047,7 +1089,7 @@ The results of the same procedure applied on a movie of real out-of-focus QDs ar
 %==========================================
 
 \subsection{Real data: QD stained tubulin fibres}
-We have applied the pipeline to a stack of $T=1000$, $128\times128$ images of tubulin fibres labelled with QDs (\autoref{fig:Patches}). The parameters of the experiment were: excitation wavelength 405 nm, emission wavelength 625 nm, exposure time 50 ms, numerical aperture 1.4, refractive index 1.52, edge size of a pixel in image plane 79 nm, quantum dots (the emission wavelength $\lambda=625 \unit{nm}$).The dataset was divided into $25 \times 25$ patches (see \autoref{sec:preproc}), and only patches with sufficiently strong signal (thick boxes in \autoref{fig:Patches}) are considered for further evaluation (see \autoref{sec:preproc}). The number of sources within each patch is over-estimated via principal components analysis (\autoref{sub:Estimation-of-number-of-sources}). Results of the procedure applied to the patch B24 from \autoref{fig:Patches}, where all the sources are approximately in the same focal plane, are shown in \autoref{fig:Real-data-patch-B24}b. \emph{say more} \fix
+We have applied the pipeline to a stack of $T=1000$, $128\times128$ images of tubulin fibres labelled with QDs (\autoref{fig:Patches}). The parameters of the experiment were: excitation wavelength $405 \unit{nm}$, emission wavelength $625 \unit{nm}$, exposure time $50 \unit{ms/frame}$, numerical aperture $1.4$, refractive index $1.52$, edge size of a pixel in image plane $79 \unit{nm}$, quantum dots (the emission wavelength $\lambda=625 \unit{nm}$).The dataset was divided into $25 \times 25$ patches (see \autoref{sec:preproc}), and only patches with sufficiently strong signal (thick boxes in \autoref{fig:Patches}) are considered for further evaluation (see \autoref{sec:preproc}). The number of sources within each patch is over-estimated via principal components analysis (\autoref{sub:Estimation-of-number-of-sources}). Results of the procedure applied to the patch \texttt{24} from \autoref{fig:Patches}, where all the sources are approximately in the same focal plane, are shown in \autoref{fig:Real-data-patch-B24}b. \emph{say more} \fix
 
 \begin{figure}[!htb]
 	\centering
@@ -1080,10 +1122,32 @@ We have applied the pipeline to a stack of $T=1000$, $128\times128$ images of tu
 		\includegraphics[width=\widthf]{\qd S364/results/resw_B24_43to56_intBars}\tabularnewline			
 	\end{tabular}}
 	}
-	\caption{Real data Ñ patch B24 from \autoref{fig:Patches}. (a) 14 randomly selected frames (out of $10^{3}$) of the tubulin structure stained with QDs. (b) Estimated sources $\bm{w}_{k}$ sorted according to their $l^{2}$ norm (shown all $K=56$ sources). Bars below each figure show the maximum of the $\bm{w}_{k}$.}
+	\caption{Real data Ñ patch \texttt{B24} from \autoref{fig:Patches}. (a) 14 randomly selected frames (out of $10^{3}$) of the tubulin structure stained with QDs. (b) Estimated sources $\bm{w}_{k}$ sorted according to their $l^{2}$ norm (shown all $K=56$ sources). Bars below each figure show the maximum of the $\bm{w}_{k}$.}
 	\label{fig:Real-data-patch-B24}
 	
 \end{figure}
+
+\begin{figure}[!htb]
+	\newcommand{\wf}{.9\textwidth}
+	\centering
+	\includegraphics[width=\wf]{\qd S364/results/all_mean_zoh}
+	\caption{Wide - filed data.}
+\end{figure}
+
+\begin{figure}[!htb]
+	\newcommand{\wf}{.9\textwidth}
+	\centering
+	\includegraphics[width=\wf]{\qd S364/results/all_gauss3_int}
+	\caption{QD - labelled tubulin. Gaussian filtered.}
+\end{figure}
+
+\begin{figure}[!htb]
+	\newcommand{\wf}{.9\textwidth}
+	\centering
+	\includegraphics[width=\wf]{\qd S364/results/all_powFromLabel}
+	\caption{QD - labelled tubulin. PSF squeezed.}
+\end{figure}
+
 
 %We trained the classifier on $10^{3}$ labelled $\bm{w}_{k}$, computed by NMF from a real dataset (\autoref{fig:Patches}). Confusion matrix of the ten-fold cross validation is shown in \autoref{tab:Confusion-matrix}. From all $\bm{w}_{k}$s classified as good sources (class 1) 89\% were correct, while the rest 11\% being spread into classes for two sources (6\%), half missing source (3\%), noise (2\%) and multiple sources (1\%).
 %
