@@ -30,9 +30,9 @@
 		\item
 		Local optima.
 		\item
-		Iterative partial restarts Ñ address local optima + weak indirect enhancing sparsity (discuss Hoyer's sparse NMF \cite{Hoyer2004} \texttt{S433}). 
+		Iterative partial restarts - address local optima + weak indirect enhancing sparsity (discuss Hoyer's sparse NMF \cite{Hoyer2004} \texttt{S433}). 
 		Number of sources $K$ can be overestimated but $K$ estimation needs  a classifier which determines whether the source is good or not. 
-		Show linear classifier performance. 	
+		Show linear classifier performance? 	
 	\end{itemize}	
 	\item
 	In-focus PSF - dealing with high densities $>10\unit{um^{-2}}$.
@@ -119,8 +119,9 @@ LM techniques are based on sources with transition between bright (ON) and dark 
 In last years there has been interest in using quantum dots (QDs) as sources for localisation microscopy. QDs are an order of magnitude brighter compared to the organic dyes or fluorescent proteins used in conventional LM \cite{Resch-Genger2008}. Under continuous excitation QDs exhibit a stochastic blinking between ON and OFF states. Excellent photo-stability, low cyto-toxicity and distinctive spectral properties make QDs very attractive for biological research. However, the stochastic blinking of QDs is impractical for standard LM techniques because the rate of switching, and hence the density of ON sources, is difficult to control. Thus QD-labeled data typically consist of highly overlapping sources which cannot be localised with standard techniques.
 
 %==========================================
-
-\subsection{Overlapping sources Ñ related work}
+%==========================================
+\clearpage
+\section{Overlapping sources - related work}
 
 Several techniques dealing with overlapping sources have been proposed recently. Most of these methods model the LM data from known image of a single source, so called point spread function (PSF). Most often a single PSF is assumed to be shared by all sources in the dataset.
 
@@ -215,7 +216,7 @@ The NMF model is fitted to data iteratively using multiplicative updates for $\b
 %==========================================
 
 \clearpage
-\section{NMF Ñ related work\label{sec:Related}}
+\section{NMF - related work\label{sec:Related}}
 
 Various alternative minimisation strategies have been explored in an effort to speed up the convergence properties of the Lee \& Seung updates. A comprehensive discussion on the variety of these algorithms can be found in \cite{Berry2007}. 
 
@@ -260,7 +261,7 @@ All the columns $\bm{w}_{k}$s of estimated matrix $\bm{W}$ have an identical ``s
 %	\includegraphics[scale=\sizefig]{\qd S432/figures/res07_simiter1_1to14}}\\
 	\subfloat[$50 \unit{sources/\mu m^{2}}$]{	
 	\includegraphics[scale=\sizefig]{\qd S433/figures/res07_simiter1_1to14}}\\	
-	\caption{Sparsity constraints $s=0.7$ on $\bm{W}$ estimated with Hoyer's algorithm from simulated data of randomly scattered sources with different density. The density is shown under each subfigure. Shown first 14 estimated components.}
+	\caption{Sparsity constraints $s=0.7$ on $\bm{W}$ estimated with Hoyer's algorithm from simulated data of randomly scattered sources with different density. Shown first 14 estimated components.}
 	\label{fig: Hoyer sparsity 0.7}
 \end{figure}
 
@@ -551,7 +552,7 @@ The estimated sources can greatly vary in quality. While some $\bm{w}$'s are cre
 		\includegraphics[width=\fw]{\qd S455/images/resw_65to80_col}\vspace{\barspace}\tabularnewline
 		\includegraphics[width=\fw]{\qd S455/images/resw_65to80_col_barInt}\tabularnewline
 	\end{tabular}	
-	\caption{Selection of the credible $\bm{w}$s. The green and blue boxes indicates the estimated ``credible'' sources (with only one major global maximum). The sources with blue frame have the maximum closer then 2 pixels to the border. The sources with red frame have local maxima of comparable strength. Bars under the figures show the maximum of the estimated $\bm{w}_{k}$.}
+	\caption{Selection of the credible $\bm{w}$s. The green and blue boxes indicates the estimated ``credible'' sources (with only one major global maximum). The sources with blue frame have the maximum closer then 2 pixels to the border and can be therefore considered as partly missing sources. The sources with red frame have two local maxima of comparable strength. Bars under the figures show the maximum of the estimated $\bm{w}_{k}$.}
 	\label{fig:good w}	
 \end{figure}
 
@@ -751,7 +752,7 @@ The parameters of the simulations such as size of the PSF and the brightness of 
 		\hline 
 		$\max(n_{phot})$ 	& max number of photons / source / frame 	& 5000\tabularnewline
 		\hline 
-		$b$ 				& background/pixel 				& 70\tabularnewline
+		$b$ 				& background/pixel 				& 100\tabularnewline
 		\hline
 	\end{tabular}
 	\caption{Main parameters for data simulations.}
@@ -804,7 +805,7 @@ Several frames from a simulated dataset of randomly scattered sources with defin
 
 \clearpage
 \section{Results \label{sec:results}}
-We used simulated data for exploring the behaviour of the NMF in different experimental regimes. AP and estmated density (described in \autoref{sec:evaluation}) were used as quantitative quality assesments of the algorithm performance. We also used the simulated dataset for comparing NMF witih other techniques dealing with overlapping sources. 
+We used simulated data for exploring the behaviour of the NMF in different experimental regimes. AP and estmated density (described in \autoref{sec:evaluation}) were used as a quantitative quality assesments of the algorithm performance. We also used the simulated dataset for comparing NMF with other techniques dealing with overlapping sources. 
 
 We applied the NMF on real datasets. A randomly scattered out-of-focus PSF were used to demonstrated the ability of NMF to recover different individual sources. Tubulin structures labeled with QDs were used as a biologically relevant sample. 
 
@@ -902,9 +903,9 @@ To address these question we tested the algorithm on simulated data of randomly 
 
 Several frames of the dataset are shown in \autoref{fig:subsampled data}a. From the dataset of $1000$ frames we generated four more datasets by subsampling the data $q=2,\,5,\,10$ and $20$ times by summing the $q$ subsequent frames. If  we neglect the read-out noise of the camera, this correspond to data taken with $q$ times longer acquisition time per frame. The subsampled data consist of $1000/q$ frames. Several frames of the subsampled data for $q=2$ and $10$ are shown in \autoref{fig:subsampled data}b,c, respectively. 
 
-\begin{figure}[!h]
-	\centering
+\begin{figure}[!h]	
 	\newcommand{\wf}{.9\textwidth}
+	\centering
 	\subfloat[Average precisoin]{
 	\includegraphics[width=\wf]{\qd S537/figures/APS537S527S532}}\\
 	\caption{Average precision as a function of number of subsampled frames.}
@@ -913,7 +914,7 @@ Several frames of the dataset are shown in \autoref{fig:subsampled data}a. From 
 
 AP computed for NMF evaluated data for three different source densities is shown in \autoref{fig:AP subsampled}. 
 
-The subsampling of the data gives higher singna-to-noise rate in each frame, however the sources appear to be more in the ``ON'' state because of their ``OFF'' periods get averaged out. 
+The subsampling of the data gives higher singnal-to-noise rate in each frame, however the sources appear to be more in the ``ON'' state because of their ``OFF'' periods get averaged out. 
 
 \emph{Maybe rather try this experiment with uniform random blinking. Because here the blinking rate is set to 0.5 (every other frame switch) and therefore any subsampling makes it worse.}
 
@@ -937,17 +938,19 @@ We used simulated data of randomly scattered overlapping sources (\autoref{sub:S
 
 Four data-stets with densities $10,\,20,\,30$ and $40\unit{sources/\mu m^{2}}$ were used. An empty margin of three pixels was left along every edge of the frames to ensure all there are no partially missing PSFs. The sum projection of the dataset is shown in \autoref{fig:wf demo}. Several individual data frames are shown in \autoref{fig:simulated data random} and shows highly overlapping sources in each frame. For CSSTORM and 3B evaluation the true background value ($100 \unit{photons/pixel}$) was subtracted before evaluation, clipping the negative values.
 
-The  results of the NMF algorithm are shown as blue curves in \autoref{fig:comparison AP,dens}. The visualisation of the results (\autoref{sub:visualisation}) for datasets with four different densities is shown in \autoref{fig:NMF demo}. 
+The  estimated density and the AP values obtained from the results of the NMF algorithm are shown as blue curves in \autoref{fig:comparison AP,dens}. The visualisation of the results (\autoref{sub:visualisation}) for datasets with four different densities is shown in \autoref{fig:NMF demo}. 
 
-CSSTORM processes each input frame individually,independent on the rest of the dataset. The output for each frame is a ``high resolution'' frame showing the possible positions of the sources on a sub-pixel grid (8 times oversampled). As described in \cite{Zhu2012} we estimated a position of each source as an centre of mass of the small clusters formed on a sub-pixel grid. The AP (as a mean of AP from individual frames ) and the estimated density (as a maximum of estimated densities from individual frames) are denoted as CSSTORMind and are shown as red curves in \autoref{fig:comparison AP,dens}.
+CSSTORM processes each input frame individually,independent on the rest of the dataset. The output for each frame is a ``high resolution'' frame showing the possible positions of the sources on a sub-pixel grid (8 times oversampled). As described in \cite{Zhu2012} we estimated the position of each source as a centre of mass of the small clusters formed on a sub-pixel grid. The AP (the mean of AP from individual frames ) and the estimated density (the maximum of estimated densities from individual frames) are denoted as \textsf{CSSTORMind} and are shown as red curves in \autoref{fig:comparison AP,dens}.
 
-We also processed a sum of all output frames which summarises all the estimated sources. The summed image was filtered with gaussian kernel ($\sigma=1\unit{pixel}$) and all the local maxima above a threshold were identified. The threshold was set to $5\%$ of the global maximum. The positions of the local maxima was considered as estimated positions and used for computation of AP and estimated density (\autoref{sec:evaluation}). Results are plotted as green curves in  \autoref{fig:comparison AP,dens}. The gaussian filtered sum of all frames with true and estimated sources is shown in \autoref{fig:CSSTORM demo}.
+We also processed a sum of all CSSTORM output frames which summarises all the estimated sources. The summed image was filtered with gaussian kernel ($\sigma=1\unit{pixel}$) and all the local maxima above a threshold were identified. Only the local maxima which was stronger then $5\%$ of the global maximum were considered for evaluation. The positions of the local maxima were used as estimated sources' positions and used for computation of the AP and the estimated density (\autoref{sec:evaluation}). 
 
-The results in \autoref{fig:comparison AP,dens} suggest that CSSTORM cannot recover enough sources in individual frames (red curves). The density is severely underestimated which leads to many FN and therefore low recall values (\autoref{eq:TP,FN}) which penalises AP (\autoref{fig:PRcurve}). However, CSSTORM recovers some subset of the sources in each frame and the the sum projection show dramatically improved AP and density estimation. It should be noted, however, that the estimated density and AP from the sum projection is highly dependent on the threshold for considering local maxima (see above).
+Results are plotted as green curves in  \autoref{fig:comparison AP,dens}. The gaussian filtered sum of all frames with true and estimated sources is shown in \autoref{fig:CSSTORM demo}.
+
+The results in \autoref{fig:comparison AP,dens} suggest that CSSTORM cannot recover enough sources in individual frames (red curves). The density is severely underestimated which leads to many false negatives (FN) and therefore low recall values (\autoref{eq:TP,FN}) which penalises AP (\autoref{fig:PRcurve}). However, CSSTORM recovers some subset of the sources in each frame and the the sum projection show dramatically improved AP and density estimation. It should be noted, however, that the estimated density and AP from the sum projection is highly dependent on the threshold for considering local maxima (see above).
 
 We also used 3B analysis for comparison. The prior parameters were adjusted to correspond the the true values (\texttt{blur.mu=0.37261, blur.sigma=0.1}). The true number of sources was used as an initial number of spots (\texttt{intensity.rel\_sigma=}$K_{true}$).
 
-The output coordinates of the 3B analysis were placed on $100\times$ oversampled grid and convolved with a gaussian ($\sigma=10$). The resulting image is shown in \autoref{fig:3B demo}. 
+The output coordinates of the 3B analysis were placed on $100\times$ oversampled grid ($0.8\unit{nm}$ pixelsize) and convolved with a gaussian ($\sigma=10\unit{pixels}$ which corresponds to $\sigma=8\unit{nm}$). The resulting image is shown in \autoref{fig:3B demo}. 
 
 The results of NMF, CSSTORM and 3B for different densities of randomly scattered sources are visualised in \autoref{fig:NMF demo}-\ref{fig:3B demo}.
 
@@ -955,15 +958,15 @@ The results of NMF, CSSTORM and 3B for different densities of randomly scattered
 	\centering
 	\newcommand{\sizef}{1}
 	\subfloat[density $10\unit{\mu m^{-2}}$, $14$ sources]{
-	\includegraphics[scale=\sizef]{\qd /S500/figures/wf_dens10_simiter1}}
+	\includegraphics[scale=\sizef]{\qd /S500/figures/wf_dens10_simiter1_bar4um}}
 	\subfloat[density $20\unit{\mu m^{-2}}$, $29$ sources]{
-	\includegraphics[scale=\sizef]{\qd S500/figures/wf_dens20_simiter1}}\\
+	\includegraphics[scale=\sizef]{\qd S500/figures/wf_dens20_simiter1_bar4um}}\\
 	\subfloat[density $30\unit{\mu m^{-2}}$, $43$ sources]{
-	\includegraphics[scale=\sizef]{\qd S500/figures/wf_dens30_simiter1}}
+	\includegraphics[scale=\sizef]{\qd S500/figures/wf_dens30_simiter1_bar4um}}
 	\subfloat[density $40\unit{\mu m^{-2}}$, $58$ sources]{
-	\includegraphics[scale=\sizef]{\qd S500/figures/wf_dens40_simiter1}}
+	\includegraphics[scale=\sizef]{\qd S500/figures/wf_dens40_simiter1_bar4um}}
 	
-	\caption{Sum projection of four datasets with different densities of the randomly scattered sources. Red circles show the true sources. The radius of the circles indicates the true-positive threshold distance $r=0.7\unit{pixels}$ ($56\unit{nm}$). For further information see \autoref{sec:evaluation}. Size of the image is $1.7\times1.7\unit{\mu m}$ ($21\times21$ pixels, $80 \unit{nm/pixel)}$}
+	\caption{Sum projection of four datasets with different densities of the randomly scattered sources. Red circles show the true sources. The radius of the circles indicates the true-positive threshold distance $r=0.7\unit{pixels}$ ($56\unit{nm}$). For further information see \autoref{sec:evaluation}. Scale bar 400\unit{nm}.}
 	\label{fig:wf demo}
 \end{figure}
 
@@ -971,15 +974,15 @@ The results of NMF, CSSTORM and 3B for different densities of randomly scattered
 	\centering
 	\newcommand{\sizef}{1}
 	\subfloat[density $10\unit{\mu m^{-2}}$]{
-	\includegraphics[scale=\sizef]{\qd /S500/figures/demo_dens10_simiter1}}
+	\includegraphics[scale=\sizef]{\qd /S500/figures/demo_dens10_simiter1_bar4um}}
 	\subfloat[density $20\unit{\mu m^{-2}}$]{
-	\includegraphics[scale=\sizef]{\qd S500/figures/demo_dens20_simiter1}}\\
+	\includegraphics[scale=\sizef]{\qd S500/figures/demo_dens20_simiter1_bar4um}}\\
 	\subfloat[density $30\unit{\mu m^{-2}}$]{
-	\includegraphics[scale=\sizef]{\qd S500/figures/demo_dens30_simiter1}}
+	\includegraphics[scale=\sizef]{\qd S500/figures/demo_dens30_simiter1_bar4um}}
 	\subfloat[density $40\unit{\mu m^{-2}}$]{
-	\includegraphics[scale=\sizef]{\qd S500/figures/demo_dens40_simiter1}}
+	\includegraphics[scale=\sizef]{\qd S500/figures/demo_dens40_simiter1_bar4um}}
 	
-	\caption{Demonstration of the NMF results. The results are visualised as a weighted sum of $\bm{w}^{p}$ as described in \autoref{sub:visualisation}. Red circles show the true sources. The radius of the circles indicates the true-positive threshold distance $r=0.7\unit{pixels}$ ($56\unit{nm}$). For further information see \autoref{sec:evaluation}. Green crosses show the local maxima in the image. Size of the image is $1.7\times1.7\unit{\mu m}$ ($84\times84$ pixels - $4\times$ oversampled original).}
+	\caption{Demonstration of the NMF results. The results are visualised as a weighted sum of $\bm{w}^{p}$ as described in \autoref{sub:visualisation}. Red circles show the true sources. The radius of the circles indicates the true-positive threshold distance $r=0.7\unit{pixels}$ ($56\unit{nm}$). For further information see \autoref{sec:evaluation}. Green crosses show the local maxima in the image. ($4\times$ oversampled original). Scale bar 400\unit{nm}.}
 	\label{fig:NMF demo}
 \end{figure}
 
@@ -987,15 +990,15 @@ The results of NMF, CSSTORM and 3B for different densities of randomly scattered
 	\centering
 	\newcommand{\sizef}{1}
 	\subfloat[density $10\unit{\mu m^{-2}}$]{
-	\includegraphics[scale=\sizef]{\qd S492/figures/demo_dens10_simiter1}}
+	\includegraphics[scale=\sizef]{\qd S492/figures/demo_dens10_simiter1_bar4um}}
 	\subfloat[density $20\unit{\mu m^{-2}}$]{
-	\includegraphics[scale=\sizef]{\qd S492/figures/demo_dens20_simiter1}}\\
+	\includegraphics[scale=\sizef]{\qd S492/figures/demo_dens20_simiter1_bar4um}}\\
 	\subfloat[density $30\unit{\mu m^{-2}}$]{
-	\includegraphics[scale=\sizef]{\qd S492/figures/demo_dens30_simiter1}}
+	\includegraphics[scale=\sizef]{\qd S492/figures/demo_dens30_simiter1_bar4um}}
 	\subfloat[density $40\unit{\mu m^{-2}}$]{
-	\includegraphics[scale=\sizef]{\qd S492/figures/demo_dens40_simiter1}}
+	\includegraphics[scale=\sizef]{\qd S492/figures/demo_dens40_simiter1_bar4um}}
 	
-	\caption{Demonstration of the CSSTORM results. Gaussian filtered sum projection  of all output frames is shown. Red circles show the true sources. The radius of the circles indicates the true-positive threshold distance $r=0.7\unit{pixels}$ ($56\unit{nm}$). For further information see \autoref{sec:evaluation}. Green crosses show the local maxima in the image. Size of the image is $1.7\times1.7\unit{\mu m}$ ($168\times168$ pixels - $8\times$ oversampled original).}
+	\caption{Demonstration of the CSSTORM results. Gaussian filtered sum projection  of all output frames is shown. Red circles show the true sources. The radius of the circles indicates the true-positive threshold distance $r=0.7\unit{pixels}$ ($56\unit{nm}$). For further information see \autoref{sec:evaluation}. Green crosses show the local maxima in the image. ($8\times$ oversampled original). Scale bar 400\unit{nm}.}
 	\label{fig:CSSTORM demo}
 \end{figure}
 
@@ -1003,15 +1006,15 @@ The results of NMF, CSSTORM and 3B for different densities of randomly scattered
 	\centering
 	\newcommand{\sizef}{1}
 	\subfloat[density $10\unit{\mu m^{-2}}$]{
-	\includegraphics[scale=\sizef]{\qd S494/figures/demo_dens10_simiter1}}
+	\includegraphics[scale=\sizef]{\qd S494/figures/demo_dens10_simiter1_bar4um}}
 	\subfloat[density $20\unit{\mu m^{-2}}$]{
-	\includegraphics[scale=\sizef]{\qd S501/figures/demo_dens20_simiter1}}\\
+	\includegraphics[scale=\sizef]{\qd S501/figures/demo_dens20_simiter1_bar4um}}\\
 	\subfloat[density $30\unit{\mu m^{-2}}$]{
-	\includegraphics[scale=\sizef]{\qd S495/figures/demo_dens30_simiter1}}
+	\includegraphics[scale=\sizef]{\qd S495/figures/demo_dens30_simiter1_bar4um}}
 	\subfloat[density $50\unit{\mu m^{-2}}$]{
-	\includegraphics[scale=\sizef]{\qd S516/figures/demo_dens40_simiter1}}
+	\includegraphics[scale=\sizef]{\qd S516/figures/demo_dens40_simiter1_bar4um}}
 	
-	\caption{Demonstration of the 3B results. Red circles show the true sources. The radius of the circles indicates the true-positive threshold distance $r=0.7\unit{pixels}$ ($56\unit{nm}$). For further information see \autoref{sec:evaluation}. Green crosses show the local maxima in the 3B image. Size of the image is $1.7\times1.7\unit{\mu m}$ ($2100\times2100$ pixels - $100\times$ oversampled original).}
+	\caption{Demonstration of the 3B results. Red circles show the true sources. The radius of the circles indicates the true-positive threshold distance $r=0.7\unit{pixels}$ ($56\unit{nm}$). For further information see \autoref{sec:evaluation}. Green crosses show the local maxima in the 3B image. ($100\times$ oversampled original). Scale bar 400\unit{nm}.}
 	\label{fig:3B demo}
 \end{figure}
 
@@ -1082,7 +1085,7 @@ The results of the same procedure applied on a movie of real out-of-focus QDs ar
 		\includegraphics[scale=\sizeresw]{\qd S392/images/resw_23to33_intBars}\tabularnewline			
 	\end{tabular}}	
 	}
-	\caption{Real data Ñ randomly scattered QDs. (a) Eleven randomly selected frames (out of $1,000$) of the overlapping PSFs produced by blinking QDs. (b) Estimated sources $\bm{w}_{k}$ sorted according to their estimated mean brightness. Bars below each figure show the maximum of the $\bm{w}_{k}$.}
+	\caption{Real data - randomly scattered QDs. (a) Eleven randomly selected frames (out of $1,000$) of the overlapping PSFs produced by blinking QDs. (b) Estimated sources $\bm{w}_{k}$ sorted according to their estimated mean brightness. Bars below each figure show the maximum of the $\bm{w}_{k}$.}
 	\label{fig:Real-data-QDrandom}	
 \end{figure}
 
@@ -1122,7 +1125,7 @@ We have applied the pipeline to a stack of $T=1000$, $128\times128$ images of tu
 		\includegraphics[width=\widthf]{\qd S364/results/resw_B24_43to56_intBars}\tabularnewline			
 	\end{tabular}}
 	}
-	\caption{Real data Ñ patch \texttt{B24} from \autoref{fig:Patches}. (a) 14 randomly selected frames (out of $10^{3}$) of the tubulin structure stained with QDs. (b) Estimated sources $\bm{w}_{k}$ sorted according to their $l^{2}$ norm (shown all $K=56$ sources). Bars below each figure show the maximum of the $\bm{w}_{k}$.}
+	\caption{Real data - patch \texttt{B24} from \autoref{fig:Patches}. (a) 14 randomly selected frames (out of $10^{3}$) of the tubulin structure stained with QDs. (b) Estimated sources $\bm{w}_{k}$ sorted according to their $l^{2}$ norm (shown all $K=56$ sources). Bars below each figure show the maximum of the $\bm{w}_{k}$.}
 	\label{fig:Real-data-patch-B24}
 	
 \end{figure}
