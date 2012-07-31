@@ -44,14 +44,41 @@
 \usepackage[colorlinks=true, pdfstartview=FitV, linkcolor=blue, citecolor=black, urlcolor=blue,pagebackref,breaklinks]{hyperref}
 \usepackage{datetime}
 \usepackage{lineno}
+\usepackage{enumerate}
+
+\hyphenation{a-na-ly-sis}
 
 \linenumbers
 
-\def\figureautorefname{Fig.}
-\def\equationautorefname{Eq.}
-\def\algorithmautorefname{Algorithm}
-\def\sectionautorefname{sec.}
-\def\subsectionautorefname{sec.}
+%This makes brakcets around equations numbers in \autoref
+\makeatletter
+\def\tagform@#1{\maketag@@@{\ignorespaces#1\unskip\@@italiccorr}}
+\let\orgtheequation\theequation
+\def\theequation{(\orgtheequation)}
+\makeatother
+
+% \Autoref is for the beginning of the sentence
+\let\orgautoref\autoref
+\providecommand{\Autoref}[1]
+{%
+\def\equationautorefname{Equation}%
+\def\figureautorefname{Figure}%
+\def\subfigureautorefname{Figure}%
+\def\sectionautorefname{Section}%
+\def\subsectionautorefname{Section}%
+\orgautoref{#1}%
+}
+% \autoref is used inside the sentence to produce Fig., and Eq. for figures, subfigures, and equations
+\renewcommand{\autoref}[1]
+{%
+\def\equationautorefname{Eq.}%
+\def\figureautorefname{Fig.}%
+\def\subfigureautorefname{Fig.}%
+\def\algorithmautorefname{Algorithm}%
+\def\sectionautorefname{Sect.}%
+\def\subsectionautorefname{Sect.}%
+\orgautoref{#1}%
+}
 
 \newboolean{includefigs} 
 \newboolean{printpreliminary}
@@ -88,8 +115,8 @@
 %================================
  % Comment this line out when finished
 \noindent Version: \today \ \currenttime \fix\\
-%Up to date version on:\\ 
-%\url{https://www.dropbox.com/s/5dtktv8cygan971/thesis.pdf}
+Up to date version on:\\ 
+\url{https://www.dropbox.com/s/5dtktv8cygan971/thesis.pdf}
 %================================
 \condcomment{\boolean{printpreliminary}}
 {
@@ -111,14 +138,16 @@ Igor, my faithful lab assistant.
 % \listoftables
 \end{preliminary}
 
+%\include{Workingplan}
+%\include{Structure}
 \include{Introduction}
 \include{Background}
 \include{chap1}
 \include{chap2}
 \include{chap3}
 
-%\appendix
-%\include{appendix1}
+\appendix
+\include{appendix1}
 
 %\bibliographystyle{apalike}
 \bibliographystyle{unsrt}

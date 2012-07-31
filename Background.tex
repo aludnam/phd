@@ -1,15 +1,97 @@
 %!TEX root = thesis.tex
 \chapter{Background}
-% Background information abotu localiasation microscopy and NMF
+
+This chapter introduces the localisation microscopy (LM) technique \autoref{sec:LM} discusses the advantages and challenges of using the quantum dots as fluorescent labels \autoref{sec:QD for LM} and reviews some recent methods dealing with LM data containing overlapping sources. 
+
+\Autoref{sec:NMF} introduces non-negative matrix factorisation (NMF). Alternative algorithms applying certain costraints on the estimated resutls are discussed in \autoref{seb:NMF constrains} and the generative probabilistic model for NMF is mentioned in \autoref{sub:GaP}.
 
 %==========================================
 %==========================================
-\section{Localisation microscopy}
 
+\section{Localisation microscopy\label{sec:LM}}
+
+Localisation microscopy (LM) is a conceptually simple and accessible technique for super-resolution imaging of fluorescent samples. LM takes as input a stack of images containing a number of fluorescent sources with time-varying intensity and identify the locations and point-spread functions (PSFs) of these sources. If the sources are attached to structures of interest (e.g.\ in biological samples), then this provides useful information about the target structures. By exploiting multiple images of time-varying sources, LM can achieve a resolution beyond the classical diffraction limit of $\sim \lambda/2$ \cite{Abbe1873}, where $\lambda$ is the wavelength of the light source. Provided enough photons are collected, the localisation of an individual source can be an order of magnitude below $\lambda/2$ \cite{Ober2004}, meaning that sources whose point spread functions overlap heavily can be resolved. 
+%See \autoref{fig:Iterative restarts}, \autoref{fig:Real-data-QDrandom} and \autoref{fig:Real-data-patch-B24} for examples.
+
+LM techniques are based on sources with transition between bright (ON) and dark (OFF) states. Fluorescent proteins or organic dyes are used as fluorophores in the standard techniques (fPALM \cite{Hess2006}, STORM \cite{Rust2006}). In this case the density of the ON sources in each captured frame can be controlled by photo-switching and must be optimised experimentally. High density of ON fluorophores results in overlapping sources and complicates localisation (overlapping sources are usually discarded), whereas low density leads to a excessive total acquisition time. Several thousands frames are typically required for an image reconstruction.
+
+%==========================================
+
+\subsection{Quantum dots for localisation microscopy\label{sec:QD for LM}}
+
+In recent years there has been interest in using quantum dots (QDs) as sources for localisation microscopy. QDs are an order of magnitude brighter compared to the organic dyes or fluorescent proteins used in conventional LM \cite{Resch-Genger2008}. Under continuous excitation QDs exhibit a stochastic blinking between ON and OFF states. Excellent photo-stability, low cyto-toxicity and distinctive spectral properties make QDs very attractive for biological research. However, the stochastic blinking of QDs is impractical for standard LM techniques because the rate of switching, and hence the density of ON sources, is difficult to control. Thus QD-labeled data typically consist of highly overlapping sources which cannot be localised with standard techniques.
+
+%==========================================
+
+\subsection{Overlapping sources\label{sec:Overlapping sources}}
+
+Several techniques dealing with overlapping sources have been proposed recently. Most of these methods model the LM data using a known image of a single source, the so called point spread function (PSF). Most often a single PSF is assumed to be shared by all sources in the dataset.
+
+There are two main groups of the algorithms addressing the overlapping sources in the LM data. 
+
+The first group operates separately on each frame of the LM dataset: a method proposed in \cite{Huang2011} tries to fit multiple PSFs into each frame of the dataset while the CSSTORM proposed in \cite{Zhu2012} make use of compressed sampling to recover the sparse vector representing the fluorophores distribution. The DAOSTORM algorithm \cite{Holden2011} applies iterative fitting and subtracting procedure in each frame. 
+
+Because each frame of the dataset is treated independetly, these methods ignore the fact that some sources can stay ON for several subsequent frames or can even reappear in different frames due to blinking and can generally deal with moderately overlapping sources with densities $<10\unit{sources/\mu m^{2}}$ \cite{Huang2011,Holden2011,Zhu2012}.
+
+The second group of the algorithms models LM dataset as a collection of blinking sources. They can improve the localisation for higher densities of the overlapping sources by taking the the reappearance of fluorophores into account. However, these algorithms are in general computationally more expensive. 
+
+Modelling the whole dataset from known PSF with maximum aposterioiry (MAP) fitting has been proposed in \cite{Harrington2008}. Bayesian analysis of the intermittent sources (Bayesian Blinking and Bleaching (3B) analysis) has been suggested in \cite{Cox2011}. The blinking behaviour of the fluorophores is modelled as a hidden markov model with three distinct states: emitting, not-emitting and bleached. Each source is described by its position, size of the PSF, and intensity. MAP estimates of the positions obtained from different sampling of state sequences are used as estimated locations of the fluorophores. While the 3B analysis adjusts the width of the PSF (gaussian approximation of the PSF \cite{Zhang2007}), it cannot deal with PSFs of different shapes. This situation can arise, for example, in three dimensional samples, where the overlapping sources can be located in different focal planes (see \autoref{fig:Simulted-PSF-different-focal-depths}). Moreover, the 3B analysis assumes a mono-exponential decay of the fluorescence for the individual sources. QDs have a complex blinking behaviour with power-law distribution in the histogram of on and off times \cite{Shimizu2001}. This can complicate the 3B analysis of the QD data. 
+
+The independent component analysis (ICA) have been proposed for analysis of overlapping intermittent sources in \cite{Lidke2005} and s further discussed in \autoref{sub:ICA}.
+
+Yet another approach to the LM data with overlapping sources problem has been proposed in a method called SOFI (Superresolution Optical Fluctuation Imaging) \cite{Dertinger2010b}. Instead of separating the individual sources, SOFI analyses higher order statistics of the intensity fluctuation. The intensity values in the SOFI image, however, reflect the fluctuation behaviour, rather than the strength of the emitters. Sources which do not blink will not appear in the SOFI image. This issue has been addressed recently by bSOFI (balanced SOFI) \cite{Geissbuehler2012}.
+% The balanced SOFI paper to read!!
+
+\begin{figure}[!htb]
+	\newcommand{\widthfig}{.95\textwidth}
+	\newcommand{\barspace}{-.5cm}
+	\centering
+	\condcomment{\boolean{includefigs}}{ 
+	\begin{tabular}{l}
+		\includegraphics[width=\widthfig]{\qd S393/images/psf_outOfFocus}\vspace{\barspace}\tabularnewline		
+		\includegraphics[width=\widthfig]{\qd S393/images/psf_outOfFocus_intBars}
+	\end{tabular}
+	}	
+	\caption{Simulated PSF in different depths of focus. The number in each figure indicates the distance in $\unit{\mu m}$ from the in-focus plane. The maximum intensity relative to the in-focus PSF is indicated in the bars below and corresponds to about 10\% at $1\unit{\mu m}$ and 3\% at $1.5\unit{\mu m}$.}
+	\label{fig:Simulted-PSF-different-focal-depths}
+\end{figure}
 
 %==========================================
 %==========================================
-\section{Non-negative matrix factorisation}
+
+\clearpage
+\section{Non-negative matrix factorisation\label{sec:NMF}}
+Non-negative matrix factorisation (NMF) solves the approximative factorisation of an $N\times T$ data matrix $\bm{D}$ with non-negative entries:
+%
+\begin{equation}
+	\bm{D}\approx\bm{WH},
+	\label{eq:NMF approx}
+\end{equation}
+%
+where $\bm{W}$ and $\bm{H}$ are $N\times K$ and $K\times T$  matrices ($K<N,T$), respectively. The factorisation is constraint to $\bm{W}$ and $\bm{H}$ with non-negative entries. 
+
+Initial factorisation algorithms (so called positive matrix factorisation) \cite{Paatero1994} were published in 1994. However, it was in 1999 when NMF attracted attention of researchers after publication of the \emph{Nature} article by Daniel Lee and Sebastian Seung \cite{Lee1999}. NMF was presented as an efficient and powerful method for approximation of non-negative data (in their case a database of facial images) by linear combination of non-negative localised basis vectors (images of the nose, mouth, ears, eyes, etc.) An individual face from the data-set can be recovered as a non-subtractive composition of individual basis vectors. 
+
+Lee and Seung also proposed simple multiplicative updates \cite{Lee2001} for the elements of $\bm{W}$ and $\bm{H}$
+%
+\begin{alignat}{1}
+	w_{xk} & =\frac{w_{xk}}{\sum_{t=1}^{T}h_{kt}}\left[(\bm{V}./\bm{WH})\bm{H^{\top}}\right]_{xk}\nonumber \\
+	h_{kt} & =\frac{h_{kt}}{\sum_{x=1}^{N}w_{xk}}\left[\bm{W^{\top}}(\bm{V}./\bm{WH})\right]_{kt},
+	\label{eq:NMF classic updates}
+\end{alignat}
+%
+minimising KL-divergence between data matrix $\bm{D}$ and its factorised approximation $\bm{WH}$ (for details see \autoref{sec: NMF} and \autoref{app:NMF-algorithm}). The symbol ``$./$'' denotes the element-wise division of matrices.
+
+Note that updates \autoref{eq:NMF classic updates} automatically ensure that $\bm{W}$ and $\bm{H}$ remains non-negative if initialised so. Also once they become zero they remain zero for the rest of iterations. Sufficient conditions for uniqueness of solutions to the NMF problem has been studied in \cite{Donoho2004}. 
 
 %==========================================
+
+\subsection{Additional constraints to the NMF model \label{seb:NMF constrains}}
+Various alternative minimisation strategies have been explored in an effort to speed up the convergence properties of the Lee \& Seung updates. A comprehensive discussion on the variety of these algorithms can be found in \cite{Berry2007}. 
+
+Additional constraints can be imposed on $\bm{W}$ and $\bm{H}$ matrices. Imposing a defined ``sparsity'' on either columns of $\bm{W}$ or rows of $\bm{H}$ has been proposed in \cite{Hoyer2004} and is discussed in \autoref{sub:Hoyer}. Enforcing the temporal smoothness of $\bm{H}$ in the analysis of EEG recordings has been published in \cite{Chen2005}. Multiplicative updates for various constraints have been suggested in \cite{Chen2005,Pauca2006}  (see \autoref{app:NMF-algorithm}).
+
 %==========================================
+
+\subsection{Gamma - Poisson model \label{sub:GaP}}
+The gamma-Poisson (GaP) model has been proposed \cite{Canny2004} as a probabilistic model for documents. It represents a generative model for NMF \autoref{eq:NMF model}. The entries $h_{kt}$ of the intensity matrix $\bm{H}$ in \autoref{eq:NMF model element-wise} are regarded as latent variables generated from a Gamma distribution with parameters $\alpha_{k}, \beta_{k}$ and the data are modelled as a Poisson variable with mean $\bm{WH}$. Variables $\theta = \{\bm{w_{k}},\alpha_{k}, \beta_{k}\}; k = 1..K$ are then parameters of the GaP model.
