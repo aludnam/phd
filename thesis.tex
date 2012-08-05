@@ -48,7 +48,7 @@
 
 \hyphenation{a-na-ly-sis}
 
-\linenumbers
+%\linenumbers
 
 %This makes brakcets around equations numbers in \autoref
 \makeatletter
@@ -132,6 +132,7 @@ Igor, my faithful lab assistant.
 }
 {
 \singlespace
+\setcounter{tocdepth}{1}
 \tableofcontents
 }
 % \listoffigures
@@ -143,8 +144,8 @@ Igor, my faithful lab assistant.
 \include{Introduction}
 \include{Background}
 \include{chap1}
-\include{chap2}
-\include{chap3}
+%\include{chap2}
+%\include{chap3}
 
 \appendix
 \include{appendix1}
