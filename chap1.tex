@@ -295,12 +295,6 @@ A simple model comparison can obtained by using the Bayesian Information Criteri
 	 \label{fig:K estimation}
 \end{figure}
 
-A reliable estimation of $K$ is a difficult task for higher source densities. \Autoref{fig:K estimation hist} shows the histograms of the estimated $K$s for ten different geometrical configurations of the sources with a given density. From the methods presented in this section  (\autoref{fig:K estimation hist}(a-c)), the analysis of the correlations in residuals (ACR) shows the best performance.
-
-Both LB and ACR, require evaluation of the model for a reasonable range of possible $K$s. The range can be estimated from the PCA  (\autoref{fig:K estimation hist}(c)), because the prinicpal coefficients can be computed directly from the data matrix $\bm{D}$.
-
-In the following section we will be discussing an iterative procedure of the NMF algorithm, which can deal with moderate overestimation of $K$  (estimated from PCA). The correct number of sources can be estimated additionally by analysing the optimised matrix $\bm{W}$ and selecting the ``credible'' sources $\bm{w_{k}}$. Therefore evaluation for only one overestimated value of $K$, rather then a range of $K$s, is required. The histogram of the $K$s estimated with the iterative algorithm is shown in  \autoref{fig:K estimation hist}(d) for comparison. This method gives the most acurate estimates of $K$. 
-%
 \begin{figure}[!hbt]
 	\newcommand{\sizef}{.4}		
 	\centering
@@ -315,6 +309,12 @@ In the following section we will be discussing an iterative procedure of the NMF
 	\caption{Histograms of the $K$ estimations with (a) analysis of correlations in residuals, (b) variational lower bound, (c) PCA and (d) iterative NMF. Simulated data with three different sources density: tens sources within a disk of $\delta$ (blue), $1.5\delta$ (green) and $2\delta$ (red).}
 	\label{fig:K estimation hist}
 \end{figure}
+%
+A reliable estimation of $K$ is a difficult task for higher source densities. \Autoref{fig:K estimation hist} shows the histograms of the estimated $K$s for ten different geometrical configurations of the sources with a given density. From the methods presented in this section  (\autoref{fig:K estimation hist}(a-c)), the analysis of the correlations in residuals (ACR) shows the best performance.
+
+Both LB and ACR, require evaluation of the model for a reasonable range of possible $K$s. The range can be estimated from the PCA  (\autoref{fig:K estimation hist}(c)), because the prinicpal coefficients can be computed directly from the data matrix $\bm{D}$.
+
+In the following section we will be discussing an iterative procedure of the NMF algorithm, which can deal with moderate overestimation of $K$  (estimated from PCA). The correct number of sources can be estimated additionally by analysing the optimised matrix $\bm{W}$ and selecting the ``credible'' sources $\bm{w_{k}}$. Therefore evaluation for only one overestimated value of $K$, rather then a range of $K$s, is required. The histogram of the $K$s estimated with the iterative algorithm is shown in  \autoref{fig:K estimation hist}(d) for comparison. This method gives the most acurate estimates of $K$. 
 
 %==========================================
 \clearpage
@@ -504,7 +504,7 @@ The individual estimated sources classified as a credible representation of the 
 To visualise the results of the NMF procedure we can use two different methods: 
 \begin{enumerate}
 	\item
-	The conventional way for LM data visualisation (STORM, PALM) is to sum gaussian functions placed in the estimated locations. The variance $\sigma^{2}$ of each gaussian can be set to reflect the ``uncertainty'' of the estimated position. This is usually set to be proportional to number of photons emitted by the source. $\sigma$ is usually much smaller then the resolution limit and the result represent a super-resolution image of the data. 
+	The conventional way for LM data visualisation (STORM, PALM) is to sum gaussian functions placed in the estimated locations. The variance $\sigma^{2}$ of each gaussian can be set to reflect the ``uncertainty'' of the estimated position. This is usually set to be proportional to the number of photons emitted by the source. $\sigma$ is usually much smaller then the resolution limit and the result represent a super-resolution image of the data. 
 	
 	In terms of NMF procedure, this method replaces the credible estimated $\bm{w}$s with ideal, sub-resolution PSFs. The intensity values for each source can be estimated from the intensity time profiles of each source (rows of $\bm{H}$). 	
 	\item
