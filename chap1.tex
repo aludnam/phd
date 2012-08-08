@@ -1,10 +1,111 @@
 %!TEX root =  thesis.tex
 \chapter{Non-negative matrix factorisation for localisation microscopy}
-We propose non-negative matrix factorisation (NMF) \cite{Lee1999} as a natural model for LM data with QD labeled samples. NMF can separate the individual highly overlapping sources with individual different shapes. This situation that can arise in a real microscopic data when aberrations are present or when the sources are not in one focal plane (\autoref{fig:Simulted-PSF-different-focal-depths}). Moreover we use the NMF algorithm which takes the Poisson noise in the recorded images into account. This allows us to recover the individual sources from noisy QD data.
+We propose non-negative matrix factorisation (NMF) as a natural model for LM data with QD labeled samples. NMF can separate the individual highly overlapping sources with individual different shapes. This situation that can arise in a real microscopic data when aberrations are present or when the sources are not in one focal plane (\autoref{fig:Simulted-PSF-different-focal-depths}). Moreover we use the NMF algorithm which takes the Poisson noise in the recorded images into account. This allows us to recover the individual sources from noisy QD data.
+
+The chapter is composed in following parts: \Autoref{sec:LM} introduces the localisation microscopy (LM) technique and \autoref{sec:QD for LM} discusses the advantages and challenges of using the quantum dots as fluorescent labels and reviews some recent methods dealing with LM data containing overlapping sources. 
+
+\Autoref{sec:NMF} introduces non-negative matrix factorisation (NMF). Alternative algorithms applying certain costraints on the estimated resutls are discussed in \autoref{sub:NMF constrains} and the generative probabilistic model for NMF is mentioned in \autoref{sub:GaP}.
+
+\Autoref{sec: NMF} shows NMF as a natural model for intermittent overlapping QDs and \autoref{sec:NMF related} discusses the alternative methods used for treating QD data. A link to a standard deconvolution technique is also mentioned. The application of hte NMF algorithm to real microscopic data is explored in \autoref{sec:NMF-for-real}. In this section we also present preliminary results to demonstrate specific problems of the topic.
+
+We used synthetic data are used for analysing the performance of the algorithm. The main simulations used in this chaper are described in \autoref{sec:simulations} and \autoref{sec:evaluation} explains the evaluation techniques for the comparison of the results.
+
+Comparison of the NMF applied to synthetic and real data is in \autoref{sec:results}. This section also contains a comparison with other techniques dealing with similar problematics. 
 
 %==========================================
 %==========================================
 
+\section{Localisation microscopy\label{sec:LM}}
+
+Localisation microscopy (LM) is a conceptually simple and accessible technique for super-resolution imaging of fluorescent samples. LM takes as input a stack of images containing a number of fluorescent sources with time-varying intensity and identify the locations and point-spread functions (PSFs) of these sources. If the sources are attached to structures of interest (e.g.\ in biological samples), then this provides useful information about the target structures. By exploiting multiple images of time-varying sources, LM can achieve a resolution beyond the classical diffraction limit of $\sim \lambda/2$ \cite{Abbe1873}, where $\lambda$ is the wavelength of the light source. Provided enough photons are collected, the localisation of an individual source can be an order of magnitude below $\lambda/2$ \cite{Ober2004}, meaning that sources whose point spread functions overlap heavily can be resolved. 
+%See \autoref{fig:Iterative restarts}, \autoref{fig:Real-data-QDrandom} and \autoref{fig:Real-data-patch-B24} for examples.
+
+LM techniques are based on sources with transition between bright (ON) and dark (OFF) states. Fluorescent proteins or organic dyes are used as fluorophores in the standard techniques (fPALM \cite{Hess2006}, STORM \cite{Rust2006}). In this case the density of the ON sources in each captured frame can be controlled by photo-switching and must be optimised experimentally. High density of ON fluorophores results in overlapping sources and complicates localisation (overlapping sources are usually discarded), whereas low density leads to a excessive total acquisition time. Several thousands frames are typically required for an image reconstruction.
+
+%==========================================
+
+\subsection{Quantum dots for localisation microscopy\label{sec:QD for LM}}
+
+In recent years there has been interest in using quantum dots (QDs) as sources for localisation microscopy. QDs are an order of magnitude brighter compared to the organic dyes or fluorescent proteins used in conventional LM \cite{Resch-Genger2008}. Under continuous excitation QDs exhibit a stochastic blinking between ON and OFF states. Excellent photo-stability, low cyto-toxicity and distinctive spectral properties make QDs very attractive for biological research. However, the stochastic blinking of QDs is impractical for standard LM techniques because the rate of switching, and hence the density of ON sources, is difficult to control. Thus QD-labeled data typically consist of highly overlapping sources which cannot be localised with standard techniques.
+
+%==========================================
+
+\subsection{Overlapping sources\label{sec:Overlapping sources}}
+
+Several techniques dealing with overlapping sources have been proposed recently. Most of these methods model the LM data using a known image of a single source, the so called point spread function (PSF). Most often a single PSF is assumed to be shared by all sources in the dataset.
+
+There are two main groups of the algorithms addressing the overlapping sources in the LM data. 
+
+The first group operates separately on each frame of the LM dataset: a method proposed in \cite{Huang2011} tries to fit multiple PSFs into each frame of the dataset while the CSSTORM proposed in \cite{Zhu2012} make use of compressed sampling to recover the sparse vector representing the fluorophores distribution. The DAOSTORM algorithm \cite{Holden2011} applies iterative fitting and subtracting procedure in each frame. 
+
+Because each frame of the dataset is treated independetly, these methods ignore the fact that some sources can stay ON for several subsequent frames or can even reappear in different frames due to blinking and can generally deal with moderately overlapping sources with densities $<10\unit{sources/\mu m^{2}}$ \cite{Huang2011,Holden2011,Zhu2012}.
+
+The second group of the algorithms models LM dataset as a collection of blinking sources. They can improve the localisation for higher densities of the overlapping sources by taking the the reappearance of fluorophores into account. However, these algorithms are in general computationally more expensive. 
+
+Modelling the whole dataset from known PSF with maximum aposterioiry (MAP) fitting has been proposed in \cite{Harrington2008}. Bayesian analysis of the intermittent sources (Bayesian Blinking and Bleaching (3B) analysis) has been suggested in \cite{Cox2011}. The blinking behaviour of the fluorophores is modelled as a hidden markov model with three distinct states: emitting, not-emitting and bleached. Each source is described by its position, size of the PSF, and intensity. MAP estimates of the positions obtained from different sampling of state sequences are used as estimated locations of the fluorophores. While the 3B analysis adjusts the width of the PSF (gaussian approximation of the PSF \cite{Zhang2007}), it cannot deal with PSFs of different shapes. This situation can arise, for example, in three dimensional samples, where the overlapping sources can be located in different focal planes (see \autoref{fig:Simulted-PSF-different-focal-depths}). Moreover, the 3B analysis assumes a mono-exponential decay of the fluorescence for the individual sources. QDs have a complex blinking behaviour with power-law distribution in the histogram of on and off times \cite{Shimizu2001}. This can complicate the 3B analysis of the QD data. 
+
+The independent component analysis (ICA) have been proposed for analysis of overlapping intermittent sources in \cite{Lidke2005} and s further discussed in \autoref{sub:ICA}.
+
+Yet another approach to the LM data with overlapping sources problem has been proposed in a method called SOFI (Superresolution Optical Fluctuation Imaging) \cite{Dertinger2010b}. Instead of separating the individual sources, SOFI analyses higher order statistics of the intensity fluctuation. The intensity values in the SOFI image, however, reflect the fluctuation behaviour, rather than the strength of the emitters. Sources which do not blink will not appear in the SOFI image. This issue has been addressed recently by bSOFI (balanced SOFI) \cite{Geissbuehler2012}.
+% The balanced SOFI paper to read!!
+
+\begin{figure}[!htb]
+	\newcommand{\widthfig}{.95\textwidth}
+	\newcommand{\barspace}{-.5cm}
+	\centering
+	\condcomment{\boolean{includefigs}}{ 
+	\begin{tabular}{l}
+		\includegraphics[width=\widthfig]{\qd S393/images/psf_outOfFocus}\vspace{\barspace}\tabularnewline		
+		\includegraphics[width=\widthfig]{\qd S393/images/psf_outOfFocus_intBars}
+	\end{tabular}
+	}	
+	\caption{Simulated PSF in different depths of focus. The number in each figure indicates the distance in $\unit{\mu m}$ from the in-focus plane. The maximum intensity relative to the in-focus PSF is indicated in the bars below and corresponds to about 10\% at $1\unit{\mu m}$ and 3\% at $1.5\unit{\mu m}$.}
+	\label{fig:Simulted-PSF-different-focal-depths}
+\end{figure}
+
+%==========================================
+%==========================================
+
+\clearpage
+\section{Non-negative matrix factorisation\label{sec:NMF}}
+Non-negative matrix factorisation (NMF) solves the approximative factorisation of an $N\times T$ data matrix $\bm{D}$ with non-negative entries:
+%
+\begin{equation}
+	\bm{D}\approx\bm{WH},
+	\label{eq:NMF approx}
+\end{equation}
+%
+where $\bm{W}$ and $\bm{H}$ are $N\times K$ and $K\times T$  matrices ($K<N,T$), respectively. The factorisation is constraint to $\bm{W}$ and $\bm{H}$ with non-negative entries. 
+
+Initial factorisation algorithms (so called positive matrix factorisation) \cite{Paatero1994} were published in 1994. However, it was in 1999 when NMF attracted attention of researchers after publication of the \emph{Nature} article by Daniel Lee and Sebastian Seung \cite{Lee1999}. NMF was presented as an efficient and powerful method for approximation of non-negative data (in their case a database of facial images) by linear combination of non-negative localised basis vectors (images of the nose, mouth, ears, eyes, etc.) An individual face from the data-set can be recovered as a non-subtractive composition of individual basis vectors. 
+
+Lee and Seung also proposed simple multiplicative updates \cite{Lee2001} for the elements of $\bm{W}$ and $\bm{H}$
+%
+\begin{alignat}{1}
+	w_{xk} & =\frac{w_{xk}}{\sum_{t=1}^{T}h_{kt}}\left[(\bm{V}./\bm{WH})\bm{H^{\top}}\right]_{xk}\nonumber \\
+	h_{kt} & =\frac{h_{kt}}{\sum_{x=1}^{N}w_{xk}}\left[\bm{W^{\top}}(\bm{V}./\bm{WH})\right]_{kt},
+	\label{eq:NMF classic updates}
+\end{alignat}
+%
+minimising KL-divergence between data matrix $\bm{D}$ and its factorised approximation $\bm{WH}$ (for details see \autoref{sec: NMF} and \autoref{app:NMF-algorithm}). The symbol ``$./$'' denotes the element-wise division of matrices.
+
+Note that updates \autoref{eq:NMF classic updates} automatically ensure that $\bm{W}$ and $\bm{H}$ remains non-negative if initialised so. Also once they become zero they remain zero for the rest of iterations. Sufficient conditions for uniqueness of solutions to the NMF problem has been studied in \cite{Donoho2004}. 
+
+%==========================================
+
+\subsection{Additional constraints to the NMF model \label{sub:NMF constrains}}
+Various alternative minimisation strategies have been explored in an effort to speed up the convergence properties of the Lee \& Seung updates. A comprehensive discussion on the variety of these algorithms can be found in \cite{Berry2007}. 
+
+Additional constraints can be imposed on $\bm{W}$ and $\bm{H}$ matrices. Imposing a defined ``sparsity'' on either columns of $\bm{W}$ or rows of $\bm{H}$ has been proposed in \cite{Hoyer2004} and is discussed in \autoref{sub:Hoyer}. Enforcing the temporal smoothness of $\bm{H}$ in the analysis of EEG recordings has been published in \cite{Chen2005}. Multiplicative updates for various constraints have been suggested in \cite{Chen2005,Pauca2006}  (see \autoref{app:NMF-algorithm}).
+
+%==========================================
+
+\subsection{Gamma - Poisson model \label{sub:GaP}}
+The gamma-Poisson (GaP) model has been proposed \cite{Canny2004} as a probabilistic model for documents. It represents a generative model for NMF \autoref{eq:NMF model}. The entries $h_{kt}$ of the intensity matrix $\bm{H}$ in \autoref{eq:NMF model element-wise} are regarded as latent variables generated from a Gamma distribution with parameters $\alpha_{k}, \beta_{k}$ and the data are modelled as a Poisson variable with mean $\bm{WH}$. Variables $\theta = \{\bm{w_{k}},\alpha_{k}, \beta_{k}\}; k = 1..K$ are then parameters of the GaP model.
+
+%==========================================
+%==========================================
+\clearpage
 \section{NMF as a natural model for QD data\label{sec: NMF}}
 Non-negative matrix factorisation (NMF) \cite{Lee1999,Lee2001} is a natural model for QD data. NMF decomposes a movie of the blinking QDs into spatial and temporal parts, i.e.,\ time independent emission profiles of the individual sources and fluctuating intensities of each source, respectively. NMF imposes non-negativity constraints on both the spatial and the temporal components which are natural constraints for the source profiles and intensities of blinking QDs.
 
@@ -48,7 +149,7 @@ The NMF model is fitted to data iteratively using multiplicative updates \autore
 %==========================================
 
 \clearpage
-\section{Related work}
+\section{Related work \label{sec:NMF related}}
 This section points to published work relevant to NMF application to the QD data. A NMF algorithm with sparsity constraints is reviewed and demonstrated on simulated data in \autoref{sub:Hoyer}. \Autoref{sub:ICA} discusses the proposed independent component analysis (ICA) as a model for QD data, while \autoref{sub:RL deconvolution} shows a link between NMF and a standard Richardson-Lucy deconvolution.
 %==========================================
 
@@ -501,96 +602,11 @@ The individual estimated sources classified as a credible representation of the 
 \subsection{Visualisation of the results\label{sub:visualisation}}
 \fix \emph{illustrate this}
 
-To visualise the results of the NMF procedure we can use two different methods: 
-\begin{enumerate}
-	\item
-	The conventional way for LM data visualisation (STORM, PALM) is to sum gaussian functions placed in the estimated locations. The variance $\sigma^{2}$ of each gaussian can be set to reflect the ``uncertainty'' of the estimated position. This is usually set to be proportional to the number of photons emitted by the source. $\sigma$ is usually much smaller then the resolution limit and the result represent a super-resolution image of the data. 
+The conventional way for visualisation of the LM results (STORM, PALM) is to sum gaussian functions placed in the estimated locations. The variance $\sigma^{2}$ of each gaussian reflects the ``uncertainty'' of the estimated position. This is usually set to be proportional to the number of photons emitted by the source. As the $\sigma$ is typically much smaller then the resolution limit, the result represents a super-resolution image of the specimen. 
 	
-	In terms of NMF procedure, this method replaces the credible estimated $\bm{w}$s with ideal, sub-resolution PSFs. The intensity values for each source can be estimated from the intensity time profiles of each source (rows of $\bm{H}$). 	
-	\item
-	We can use the estimated sources $\bm{w}$ directly without replacing them with their ``ideal'' PSFs. By taking the power $p>1$ of the estimated sources $\bm{w}^{p}$ we achieve a ``shrinking'' of the individual $\bm{w}$ while keeping some characteristics of each source's shape (elongation along a certain direction, for example). If we normalise the $L_{1}$ norm of $\bm{w}^{p}$ to 1, we can reconstruct a ``super-resolution'' image by summing all $\bm{w_{k}}^{p}$, weighted by the corresponding mean intensity $\unit{mean}(\bm{h_{k}})$.
-\end{enumerate}
+In terms of NMF procedure, this method replaces the credible estimated $\bm{w}$s with ideal, sub-resolution PSFs. The intensity values for each source can be estimated from the intensity time profiles of each source (rows of $\bm{H}$). 	
 
-%==========================================
-%==========================================
-
-\clearpage
-\section{Evaluation of the results\label{sec:evaluation}}
-
-The performance of the algorithm applied on a simulated dataset can be quantitatively measured, because the true locations of the sources are known. We used several measures to compare the algorithm performance on simulated datasets consisting of randomly scattered in-focus PSFs. 
-
-\begin{figure}[!h]
-	\centering
-	\includegraphics[width=1.0\textwidth]{figures/TPFNFPillustration/TPFNFPs}
-	\caption{True positives TP, false positives FP and false negatives FN illustration. A red dot represents the true location with a circle of radius $r$, a green cross denotes an estimated position.}
-	\label{fig:TPFPFN}
-\end{figure}
-
-The individual estimated sources $\bm{w_{k}}$ were localised by ML fitting of a gaussian approximation of a PSF \cite{Zhang2007}. We used a greedy algorithm to assign the estimated locations ($E$) to their nearest true positions ($T$). Only one estimated position was assigned to each true position. If the distance between and estimated and the true position was smaller than a threshold $r$, then the source was consider as a true positive (TP). A true position with no estimated source within a disk of radius $r$ was false negative (FN), whereas an estimated position further then $r$ from any true position was considered as false positive (FP), see \autoref{fig:TPFPFN}. $M$ estimated sources in the proximity of one true source are counted as $1$TP and $(M-1)$FP (\autoref{fig:TPFPFNcombi}, left). One estimated source in proximity of $M$ true sources gives $1$TP and $(M-1)$FN (\autoref{fig:TPFPFNcombi}, right).
-
-We set the threshold $r=\sigma/2$, where $\sigma=\frac{\sqrt{2}}{2\pi}\frac{\lambda_{em}}{NA}$ is the standard deviation of the in-focus PSF gaussian approximation \cite{Zhang2007}. For the parameters used in our simulations (see \autoref{tab:Simulations parameters}) the threshold corresponds to $r=0.7\unit{pixels}$ ($56\unit{nm}$). 
-
-\begin{figure}[!h]
-	\centering
-	\includegraphics[width=1.0\textwidth]{figures/TPFNFPillustration/TPFNFPs_comb}
-	\caption{There is only one estimated position assigned to each true position. Two estimated sources in the proximity of one true source are counted as $1$TP and $1$FP (left). One estimated source in proximity of two true sources gives $1$TP and $1$FN (right)}
-	\label{fig:TPFPFNcombi}
-\end{figure}
-
-Localisation error was estimated as an average distance between true locations and all estimated locations classified as TP. 
-
-The estimated density of the sources was counted as number of all TP divided by the area of the image.
-
-The average precision (AP) \cite{Salton1986,Everingham2009} was used to summarise both localisation precision and ability to recover the individual sources. The estimated positions $e_{k}$ are ranked according to the square of the source's mean brightness
-%
-\begin{equation}
-	b_{k}=\sqrt{\bar{N_{k}}}
-\end{equation}
-%
-because the localisation precision should scale as $1/\sqrt{N}$, where $N$ is a number of photons emitted by a source. This is retrieved from the matrix $\bm{H}$ as a mean along the rows
-%
-\begin{equation}
-	\bar{N_{k}}=\underset{t}{\unit{mean}}(h_{kt}).
-\end{equation}
-
-The interval $[l_{min},l_{max}]$ between the dimmest $l_{min}$ and the brightest $l_{max}$ source intensity is divided into number of intervals (confidence levels) $l_{i}$ defined by the steps in the sorted intensities of all sources. For each confidence level $l_i$ only the sources with $b_{k}$ above $l_i$ are considered. True positives ($\unit{TP}_{i}$), false negatives ($\unit{FN}_{i}$) and false positives ($\unit{FP}_{i}$) are computed for each confidence level $l_{i}$.
-
-Precision $P$ and recall $R$ are computed from $\unit{TP}(l_{i})$, $\unit{FP}(l_{i})$ and $\unit{FN}(l_{i})$ for each confidence level $l_i$:
-%
-\begin{align} \label{eq:TP,FN} 
-	P(l_i)& = \frac{\unit{TP}(l_i)}{\unit{TP}(l_i)+\unit{FP}(l_i)},\\
-	R(l_i)& = \frac{\unit{TP}(l_i)}{\unit{TP}(l_i)+\unit{FN}(l_i)}.
-\end{align}
-%
-An example of precision $P(l_{i})$ and recall $R(l_{i})$ curves for different confidence levels is shown in \autoref{fig:PRcurve}a. 
-%
-\begin{figure}[!h]
-	\newcommand{\widthfig}{.5\textwidth}
-	\newcommand{\sizefig}{.4}
-	\centering
-	\subfloat[]{
-	\includegraphics[scale=\sizefig]{\qd S407/images/PRconfidence}}
-	\subfloat[]{
-	\includegraphics[scale=\sizefig]{\qd S407/images/PR_Pinterpol}}
-	\caption{(a) Example of the precision $P(l_{i})$ (blue) and recall $R(l_{i})$ (green) curve. (b) The precision/recall curve $P(R)$ (blue) with interpolated precision $P_{interp}(\tilde{R}$) (red).}
-	\label{fig:PRcurve}
-\end{figure}
-
-Following \cite{Everingham2009}, the precision/recall (PR) curve $P(R)$ (\autoref{fig:PRcurve}a) is interpolated for $11$ equally spaced recall levels $\tilde{R}_{i}\in[0:.1:1]$ by taking the maximum precision for which the corresponding recall exceeds $\tilde{R}_{i}$ (\autoref{fig:PRcurve}b):
-%
-\begin{equation}
-	P_{interp}(\tilde{R})=\max_{R;R\geq \tilde{R}}P(R).
-\end{equation}
-%
-The precision/recall (PR) curve is interpolated in order to reduce the impact of ``wiggles'' in the PR curve (see \autoref{fig:PRcurve}b). Note that to obtain a high AP, the method must have precision at all levels of recall, penalising methods that can accurately estimate only few very bright sources. 
-% ``wiggles'' in the precision/recall curve, caused by small variations in the ranking of examples. 
-
-Average precision (AP) is a mean of interpolated precision:
-%
-\begin{equation}
-	AP=\frac{1}{11}\sum_{\tilde{R}}{P_{interp}(\tilde{R})}.
-	\label{eq:AP}
-\end{equation}
+However, we can use the estimated sources $\bm{w}$ directly without replacing them with their ``ideal'' PSFs. By taking the power $p>1$ of the estimated sources $\bm{w}^{p}$ we achieve a ``shrinking'' of the individual $\bm{w}$ while keeping some characteristics of each source's shape (elongation along a certain direction, for example). If we normalise the $L_{1}$ norm of $\bm{w}^{p}$ to 1, we can reconstruct a ``super-resolution'' image by summing all $\bm{w_{k}}^{p}$, weighted by the corresponding mean intensity $\unit{mean}(\bm{h_{k}})$.
 
 %==========================================
 %==========================================
@@ -706,6 +722,87 @@ Dataset with sources arranged in a shape of a hash symbol (\#) was used for test
 	\caption{Mean projection of the simulated frames \autoref{fig:simulated data hash}.}
 	\label{fig:simulated data hash - mean}
 \end{figure} 
+
+%==========================================
+%==========================================
+
+\clearpage
+\section{Evaluation of the results\label{sec:evaluation}}
+
+The performance of the algorithm applied on a simulated dataset can be quantitatively measured, because the true locations of the sources are known. We used several measures to compare the algorithm performance on simulated datasets consisting of randomly scattered in-focus PSFs. 
+
+\begin{figure}[!h]
+	\centering
+	\includegraphics[width=1.0\textwidth]{figures/TPFNFPillustration/TPFNFPs}
+	\caption{True positives TP, false positives FP and false negatives FN illustration. A red dot represents the true location with a circle of radius $r$, a green cross denotes an estimated position.}
+	\label{fig:TPFPFN}
+\end{figure}
+
+The individual estimated sources $\bm{w_{k}}$ were localised by ML fitting of a gaussian approximation of a PSF \cite{Zhang2007}. We used a greedy algorithm to assign the estimated locations ($E$) to their nearest true positions ($T$). Only one estimated position was assigned to each true position. If the distance between and estimated and the true position was smaller than a threshold $r$, then the source was consider as a true positive (TP). A true position with no estimated source within a disk of radius $r$ was false negative (FN), whereas an estimated position further then $r$ from any true position was considered as false positive (FP), see \autoref{fig:TPFPFN}. $M$ estimated sources in the proximity of one true source are counted as $1$TP and $(M-1)$FP (\autoref{fig:TPFPFNcombi}, left). One estimated source in proximity of $M$ true sources gives $1$TP and $(M-1)$FN (\autoref{fig:TPFPFNcombi}, right).
+
+We set the threshold $r=\sigma/2$, where $\sigma=\frac{\sqrt{2}}{2\pi}\frac{\lambda_{em}}{NA}$ is the standard deviation of the in-focus PSF gaussian approximation \cite{Zhang2007}. For the parameters used in our simulations (see \autoref{tab:Simulations parameters}) the threshold corresponds to $r=0.7\unit{pixels}$ ($56\unit{nm}$). 
+
+\begin{figure}[!h]
+	\centering
+	\includegraphics[width=1.0\textwidth]{figures/TPFNFPillustration/TPFNFPs_comb}
+	\caption{There is only one estimated position assigned to each true position. Two estimated sources in the proximity of one true source are counted as $1$TP and $1$FP (left). One estimated source in proximity of two true sources gives $1$TP and $1$FN (right)}
+	\label{fig:TPFPFNcombi}
+\end{figure}
+
+Localisation error was estimated as an average distance between true locations and all estimated locations classified as TP. 
+
+The estimated density of the sources was counted as number of all TP divided by the area of the image.
+
+The average precision (AP) \cite{Salton1986,Everingham2009} was used to summarise both localisation precision and ability to recover the individual sources. The estimated positions $e_{k}$ are ranked according to the square of the source's mean brightness
+%
+\begin{equation}
+	b_{k}=\sqrt{\bar{N_{k}}}
+\end{equation}
+%
+because the localisation precision should scale as $1/\sqrt{N}$, where $N$ is a number of photons emitted by a source. This is retrieved from the matrix $\bm{H}$ as a mean along the rows
+%
+\begin{equation}
+	\bar{N_{k}}=\underset{t}{\unit{mean}}(h_{kt}).
+\end{equation}
+
+The interval $[l_{min},l_{max}]$ between the dimmest $l_{min}$ and the brightest $l_{max}$ source intensity is divided into number of intervals (confidence levels) $l_{i}$ defined by the steps in the sorted intensities of all sources. For each confidence level $l_i$ only the sources with $b_{k}$ above $l_i$ are considered. True positives ($\unit{TP}_{i}$), false negatives ($\unit{FN}_{i}$) and false positives ($\unit{FP}_{i}$) are computed for each confidence level $l_{i}$.
+
+Precision $P$ and recall $R$ are computed from $\unit{TP}(l_{i})$, $\unit{FP}(l_{i})$ and $\unit{FN}(l_{i})$ for each confidence level $l_i$:
+%
+\begin{align} \label{eq:TP,FN} 
+	P(l_i)& = \frac{\unit{TP}(l_i)}{\unit{TP}(l_i)+\unit{FP}(l_i)},\\
+	R(l_i)& = \frac{\unit{TP}(l_i)}{\unit{TP}(l_i)+\unit{FN}(l_i)}.
+\end{align}
+%
+An example of precision $P(l_{i})$ and recall $R(l_{i})$ curves for different confidence levels is shown in \autoref{fig:PRcurve}a. 
+%
+\begin{figure}[!h]
+	\newcommand{\widthfig}{.5\textwidth}
+	\newcommand{\sizefig}{.4}
+	\centering
+	\subfloat[]{
+	\includegraphics[scale=\sizefig]{\qd S407/images/PRconfidence}}
+	\subfloat[]{
+	\includegraphics[scale=\sizefig]{\qd S407/images/PR_Pinterpol}}
+	\caption{(a) Example of the precision $P(l_{i})$ (blue) and recall $R(l_{i})$ (green) curve. (b) The precision/recall curve $P(R)$ (blue) with interpolated precision $P_{interp}(\tilde{R}$) (red).}
+	\label{fig:PRcurve}
+\end{figure}
+
+Following \cite{Everingham2009}, the precision/recall (PR) curve $P(R)$ (\autoref{fig:PRcurve}a) is interpolated for $11$ equally spaced recall levels $\tilde{R}_{i}\in[0:.1:1]$ by taking the maximum precision for which the corresponding recall exceeds $\tilde{R}_{i}$ (\autoref{fig:PRcurve}b):
+%
+\begin{equation}
+	P_{interp}(\tilde{R})=\max_{R;R\geq \tilde{R}}P(R).
+\end{equation}
+%
+The precision/recall (PR) curve is interpolated in order to reduce the impact of ``wiggles'' in the PR curve (see \autoref{fig:PRcurve}b). Note that to obtain a high AP, the method must have precision at all levels of recall, penalising methods that can accurately estimate only few very bright sources. 
+% ``wiggles'' in the precision/recall curve, caused by small variations in the ranking of examples. 
+
+Average precision (AP) is a mean of interpolated precision:
+%
+\begin{equation}
+	AP=\frac{1}{11}\sum_{\tilde{R}}{P_{interp}(\tilde{R})}.
+	\label{eq:AP}
+\end{equation}
 
 %==========================================
 %==========================================
@@ -1232,6 +1329,21 @@ We have applied the pipeline to a stack of $T=1000$, $128\times128$ images of tu
 	\includegraphics[width=\wf]{\qd S364/results/all_powFromLabel}
 	\caption{QD - labelled tubulin. PSF squeezed.}
 \end{figure}
+
+\begin{figure}[!htb]
+	\newcommand{\wf}{.9\textwidth}
+	\centering
+	\includegraphics[width=\wf]{\qd S364/results/all_powFromLabel}
+	\caption{QD - labelled tubulin. PSF squeezed.}
+\end{figure}
+
+\begin{figure}[!htb]
+	\newcommand{\wf}{.9\textwidth}
+	\centering
+	\includegraphics[width=\wf]{\qd S364/results/meanResIm_power05_scalebar500nm}
+	\caption{QD - labelled tubulin. PSF squeezed. Mean of 10 evaluations. Scale bar $500 \unit{nm}$.}
+\end{figure}
+
 
 
 %We trained the classifier on $10^{3}$ labelled $\bm{w}_{k}$, computed by NMF from a real dataset (\autoref{fig:Patches}). Confusion matrix of the ten-fold cross validation is shown in \autoref{tab:Confusion-matrix}. From all $\bm{w}_{k}$s classified as good sources (class 1) 89\% were correct, while the rest 11\% being spread into classes for two sources (6\%), half missing source (3\%), noise (2\%) and multiple sources (1\%).
