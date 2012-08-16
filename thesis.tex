@@ -41,7 +41,7 @@
 \usepackage{bm}
 \usepackage{amsmath, amsthm, amssymb}
 \usepackage{color}
-\usepackage[colorlinks=true, pdfstartview=FitV, linkcolor=blue, citecolor=black, urlcolor=blue,pagebackref,breaklinks]{hyperref}
+\usepackage[colorlinks=true, pdfstartview=FitV, linkcolor=blue, citecolor=black, urlcolor=blue,pagebackref,breaklinks=true]{hyperref}
 \usepackage{datetime}
 \usepackage{lineno}
 \usepackage{enumerate}
@@ -87,6 +87,7 @@
 
 \newcommand{\fix}{\marginpar{FIX}}
 \newcommand{\new}{\marginpar{NEW}}
+\newcommand{\fixme}[1]{* \marginpar{FIX:\\ {\scriptsize *\emph{#1}}}}
 \newcommand{\home}{/Users/ondrejmandula/}
 \newcommand{\qd}{\home project/data/qdots/}
 \newcommand{\bfone}{\mathbf{1}}
@@ -141,11 +142,11 @@ Igor, my faithful lab assistant.
 
 %\include{Workingplan}
 %\include{Structure}
-\include{Introduction}
+%\include{Introduction}
 %\include{Background}
 \include{chap1}
-\include{chap2}
-\include{chap3}
+%\include{chap2}
+%\include{chap3}
 
 \appendix
 \include{appendix1}

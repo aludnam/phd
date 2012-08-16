@@ -4,11 +4,11 @@ We propose non-negative matrix factorisation (NMF) as a natural model for LM dat
 
 The chapter is composed in following parts: \Autoref{sec:LM} introduces the localisation microscopy (LM) technique and \autoref{sec:QD for LM} discusses the advantages and challenges of using the quantum dots as fluorescent labels and reviews some recent methods dealing with LM data containing overlapping sources. 
 
-\Autoref{sec:NMF} introduces non-negative matrix factorisation (NMF). Alternative algorithms applying certain costraints on the estimated resutls are discussed in \autoref{sub:NMF constrains} and the generative probabilistic model for NMF is mentioned in \autoref{sub:GaP}.
+\Autoref{sec:NMF} introduces non-negative matrix factorisation (NMF). Alternative algorithms applying certain constraints on the estimated results are discussed in \autoref{sub:NMF constrains} and the generative probabilistic model for NMF is mentioned in \autoref{sub:GaP}.
 
-\Autoref{sec: NMF} shows NMF as a natural model for intermittent overlapping QDs and \autoref{sec:NMF related} discusses the alternative methods used for treating QD data. A link to a standard deconvolution technique is also mentioned. The application of hte NMF algorithm to real microscopic data is explored in \autoref{sec:NMF-for-real}. In this section we also present preliminary results to demonstrate specific problems of the topic.
+\Autoref{sec: NMF} shows NMF as a natural model for intermittent overlapping QDs and \autoref{sec:NMF related} discusses the alternative methods used for treating QD data. A link to a standard deconvolution technique is also mentioned. The application of the NMF algorithm to real microscopic data is explored in \autoref{sec:NMF-for-real}. In this section we also present preliminary results to demonstrate specific problems of the topic.
 
-We used synthetic data are used for analysing the performance of the algorithm. The main simulations used in this chaper are described in \autoref{sec:simulations} and \autoref{sec:evaluation} explains the evaluation techniques for the comparison of the results.
+We used synthetic data are used for analysing the performance of the algorithm. The main simulations used in this chapter are described in \autoref{sec:simulations} and \autoref{sec:evaluation} explains the evaluation techniques for the comparison of the results.
 
 Comparison of the NMF applied to synthetic and real data is in \autoref{sec:results}. This section also contains a comparison with other techniques dealing with similar problematics. 
 
@@ -38,7 +38,7 @@ There are two main groups of the algorithms addressing the overlapping sources i
 
 The first group operates separately on each frame of the LM dataset: a method proposed in \cite{Huang2011} tries to fit multiple PSFs into each frame of the dataset while the CSSTORM proposed in \cite{Zhu2012} make use of compressed sampling to recover the sparse vector representing the fluorophores distribution. The DAOSTORM algorithm \cite{Holden2011} applies iterative fitting and subtracting procedure in each frame. 
 
-Because each frame of the dataset is treated independetly, these methods ignore the fact that some sources can stay ON for several subsequent frames or can even reappear in different frames due to blinking and can generally deal with moderately overlapping sources with densities $<10\unit{sources/\mu m^{2}}$ \cite{Huang2011,Holden2011,Zhu2012}.
+Because each frame of the dataset is treated independently, these methods ignore the fact that some sources can stay ON for several subsequent frames or can even reappear in different frames due to blinking and can generally deal with moderately overlapping sources with densities $<10\unit{sources/\mu m^{2}}$ \cite{Huang2011,Holden2011,Zhu2012}.
 
 The second group of the algorithms models LM dataset as a collection of blinking sources. They can improve the localisation for higher densities of the overlapping sources by taking the the reappearance of fluorophores into account. However, these algorithms are in general computationally more expensive. 
 
@@ -269,7 +269,7 @@ In this section we describe the generation of the simulated datasets used to tes
 
 %Main competitors 3B \cite{Cox2011}, CSSTORM \cite{Zhu2012} and SOFI \cite{Dertinger2009}.	
 
-The parameters of the simulations were chosen to correspond to real experimental data with QDs.  \Autoref{tab:Simulations parameters} sumarises the main simulation parameters. 
+The parameters of the simulations were chosen to correspond to real experimental data with QDs.  \Autoref{tab:Simulations parameters} summarises the main simulation parameters. 
 %
 \begin{table}[!h]
 	\centering
@@ -306,7 +306,7 @@ The blinking behaviour of the QDs was simulated as either:
 	\item
 	Uniform random number between $0$ and $\max(n_{phot})$.
 	\item
-	Telegraph process with switching rate $\gamma$. Difference between the sampling rate of the experiment and the blinking of the fluorophores is considered by simulating the blinking behavior on the oversampled time axes followed with averaging over several bins. The simulation of the different blinking behavior is discussed in \autoref{sub:results - blinking behaviour}. 
+	Telegraph process with switching rate $\gamma$. Difference between the sampling rate of the experiment and the blinking of the fluorophores is considered by simulating the blinking behaviour on the oversampled time axes followed with averaging over several bins. The simulation of the different blinking behaviour is discussed in \autoref{sub:results - blinking behaviour}. 
 \end{enumerate}
  
 %==========================================
@@ -345,9 +345,9 @@ The ability of the algorithm to separate individual overlapping sources was test
 %==========================================
 \clearpage
 \subsection{Artificial structure\label{sub:Simul hash}}
-Dataset with sources arranged in a shape of a hash symbol (\#) was used for testing the algorithm to recover a structural details in the sample. The vertical parallel lines were aligned with the pixels grid, the horisontal lines were slightly tilted to investigate the possible effect caused by the geometrical configuration of the sources with respect to the pixel grid. 
+Dataset with sources arranged in a shape of a hash symbol (\#) was used for testing the algorithm to recover a structural details in the sample. The vertical parallel lines were aligned with the pixels grid, the horizontal lines were slightly tilted to investigate the possible effect caused by the geometrical configuration of the sources with respect to the pixel grid. 
 
-The distance $d$ between the paralel lines and the linear density of the sources $\mu$ were two main parameters of the structure. \Autoref{fig:simulated data hash} shows several frames of the simulated dataset for two different linear densities and $d=100\unit{nm}$, which corresponds to half of the radius of the Airy disk. The mean projection of the frames is shown in \autoref{fig:simulated data hash - mean}.
+The distance $d$ between the parallel lines and the linear density of the sources $\mu$ were two main parameters of the structure. \Autoref{fig:simulated data hash} shows several frames of the simulated dataset for two different linear densities and $d=100\unit{nm}$, which corresponds to half of the radius of the Airy disk. The mean projection of the frames is shown in \autoref{fig:simulated data hash - mean}.
 %
 \begin{figure}[!htb]	
 	\newcommand{\widthfig}{1\textwidth}
@@ -365,7 +365,7 @@ The distance $d$ between the paralel lines and the linear density of the sources
 \end{figure} 
 %
 \begin{figure}[!htb]	
-	\newcommand{\widthfig}{.4\textwidth}
+	\newcommand{\widthfig}{.3\textwidth}
 	\centering	
 %	\subfloat[$\mu=0.3\unit{\mu m^{-1}}$]{
 %	\includegraphics[width=\widthfig]{\qd S569/figures/dpixc_mean_dens3}}\hspace{.3cm}	
@@ -506,7 +506,7 @@ The NMF model \autoref{eq:NMF model element-wise} requires prior knowledge about
 	 \label{fig:K estimation data}
 \end{figure}
 
-\Autoref{fig:K estimation data} illustrates three different simulated datasets with 10 sources randomly scattered within an area of radius $2\delta$, $1.5\delta$ and $\delta$, respectively. $\delta$ was equal to diameter of an Airy disk, shown as a green circle in \autoref{fig:K estimation data}(c) ($\delta=0.61\frac{\lambda_{em}}{NA}$). This corresponds to the sources densities of $29$, $13$ and $7$ sources per $\unit{\mu m^{2}}$, respectively. The mean of the simulated frames, which corresponds to a wide-field image is shown as a gray-value image. Red marks indicate the true positions of the sources. Ten datasets with different geometrical configurations of the randomly scattered sources were simulated for each source density. 
+\Autoref{fig:K estimation data} illustrates three different simulated datasets with 10 sources randomly scattered within an area of radius $2\delta$, $1.5\delta$ and $\delta$, respectively. $\delta$ was equal to diameter of an Airy disk, shown as a green circle in \autoref{fig:K estimation data}(c) ($\delta=0.61\frac{\lambda_{em}}{NA}$). This corresponds to the sources densities of $29$, $13$ and $7$ sources per $\unit{\mu m^{2}}$, respectively. The mean of the simulated frames, which corresponds to a wide-field image is shown as a grey-value image. Red marks indicate the true positions of the sources. Ten datasets with different geometrical configurations of the randomly scattered sources were simulated for each source density. 
 
 A simple model comparison can obtained by using the Bayesian Information Criterion \cite{Bishop2006} where we find $\hat{\theta}$ that maximises $p(\bm{D}|K, \theta)$, and then add a penalty term for the $NK$ parameters contained in $\bm{W}$, so that models with larger $K$ would be more heavily penalised. BIC, however, did not provide a satisfactory results. We therefore estimated the number of sources $K$ using:
 
@@ -800,35 +800,77 @@ The individual estimated sources classified as a credible representation of the 
 \subsection{Visualisation of the results\label{sub:visualisation}}
 
 \begin{figure}[!hbt]
-	\newcommand{\sizef}{.9}		
-	\newcommand{\textgaussdiff}{Gauss $\sigma$ from intenisty}
-	\newcommand{\textgauss}{Gauss $\sigma=3$ pixels}
-	\newcommand{\textpowers}{Powers $p=10$}
+	\newcommand{\sizef}{.8}		
+	\newcommand{\textgaussdiff}{Gauss, $\sigma^{2} \propto$ 1/intenisty}
+	\newcommand{\textgauss}{Gauss, $\sigma=3$ pixels}
+	\newcommand{\textpowers}{Powers, $p=30$}
 	\centering
 	\subfloat[\textgaussdiff]{
-	\includegraphics[scale=\sizef]{\qd S575/figures/oneeval_gaussFiltered_coordsEstTrue_diffSigma_bar4um}}
+	\includegraphics[scale=\sizef]{\qd S575/figures/oneeval_gaussFiltered_coordsEstTrue_diffSigma_bar04um}}
 	\subfloat[\textgaussdiff]{
-	\includegraphics[scale=\sizef]{\qd S575/figures/gaussFiltered_coordsEstTrue_diffSigma_bar4um}}\\	
-	\subfloat[\textgauss]{
-	\includegraphics[scale=\sizef]{\qd S575/figures/oneeval_gaussFiltered_coordsEstTrue_bar4um}}
-	\subfloat[\textgauss]{
-	\includegraphics[scale=\sizef]{\qd S575/figures/gaussFiltered_coordsEstTrue_bar4um}}\\	
+	\includegraphics[scale=\sizef]{\qd S575/figures/gaussFiltered_coordsEstTrue_diffSigma_bar04um}}\\	
+
+%	\subfloat[\textgauss]{
+%	\includegraphics[scale=\sizef]{\qd S575/figures/oneeval_gaussFiltered_coordsEstTrue_bar04um}}
+%	\subfloat[\textgauss]{
+%	\includegraphics[scale=\sizef]{\qd S575/figures/gaussFiltered_coordsEstTrue_bar04um}}\\	
 
 	\subfloat[\textpowers]{
-	\includegraphics[scale=\sizef]{\qd S575/figures/res_truepos_bar4um}}
+	\includegraphics[scale=\sizef]{\qd S575/figures/res_truepos_bar04um}}
 	\subfloat[\textpowers]{
-	\includegraphics[scale=\sizef]{\qd S575/figures/res_meaniter_coordTrue_bar4um}}
-	\caption{Visualisatoin of the results with a conventional }
+	\includegraphics[scale=\sizef]{\qd S575/figures/res_meaniter_coordTrue_bar04um}}
+	\caption{Visualisatoin of the results. Left column shows the results of one NMF evluation. Right column shows the sum of ten NMF evaluations of the same dataset. (a,b) The conventional visualisation by placing gaussians located at the positions of the estimated sources. (c,d) Powers of $\bm{w_{k}}$s.  Scale bar $400 \unit{nm}$.}
 	\label{fig:visualisation gaussf}
 \end{figure}
 
-The conventional way for visualisation of the LM results (STORM, PALM) is to sum gaussian functions placed in the estimated locations. The variance $\sigma^{2}$ of each gaussian reflects the ``uncertainty'' of the estimated position. This is usually set to be proportional to the number of photons emitted by the source. As the $\sigma$ is typically considerably smaller then the resolution limit, the rendered image can provide super-resolution information about the specimen's structure. 
+The conventional way for visualisation of the LM results (STORM, PALM) is to sum gaussian functions placed in the estimated locations. The variance $\sigma^{2}$ of each gaussian reflects the ``uncertainty'' of the estimated position. This is usually set to be proportional to the inverese of number of photons $N$ emitted by the source. The motivation behind this is the Cramer-Rao (CR) lower bound on the localisatoin accuracy 
+%
+\begin{equation}
+	\sigma_{CR}^{2} \approx \sigma_{Airy}^{2}/N,
+\end{equation}
+%
+where the  $\sigma_{Airy}^{2}$ is the variance of the PSF Gaussian approximation \fixme{reference to the chapter about CR}. As the $\sigma$ is typically considerably smaller then the resolution limit, the rendered image can provide super-resolution information about the specimen's structure. 
 	
-In terms of NMF procedure, this method replaces the credible estimated $\bm{w}$s with an ideal, sub-resolution PSFs contered at the estimated soure's location. The intensity values for each source can be estimated from the intensity time profiles of each source (rows of $\bm{H}$). 
+In terms of the NMF procedure, this method replaces the credible estimated $\bm{w}$s with an ideal, sub-resolution PSFs centered at the estimated source's location. The intensity values for each source can be estimated from the intensity time profiles of each source (rows of $\bm{H}$). 
 
-However, we can use the estimated sources $\bm{w}$s directly without replacing them with ``ideal'' PSFs. By taking the power $p>1$ of the estimated sources $\bm{w}^{p}$ we achieve a ``shrinking'' of the individual $\bm{w}$ while keeping some characteristics of each source's shape (elongation along a certain direction, for example). Moreover, this appoach allows taking into account even the $\bm{w_{k}}$ representing mulitple sources (see red boxes in \autoref{fig:good w}).
+The conventional visualisation of the NMF evaluation of the synthetic dataset \autoref{sub:Simul hash} representing an artifical structure ($\mu = 1\unit{\mu m^{-1}}$, $d=100 \unit{nm}$) is shown in \autoref{fig:visualisation gaussf}a-b. The standard deviation of each gaussian was set to $\sigma=20\sigma_{CR}$. The left column displays the result of one evaluation, the right column shows the sum of six \fixme{make it ten} evaluaitons of the same dataset.
 
-If we normalise the $L_{1}$ norm of $\bm{w}^{p}$ to 1 ($\sum_{x} \bm{w}^{p}(x)=1$), we can reconstruct a ``super-resolution'' image by summing all $\bm{w_{k}}^{p}$, weighted by the corresponding mean intensity $\unit{mean}(\bm{h_{k}})$.
+\begin{figure}[!hbt]
+	\newcommand{\sizef}{.8}			
+	\newcommand{\widthfig}{1\textwidth}	
+	\centering
+	\subfloat[Estimated $\bm{w}$s.]{
+	\includegraphics[width=\widthfig]{\qd S575/figures/demowpow_rf1_pow1}}\\
+	\subfloat[$\bm{w}$s resampled by a factor $r=4$ and taken to the power $p=10$]{
+	\includegraphics[width=\widthfig]{\qd S575/figures/demowpow_rf4_pow5}}	
+	\caption{Illustration of the $\bm{w_{k}}$s ``squeezeing''. Eight (out of 60) selected $\bm{w_{k}}$s  shown. The number in the top left corner is the index in the $L_{2}$ norm soreted $\bm{w}$s.}
+	\label{fig:demo pow w}	
+\end{figure}
+
+We can use the estimated sources $\bm{w}$s directly without replacing them with ``ideal'' PSFs. By taking the power $p>1$ of the estimated sources $\bm{w}^{p}$ we achieve a ``shrinking'' of the individual $\bm{w}$ while keeping some characteristics of each source's shape (elongation along a certain direction, for example). 
+
+Certain oversampling of $\bm{w_{k}}$s (for example zero-padding of the Fourier transform of the $\bm{w_{k}}'s image$) is needed before taking the higher powers $p$. \Autoref{fig:demo pow w} shows the original estimated $\bm{w}$s and the corresponding upsampled (by a factor of $r=4$) $\bm{w}$s taken to the power $p=5$. 
+
+This approach allows taking into account even the $\bm{w_{k}}$s containing multiple sources ($\bm{w_{32}}$ in \autoref{fig:demo pow w}, for example).
+
+If we normalise the $L_{1}$ norm of $\bm{w}^{p}$ to 1 ($\sum_{x} \bm{w}^{p}(x)=1$), we can reconstruct a ``super-resolution'' image by summing all $\bm{w_{k}}^{p}$, weighted by the corresponding mean intensity $\unit{mean}(\bm{h_{k}})$. The results for different values of $p$ are shown in \autoref{fig:demo pow w result} and compared with the conventional visualisation in \autoref{fig:visualisation gaussf}c,d.
+
+\begin{figure}[!hbt]
+	\newcommand{\sizef}{.45}			
+	\newcommand{\widthfig}{1\textwidth}	
+	\centering
+	\subfloat[Wide-field]{
+	\includegraphics[scale=\sizef]{\qd S575/figures/wf_bar04um}}
+	\subfloat[$p=5$]{
+	\includegraphics[scale=\sizef]{\qd S575/figures/res_meaniter_rf4_pow5_coordTrue_bar04um}}	
+	\subfloat[$p=10$]{
+	\includegraphics[scale=\sizef]{\qd S575/figures/res_meaniter_rf4_pow10_coordTrue_bar04um}}	
+	\subfloat[$p=30$]{
+	\includegraphics[scale=\sizef]{\qd S575/figures/res_meaniter_rf4_pow30_coordTrue_bar04um}}	
+	\caption{(a) Sum projecton of the frames. (b-d) Reconstructed results from $\bm{w}^{p}$ for different values of $p$.}
+	\label{fig:demo pow w result}	
+\end{figure}
+
 
 %==========================================
 %==========================================
@@ -854,7 +896,7 @@ The performance of the algorithm for different source densities types of the bli
 	\includegraphics[scale=\sizef]{\qd S455/images/blinkmatS445}}\\
 	\subfloat[telegraph oversampled ($\gamma=5$)]{
 	%\includegraphics[scale=\sizef]{\qd S455/images/blinkmatS450}}
-	%\includegraphics[scale=\sizef]{\qd S455/images/blinkmatS557}} % same varaince as random
+	%{\includegraphics[scale=\sizef]{\qd S455/images/blinkmatS557}} % same varaince as random
 	\includegraphics[scale=\sizef]{\qd S455/images/blinkmatS565}} % half variance compared to random
 	\subfloat[telegraph oversampled ($\gamma=0.5$)]{
 	\includegraphics[scale=\sizef]{\qd S455/images/blinkmatS455}}	
@@ -968,7 +1010,7 @@ The subsampling of the data gives higher signal-to-noise rate in each frame, how
 \subsection{Comparison with other methods\label{sub:results - comparison}} %Main competitors 3B \cite{Cox2011}, CSSTORM \cite{Zhu2012} and SOFI \cite{Dertinger2009}.	
 We used simulated data of randomly scattered overlapping sources (\autoref{sub:Simul random}) to compare the performance of the NMF with CSSTORM \cite{Zhu2012}, and 3B analysis \cite{Cox2011}, where the code is freely available. 
 
-Data-stets with densities $[10 - 40]\ \unit{sources/\mu m^{2}}$ were used. An empty margin of three pixels was left along every edge of the frames to ensure all there are no partially missing PSFs. The sum projection of the frames is shown in \autoref{fig:density 10 wf}-\ref{fig:density 40 wf}. Several individual data frames are shown in \autoref{fig:simulated data random}, illustrating highly overlapping sources in each frame (dataset displayed in \autoref{fig:simulated data random} does not contain the 3 pixel empty margin). The blinking behavior was simulated as an oversampled telegraph process with switching rate $\gamma=0.5$ as described in \autoref{sub:results - blinking behaviour} (d) and illustrated in \autoref{fig:blinking}d.
+Data-stets with densities $[10 - 40]\ \unit{sources/\mu m^{2}}$ were used. An empty margin of three pixels was left along every edge of the frames to ensure all there are no partially missing PSFs. The sum projection of the frames is shown in \autoref{fig:density 10 wf}-\ref{fig:density 40 wf}. Several individual data frames are shown in \autoref{fig:simulated data random}, illustrating highly overlapping sources in each frame (dataset displayed in \autoref{fig:simulated data random} does not contain the 3 pixel empty margin). The blinking behaviour was simulated as an oversampled telegraph process with switching rate $\gamma=0.5$ as described in \autoref{sub:results - blinking behaviour} (d) and illustrated in \autoref{fig:blinking}d.
 
 For CSSTORM and 3B evaluation the true background value of $100$ photons per pixel per frame was subtracted before evaluation, clipping the negative values. The true PSF was provided to both CSSTORM and 3B algorithms. 
 
@@ -984,7 +1026,7 @@ For CSSTORM and 3B evaluation the true background value of $100$ photons per pix
 	\label{fig:comparison AP,dens}
 \end{figure}
 %
-The estimated density and the AP values obtained from the results of the NMF algorithm are denoted as \textsf{NMF} and are shown as blue lines in \autoref{fig:comparison AP,dens}. The mean and the standard deviation from five different configuration of the randomly scattered sources are shown. The visualisation of the results (\autoref{sub:visualisation}, $p=4,\,q=4$ used) for datasets with four different densities is shown as a grayscale image in \autoref{fig:density 10 NMF}-\ref{fig:density 40 NMF}. The green crosses show the ML fit of a gaussian function to the NMF estimated $\bm{w_{k}}$ selected from by the procedure described in \autoref{sub:Classification-of-sources}.
+The estimated density and the AP values obtained from the results of the NMF algorithm are denoted as \textsf{NMF} and are shown as blue lines in \autoref{fig:comparison AP,dens}. The mean and the standard deviation from five different configuration of the randomly scattered sources are shown. The visualisation of the results (\autoref{sub:visualisation}, $p=4,\,q=4$ used) for datasets with four different densities is shown as a grey-scale image in \autoref{fig:density 10 NMF}-\ref{fig:density 40 NMF}. The green crosses show the ML fit of a gaussian function to the NMF estimated $\bm{w_{k}}$ selected from by the procedure described in \autoref{sub:Classification-of-sources}.
 
 CSSTORM processes each input frame individually, independent of the rest of the dataset. It tries to recover a sparse distribution of the fluorophores in each frame considering a known PSF.The output for each frame is a ``high resolution'' frame showing the possible positions of the sources on a sub-pixel grid (8 times oversampled). Following \cite{Zhu2012}, we estimated the position of each source as a centre of mass of the small clusters formed on a sub-pixel grid. The AP (the mean of AP from individual frames) and the estimated density (the maximum of estimated densities from the individual frames) are denoted as \textsf{CSSTORMind} and are shown as red curves in \autoref{fig:comparison AP,dens}.
 
@@ -993,9 +1035,9 @@ We also processed the sum of all CSSTORM output frames which summarises all the 
 The results in \autoref{fig:comparison AP,dens} suggest that CSSTORM cannot recover enough sources in individual frames (red curves). The density is severely underestimated which leads to many false negatives (FN) and therefore low recall values \autoref{eq:TP,FN} which penalises AP. However, CSSTORM recovers some subset of the sources in each frame and the sum projection show dramatically improved AP and density estimation. It should be noted, however, that the estimated density and AP from the sum projection is highly dependent on the threshold for considering local maxima (see above). We chose the threshold of $5\%$, because for this value the number of local maxima roughly correspond to the true number of sources $K_{true}$.
 
 %parameters adjusted for the 3B evaluatiom: \texttt{blur.mu=0.37261, blur.sigma=0.1, intensity.rel\_sigma=}$K_{true}$
-We also used 3B analysis for the simulated datasets. The prior parameters for the size of the PSF were adjusted to the true values. Also the true number of sources $K_{true}$ was used as an initial number of spots in the model.The 3B algorithm was run for at least 50 iterations. Following \cite{Cox2011}, the output coordinates of the 3B analysis were placed on $100\times$ oversampled grid ($0.8\unit{nm}$ pixel-size) and convolved with a gaussian ($\sigma=10\unit{pixels}$, which corresponds to $\sigma=8\unit{nm}$). The resulting image is shown in as a grayscale image in \autoref{fig:density 10 3B}-\ref{fig:density 40 3B}. Similar to analysis of the projected CSSTORM, we identified a local minima in the images. Only the minima above a certain threshold were considered for evaluation. The threshold was set individually for each images, such that the number of local maxima roughly corresponds to the number of sources considered by the 3B analysis after 50 iterations. The estimated density and the AP are denoted as \textsf{3B} and are shown in \autoref{fig:comparison AP,dens} as cyan lines. 
+We also used 3B analysis for the simulated datasets. The prior parameters for the size of the PSF were adjusted to the true values. Also the true number of sources $K_{true}$ was used as an initial number of spots in the model.The 3B algorithm was run for at least 50 iterations. Following \cite{Cox2011}, the output coordinates of the 3B analysis were placed on $100\times$ oversampled grid ($0.8\unit{nm}$ pixel-size) and convolved with a gaussian ($\sigma=10\unit{pixels}$, which corresponds to $\sigma=8\unit{nm}$). The resulting image is shown in as a grey-scale image in \autoref{fig:density 10 3B}-\ref{fig:density 40 3B}. Similar to analysis of the projected CSSTORM, we identified a local minima in the images. Only the minima above a certain threshold were considered for evaluation. The threshold was set individually for each images, such that the number of local maxima roughly corresponds to the number of sources considered by the 3B analysis after 50 iterations. The estimated density and the AP are denoted as \textsf{3B} and are shown in \autoref{fig:comparison AP,dens} as cyan lines. 
 
-Experiments with simulated data shown above are useful for a quantitative comparison of the different methods. Randomly scattered sources are, however, of little practical interest. The main motivation of hte super-resolution microscopy is to recover sub-diffraction details of the sample structure. Therefore we used simulated data with sources attached to an artificial structure to compare the performance of the three methods. Simulated data are illustrated in \autoref{sub:Simul hash} with parameters shown in  \autoref{tab:Simulations parameters} .
+Experiments with simulated data shown above are useful for a quantitative comparison of the different methods. Randomly scattered sources are, however, of little practical interest. The main motivation of the super-resolution microscopy is to recover sub-diffraction details of the sample structure. Therefore we used simulated data with sources attached to an artificial structure to compare the performance of the three methods. Simulated data are illustrated in \autoref{sub:Simul hash} with parameters shown in  \autoref{tab:Simulations parameters} .
 \fix \emph{comment on results}
 
 
@@ -1304,7 +1346,7 @@ We have applied the pipeline to a stack of $T=1000$, $128\times128$ images of tu
 	\condcomment{\boolean{includefigs}}{ 
 	\includegraphics[scale=.9]{\qd S364/results/dataChunks}}
 	
-	\caption{Division of the dataset into smaller patches. The time average of the data is shown as a grey valued image. Boxes with thick lines will be considered for NMF evaluation. Boxes with thin lines are considered to be empty. The identifier of the patch and the (over)estimated number of sources ($K$) are shown in each box.}
+	\caption{Division of the dataset into smaller patches. The time average of the data is shown as a grey-valued image. Boxes with thick lines will be considered for NMF evaluation. Boxes with thin lines are considered to be empty. The identifier of the patch and the (over)estimated number of sources ($K$) are shown in each box.}
 	\label{fig:Patches}
 \end{figure}
 
