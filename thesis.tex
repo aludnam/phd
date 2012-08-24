@@ -46,10 +46,11 @@
 \usepackage{lineno}
 \usepackage{enumerate}
 
+
 \hyphenation{a-na-ly-sis}
 \hyphenation{CS-STORM}
 
-%\linenumbers
+\linenumbers
 
 %This makes brakcets around equations numbers in \autoref
 \makeatletter
@@ -67,6 +68,7 @@
 \def\subfigureautorefname{Figure}%
 \def\sectionautorefname{Section}%
 \def\subsectionautorefname{Section}%
+\def\tableautorefname{Table}%
 \orgautoref{#1}%
 }
 % \autoref is used inside the sentence to produce Fig., and Eq. for figures, subfigures, and equations
@@ -78,8 +80,13 @@
 \def\algorithmautorefname{Algorithm}%
 \def\sectionautorefname{Sect.}%
 \def\subsectionautorefname{Sect.}%
+\def\tableautorefname{Tab.}%
 \orgautoref{#1}%
 }
+
+%this is to make captions with small bold labels
+%	\renewcommand{\captionfont}{\small}
+\renewcommand{\captionlabelfont}{\small\bfseries}
 
 \newboolean{includefigs} 
 \newboolean{printpreliminary}
@@ -95,6 +102,7 @@
 \newcommand{\cut}[1]{}
 \newcommand{\unit}[1]{\ensuremath{\, \mathrm{#1}}}
 \newcommand{\condcomment}[2]{\ifthenelse{#1}{#2}{}}
+\newcommand{\um}{\unit{\mu m}}
 
 %% Information about the title, etc.
 \title{How I Did It}
