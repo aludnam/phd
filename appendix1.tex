@@ -1,0 +1,65 @@
+%!TEX root = thesis.tex
+\chapter{NMF algorithm\label{app:NMF-algorithm}}
+
+Classic NMF updates \cite{Lee2001} minimises the generalised KL divergence between the data matrix $\bm{D}$ and its factorised version $\bm{WH}$ (see \autoref{eq:KL divergence})
+%
+\begin{equation}
+	\mbox{KL}(\bm{D}\parallel\bm{WH})=-\sum_{xt}\left(d_{xt}\log\sum_{k=1}^{K}w_{xk}h_{kt}-\sum_{k=1}^{K}w_{xk}h_{kt}\right)+C,
+\end{equation}
+where $C$ is a constant independent on $\bm{W}$ or $\bm{H}$. The optimisation can be solved by a scaled gradient descent method:
+%
+\begin{alignat}{1}
+	\bm{W} & =\bm{W}-\alpha^{W}\frac{\partial f(\bm{W,H})}{\partial \bm{W}}\nonumber \\
+	\bm{H} & =\bm{H}-\alpha^{H}\frac{\partial f(\bm{W,H})}{\partial \bm{H}},
+	\label{eq:gradient descend}
+\end{alignat}
+%
+with respect to an objective function $f(\bm{W,H})=\mbox{KL}(\bm{D}\parallel\bm{WH})$. The explicit derivation of the objective function $f$ gives
+%
+\begin{alignat}{1}
+	\frac{\partial f(\bm{W,H})}{\partial w_{xk}} & =\sum_{t=1}^{T}h_{kt}-\left[((\bm{D}\oslash\bm{WH})\bm{H}^{\top}\right]_{xk}\nonumber \\
+	\frac{\partial f(\bm{W,H})}{\partial h_{kt}} & =\sum_{x=1}^{N}w_{xk}-\left[\bm{W^{\top}}(\bm{D}\oslash\bm{WH})\right]_{xt},
+	\label{eq:gradients}
+\end{alignat}
+%
+where the symbol ``$\oslash$'' denotes the element-wise division of matrices. 
+
+Lee and Seung \cite{Lee2001} proposed 
+%
+\begin{alignat}{1}
+	\alpha_{xk}^{W} & =\frac{w_{xk}}{\sum_{t=1}^{T}h_{kt}}\nonumber \\
+	\alpha_{kt}^{H} & =\frac{h_{kt}}{\sum_{x=1}^{N}w_{xk}},
+	\label{eq:alphas}
+\end{alignat}
+%
+which leads to compact multiplicative updates
+%
+\begin{alignat}{1}
+	w_{xk} & =\frac{w_{xk}}{\sum_{t=1}^{T}h_{kt}}\left[(\bm{D}\oslash\bm{WH})\bm{H^{\top}}\right]_{xk}\nonumber \\
+	h_{kt} & =\frac{h_{kt}}{\sum_{x=1}^{N}w_{xk}}\left[\bm{W^{\top}}(\bm{D}\oslash\bm{WH})\right]_{kt}.
+	\label{eq:classic updates}
+\end{alignat}
+%
+
+Auxiliary constraints $J^{W}(\bm{W})$, $J^{H}(\bm{H})$ can be added to the objective function $f(\bm{W,H})$ to enhance certain characteristics of $\bm{W}$, $\bm{H}$:
+%
+\begin{equation}
+	f(\bm{W,H})=f(\bm{W,H})+\beta^{W}J^{W}(\bm{W})+\beta^{H}J^{H}(\bm{H}).
+	\label{eq:objective + auxiliary}
+\end{equation}
+%
+With a choice of
+%
+\begin{alignat}{1}
+	\alpha_{xk}^{W} & =\frac{w_{xk}}{\sum_{t=1}^{T}h_{kt}+\beta^{W}\frac{\partial J^{W}}{\partial w_{xk}}}\nonumber \\
+	\alpha_{kt}^{H} & =\frac{h_{kt}}{\sum_{x=1}^{N}w_{xk}+\beta^{H}\frac{\partial J^{H}}{\partial h_{kt}}},
+	\label{alphas + auxiliary}
+\end{alignat}
+%
+the multiplicative updates change to
+%
+\begin{alignat}{1}
+	w_{xk} & =\frac{w_{xk}}{\sum_{t=1}^{T}h_{kt}+\beta^{W}\frac{\partial J^{W}}{\partial w_{xk}}}\left[(\bm{D}\oslash\bm{WH})\bm{H^{\top}}\right]_{xk}\nonumber \\
+	h_{kt} & =\frac{h_{kt}}{\sum_{x=1}^{N}w_{xk}+\beta^{H}\frac{\partial J^{H}}{\partial h_{kt}}}\left[\bm{W^{\top}}(\bm{D}\oslash\bm{WH})\right]_{kt}.
+	\label{eq:classic updates + auxiliary}
+\end{alignat}

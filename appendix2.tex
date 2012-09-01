@@ -1,0 +1,415 @@
+%!TEX root = thesis.tex
+\chapter{Resolution limit for the blinking QDs}
+
+\section{Poisson random variable}
+
+This is derivation of the fisher information for Poisson distributed variable $X$ with mean $\lambda$.
+
+\begin{equation}
+	X\sim\textrm{Po}(n,\lambda)=p(n|\theta)=\frac{\lambda^{n}e^{-\lambda}}{n!}
+\end{equation}
+
+Likelihood of the Poisson distributed variable with detection $n_{k}$ in K pixels: 
+%
+\begin{equation}
+	l(\theta)=\prod_{k=1}^{K}l_{k}=\prod_{k=1}^{K}\frac{\lambda_{k}^{n_{k}}e^{-\lambda_{k}}}{n_{k}!}
+	\label{eq:Likelihood of Poisson}
+\end{equation}
+%
+where $l_{k}(\theta)=p(n_{k}|\theta)$ to emphasise the dependency on the parameter $\theta$.
+
+Log-likelihood:
+%
+\begin{equation}
+	\mathcal{L}=\sum_{k}\left(n_{k}\log\lambda_{k}-\lambda_{k}-\log n_{k}!\right)
+\end{equation}
+
+\section{Fisher Information for a Poisson variable\label{sub: Appendix Fisher-Information-Poisson}}
+
+Fisher information:
+%
+\begin{equation}
+	I(\theta)=-\mathbb{E}\left[\frac{\partial^{2}\mathcal{L}}{\partial\theta^{2}}\right]=\mathbb{E}\left[\left(\frac{\partial\mathcal{L}}{\partial\theta}\right)^{2}\right]=\mathbb{E}\left[\left(\sum_{k}\frac{\partial\log(l_{k})}{\partial\theta}\right)^{2}\right]=\mathbb{E}\left[\left(\sum_{k}\frac{1}{l_{k}}\frac{\partial l_{k}}{\partial\theta}\right)^{2}\right]
+	\label{eq:Fisher Info Definition}
+\end{equation}
+
+\begin{alignat*}{1}
+	I(\theta) & =\mathbb{E}\left[\left(\sum_{k}\frac{1}{l_{k}}\frac{\partial l_{k}}{\partial\theta}\right)\left(\sum_{m}\frac{1}{l_{m}}\frac{\partial l_{m}}{\partial\theta}\right)\right]\\
+	 & =\mathbb{E}\left[\sum_{k}\frac{1}{l_{k}^{2}}\left(\frac{\partial l_{k}}{\partial\theta}\right)^{2}\right]+\mathbb{E}\left[\sum_{k}\sum_{m\neq k}\frac{1}{l_{k}}\frac{\partial l_{k}}{\partial\theta}\frac{1}{l_{m}}\frac{\partial l_{m}}{\partial\theta}\right]
+\end{alignat*}
+%
+as $n_{k}$ are iid then the second term can be expressed as 
+%
+\begin{align*}
+	\mathbb{E}\left[\sum_{k}\sum_{m\neq k}\frac{1}{l_{k}}\frac{\partial l_{k}}{\partial\theta}\frac{1}{l_{m}}\frac{\partial l_{m}}{\partial\theta}\right] & =\sum_{k}\sum_{m\neq k}\mathbb{E}_{k}\left[\frac{1}{l_{k}}\frac{\partial l_{k}}{\partial\theta}\right]\mathbb{E}_{m}\left[\frac{1}{l_{m}}\frac{\partial l_{m}}{\partial\theta}\right]
+\end{align*}
+%
+where
+%
+\begin{equation}
+	\mathbb{E}_{k}\left[f(n_{k})\right]=\sum_{n_{k}\geq0}p(n_{k}|\theta)f(n_{k})
+\end{equation}
+
+But 
+%
+\begin{equation}
+	\mathbb{E}_{k}\left[\frac{1}{l_{k}}\frac{\partial l_{k}}{\partial\theta}\right]=\sum_{n_{k}}l_{k}\frac{1}{l_{k}}\frac{\partial l_{k}}{\partial\theta}=\sum_{n_{k}}\frac{\partial l_{k}}{\partial\theta}=\frac{\partial\sum_{n_{k}}l_{k}}{\partial\theta}=0
+\end{equation}
+%
+as $\sum_{n_{k}}l_{k}=\sum_{n_{k}}p(n_{k}|\theta)=1$. The Fisher Information can then be expressed 
+%
+\begin{align*}
+	I(\theta) & =\mathbb{E}\left[\sum_{k}\frac{1}{l_{k}^{2}}\left(\frac{\partial l_{k}}{\partial\theta}\right)^{2}\right]\\
+	 & =\sum_{k=1}^{k}\sum_{n_{k}\geq0}l_{k}\frac{1}{l_{k}^{2}}\left(\frac{\partial l_{k}}{\partial\theta}\right)^{2}\\
+	 & =\sum_{k=1}^{k}\sum_{n_{k}\geq0}\frac{1}{l_{k}}\left(\frac{\partial l_{k}}{\partial\theta}\right)^{2}
+\end{align*}
+
+Derivatives of likelihood Eq.(\ref{eq:Likelihood of Poisson}): 
+%
+\begin{equation}
+	\frac{\partial l_{k}}{\partial\theta}=\frac{l_{k}(n_{k}-\lambda_{k})}{\lambda_{k}}\frac{\partial\lambda_{k}}{\partial\theta}
+\end{equation}
+%
+And we get:
+%
+\begin{align*}
+	I(\theta) & =\sum_{k=1}^{k}\sum_{n_{k}\geq0}\frac{l_{k}(n_{k}-\lambda_{k})^{2}}{\lambda_{k}^{2}}\left(\frac{\partial\lambda_{k}}{\partial\theta}\right)^{2}\\
+	 & =\sum_{k=1}^{k}\frac{1}{\lambda_{k}^{2}}\left(\frac{\partial\lambda_{k}}{\partial\theta}\right)^{2}\mathbb{E}_{k}\left[(n_{k}-\lambda_{k})^{2}\right]
+\end{align*}
+%
+for Poisson $\mathrm{var}(n)=\mathrm{mean}(n)=\lambda$ gives 
+%
+\begin{equation}
+	\mathbb{E}_{k}\left[(n_{k}-\lambda_{k})^{2}\right]=\textrm{var}(n_{k})=\lambda_{k}
+\end{equation}
+%
+and
+% 
+\begin{equation}
+	I(\theta)=\sum_{k=1}^{K}\frac{1}{\lambda_{k}}\left(\frac{\partial\lambda_{k}}{\partial\theta}\right)^{2}\label{eq:Fisher Info for Poisson}
+\end{equation}
+
+This is the pixelised version (detection of the photons in K detectors - CCD camera and $\lambda_{k}=\int_{C_{k}}\lambda(x)dx$ where$C_{k}$ is an area of the pixels of the detector). Non pixelised version \citep{Ram2006}
+
+\begin{equation}
+	I(\theta)=\int\frac{1}{\lambda(x)}\left(\frac{\partial\lambda(x)}{\partial\theta}\right)^{2}dx
+\end{equation}
+
+\section{Two sources separated by a distance $d$\label{sub:Appendix Two-sources-separated}}
+
+These are comment on Fisher Information estimation as described in \citep{Ram2006}.
+
+For two sources separated by a distance $d$ we have a mean value of the intensity:
+%
+\begin{equation}
+	\lambda=\Lambda_{1}f_{1}+\Lambda_{2}f_{2}
+\end{equation}
+%
+where $f_{i}$ and $\Lambda_{i}$ is the response function and intensity, respectively, of the source $i$. For translationally invariant PSF
+and in-focus sources: $f_{1}=q(x-\frac{d}{2})$ and $f_{2}=q(x+\frac{d}{2})$
+%
+\begin{equation}
+	\lambda(d)=\Lambda_{1}q(x-\frac{d}{2})+\Lambda_{2}q(x+\frac{d}{2})
+\end{equation}
+%
+where $q$ is the PSF of the sources. For pixelised version (integral over pixel area $C_{k}$)
+%
+\begin{equation}
+	\lambda_{k}(d)=\Lambda_{1}\int_{C_{k}}q(x-\frac{d}{2})dx+\Lambda_{2}\int_{C_{k}}q(x+\frac{d}{2})dx
+\end{equation}
+%
+so we get (as described in\citet{Ram2006})
+%
+\begin{equation}
+	I(d)=\frac{1}{4}\sum_{k=1}^{K}\frac{\left(\Lambda_{1}\int_{C_{k}}\partial_{x}q(x-\frac{d}{2})dx-\Lambda_{2}\int_{C_{k}}\partial_{x}q(x+\frac{d}{2})dx\right)^{2}}{\Lambda_{1}\int_{C_{k}}q(x-\frac{d}{2})dx+\Lambda_{2}\int_{C_{k}}q(x+\frac{d}{2})dx}\label{eq:Fisher Info Pixelised - Ram}
+\end{equation}
+
+\subparagraph*{Limit $d=0$}
+
+If $\Lambda_{1}=\Lambda_{2}$ then $I(d=0)=0$ which means $\textrm{var}(d=0)\rightarrow\infty$. (This does not hold for $\Lambda_{1}\neq\Lambda_{2}$). 
+
+\subparagraph*{Limit $d\rightarrow\infty$}
+
+When sources are far apart then the mixing term in nominator in (\ref{eq:Fisher Info Pixelised - Ram}) $\Lambda_{1}\Lambda_{2}\partial_{x}q(x-\frac{d}{2})\partial q(d+\frac{d}{2})=0$ as the $\partial_{x}q(x-\frac{d}{2})$ ($q(x-\frac{d}{2})$) and $\partial_{x}q(x+\frac{d}{2})$ ($q(x+\frac{d}{2})$ ) do not have any overlap. The (\ref{eq:Fisher Info Pixelised - Ram}) then decomposes into two individual terms (sum of Fisher Information for localisation of individual sources.)
+
+\begin{alignat*}{1}
+	I(d) & =\frac{1}{4}\sum_{k=1}^{K}\left[\frac{\left(\Lambda_{1}\int_{C_{k}}\partial_{x}q(x-\frac{d}{2})dx\right)^{2}}{\Lambda_{1}\int_{C_{k}}q(x-\frac{d}{2})dx}+\frac{\left(\Lambda_{2}\int_{C_{k}}\partial_{x}q(x+\frac{d}{2})dx\right)^{2}}{\Lambda_{2}\int_{C_{k}}q(x+\frac{d}{2})dx}\right]\\
+	 & =\frac{1}{4}\sum_{k=1}^{K}\frac{\left(\int_{C_{k}}\partial_{x}q(x)dx\right)^{2}}{\int_{C_{k}}q(x)dx}\left[\Lambda_{1}+\Lambda_{2}\right]
+\end{alignat*}
+
+\subparagraph{Limit $\Lambda_{i}=0$}
+
+If $\Lambda_{1}=0$ or $\Lambda_{2}=0$ $I(d)\neq0$. So the variance is finite even if one of the sources is not present.
+
+
+\section{An alternative way to derive Fisher information for two sources separated by $d$:\label{sub:Appendix An-alternative-way-Fisher-info}}
+
+This is a suggestion how to fix the problems with limits for Fisher Information derived above. This gives infinite variance when one of the sources is no present. Also fix weird behaviour of the $I(d)$ for $d=0$. 
+
+For two sources $f_{1}=q(x-c_{1})$ and $f_{2}=q(x-c_{2})$ we have $\lambda=\Lambda_{1}f_{1}+\Lambda_{2}f_{2}$. The distance between the two sources is $d=c_{1}-c_{2}$. This is a linear combination $\bm{a}^{T}\cdot\bm{c}$ of the variable $\bm{c}=(c_{1},c_{2})$ where $\bm{a}=(1,-1)$. The variance of $d$ is given by
+%
+\begin{equation}
+	\textrm{var}(d)=\textrm{var}(\bm{a}^{T}\cdot\bm{c})=\bm{a}^{T}\cdot\bm{Q}\cdot\bm{a}=Q_{11}+Q_{22}-2Q_{12}
+\end{equation}
+%
+where $\bm{Q}$ is a covariance matrix $\bm{Q}=\bm{I}^{-1}(\theta)$ and $\bm{I}(\theta)$ is the Fisher information matrix (symmetric
+$I_{12}=I_{21}$) 
+%
+\begin{equation}
+	\bm{I}(\theta)=\left(
+	\begin{array}{cc}
+		I_{11} & I_{12}\\
+		I_{12} & I_{22}
+	\end{array}\right)
+\end{equation}
+%
+given by generalisation of Eq.(\ref{eq:Fisher Info for Poisson})
+%
+\begin{equation}
+	I_{ij}(\theta)=\sum_{k=1}^{K}\frac{1}{\lambda_{k}}\frac{\partial\lambda_{k}}{\partial\theta_{i}}\frac{\partial\lambda_{k}}{\partial\theta_{j}}
+\end{equation}
+
+The covariance matrix $\bm{Q}$ is then 
+%
+\begin{equation}
+	\bm{Q}=\bm{I}^{-1}(\theta)=\frac{1}{I_{11}I_{12}-I_{12}^{2}}\left(
+	\begin{array}{cc}	
+		I_{22} & -I_{12}\\
+		-I_{12} & I_{11}
+	\end{array}\right)
+\end{equation}
+%
+and the variance of $d=c_{1}-c_{2}$ 
+%
+\begin{equation}
+	\textrm{var}(d)=(1,-1)^{T}\cdot\bm{Q}\cdot(1,-1)=\frac{I_{11}+I_{22}+2I_{12}}{I_{11}I_{12}-I_{12}^{2}}
+	\label{eq:variance alternative}
+\end{equation}
+
+The individual terms of the Fisher Information matrix 
+%
+\begin{equation}
+	I_{11}=\sum_{k=1}^{K}\frac{1}{\lambda_{k}}\left(\frac{\partial\lambda_{k}}{\partial c_{1}}\right)^{2}=\sum_{k=1}^{K}\frac{\left(\Lambda_{1}q'_{k}(c_{1})\right)^{2}}{\Lambda_{1}q_{k}(c_{1})+\Lambda_{2}q_{k}(c_{2})}
+\end{equation}
+%
+where
+%
+\begin{alignat*}{2}
+	q_{k}(c) & =\int_{C_{k}}q(x-c)dx & ,\ (q_{k}(0)=q_{k})\\
+	q'_{k}(c) & =\int_{C_{k}}\frac{\partial q(x-c)}{\partial x}dx & ,\ (q'_{k}(0)=q'_{k})
+\end{alignat*}
+
+If this keeps translational invariance (non-pixelised version does as $\int_{\mathbb{R}}g(x+c)dx=\int_{\mathbb{R}}g(x)dx$) then 
+%
+\begin{equation}
+	I_{11}=\sum_{k=1}^{K}\frac{\left(\Lambda_{1}q'_{k}\right)^{2}}{\Lambda_{1}q_{k}+\Lambda_{2}q_{k}(-d)}
+\end{equation}
+%
+where $d=c_{1}-c_{2}$ and 
+%
+\begin{equation}
+	I_{22}=\sum_{k=1}^{K}\frac{\left(\Lambda_{2}q'_{k}\right)^{2}}{\Lambda_{2}q_{k}+\Lambda_{1}q_{k}(d)}
+\end{equation}
+
+For symmetrical PSF $q(x-d)=q(x+d)$ we have 
+%
+\begin{equation}
+	I_{ii}=\sum_{k=1}^{K}\frac{\left(\Lambda_{i}q'_{k}\right)^{2}}{\Lambda_{i}q_{k}+\Lambda_{j}q_{k}(d)}
+	\label{eq:Fisher Information alternative - Individual}
+\end{equation}
+%
+And the cross term ($i\neq j$) 
+%
+\begin{equation}
+	I_{ij}=\sum_{k=1}^{K}\frac{\Lambda_{i}\Lambda_{j}q'_{k}q'_{k}(d)}{\Lambda_{i}q_{k}+\Lambda_{j}q_{k}(d)}
+\end{equation}
+
+\subparagraph{Limit $d\rightarrow0$}
+
+For $d=0$ we have
+
+\begin{alignat*}{1}
+	I_{ii} & =\frac{\Lambda_{i}^{2}}{\Lambda_{i}+\Lambda_{j}}S(0)\\
+	I_{ij} & =\frac{\Lambda_{i}\Lambda_{j}}{\Lambda_{i}+\Lambda_{j}}S(0)
+\end{alignat*}
+%
+where $S(d)=\sum_{k=1}^{K}\frac{\left(q'_{k}\right)^{2}}{q_{k}+q_{k}(d)}$. 
+
+Numerator $p$ in Eq.(\ref{eq:variance alternative}) 
+%
+\begin{equation}
+	p=I_{11}+I_{22}+2I_{12}=\frac{S(0)}{\Lambda_{1}+\Lambda_{2}}(\Lambda_{1}^{2}+\Lambda_{2}^{2}+2\Lambda_{1}\Lambda_{2})=\frac{S(0)}{\Lambda_{1}+\Lambda_{2}}(\Lambda_{1}+\Lambda_{2})^{2}
+\end{equation}
+%
+is non-zero for any $\Lambda_{1},\,\Lambda_{2}$.
+
+The denominator in Eq.(\ref{eq:variance alternative}) 
+%
+\begin{eqnarray*}
+	r=\det\left[\bm{I}(\theta)\right]=I_{11}I_{22}-I_{12}^{2}=\frac{S^{2}(0)}{\left(\Lambda_{1}+\Lambda_{2}\right)^{2}}\left(\Lambda_{1}^{2}\Lambda_{2}^{2}-(\Lambda_{1}\Lambda_{2})^{2}\right) & \equiv & 0\ \text{for any }\Lambda_{i}
+\end{eqnarray*}
+
+$\bm{I}(\theta)$ is therefore a singular matrix for $d=0$ and inversion $\bm{I}^{-1}(\theta)$ does not exist. 
+
+However, for the limit $d\rightarrow0$ and $p\neq0,\, r\rightarrow0$
+and $\textrm{var}(d\rightarrow0)=\frac{p}{r}\rightarrow\infty$. 
+
+\subparagraph*{Limit $d\rightarrow\infty$}
+
+The cross term $I_{ij}=0,\: i\neq j$ and we get
+%
+\begin{equation}
+	\textrm{var}(d)=\frac{1}{I_{11}}+\frac{1}{I_{22}}
+\end{equation}
+%
+and 
+%
+\begin{equation}
+	I_{ii}=\sum_{k=1}^{K}\frac{\left(\Lambda_{i}q_{k}'\right)^{2}}{\Lambda_{i}q_{k}+\Lambda_{j}q_{k}(d)}=\Lambda_{i}\sum_{k=1}^{K}\frac{\left(q_{k}'\right)^{2}}{q_{k}}=2\Lambda_{i}S(0)
+\end{equation}
+%
+as the PSF $q(x)$ (and also $q'(x)$) have a finite support, if $d$ is big, $q(x-d)$ is outside the support of the $q'(x)$. They have no overlap so it doesn't have any effect in the denominator. 
+
+For non-pixelised version, $\Lambda_{1}=\Lambda_{2}=\Lambda$ and for Gaussian approximation of the PSF ($q(x-a)\propto\exp\left(-\frac{(x-a)^{2}}{2\sigma^{2}}\right)$ (with $\sigma=\frac{\sqrt{2}}{2\pi}\frac{\lambda}{NA}$ \citep{Zhang2007}) we have $q'(x)=\frac{1}{\sigma^{2}}xq(x)$ and and for $\Lambda_{1}=\Lambda_{2}=\Lambda$ and for Gaussian approximation of the PSF $S(0)=\frac{1}{2\sigma^{2}}$:
+%
+\begin{alignat*}{1}
+	I(d\rightarrow\infty) & =\frac{\Lambda}{\sigma^{2}}\\
+	\textrm{var}(d\rightarrow\infty) & =\frac{\sigma^{2}}{\Lambda}
+\end{alignat*}
+
+\subparagraph{Limit $\Lambda_{i}=0,\ \Lambda_{j}\neq0$}
+
+then $I_{ii}\equiv0$ and $I_{ij}\equiv0$ and so $\det(\bm{I}(\theta))\equiv0$, and matrix is singular. In the limit $\Lambda_{i}\rightarrow0$ the variance (\ref{eq:variance alternative}) $\textrm{var}(d)\rightarrow\infty$. 
+
+\section{Time distribution of the intensities (blinking)\label{sub:Appendix: Time-distribution - Cheating}}
+
+For likelihood dependent on parameter $\Lambda_{t}$ (T different time slices)
+%
+\begin{equation}
+	l_{T}(d,\Lambda)=\prod_{k=1}^{K}\prod_{t=1}^{T}p(n_{k}|d,\Lambda_{t})p(\Lambda_{t})
+\end{equation}
+
+\begin{equation}
+	\mathcal{L}_{T}(d,\Lambda)=\sum_{k=1}^{K}\sum_{t=1}^{T}\left[\log\left(l_{k}(d,\Lambda_{t})\right)+\log\left(p(\Lambda_{t})\right)\right]
+\end{equation}
+%
+as $p(\Lambda)$ is not dependent on $d$ then
+%
+\begin{equation}
+	\frac{\partial^{2}\mathcal{L}_{T}(d,\Lambda)}{\partial d^{2}}=\sum_{t=1}^{T}\frac{\partial^{2}\mathcal{L}(d,\Lambda_{t})}{\partial d^{2}}
+\end{equation}
+%
+but in the expectation equation Eq.(\ref{eq:Fisher Info Definition}) the time dependence appears as
+%
+\begin{alignat*}{1}
+	I_{T}(\theta) & =-\mathbb{E}_{T}\left[\sum_{t=1}^{T}\frac{\partial^{2}\mathcal{L}(d,\Lambda_{t})}{\partial d^{2}}\right]=\sum_{t=1}^{T}-\mathbb{E}_{T}\left[\frac{\partial^{2}\mathcal{L}(d,\Lambda_{t})}{\partial d^{2}}\right]=\sum_{t=1}^{T}\mathbb{E}_{T}\left[\left(\frac{\partial\mathcal{L}(d,\Lambda_{t})}{\partial d}\right)^{2}\right]\\
+	 & =\sum_{t=1}^{T}\int_{\Lambda_{t}}p(\Lambda_{t})I(\theta)d\Lambda_{t}=\sum_{t,k}\int_{\Lambda_{t}}p(\Lambda_{t})\frac{1}{\lambda_{k}(\Lambda_{t})}\left(\frac{\partial\lambda_{k}(\Lambda_{t})}{\partial d}\right)^{2}d\Lambda_{t}
+\end{alignat*}
+
+\section{Time distribution of the intensities - integrating out $\Lambda$\label{sub:Appendix Time-distribution-Integrating out}}
+
+\begin{equation}
+	l_{k}(d)=\int_{\Lambda}l_{k}(d,\Lambda)d\Lambda=\int_{\Lambda}p(n_{k}|d,\Lambda)p(\Lambda)d\Lambda
+\end{equation}
+%
+for four state model of two sources: $\left\{ (\Lambda_{1},0),(0,\Lambda_{2}),(\Lambda_{1},\Lambda_{2}),(0,0)\right\} $: $\lambda^{1}=\Lambda_{1}q(x-c_{1})$, $\lambda^{2}=\Lambda_{2}q(x-c_{2})$, $\lambda^{3}=+\Lambda_{1}q(x-c_{1})+\Lambda_{2}q(x-c_{2})$, $\lambda^{4}=0$ with uniform distribution over these states
+%
+\begin{equation}
+	l_{k}(\theta)=\frac{1}{4}\sum_{i=1}^{4}\mathrm{Po}(\lambda_{k}^{i})
+\end{equation}
+%
+derivatives 
+%
+\begin{equation}
+	\frac{\partial l_{k}}{\partial c_{p}}=\frac{1}{4}\sum_{i}\frac{\partial\mathrm{Po}(\lambda_{k}^{i})}{\partial c_{p}}=\frac{1}{4}\sum_{i}\left(\mathrm{Po}(\lambda_{k}^{i})\frac{(n_{k}-\lambda_{k}^{i})}{\lambda_{k}^{i}}\frac{\partial\lambda_{k}^{i}}{\partial c_{p}}\right)
+\end{equation}
+
+The Fisher information matrix diagonal entries:
+%
+\begin{alignat}{1}
+	I_{pp}(\theta) & =\mathbb{E}\left[\left(\sum_{k=1}^{N}\frac{1}{l_{k}}\frac{\partial l_{k}}{\partial c_{p}}\right)^{2}\right]\nonumber \\
+	 & =\mathbb{E}\left[\left\{ \sum_{k=1}^{N}\left(\frac{1}{\sum_{j=1}^{4}\textrm{Po}(\lambda_{k}^{j})}\frac{\partial\sum_{i=1}^{4}\textrm{Po}(\textrm{\ensuremath{\lambda}}_{k}^{i})}{\partial c_{p}}\right)\right\} \left\{ \sum_{l=1}^{N}\left(\frac{1}{\sum_{j=1}^{4}\textrm{Po}(\lambda_{l}^{j})}\frac{\partial\sum_{i=1}^{4}\textrm{Po}(\textrm{\ensuremath{\lambda}}_{l}^{i})}{\partial c_{p}}\right)\right\} \right]\nonumber \\
+	 & =\sum_{k=1}^{N}\mathbb{E}_{k}\left[\frac{\left(\sum_{i=1}^{4}\frac{\partial\textrm{Po}(\textrm{\ensuremath{\lambda}}_{k}^{i})}{\partial c_{p}}\right)^{2}}{\left(\sum_{j=1}^{4}\textrm{Po}(\lambda_{k}^{j})\right)^{2}}\right]\label{eq:Fisher Info Integrated Out - diagonal entries}
+\end{alignat}
+
+as the cross terms ($k,\, l$) in the sum (2nd row) are zeros: 
+
+\begin{alignat*}{1}
+	\mathbb{E}\left[\left(\frac{\sum_{i=1}^{4}\frac{\partial\textrm{Po}(\textrm{\ensuremath{\lambda}}_{k}^{i})}{\partial c_{p}}}{\sum_{j=1}^{4}\textrm{Po}(\lambda_{k}^{j})}\right)\left(\frac{\sum_{i=1}^{4}\frac{\partial\textrm{Po}(\textrm{\ensuremath{\lambda}}_{l}^{i})}{\partial c_{p}}}{\sum_{j=1}^{4}\textrm{Po}(\lambda_{l}^{j})}\right)\right] & =\mathbb{E}_{k}\left[\frac{\sum_{i=1}^{4}\frac{\partial\textrm{Po}(\textrm{\ensuremath{\lambda}}_{k}^{i})}{\partial c_{p}}}{\sum_{j=1}^{4}\textrm{Po}(\lambda_{k}^{j})}\right]\mathbb{E}_{l}\left[\frac{\sum_{i=1}^{4}\frac{\partial\textrm{Po}(\textrm{\ensuremath{\lambda}}_{l}^{i})}{\partial c_{p}}}{\sum_{j=1}^{4}\textrm{Po}(\lambda_{l}^{j})}\right]\\
+	 & =\sum_{i=1}^{4}\frac{\partial}{\partial c_{p}}\left(\sum_{n_{k}\geq0}\textrm{Po}(\textrm{\ensuremath{\lambda}}_{k}^{i})\right)\sum_{i=1}^{4}\frac{\partial}{\partial c_{p}}\left(\sum_{n_{k}\geq0}\textrm{Po}(\textrm{\ensuremath{\lambda}}_{l}^{i})\right)\\
+	 & =0	
+\end{alignat*}
+
+Expressing the derivatives and the expectation from Eq.(\ref{eq:Fisher Info Integrated Out - diagonal entries}):
+%
+\begin{alignat*}{1}
+	I_{pp}(\theta) & =\sum_{k=1}^{N}\mathbb{E}_{k}\left[\left\{ \frac{\sum_{i=1}^{4}\left(\mathrm{Po}(n_{k};\lambda_{k}^{i})\frac{(n_{k}-\lambda_{k}^{i})}{\lambda_{k}^{i}}\frac{\partial\lambda_{k}^{i}}{\partial c_{p}}\right)}{\sum_{j=1}^{4}\textrm{Po}(n_{k};\lambda_{k}^{j})}\right\} ^{2}\right]\\
+	 & =\frac{1}{4}\sum_{k=1}^{N}\sum_{n_{k}\geq0}\frac{\left\{ \sum_{i=1}^{4}\left(\mathrm{Po}(n_{k};\lambda_{k}^{i})\frac{(n_{k}-\lambda_{k}^{i})}{\lambda_{k}^{i}}\frac{\partial\lambda_{k}^{i}}{\partial c_{p}}\right)\right\} ^{2}}{\sum_{j=1}^{4}\textrm{Po}(n_{k};\lambda_{k}^{j})}
+\end{alignat*}
+
+For the four states model we have $\lambda^{3}(c_{1},c_{2})=\lambda^{1}(c_{1})+\lambda^{2}(c_{2})$ and so $\frac{\partial\lambda^{3}}{\partial c_{p}}=\frac{\partial\lambda^{p}}{\partial c_{p}}$ and $\frac{\partial\lambda^{j}}{\partial c_{p}}=0,\, i\neq j$ for $p=\{1,2\},\: j=\{1,2,4\};$ so 
+%
+\begin{alignat*}{1}
+	I_{pp}(\theta) & =\sum_{k=1}^{N}\left(\frac{\partial\lambda_{k}^{p}}{\partial c_{p}}\right)^{2}\mathbb{E}_{k}\left[\left\{ \frac{\sum_{i=\{p,3\}}\left(\mathrm{Po}(n_{k};\lambda_{k}^{i})\frac{(n_{k}-\lambda_{k}^{i})}{\lambda_{k}^{i}}\right)}{\sum_{j=1}^{4}\textrm{Po}(n_{k};\lambda_{k}^{j})}\right\} ^{2}\right]
+\end{alignat*}
+
+The Fisher information matrix off-diagonal entries:
+
+\begin{alignat}{1}
+	I_{pq}(\theta) & =\sum_{k=1}^{N}\mathbb{E}_{k}\left[\frac{\left(\sum_{i=1}^{4}\frac{\partial\textrm{Po}(\textrm{\ensuremath{\lambda}}_{k}^{i})}{\partial c_{p}}\right)\left(\sum_{l=1}^{4}\frac{\partial\textrm{Po}(\textrm{\ensuremath{\lambda}}_{k}^{l})}{\partial c_{q}}\right)}{\left(\sum_{j=1}^{4}\textrm{Po}(\lambda_{k}^{j})\right)^{2}}\right]\nonumber \\
+	 & =\sum_{k=1}^{N}\left(\frac{\partial\lambda_{k}^{p}}{\partial c_{p}}\right)\left(\frac{\partial\lambda_{k}^{q}}{\partial c_{q}}\right)\mathbb{E}_{k}\left[\frac{\left(\sum_{i=\{p,3\}}\mathrm{Po}(n_{k};\lambda_{k}^{i})\frac{(n_{k}-\lambda_{k}^{i})}{\lambda_{k}^{i}}\right)\left(\sum_{i=\{q,3\}}\mathrm{Po}(n_{k};\lambda_{k}^{i})\frac{(n_{k}-\lambda_{k}^{i})}{\lambda_{k}^{i}}\right)}{\left(\sum_{j=1}^{4}\textrm{Po}(n_{k};\lambda_{k}^{j})\right)^{2}}\right]
+	 \label{eq:Fisher Info Integrated Out-off diagonal entries}
+\end{alignat}
+
+\paragraph{Limit $d\rightarrow0$}
+
+When $c^{1}=c^{2}$ then $\lambda^{1}=\lambda^{2}$ and $\frac{\partial\text{Po}(\lambda^{1})}{\partial c^{1}}=\frac{\partial\text{Po}(\lambda^{2})}{\partial c^{2}}$. Then all entries in $I_{pq}$ are equal and the matrix is singular. For the limit $d\rightarrow0$ the determianat $\det(\bm{I})\rightarrow0$ and the variance $\text{var}(d)\rightarrow\infty$.
+
+\paragraph{Limit $d\rightarrow\infty$}
+
+Sources are far apart and $\lambda^{1}$ and $\lambda^{2}$ do not have a common overlap. For $k'$ where $\lambda_{k'}^{1}>0,\,\lambda_{k'}^{2}\equiv0$ and $\text{Po}(n_{k'},\lambda_{k'}^{3})=\text{Po}(n_{k'},\lambda_{k'}^{1})+\text{Po}(n_{k'},\lambda_{k'}^{2}=0)=\text{Po}(n_{k'},\lambda_{k'}^{1})+1$.
+
+Also $\frac{\partial\lambda^{p}}{\partial c_{q}}=0,\: p\neq q$. From Eq.(\ref{eq:Fisher Info Integrated Out - diagonal entries}) the diagonal
+elements 
+
+\begin{alignat*}{1}
+	I_{pp} & =\sum_{k=1}^{N}\mathbb{E}_{k}\left[\frac{\left(2\frac{\partial\textrm{Po}(\textrm{\ensuremath{\lambda}}_{k}^{p})}{\partial c_{p}}\right)^{2}}{\left(2\textrm{Po}(\lambda_{k}^{p})+2\textrm{Po}(\lambda_{k}^{q})\right)^{2}}\right]\\
+	 & =\sum_{k=1}^{N}\mathbb{E}_{k}\left[\frac{\left(\textrm{Po}(\textrm{\ensuremath{\lambda}}_{k}^{p})\frac{\left(n_{k}-\lambda_{k}^{p}\right)^{2}}{\lambda_{k}^{p}}\frac{\partial\lambda_{k}^{p}}{\partial c_{p}}\right)^{2}}{\left(\textrm{Po}(\lambda_{k}^{p})+1\right)^{2}}\right]\\
+	 & =\sum_{k=1}^{N}\left(\frac{1}{\lambda_{k}^{p}}\frac{\partial\textrm{\ensuremath{\lambda}}_{k}^{p}}{\partial c_{p}}\right)^{2}\mathbb{E}_{k}\left[\left(n_{k}-\lambda_{k}^{p}\right)^{2}\left(\frac{\textrm{Po}(\textrm{\ensuremath{\lambda}}_{k}^{p})}{\textrm{Po}(\textrm{\ensuremath{\lambda}}_{k}^{p})+1}\right)^{2}\right]
+\end{alignat*}
+
+For large $\lambda_{k}^{p}$ the second term in the expectation is approximately one: $\frac{\textrm{Po}(\textrm{\ensuremath{\lambda}}_{k}^{p})}{\textrm{Po}(\textrm{\ensuremath{\lambda}}_{k}^{p})+1}=1-\frac{1}{1+\textrm{Po}(\textrm{\ensuremath{\lambda}}_{k}^{p})}\approx1$
+%
+\begin{equation}
+	I_{pp}\approx\frac{1}{2}\sum_{k=1}^{N}\frac{1}{\lambda_{k}^{p}}\left(\frac{\partial\textrm{\ensuremath{\lambda}}_{k}^{p}}{\partial c_{p}}\right)^{2}\label{eq: int out - approximation d to infty}
+\end{equation}
+%
+which is the Eq.(\ref{eq:Fisher Info for Poisson}) (up to the factor 2). As the the term is upper bounded by one: $\frac{\textrm{Po}(\textrm{\ensuremath{\lambda}}_{k}^{p})}{\textrm{Po}(\textrm{\ensuremath{\lambda}}_{k}^{p})+1}=1-\frac{1}{1+\textrm{Po}(\textrm{\ensuremath{\lambda}}_{k}^{p})}<1$ the terms $ $$I_{pp}$ will be slightly smaller then the approximation Eq.(\ref{eq: int out - approximation d to infty}):
+%
+\begin{equation}
+	I_{pp}=\frac{1}{2}\sum_{k=1}^{N}\frac{1}{\lambda_{k}^{p}}\left(\frac{\partial\textrm{\ensuremath{\lambda}}_{k}^{p}}{\partial c_{p}}\right)^{2}-\epsilon\label{eq:int out d to infty}
+\end{equation}
+
+The off-diagonal entries: 
+%
+\begin{equation}
+	I_{pq}=0
+\end{equation}
+%
+as
+% 
+\begin{equation}
+	\frac{\partial\text{Po}(\lambda^{p})}{\partial c_{p}}\frac{\partial\text{Po}(\lambda^{q})}{\partial c_{q}}=0
+\end{equation}
+%
+because $\lambda^{p}(x)$ and $\lambda^{q}(x)$ do not have a common support. 
+
+Therefore
+%
+\begin{alignat}{1}
+	\text{var}(d) & =\frac{1}{I_{11}}+\frac{1}{I_{22}}\nonumber \\
+	& =2\left(\frac{1}{I_{11}^{\text{static}}-\epsilon}+\frac{1}{I_{22}^{\text{static}}-\epsilon}\right)\nonumber \\
+	 & >2\text{var}(d^{\text{static}})\label{eq:variance d static vs blinking}
+\end{alignat}
+%
+where $I^{\text{static}}$ and $\text{var}^{\text{static}}$ correspond to the Fisher information matrix Eq.(\ref{eq:Fisher Info for Poisson}) and the variance Eq.(\ref{eq:variance alternative}) of the static case. The factor of 2 stems from the fact that the total number of photons is double in the static case compared to the blinking model. 
