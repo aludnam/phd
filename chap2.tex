@@ -1,42 +1,44 @@
 %!TEX root = thesis.tex
-\chapter{Theoretical limits of the LM}
+\chapter{Theoretical limits for localisation microscopy \label{sec:Theoretical-limits-of teh LM}}
 %FREM + correction
 
-\section{An alternative derivation of the FREM}
+%\section{An alternative derivation of the FREM}
+%
+%%==========================================
+%%==========================================
+%
+%\section{FREM for blinking sources}
+%
+%%==========================================
+%%==========================================
+%
+%\section{Simulations}
+%
+%%==========================================
+%%==========================================
+%
+%\section{Results}
+%
+%%==========================================
+%%==========================================
+%
+%\section{Discussion}
+%
+%%==========================================
+%%==========================================
+%
+%\section{Conclusion}
+
+In this chapter, we discuss the limits of the localisation microscopy (LM) from the thoretical point of view. We explore the theoretical localisation precisoin for two emmiters in differetnt experimental settings (intensity of the sources and the background levels) and whether the fluorescence intermittency (blinking) allow for higher resolution? The notion about the localiaiton variance provides us with limits on achievable resolution in LM.
+
+We address these question by examining the \CR lower bound for the variance of the estimator on distance between two emitters. First, we consider static sources and after we analyse the situation for sources with intermittent intensity (blinking). 
 
 %==========================================
 %==========================================
 
-\section{FREM for blinking sources}
+\section{\CR lower bound}
 
-%==========================================
-%==========================================
-
-\section{Simulations}
-
-%==========================================
-%==========================================
-
-\section{Results}
-
-%==========================================
-%==========================================
-
-\section{Discussion}
-
-%==========================================
-%==========================================
-
-\section{Conclusion}
-
-\section{Theoretical limits of the LM\label{sec:Theoretical-limits-of teh LM}}
-
-Results from the variational approximation naturally bring a question about actual limits of the LM method. How close the sources can be in order to be possible to resolve them with the LM method? What are the limiting factors? Does the fluorescence intermittency (blinking) allow for higher resolution? We tried to address these question by examining the Cram\'er\textendash{}Rao lower bound for the variance of the estimator on distance between two sources.
-
-\subsection{Cramer Rao bound}
-
-If $\mathcal{L}(\theta)=\log p(x|\theta)$ is a log-likelihood function for data $X$, then a covariance matrix $\bm{Q}$ of an unbiased stimator
-of $\hat{\theta}$ is bounded by \cite{Rao1945,Cover1991} 
+If $\mathcal{L}(\theta)=\log p(x|\theta)$ is a log-likelihood function for data $X$, then a covariance matrix $\bm{Q}$ of an unbiased estimator of $\hat{\theta}$ is bounded by \cite{Rao1945,Cover1991} 
 %
 \begin{equation}
 	\bm{Q}\geq\bm{I}^{-1}(\theta),
@@ -46,94 +48,116 @@ of $\hat{\theta}$ is bounded by \cite{Rao1945,Cover1991}
 where $\bm{I}(\bm{\theta})$ is the Fisher information matrix 
 %
 \begin{equation}
-	I_{ij}(\bm{\theta})=-\mathbb{E}\left[\frac{\partial^{2}\mathcal{L}}{\partial\theta_{i}\partial\theta_{j}}\right]=\mathbb{E}\left[\frac{\partial\mathcal{L}}{\partial\theta_{i}}\frac{\partial\mathcal{L}}{\partial\theta_{j}}\right].
+	I_{ij}(\bm{\theta})=-\E\left[\frac{\partial^2\mathcal{L}}{\partial\theta_i\partial\theta_j}\right]=\E\left[\frac{\partial\mathcal{L}}{\partial\theta_i}\frac{\partial\mathcal{L}}{\partial\theta_j}\right].
 	\label{eq:Fisher information general}
 \end{equation}
 
 The inequality \autoref{eq:Covariance vs Fisher information} is in the sense that $\bm{Q}-\bm{I}^{-1}(\theta)$ is a non-negative definite matrix.
 
-\subsection{Fundamental resolution measure (FREM)}
+%==========================================
+%==========================================
 
-For PALM/STORM \cut{(\autoref{sub:PALM,-STORM})} the spatial resolution limit is determined by the localisation precision for an individual source. The Cramér\textendash{}Rao bound lower for the position estimation of a single source detected by a CCD camera is derived in \cite{Ram2006,Ram2006b}. The variance is shown to be proportional to $1/\Lambda$ where $\Lambda$ is the intensity of the source. A fundamental resolution measure (FREM) for two sources separated by a distance $d$ is shown as an alternative to the Rayleigh resolution criterion considering the photon statistics on the detector (CCD camera). The Fisher information is derived as
+\section{Fundamental resolution measure (FREM)}
+
+For the stanard LM techniques such as PALM and STORM \cut{(\autoref{sub:PALM,-STORM})} the spatial resolution limit is determined by the localisation precision for an individual source, because only individual, well separated sources are considered for localisation. 
+
+The \CR lower bound for the position estimation of a single source detected by a CCD camera is derived in \cite{Ram2006,Ram2006b}. The variance is shown to be proportional to $1/\Lambda$ where $\Lambda$ is the number of photons emitted by the source. A fundamental resolution measure (FREM) for two sources separated by a distance $d$ is shown as an alternative to the classical resolution criterion (radius $\delta$ of an Airy disk) considering the photon statistics on the detector (CCD camera). Fisher information is derived as
 %
 \begin{equation}
-	I(d)=\frac{1}{4}\sum_{n=1}^{N}\frac{\left(\Lambda_{1}\int_{C_{n}}\partial_{x}q(x-\frac{d}{2})dx-\Lambda_{2}\int_{C_{n}}\partial_{x}q(x+\frac{d}{2})dx\right)^{2}}{\Lambda_{1}\int_{C_{n}}q(x-\frac{d}{2})dx+\Lambda_{2}\int_{C_{n}}q(x+\frac{d}{2})dx},
+	I(d)=\frac{1}{4}\sum_{n=1}^N\frac{\left(\Lambda_1\int_{\Gamma_n}\partial_xq(x-\frac{d}{2})dx-\Lambda_2\int_{\Gamma_n}\partial_xq(x+\frac{d}{2})dx\right)^2}{\Lambda_1\int_{\Gamma_n}q(x-\frac{d}{2})dx+\Lambda_2\int_{\Gamma_n}q(x+\frac{d}{2})dx},
 	\label{eq:Ram FREM}
 \end{equation}
 %
-where $\Lambda_{i}$ is the intensity of the $i$th source, $q(x)$ is a response function of a source ($\int q(x)dx=1$) and $C_{n}$ is an area of the $n$th pixel. The variance of the estimator on $d$ is then 
+where $\Lambda_i$ is the intensity of the $i$th source, $q(x)$ is a response function of a source ($\int q(x)dx=1$) and $\Gamma_n$ is an area of the $n$th pixel. The variance of the estimator on $d$ is then 
 %
 \begin{equation}
-	\text{var}(d)=I^{-1}(d).
-\end{equation}
-
-A short summary is shown in \autoref{sub:Appendix Two-sources-separated}. There are certain problems with this formula, though. The limit $d\rightarrow0$ gives the Fisher information $I(d)\rightarrow0$ ($\text{var}(d)\rightarrow\infty$) for situation when $\Lambda_{1}=\Lambda_{2}$. However, the variance remains finite ($I(d)\neq0$) when $\Lambda_{1}\neq\Lambda_{2}$ (see discussion in \autoref{sub:Appendix Two-sources-separated}). The formula also gives $I(d)\neq0$ even for the situation when one of the sources is not present ($\Lambda_{i}=0$). This stems from the fact that the response function of the sources are assumed to be located at $\pm\frac{d}{2}$ which implicitly assumes the knowledge of the origin location. Only one source is then needed to determined the distance $\frac{d}{2}$. 
-
-\subsection{An alternative derivation of the FREM\label{sub:An-alternative-derivation-FREM}} 
-
-We derived an alternative FREM formula for two sources situation (details in \autoref{sub:Appendix An-alternative-way-Fisher-info}). We assume two sources located at positions $c_{1}$ and $c_{2}$. The response functions (we assume an identical PSF $q(x)$ for both sources) are $f_{1}=q(x-c_{1})$ and $f_{2}=q(x-c_{2})$. The distance between the two sources is $d=c_{1}-c_{2}$ and the variance of $d$ is given by
-
-\begin{equation}
-	\textrm{var}(d)=Q_{11}+Q_{22}-2Q_{12},
-\end{equation}
-
-where $\bm{Q}$ is the covariance matrix $\bm{Q}=\bm{I}^{-1}(\theta)$ and $\bm{I}(\theta)$ is a (symmetric) Fisher information matrix \autoref{eq:Fisher information general}. 
-
-For a Poisson distributed pixel counts (this assumes that data are corrupted with Poisson noise only) 
-%
-\begin{equation}
-	p(n_{p}|\theta_{p})=\text{Po}(n_{p};\lambda_{p}),
+	\var(d)=I^{-1}(d).
 \end{equation}
 %
-where $\lambda_{p}$ is the value of the $p$th pixel:
+A short summary of the derivation is shown in \autoref{app:Resolution limit for the blinking QDs}. 
 
+There are certain problems with this formula, though. The limit of infinitely close emitters $d\rightarrow0$ gives  zero Fisher information $I(d)\rightarrow0$, and therefore $\var(d)\rightarrow\infty$, only for situation, when the sources have equal intensities $\Lambda_1=\Lambda_2$. However, the variance remains finite ($I(d)\neq0$) when $\Lambda_1\neq\Lambda_2$ (see discussion in \autoref{sub:Appendix Two-sources-separated}). The formula also gives $I(d)\neq0$ even for the situation when one of the sources is not present ($\Lambda_i=0$). 
+
+These problems stem from the fact that the response functions of the sources are assumed to be located at $\pm d/2$, which implicitly assumes the knowledge of the origin. This is the reason why $I(d)\neq0$ for $\Lambda_i=0$, because only one source is needed to determined the distance $d/2$. 
+
+%==========================================
+%==========================================
+
+\section{An alternative derivation of the FREM\label{sub:An-alternative-derivation-FREM}} 
+
+To fix the problems with \autoref{eq:Ram FREM} we derived an alternative FREM formula. (The details of the derivation are in \autoref{app:Resolution limit for the blinking QDs}). 
+
+We assume two sources located at positions $c_1$ and $c_2$ with intensities $\Lambda_1$ and $\Lambda_2$, respectively. The distance between the two sources is $d=c_1-c_2$. This is a linear combination $\bm{a}^{T}\cdot\bm{c}$ of the variable $\bm{c}=(c_1,c_2)^{T}$ where $\bm{a}=(1,-1)^{T}$. The variance of $d$ is therefore given by 
+%
 \begin{equation}
-	\lambda_{p}=\int_{C_{p}}\lambda(x)dx=\int_{C_{p}}\Lambda_{1}f_{1}(x)+\Lambda_{2}f_{2}(x)dx.
-	\label{eq:Mean value of hte Poisson process}
+	\textrm{var}(d)=\textrm{var}(\bm{a}^{T}\cdot\bm{c})=\bm{a}^{T}\cdot\bm{Q}\cdot\bm{a}
+	\label{eq:var d from Q}
 \end{equation}
 %
-wehere $C_{p}$ is the area of the $p$th pixel. The log-likelihood function for $N$ pixels
+where $\bm{Q}$ is the covariance matrix with lower bound given by the inverse of the Fisher information matrix $\bm{I}^{-1}(\theta)$: 
 %
 \begin{equation}
-	\log p(n|\theta)=\sum_{p=1}^{N}\text{Po}(n_{p};\lambda_{p}),\label{eq:FREM likekihood Poisson}
-\end{equation}
-%
-and the Fisher information matrix becomes (\autoref{sub: Appendix Fisher-Information-Poisson})
-%
-\begin{equation}
-	I_{ij}(\theta)=\sum_{p=1}^{N}\frac{1}{\lambda_{p}}\frac{\partial\lambda_{p}}{\partial\theta_{i}}\frac{\partial\lambda_{p}}{\partial\theta_{j}}.
-\end{equation}
-
-The covariance matrix $\bm{Q}$ is then 
-
-\begin{equation}
-	\bm{Q}=\bm{I}^{-1}(\theta)=\frac{1}{I_{11}I_{12}-I_{12}^{2}}\left(
+	\bm{Q}\geq\bm{I}^{-1}(\theta)=\frac{1}{I_{11}I_{12}-I_{12}^2}\left(
 	\begin{array}{cc}
 		I_{22} & -I_{12}\\
 		-I_{12} & I_{11}
-	\end{array}\right),
+	\end{array}\right).
+	\label{eq:inverse I}
 \end{equation}
 %
-and the variance of $d=c_{1}-c_{2}$ 
+Expressing the elements of the covariance matrix $\bm{Q}$ from \autoref{eq:inverse I} and substitution to \autoref{eq:var d from Q} gives the expression for $\var(d)$ from the elements of the Fisher information matrix
 %
 \begin{equation}
-	\textrm{var}(d)=(1,-1)^{T}\cdot\bm{Q}\cdot(1,-1)=\frac{I_{11}+I_{22}+2I_{12}}{I_{11}I_{12}-I_{12}^{2}}.
+	\var(d)=Q_{11}+Q_{22}-2Q_{12}=\frac{I_{11}+I_{22}+2I_{12}}{I_{11}I_{12}-I_{12}^2}.
 	\label{eq:variance d alternative}
 \end{equation}
 
-For a symmetrical PSF $q(x-d)=q(x+d)$ we show (\autoref{sub: Appendix Fisher-Information-Poisson}) that the entries of the Fisher information matrix
+We assume that the recorded images are corrupted with Poisson noise only. Therefore we can write a probability distribution of an intensity value $\lambda_k$ recorded in the $k$th pixel:
 %
-\begin{alignat}{2}
-	I_{ii} & =\sum_{n=1}^{N}\frac{\left(\Lambda_{i}q'_{n}\right)^{2}}{\Lambda_{i}q_{n}+\Lambda_{j}q_{n}(d)}\nonumber \\
-	I_{ij} & =\sum_{n=1}^{N}\frac{\Lambda_{i}\Lambda_{j}q'_{n}(0)q'_{n}(d)}{\Lambda_{i}q_{n}+\Lambda_{j}q_{n}(d)} & \text{ for \ensuremath{i\neq j}},
-	\label{eq:Fisher Information Static}
+\begin{equation}
+	p(n_k|\theta_k)=\Po(n_k;\lambda_k).
+\end{equation}
+%
+If we consider situation where both sources have identical PSFs $q(x)$, we get the intensity $\lambda_k$ in the pixel $k$ by integration of the intensity distribution $\lambda(x)$ over the area of the pixel $\Gamma_k$:
+%
+\begin{equation}
+	\lambda_k=\int_{\Gamma_k}\lambda(x)dx=\int_{\Gamma_k}\Lambda_1q(x-c_1)+\Lambda_2q(x-c_2)dx.
+	\label{eq:intensity pixel}
+\end{equation}
+%
+If we suppose uncorrelated noise between pixels, we get the log-likelihood function for $N$ pixels: 
+%
+\begin{equation}
+	\mathcal{L}=\sum_{k=1}^N\log p(n|\theta)=\sum_{k=1}^N\log\Po\left(n_k;\lambda_k\right)
+	\label{eq:FREM likekihood Poisson}
+\end{equation}
+%
+and from \autoref{eq:Fisher information general} the elements of the Fisher information matrix become (see \autoref{sub: Appendix Fisher-Information-Poisson} for details)
+%
+\begin{equation}
+	I_{ij}(\theta)=\sum_{k=1}^N\frac{1}{\lambda_k}\frac{\partial\lambda_k}{\partial\theta_i}\frac{\partial\lambda_k}{\partial\theta_j}.
+\end{equation}
+%
+By substitution from \autoref{eq:intensity pixel} we get for the individual elements of the Fisher information matrix (see \autoref{app:Resolution limit for the blinking QDs} for details): 
+%
+\begin{alignat}{1}
+	I_{ii} & =\Lambda_i^2\sum_{k=1}^{K}\frac{\left(q'_k(c_i)\right)^2}{f_k(c_1,c_2)}\nonumber\\
+	I_{ij} & =\Lambda_i\Lambda_j\sum_{k=1}^{K}\frac{q'_k(c_i)q'_k(c_j)}{f_k(c_1,c_2)},
+	\label{eq:FI - individual}
 \end{alignat}
 %
-where $q_{n}(d)=\int_{C_{n}}q(x-d)dx$ ($q_{n}(0)=q_{n})$ and $q_{n}'(d)=\int_{C_{n}}\frac{\partial q(x-d)}{\partial x}dx$ ($q'_{n}(0)=q'_{n})$. 
+where $q_k(c_i)$ and $q'_k(c_i)$ are the pixelised versions (pixel area $\Gamma_k$) of the PSF and the derivative, respectively:
+%
+\begin{alignat*}{1}
+	q_k(c_i) & =\int_{\Gamma_k}q(x-c_i)dx\\
+	q'_k(c_i) & =\int_{\Gamma_k}\frac{\partial q(x-c_i)}{\partial x}dx.
+\end{alignat*}
+%
+and $f_k(c_1,c_2)=\Lambda_1q_k(c_1)+\Lambda_2q_k(c_2)$.
 
-As shown in \autoref{sub:Appendix An-alternative-way-Fisher-info} variance defined in \autoref{eq:variance d alternative} have very reasonable behaviour in the limits: the limit $d\rightarrow0$ gives $\text{var}(d)\rightarrow\infty$ for any value $\Lambda_{i}$, $\Lambda_{j}$. The variance is also infinite if one of the sources is zero $\Lambda_{i}=0$ as we do not make any assumption about the symmetry with respect to the origin ($d=c_{1}-c_{2}$). 
+As shown in \autoref{sub:Appendix An-alternative-way-Fisher-info} variance computed from \autoref{eq:FI - individual} have very reasonable behaviour in the limits: the limit $d\rightarrow0$ gives $\var(d)\rightarrow\infty$ for any value of $\Lambda_i$ and $\Lambda_j$. The variance is also infinite if one of the sources is zero $\Lambda_i=0$ as we do not make any assumption about the symmetry with respect to the origin. 
 
-For sources which are well separated $d\rightarrow\infty$ the off-diagonal elements of the Fisher information matrix vanish ($I_{ij}=0\text{ for }i\neq j$) and the variance becomes $\text{var}(d)=\text{var}(c_{1})+\text{var}(c_{2})$ (sum of the variances for localisation of individual sources).
+For sources which are well separated $d\rightarrow\infty$ the off-diagonal elements of the Fisher information matrix vanish ($I_{ij}=0\text{ for }i\neq j$) and the variance becomes $\var(d)=\var(c_1)+\var(c_2)$ (sum of the variances for localisation of individual sources).
 
 \begin{figure}[!h]
 	\centering
@@ -160,40 +184,44 @@ For sources which are well separated $d\rightarrow\infty$ the off-diagonal eleme
 		\tabularnewline
 	\end{tabular}
 
-	\caption{Expected log-likelihood \autoref{eq:Expected log-likelihood} as a function of ${\bf c}=(c_{\text{1}},\, c_{2})$ for different separation $d$ between the two sources (located at ${\bf c}^{true}$). The true sources position is marked with black asterisk. 
+	\caption{Expected log-likelihood \autoref{eq:Expected log-likelihood} as a function of ${\bf c}=(c_{\text{1}},\, c_2)$ for different separation $d$ between the two sources (located at ${\bf c}^{true}$). The true sources position is marked with black asterisk. Movement along the ``top-left to bottom-right'' diagonal represents moving the points in the oposit directions. Movement alogn the ``top-right to bottom-left'' diagonal 
 	\label{fig:Expected-log-likelihood-Surface}}
 \end{figure}
 
-In order to understand the behaviour of the Fisher Information matrix we visualised in \autoref{fig:Expected-log-likelihood-Surface} an expected log-likelihood \autoref{eq:FREM likekihood Poisson} as a function of the parameter ${\bf c}=(c_{1},\, c_{2})$. 
+In order to understand the behaviour of the Fisher Information matrix we visualised (\autoref{fig:Expected-log-likelihood-Surface}) an expected log-likelihood \autoref{eq:FREM likekihood Poisson} as a function of the parameter ${\bf c}=(c_1,\, c_2)$. 
 %
 \begin{equation}
-	\mathbb{E}_{\text{Po}(n;\lambda^{true})}\left[\sum_{p=1}^{N}\log\text{Po}\left(n_{p};\lambda_{p}({\bf c})\right)\right]=\sum_{p=1}^{N}\left(\lambda_{p}^{true}\log\lambda_{p}({\bf c})-\lambda_{p}({\bf c})\right)+A,
+	\E_{p(n|\lambda^{true})}\left[\sum_{k=1}^N\log\Po\left(n_k;\lambda_k({\bf c})\right)\right]=\sum_{k=1}^N\left(\lambda_k^{true}\log\lambda_k({\bf c})-\lambda_k({\bf c})\right)+A,
 	\label{eq:Expected log-likelihood}
 \end{equation}
 %
-where $\lambda^{true}$ is the true intensity profile sources and $A$ is independent on ${\bf c}$. The Fisher Information matrix \autoref{eq:Fisher information general} for ${\bf \theta}=(c_{1},\, c_{2})$ is a Hessian (curvature) of this surface at $(c_{1}^{true},\, c_{2}^{true})$. The parameters from \autoref{tab:Parameters-of-the-simulation} have been used. 
+where $\lambda^{true}$ is the true intensity profile sources and $A$ is independent on ${\bf c}$. 
 
-We can observe that for small, non zero $d$ there is a saddle point for $c_{1}=c_{2}$ (\autoref{fig:Expected-log-likelihood-Surface}\bbb). This settle is less and less pronounces as the separation $d$ gets smaller (\autoref{fig:Expected-log-likelihood-Surface}c) and eventually degenerates into a flat `crest' for $d=0$ (\autoref{fig:Expected-log-likelihood-Surface}d). For $d=0$ $(c_{1}^{true}=c_{2}^{true})$ the Hessian becomes singular as the `crest' is flat in the proximity of ${\bf c}^{true}$ along the diagonal direction $c_{1}=c_{2}$ and the variance $\text{var}(d)$ diverges.
+The Fisher Information matrix \autoref{eq:Fisher information general} is a Hessian (curvature) of the surface at $(c_1^{true},\, c_2^{true})$. For large separation of sources \autoref{fig:Expected-log-likelihood-Surface}\aaa\ there is a sharp maximum at $\bm{c}^{true}=(c_1^{true},\, c_2^{true})$. Note that there are two maxima as the points are interchangable. 
 
+For small, non zero $d$ there is a saddle point for $c_1=c_2$ (\autoref{fig:Expected-log-likelihood-Surface}\bbb). This settle is less and less pronounces as the separation $d$ gets smaller (\autoref{fig:Expected-log-likelihood-Surface}c) and eventually degenerates into a flat `crest' for $d=0$ (\autoref{fig:Expected-log-likelihood-Surface}d). For $d=0$ $(c_1^{true}=c_2^{true})$ the Hessian becomes singular as the `crest' is flat in the proximity of ${\bf c}^{true}$ along the diagonal direction $c_1=c_2$ and the variance $\var(d)$ diverges.
 
-\subsection{FREM for blinking sources}
+%==========================================
+%==========================================
 
-One of the fundamental questions is whether the fluorescence intermittency (QD blinking) allows for higher resolution compared to the situation when the sources remains static over time. To address this question we assume a simple model of Poisson distributed data with mean values $\lambda_{n}$ shown in \autoref{eq:Mean value of hte Poisson process}. We assume the intensity vector of the two sources $\bm{\Lambda}=(\Lambda_{1},\Lambda_{2})$ to be a random variable distributed over four distinctive states
+\section{FREM for blinking sources}
+
+One of the fundamental questions is whether the fluorescence intermittency (QD blinking) allows for higher resolution compared to the situation when the sources remains static over time. To address this question we assume a simple model of Poisson distributed data with mean values $\lambda_n$ shown in \autoref{eq:intensity pixel}. We assume the intensity vector of the two sources $\bm{\Lambda}=(\Lambda_1,\Lambda_2)$ to be a random variable distributed over four distinctive states
 %
 \begin{equation}
-	\left\{ \bm{\Lambda}^{1}=(\Lambda_{1},0),\,\bm{\Lambda}^{2}=(0,\Lambda_{2}),\,\bm{\Lambda}^{3}=(\Lambda_{1},\Lambda_{2}),\,\bm{\Lambda}^{4}=(0,0)\right\} .
+	\left\{ \bm{\Lambda}^1=(\Lambda_1,0),\,\bm{\Lambda}^2=(0,\Lambda_2),\,\bm{\Lambda}^3=(\Lambda_1,\Lambda_2),\,\bm{\Lambda}^4=(0,0)\right\} .
 \end{equation}
 %
 This simulates a simple blinking model of two QDs. If the state of $\bm{\Lambda}$ were known we would write the likelihood function as 
 %
 \begin{equation}
-	l(\theta)=p(n,\bm{\Lambda}|\theta)=\prod_{p=1}^{N}p(n_{p}|\theta,\bm{\Lambda})p(\bm{\Lambda}),
+	l(\theta)=p(n,\bm{\Lambda}|\theta)=\prod_{k=1}^Np(n_k|\theta,\bm{\Lambda})p(\bm{\Lambda}),
 \end{equation}
 %
 and the expected Fisher information matrix would become (\autoref{sub:Appendix: Time-distribution - Cheating})
 %
 \begin{equation}
-	I(\theta)=\sum_{i=1}^{4}p(\bm{\Lambda}^{i})\sum_{p=1}^{N}\frac{1}{\lambda_{p}(\theta,\bm{\Lambda}^{i})}\left(\frac{\partial\lambda_{p}(\theta,\bm{\Lambda}^{i})}{\partial\theta}\right)^{2},\label{eq:Fisher Information Blinking Cheating}
+	I(\theta)=\sum_{i=1}^4p(\bm{\Lambda}^i)\sum_{k=1}^N\frac{1}{\lambda_k(\theta,\bm{\Lambda}^i)}\left(\frac{\partial\lambda_k(\theta,\bm{\Lambda}^i)}{\partial\theta}\right)^2,\label{eq:Fisher Information Blinking Cheating}
 \end{equation}
 %
 which is the expectation value (with respect to the states $\bm{\Lambda}$) of the Fisher information matrix \autoref{eq:Fisher Information Static}. 
@@ -201,65 +229,69 @@ which is the expectation value (with respect to the states $\bm{\Lambda}$) of th
 However, we assume that the variable $\bm{\Lambda}$ is fully described by the probability $p(\bm{\Lambda})$ over the states. The exact state in each situation is unknown. Therefore we have to integrate over $\bm{\Lambda}$ and the likelihood function is then
 %
 \begin{equation}
-	l(\theta)=\prod_{p=1}^{N}p(n_{p}|\theta)=\prod_{p=1}^{N}\sum_{i=1}^{4}p(n_{p},\bm{\Lambda}^{i}|\theta)=\prod_{p=1}^{N}\sum_{i=1}^{4}p(n_{p}|\theta,\bm{\Lambda}^{i})p(\bm{\Lambda}^{i}).
+	l(\theta)=\prod_{k=1}^Np(n_k|\theta)=\prod_{k=1}^N\sum_{i=1}^4p(n_k,\bm{\Lambda}^i|\theta)=\prod_{k=1}^N\sum_{i=1}^4p(n_k|\theta,\bm{\Lambda}^i)p(\bm{\Lambda}^i).
 	\label{eq:FREM likelihood Lanbda integrated out}
 \end{equation}
 %
 This complicates the evaluation of the Fisher information matrix \autoref{eq:Fisher information general} because of the summation within the logarithm in the log-likelihood
 %
 \begin{equation}
-	\mathcal{L}(\theta)=\log l(\theta)=\sum_{p}\log\sum_{i=1}^{4}p(n_{p}|\theta,\bm{\Lambda}^{i})p(\bm{\Lambda}^{i}).
+	\mathcal{L}(\theta)=\log l(\theta)=\sum_k\log\sum_{i=1}^4p(n_k|\theta,\bm{\Lambda}^i)p(\bm{\Lambda}^i).
 \end{equation}
 %
-In \autoref{sub:Appendix Time-distribution-Integrating out} we show that the Fisher information matrix for $p(\bm{\Lambda}^{i})=\frac{1}{4}$ for all $i$ is given by
+In \autoref{sub:Appendix Time-distribution-Integrating out} we show that the Fisher information matrix for $p(\bm{\Lambda}^i)=\frac{1}{4}$ for all $i$ is given by
 %
-\begin{alignat}{1}
-	I_{rs}(\theta) & =\sum_{p=1}^{N}\mathbb{E}_{p}\left[\frac{\left(\sum_{i=1}^{4}\frac{\partial\textrm{Po}(\textrm{\ensuremath{\lambda}}_{p}^{i})}{\partial c_{r}}\right)\left(\sum_{l=1}^{4}\frac{\partial\textrm{Po}(\textrm{\ensuremath{\lambda}}_{p}^{l})}{\partial c_{s}}\right)}{\left(\sum_{j=1}^{4}\textrm{Po}(\lambda_{p}^{j})\right)^{2}}\right],
+\begin{equation}
+	I_{rs}(\theta) =\sum_{k=1}^N\E_k\left[\frac{\left(\sum_{i=1}^4\frac{\partial\Po(\lambda_k^i)}{\partial c_r}\right)\left(\sum_{l=1}^4\frac{\partial\Po(\lambda_k^l)}{\partial c_s}\right)}{\left(\sum_{j=1}^4\Po(\lambda_k^j)\right)^2}\right],
 	\label{eq:Fisher Information Blinking Integrating Out}
-\end{alignat}
+\end{equation}
 %
-where $\lambda_{p}^{i}=\lambda_{p}(\bm{\Lambda}^{i})$ is the mean intensity in the $p$th pixel when $\bm{\Lambda}$ is in the state $\bm{\Lambda}^{i}$. $\mathbb{E}_{p}\left[.\right]$ represents the expectation value with respect to $p(n_{p}|\theta)$ in \autoref{eq:FREM likelihood Lanbda integrated out}.
+where $\lambda_k^i=\lambda_k(\bm{\Lambda}^i)$ is the mean intensity in the $k$th pixel when $\bm{\Lambda}$ is in the state $\bm{\Lambda}^i$. $\E_k\left[.\right]$ represents the expectation value with respect to $p(n_k|\theta)$ in \autoref{eq:FREM likelihood Lanbda integrated out}.
 
 Expressing the derivatives and the expectation value gives
 %
-\begin{equation}
-	I_{rs}(\theta)=\frac{1}{2}\sum_{p=1}^{N}\left(\frac{\partial\lambda_{p}^{r}}{\partial c_{r}}\right)\left(\frac{\partial\lambda_{p}^{s}}{\partial c_{s}}\right)\sum_{n_{p}\geq0}\left[\frac{\left(\sum_{i=\{r,3\}}\mathrm{Po}(n_{p};\lambda_{p}^{i})\frac{(n_{p}-\lambda_{p}^{i})}{\lambda_{p}^{i}}\right)\left(\sum_{i=\{s,3\}}\mathrm{Po}(n_{p};\lambda_{p}^{i})\frac{(n_{p}-\lambda_{p}^{i})}{\lambda_{p}^{i}}\right)}{\sum_{j=1}^{4}\textrm{Po}(n_{p};\lambda_{p}^{j})}\right].
-\end{equation}
+\begin{alignat}{2}
+	I_{rs}(\theta)&=\frac{1}{2}\sum_{k=1}^N\left(\frac{\partial\lambda_k^r}{\partial c_r}\right)\left(\frac{\partial\lambda_k^s}{\partial c_s}\right)\times\\
+	&\times \sum_{n_k\geq0}\left[\frac{\left(\sum_{i=\{r,3\}}\Po(n_k;\lambda_k^i)\frac{(n_k-\lambda_k^i)}{\lambda_k^i}\right)\left(\sum_{i=\{s,3\}}\Po(n_k;\lambda_k^i)\frac{(n_k-\lambda_k^i)}{\lambda_k^i}\right)}{\sum_{j=1}^4\Po(n_k;\lambda_k^j)}\right].
+\end{alignat}
 
-In \autoref{sub:Appendix Time-distribution-Integrating out} we show that the limit $d\rightarrow0$ gives $\text{var}(d)\rightarrow\infty$ and the limit $d\rightarrow\infty$ gives $\text{var}(d)=\frac{1}{I_{11}}+\frac{1}{I_{22}}$. It is also shown that for the the limit $d\rightarrow\infty$ the variance in the static case $\text{var}^{\text{static}}(d)$ is a lower bound for the blinking case: $\text{var}(d)>\text{var}^{\text{static}}(d)$. This assumes that the total number of detected photons is equal for static and blinking case. 
+In \autoref{sub:Appendix Time-distribution-Integrating out} we show that the limit $d\rightarrow0$ gives $\var(d)\rightarrow\infty$ and the limit $d\rightarrow\infty$ gives $\var(d)=\frac{1}{I_{11}}+\frac{1}{I_{22}}$. It is also shown that for the the limit $d\rightarrow\infty$ the variance in the static case $\var^{\text{static}}(d)$ is a lower bound for the blinking case: $\var(d)>\var^{\text{static}}(d)$. This assumes that the total number of detected photons is equal for static and blinking case. 
 
-\subsection{Simulations} 
+%==========================================
+%==========================================
 
-We made a numerical computation of the $\text{var}(d)$ for two sources with equal intensity $\Lambda_{1}=\Lambda_{2}=\Lambda$. The parameters of the simulated sources are shown in \autoref{tab:Parameters-of-the-simulation}. We kept the total intensity (total photon count) equal for both static and the blinking case.
+\section{Simulations} 
+
+We made a numerical computation of the $\var(d)$ for two sources with equal intensity $\Lambda_1=\Lambda_2=\Lambda$. The parameters of the simulated sources are shown in \autoref{tab:Parameters-of-the-simulation}. We kept the total intensity (total photon count) equal for both static and the blinking case.
 
 In the static case \autoref{eq:variance d alternative} the variance scales linearly with $1/\Lambda$ 
+%
 \begin{equation}
-	\text{var}^{\text{static}}(d)\propto\frac{1}{\Lambda}
+	\var^{\text{static}}(d)\propto\frac{1}{\Lambda}
 \end{equation}
-
+%
 as each entry of the Fisher information matrix $I_{pq}\propto\Lambda$ (\autoref{eq:Fisher Information Static}).
 
-In the blinking case \autoref{eq:Fisher Information Blinking Integrating Out} the dependency on $\Lambda$ is complicated as the expectation in \autoref{eq:Fisher Information Blinking Integrating Out} cannot be simplified and $\text{var}(d)$ depends on $\Lambda$ through the parameter $\lambda_{p}^{i}(\Lambda)$ of the Poisson distribution in \autoref{eq:Fisher Information Blinking Integrating Out}. This gives rise to a non-linear relationship between $\text{var}(d)$ and $\Lambda$.
-
+In the blinking case \autoref{eq:Fisher Information Blinking Integrating Out} the dependency on $\Lambda$ is complicated as the expectation in \autoref{eq:Fisher Information Blinking Integrating Out} cannot be simplified and $\var(d)$ depends on $\Lambda$ through the parameter $\lambda_k^i(\Lambda)$ of the Poisson distribution in \autoref{eq:Fisher Information Blinking Integrating Out}. This gives rise to a non-linear relationship between $\var(d)$ and $\Lambda$.
+%
 \begin{figure}[!h]
 	\centering
 	\newcommand{\wf}{.49\textwidth}
 	\subfloat[FREM (fixed background 100 photons)]{\includegraphics[width=\wf]{\qd T1/images/ComarisonStaticVsBlinking_PSF2D_FREM_bg100_b}}
-	\subfloat[FREM (fixed $\Lambda=10^{3}$ photons)]{\includegraphics[width=\wf]{\qd T1/images/ComarisonStaticVsBlinking_PSF2D_FREM_Lambda1000_differentBg}}
+	\subfloat[FREM (fixed $\Lambda=10^3$ photons)]{\includegraphics[width=\wf]{\qd T1/images/ComarisonStaticVsBlinking_PSF2D_FREM_Lambda1000_differentBg}}
 	
-	\caption{Left: FREM ($\sqrt{\text{var}(d)}$) for fixed background $100$ photons and different intensities $\Lambda$ of the sources. Right: FREM for fixed sources intensity $\Lambda=10^{3}$ photons and different background levels. Solid lines correspond to the blinking situation \autoref{eq:Fisher Information Blinking Integrating Out}, dashed lines correspond the static situation \autoref{eq:Fisher Information Static}. 
+	\caption{Left: FREM ($\sqrt{\var(d)}$) for fixed background $100$ photons and different intensities $\Lambda$ of the sources. Right: FREM for fixed sources intensity $\Lambda=10^3$ photons and different background levels. Solid lines correspond to the blinking situation \autoref{eq:Fisher Information Blinking Integrating Out}, dashed lines correspond the static situation \autoref{eq:Fisher Information Static}. 
 	\label{fig:Comparison Fisher-informaton and variance}}
 \end{figure}
 
-
 The comparison of the blinking and the static case for three different values of the mean source intensity $\Lambda$ is shown in \autoref{fig:Comparison Fisher-informaton and variance}\aaa. In this figure the background intensity was fixed to $bg=100$~photons. The intensity of the blinking sources was set to $2\Lambda$ to keep the mean number of detected photons constant for the static and the blinking case (the blinking sources are on average `ON' only half of the time and so the average intensity is $\Lambda$). 
 
-\autoref{fig:Comparison Fisher-informaton and variance}\bbb compares the blinking and the static situation for sources with $\Lambda=10^{3}$~photons ($2\cdot10^{3}$~photons for blinking case) with three different background levels.
+\autoref{fig:Comparison Fisher-informaton and variance}\bbb compares the blinking and the static situation for sources with $\Lambda=10^3$~photons ($2\cdot10^3$~photons for blinking case) with three different background levels.
 
 \begin{figure}%
 	\centering	
 	\includegraphics[scale=.45]{\qd T1/images/FractionStatBlink_2DPSF_bg100}	
-	\caption{Ratio $r=\sqrt{\text{var}^{\text{static}}(d)/\text{var}(d)}$ for
+	\caption{Ratio $r=\sqrt{\var^{\text{static}}(d)/\var(d)}$ for
 	different intensity $\Lambda$ and fixed background $100$ photons
 	(as in \autoref{fig:Comparison Fisher-informaton and variance}\aaa).
 	The blinking situation gives smaller variance (higher localisation
@@ -267,7 +299,7 @@ The comparison of the blinking and the static case for three different values of
 	\label{fig:Comparison variances ration} }
 \end{figure}
 
-Ratio of the localisation precision for the static and the blinking situation $r=\sqrt{\text{var}^{\text{static}}(d)/\text{var}(d)}$ from \autoref{fig:Comparison Fisher-informaton and variance}\aaa is shown in \autoref{fig:Comparison variances ration}. For closely separated sources ($d<50$~nm$\ \sim\ 0.5$ pixel) with high signal to noise ratio (bright sources and low background $bg<100$) the blinking allows for higher localisation precision. For sources emerged in high background ($bg\sim\Lambda$) the static sources are preferable even for small separation (blue curve in \autoref{fig:Comparison variances ration}). However, this setting corresponds to extremely noisy data \autoref{fig:effect of the background and illustration of the noisy sources with backgroud}e with very high variance of the localisation estimation ($\sqrt{\text{var}(d)}\sim d$). 
+Ratio of the localisation precision for the static and the blinking situation $r=\sqrt{\var^{\text{static}}(d)/\var(d)}$ from \autoref{fig:Comparison Fisher-informaton and variance}\aaa is shown in \autoref{fig:Comparison variances ration}. For closely separated sources ($d<50$~nm$\ \sim\ 0.5$ pixel) with high signal to noise ratio (bright sources and low background $bg<100$) the blinking allows for higher localisation precision. For sources emerged in high background ($bg\sim\Lambda$) the static sources are preferable even for small separation (blue curve in \autoref{fig:Comparison variances ration}). However, this setting corresponds to extremely noisy data \autoref{fig:effect of the background and illustration of the noisy sources with backgroud}e with very high variance of the localisation estimation ($\sqrt{\var(d)}\sim d$). 
 
 The region of $d$ over which the blinking is preferable to the static case depends both on the source intensity and the background levels. The higher the signal to noise ratio the larger the region over which the blinking gives higher localisation precision. For large separations the static sources give smaller variance. In this regime the variance for the static sources provides the lower bound on the blinking case as shown in \autoref{sub:Appendix Time-distribution-Integrating out}.
 
@@ -278,28 +310,31 @@ The region of $d$ over which the blinking is preferable to the static case depen
 		\noindent 
 		\centering
 		\begin{tabular}{cc}
-			\subfloat[$\Lambda=10^{3}$ photons, $d=40$ nm]{\includegraphics[scale=\sizefa]{\qd T1/images/EffectOfTheBackground_int1000_d4}}
+			\subfloat[$\Lambda=10^3$ photons, $d=40$ nm]{\includegraphics[scale=\sizefa]{\qd T1/images/EffectOfTheBackground_int1000_d4}}
 			
 			& \begin{minipage}[7.6cm]{10.5cm}
 			\vspace*{-7cm}
 			\subfloat[$bg=0$]{\includegraphics[scale=\sizef]{\qd T1/images/twoSources_Sep1_int1000_bg0_sep4}}
-			\subfloat[ $bg=10^{2}$]{\includegraphics[scale=\sizef]{\qd T1/images/twoSources_Sep1_int1000_bg100_sep4}}
+			\subfloat[ $bg=10^2$]{\includegraphics[scale=\sizef]{\qd T1/images/twoSources_Sep1_int1000_bg100_sep4}}
 			
-			\subfloat[$bg=5\cdot10^{2}$]{\includegraphics[scale=\sizef]{\qd T1/images/twoSources_Sep1_int1000_bg500_sep4}}
-			\subfloat[$bg=10^{3}$]{\includegraphics[scale=\sizef]{\qd T1/images/twoSources_Sep1_int1000_bg1000_sep4}}
+			\subfloat[$bg=5\cdot10^2$]{\includegraphics[scale=\sizef]{\qd T1/images/twoSources_Sep1_int1000_bg500_sep4}}
+			\subfloat[$bg=10^3$]{\includegraphics[scale=\sizef]{\qd T1/images/twoSources_Sep1_int1000_bg1000_sep4}}
 			\end{minipage}
 							
 		\end{tabular}
-	\caption{(a) Localisation precision for different background levels (two sources separated by 40~nm with equal intensities $\Lambda=10^{3}$ photons). (b-e) Simulated static sources ($\Lambda=10^{3}$ photons) separated by 40~nm with background levels $0$, $10^{2}$, $5\cdot10^{2}$ and $10^{3}$ photons, respectively. Simulated images were corrupted with Poisson noise.}	
+	\caption{(a) Localisation precision for different background levels (two sources separated by 40~nm with equal intensities $\Lambda=10^3$ photons). (b-e) Simulated static sources ($\Lambda=10^3$ photons) separated by 40~nm with background levels $0$, $10^2$, $5\cdot10^2$ and $10^3$ photons, respectively. Simulated images were corrupted with Poisson noise.}	
 	\label{fig:effect of the background and illustration of the noisy sources with backgroud}
 \end{figure}
 
 
-Localisation precision $\sqrt{\text{var}(d)}$ for two sources separated by 40~nm with equal intensities $\Lambda=10^{3}$ photons for different background levels is shown in \autoref{fig:effect of the background and illustration of the noisy sources with backgroud}\aaa. This graph correspond to two sources separated by $d=40$~nm with $\Lambda=10^{3}$~photons ($2\Lambda$ for blinking case). For lower background ($bg<200$) the blinking sources allow higher localisation precision (lower $\text{var}(d)$). Illustration of this data with different background levels is shown in \autoref{fig:effect of the background and illustration of the noisy sources with backgroud}b-e. 
+Localisation precision $\sqrt{\var(d)}$ for two sources separated by 40~nm with equal intensities $\Lambda=10^3$ photons for different background levels is shown in \autoref{fig:effect of the background and illustration of the noisy sources with backgroud}\aaa. This graph correspond to two sources separated by $d=40$~nm with $\Lambda=10^3$~photons ($2\Lambda$ for blinking case). For lower background ($bg<200$) the blinking sources allow higher localisation precision (lower $\var(d)$). Illustration of this data with different background levels is shown in \autoref{fig:effect of the background and illustration of the noisy sources with backgroud}b-e. 
 
-\subsection{Conclusions} 
+%==========================================
+%==========================================
 
-The alternative derivation of the FREM provides correction to the formula published in \cite{Ram2006}. Results presented in \autoref{fig:Comparison Fisher-informaton and variance} suggest that the in certain setting (bright sources low background) the blinking sources can significantly increase the localisation precision compared to the static situation. This effect is stronger for close ($d<50\ \text{nm}$) and bright ($\Lambda>1000\ \text{photons}$) sources with lower background levels ($bg<100$). This corresponds to a realistic setting for QD data (simulated data shown in \autoref{fig:effect of the background and illustration of the noisy sources with backgroud}c). For well separated sources ($d\rightarrow\infty$ limit) the static situation provides lower bound for the localisation precision. 
+\section{Conclusions} 
+
+The alternative derivation of the FREM provides correction to the formula published in \cite{Ram2006}. Results presented in \autoref{fig:Comparison Fisher-informaton and variance} suggest that the in certain setting (bright sources low background) the blinking sources can significantly increase the localisation precision compared to the static situation. This effect is stronger for close ($d<50\ \text{nm}$) and bright ($\Lambda>1000\ \text{photons}$) sources with lower background levels ($bg<100$). This corresponds to a realistic setting for QD data (simulated data shown in \autoref{fig:effect of the background and illustration of the noisy sources with backgroud}\ccc). For well separated sources ($d\rightarrow\infty$ limit) the static situation provides lower bound for the localisation precision. 
 
 The regions where the blinking is preferable to the static case depends on the intensity of the sources (\autoref{fig:Comparison Fisher-informaton and variance}\aaa) as well as on the background levels (\autoref{fig:Comparison Fisher-informaton and variance}\bbb). Background have a large impact on the localisation precision as shown in \autoref{fig:effect of the background and illustration of the noisy sources with backgroud} and it is desirable to keep is as low as possible. In practice a large proportion of the background intensity comes from the out of focus light. Typically TIRF (Total Internal Reflection Fluorescent microscopy) illumination of the sources is used to reduce the out-of-focus blur. However, different techniques such as local illumination of the sample can be used. 
 
