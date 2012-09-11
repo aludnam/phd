@@ -36,32 +36,13 @@ We address these question by examining the \CR lower bound for the variance of t
 %==========================================
 %==========================================
 
-\section{\CR lower bound}
-
-If $\mathcal{L}(\theta)=\log p(x|\theta)$ is a log-likelihood function for data $X$, then a covariance matrix $\bm{Q}$ of an unbiased estimator of $\hat{\theta}$ is bounded by \cite{Rao1945,Cover1991} 
-%
-\begin{equation}
-	\bm{Q}\geq\bm{I}^{-1}(\theta),
-	\label{eq:Covariance vs Fisher information}
-\end{equation}
-%
-where $\bm{I}(\bm{\theta})$ is the Fisher information matrix 
-%
-\begin{equation}
-	I_{ij}(\bm{\theta})=-\E\left[\frac{\partial^2\mathcal{L}}{\partial\theta_i\partial\theta_j}\right]=\E\left[\frac{\partial\mathcal{L}}{\partial\theta_i}\frac{\partial\mathcal{L}}{\partial\theta_j}\right].
-	\label{eq:Fisher information general}
-\end{equation}
-
-The inequality \autoref{eq:Covariance vs Fisher information} is in the sense that $\bm{Q}-\bm{I}^{-1}(\theta)$ is a non-negative definite matrix.
-
-%==========================================
-%==========================================
-
 \section{Fundamental resolution measure (FREM)}
 
 For the stanard LM techniques such as PALM and STORM \cut{(\autoref{sub:PALM,-STORM})} the spatial resolution limit is determined by the localisation precision for an individual source, because only individual, well separated sources are considered for localisation. 
 
-The \CR lower bound for the position estimation of a single source detected by a CCD camera is derived in \cite{Ram2006,Ram2006b}. The variance is shown to be proportional to $1/\Lambda$ where $\Lambda$ is the number of photons emitted by the source. A fundamental resolution measure (FREM) for two sources separated by a distance $d$ is shown as an alternative to the classical resolution criterion (radius $\delta$ of an Airy disk) considering the photon statistics on the detector (CCD camera). Fisher information is derived as
+The \CR lower bound for the position estimation of a single source detected by a CCD camera is derived in \cite{Ram2006,Ram2006b}. The variance is shown to be proportional to $1/\Lambda$, where $\Lambda$ is the number of photons emitted by the source. 
+
+A fundamental resolution measure (FREM) for two sources separated by a distance $d$ is shown as an alternative to the classical resolution criterion (radius $\delta$ of an Airy disk) considering the photon statistics on the detector (CCD camera). Fisher information is derived as
 %
 \begin{equation}
 	I(d)=\frac{1}{4}\sum_{k=1}^N\frac{\left[\Lambda_1q_k'(-\frac{d}{2})-\Lambda_2q_k'(\frac{d}{2})\right]^2}{\Lambda_1q_k(-\frac{d}{2})+\Lambda_2q_k(\frac{d}{2})+b},
@@ -85,6 +66,28 @@ These problems stem from the fact that the response functions of the sources are
 %==========================================
 %==========================================
 
+\section{\CR lower bound}
+
+If $\mathcal{L}(\theta)=\log p(x|\theta)$ is a log-likelihood function for data $X$, then a covariance matrix $\bm{Q}$ of an unbiased estimator of $\hat{\theta}$ is bounded by \cite{Rao1945,Cover1991} 
+%
+\begin{equation}
+	\bm{Q}\geq\bm{I}^{-1}(\theta),
+	\label{eq:Covariance vs Fisher information}
+\end{equation}
+%
+where $\bm{I}(\bm{\theta})$ is the Fisher information matrix 
+%
+\begin{equation}
+	I_{ij}(\bm{\theta})=-\E\left[\frac{\partial^2\mathcal{L}}{\partial\theta_i\partial\theta_j}\right]=\E\left[\frac{\partial\mathcal{L}}{\partial\theta_i}\frac{\partial\mathcal{L}}{\partial\theta_j}\right].
+	\label{eq:Fisher information general}
+\end{equation}
+
+The inequality \autoref{eq:Covariance vs Fisher information} is in the sense that $\bm{Q}-\bm{I}^{-1}(\theta)$ is a non-negative definite matrix.
+
+
+%==========================================
+%==========================================
+
 \section{An alternative derivation of the FREM\label{sub:An-alternative-derivation-FREM}} 
 
 To fix the problems with \autoref{eq:Ram FREM} we derived an alternative FREM formula. (The details of the derivation are in \autoref{app:Resolution limit for the blinking QDs}). The difference between the original and our proposed FREM is demonstratd on simulated data in \autoref{sec:FREM results}.
@@ -101,7 +104,7 @@ We assume two sources located at positions $c_1$ and $c_2$ with intensities $\La
 where $\bm{Q}$ is the covariance matrix with lower bound given by the inverse of the Fisher information matrix $\bm{I}^{-1}(\theta)$: 
 %
 \begin{equation}
-	\bm{Q}\geq\bm{I}^{-1}(\theta)=\frac{1}{I_{11}I_{12}-I_{12}^2}\left(
+	\bm{Q}\geq\bm{I}^{-1}(\theta)=\frac{1}{I_{11}I_{22}-I_{12}^2}\left(
 	\begin{array}{cc}
 		I_{22} & -I_{12}\\
 		-I_{12} & I_{11}
@@ -112,7 +115,7 @@ where $\bm{Q}$ is the covariance matrix with lower bound given by the inverse of
 Expressing the elements of the covariance matrix $\bm{Q}$ from \autoref{eq:inverse I} and substitution to \autoref{eq:var d from Q} gives the expression for $\var(d)$ from the elements of the Fisher information matrix
 %
 \begin{equation}
-	\var(d)=Q_{11}+Q_{22}-2Q_{12}=\frac{I_{11}+I_{22}+2I_{12}}{I_{11}I_{12}-I_{12}^2}.
+	\var(d)=Q_{11}+Q_{22}-2Q_{12}=\frac{I_{11}+I_{22}+2I_{12}}{I_{11}I_{22}-I_{12}^2}.
 	\label{eq:variance d alternative}
 \end{equation}
 
@@ -258,11 +261,11 @@ In \autoref{sub:Appendix Time-distribution-Integrating out} we show that the lim
 \section{Simulations\label{sec:FREM simulations}} 
 We made a comparison of the origional FREM formula \autoref{eq:Ram FREM}, our proposed fixed FREM formula \autoref{eq:FI - individual}, describing situation for static sources and FREM for sources with intermittent intensity \autoref{eq:FI-blinking}.
 
-The simulations were made for $625\unit{nm}$ emission light wavelenthg and $1.2\unit{NA}$ numerical apperture of the microcope. Pixelisation was considered for image with $80\times80\unit{nm}$ pixels. Various intensity of the emitters $\Lambda_i$ and pixel background levels $b$ were considered. We considered the two sources of equal strength $\Lambda_1=\Lambda_2=\Lambda$.
+The simulations were made for $625\unit{nm}$ emission light wavelenthg and $1.2\unit{NA}$ numerical apperture of the microcope. Pixelisation was considered for image with $80\times80\unit{nm}$ pixels. Various intensity of the emitters $\Lambda_i$ and pixel background levels $b$ were considered.
 
 The pixelised version $q_k(c_i)$ of the continuous PSF $q(x-c_i)$ and the corresponding derivatives $q'_k(c_i)$ from \autoref{eq:Ram FREM} and \autoref{eq:FI - individual} were computed by summing $10\times10$ pixels of $10\times$ oversampled images. The pixelised $\lambda^\alpha_k$ in \autoref{eq:Fisher Information Blinking Integrating Out} was computed in similar way. 
 
-Expecation values in \autoref{eq:Fisher Information Blinking Integrating Out} were evaluated using expression \autoref{eq:FI-blinking}. The set of images for a range $n_k=[0..n_{max}]$ was computed to performe the summation $\sum_{n_k\geq0}$. The value of $n_{max}$ was set such that the Poisson cumulative distribution function $F$ for the maximum intensity $\max_{k,\alpha}\lambda_k^\alpha$ satisfies $F(n>n_{max})>1-t$ with $t=10^{-6}$. \fixme{comment of compariosn of blinking and the static situatiotn  - bg and int}
+Expecation values in \autoref{eq:Fisher Information Blinking Integrating Out} were evaluated using expression \autoref{eq:FI-blinking}. The set of images for a range $n_k=[0..n_{max}]$ was computed to performe the summation $\sum_{n_k\geq0}$. The value of $n_{max}$ was set such that the Poisson cumulative distribution function $F$ for the maximum intensity $\max_{k,\alpha}(\lambda_k^\alpha)$ satisfies $F(n>n_{max})>1-t$ with $t=10^{-6}$. \fixme{comment of compariosn of blinking and the static situatiotn  - bg and int}
 
 %==========================================
 %==========================================
@@ -271,22 +274,27 @@ Expecation values in \autoref{eq:Fisher Information Blinking Integrating Out} we
 
 %==========================================
 \subsection{Comparison of the original and proposed FREM formula}
-We made a comparison of the original \autoref{eq:Ram FREM} and our proposed FREM formula \autoref{eq:FI - individual} for static sources. The sources $s_i$ with equal strength were represented with an in-foucs PSF centered at $c_i$.  Three different intensities of the sources ($\Lambda=500,\,3000$ and $5000$ photons) were considered. We used homogeneous background $b=100\unit{photons/pixel}$. 
-
-\begin{figure}[!h]
+%
+\begin{figure}[!hbt]
 	\centering
 	\newcommand{\wf}{.49\textwidth}
 	\begin{tabular}{cc}
 		\subfloat[FREM (fixed background 100 photons)]{\includegraphics[width=\wf]{\qd gFREM/images/FREM_statVsRAM_bg100fix}}
 		&\subfloat[ratio]{\includegraphics[width=\wf]{\qd gFREM/images/FREM_staticVsRAM_ratio_bg100fix}}
 	\end{tabular}	
-	\caption{(a) Comparison of the original FREM formula \autoref{eq:Ram FREM} (dashed line) and our proposed FREM formula \autoref{eq:FI - individual} (solid line). Black dotted curve corresponds to FREM=$d$. This would be a straight line with unit gradient in a linear plot. (b) Ratio of the curves showing how many times is FREM higher for our proposed formula compared to the original formula.} 
+	\caption{(a) Comparison of the original FREM formula \autoref{eq:Ram FREM} (dashed line) and our proposed FREM formula \autoref{eq:FI - individual} (solid line) for two sources with intensities $\Lambda_2=2\Lambda_1$. Black dotted curve corresponds to FREM=$d$. This would be a straight line with unit gradient in a linear plot. (b) Ratio of the curves showing how many times is FREM higher for our proposed formula compared to the original formula. All three curves are identical as the ratio depends only on $\Lambda_1/\Lambda_2$.} 
 	\label{fig:Comparison FREM Ram and fix}
 \end{figure}
-%
-\Autoref{fig:Comparison FREM Ram and fix}\aaa\ shows FREM (square root of the variance) for a range of sources separations evaluated with the original FREM formula \autoref{eq:Ram FREM} (dashed line) and our proposed FREM formula \autoref{eq:FI - individual} (solid line).
+
+We compared the original \autoref{eq:Ram FREM} and our proposed \autoref{eq:FI - individual} FREM formula for two static static sources. It can be shown (see \autoref{app:Resolution limit for the blinking QDs}), that if the sources have equal strength ($\Lambda_1=\Lambda_2$), both formulas give the identical results. However, for inequal sources the FREM values differ significanlty. 
+
+The sources $s_i$ were represented with an in-foucs PSF centered at $c_i$. The intenisity of $s_2$ was set to double of the intensity of $s_1$: $\Lambda_2=2\Lambda_1$. Three different intensity levels of $s_1$ ($\Lambda_1=500,\,3000$ and $10^4$ photons) with homogeneous background $b=100\unit{photons/pixel}$ were considered. 
+
+\Autoref{fig:Comparison FREM Ram and fix}\aaa\ shows FREM (square root of the variance) for a range of sources separations $d$ evaluated with the original FREM formula \autoref{eq:Ram FREM} (dashed line) and our proposed FREM formula \autoref{eq:FI - individual} (solid line).
  
-The original FREM formula consistently underestimate the resloution limit. \Autoref{fig:Comparison FREM Ram and fix}\bbb\ shows the ratio of the curves. The difference is more pronounced for weak sources (blue curves) and gets less significat for bright emitters (red curves). For example, for two sources separated by $d=100\unit{nm}$ with $\Lambda =500\ \unit{photons}$ the original formula gives three times smaller value of FREM, while for the same separation and bright sources wiht $\Lambda =10^4\unit{photons}$ only $1.75\times$ (see \Autoref{fig:Comparison FREM Ram and fix}\bbb). As shown in \autoref{fig:Comparison FREM Ram and fix}\bbb the curves for the originala and our proposed FREM formulas have different course over separations $d$.
+The original FREM formula consistently underestimate the resloution limit and gives finite values even for $d\rightarrow 0$. \Autoref{fig:Comparison FREM Ram and fix}\bbb\ shows the ratio of the curves. It can be shown that for a given distance $d$ the ratio is a function of $\Lambda_1/\Lambda_2$ and is therefore constant for different intinsities of $\Lambda_1$ (see \autoref{fig:Comparison FREM Ram and fix}\bbb), because in our case $\Lambda_1/\Lambda_2=1/2$.
+
+The difference is less significant for larger separation of sources and both formulas converge to the same value in the limit $d\rightarrow \infty$.
 
 %==========================================
 \subsection{FREM for static and blinking sources}
@@ -309,7 +317,7 @@ The original FREM formula consistently underestimate the resloution limit. \Auto
 %
 \Autoref{fig:Comparison Fisher-informaton and variance} compares FREM as a function of separation $d$ for the static \autoref{eq:FI - individual} and the blinking case \autoref{eq:FI-blinking}. To make a fair comparison, we used $\Lambda$ and $b$ values for the intensity and the background, respectively, for the blinking and $\Lambda^{static}=2\Lambda$ and $b^{static}=4b$ for the static case. This is ment to correspond to the situation, when insted of observing all four states of $\lambda^\alpha$ (\autoref{eq:lambda states}) in four different frames, we sum these frames together (make four times longer acquisiton time) for the static case. This gives four times higher backgroud/pixel values and two times higher intensity of each source.
 
-Three different intensities of the sources are considered in a semi-logaritmic plot \autoref{fig:FREM fixed bg}. All curves are computed for a fixed background level $b=100$ photons/pixel. For bright sources (red curves) the blinking (dashed curves) allows for higher precision of the separation $d$ estiamation, when compared to the static situation (dashed curves are under the solid lines). However, as the sources become weaker and more separated, the static situation is preferable. The ratio of the FREM values
+Three different intensities of the sources are considered in a semi-logaritmic plot \autoref{fig:FREM fixed bg}. All curves are computed for a fixed background level $b=100$ photons/pixel. For bright sources (red curves) the blinking (dashed curves) allows for higher precision of the separation $d$ estiamation, when compared to the static situation (dashed curves are under the solid lines). However, as the sources become weaker and more separated, the static situation is preferable (blue curves). The ratio of the FREM values
 %
 \begin{equation}
 	r=\sqrt{\frac{\var^{static}(d)}{\var(d)}}
@@ -317,9 +325,9 @@ Three different intensities of the sources are considered in a semi-logaritmic p
 \end{equation} 
 %
 for the blinking and the static case are shown in \autoref{fig:FREM ratio fixed bg}. Blinking is beneficial in the region where the ratio curves are above one (solid black horizontal line).
-\fixme{comment why d-> infty is better for static 0> brighter sources...)}
+\fixme{comment why d-> infty is better for static 0> brighter sources...}
 
-\Autoref{fig:FREM fixed int} shows the FREM curves for three different background values $b$. The intensity of the sources was set to $\Lambda =3\cdot 10^3$ photons. In this case the blinking is preferable for close sources with low level of background (blue curves) \autoref{fig:FREM ratio fixed int}. 
+\Autoref{fig:FREM fixed int} shows the FREM curves for three different background values $b$. The intensity of the sources was set to $\Lambda =3\cdot 10^3$ photons. In this case the blinking is preferable for close sources with low level of background (blue curves in \autoref{fig:FREM fixed int} and their ratios in  \autoref{fig:FREM ratio fixed int}). 
 
 \begin{figure}[!hbt]
 	\centering
@@ -379,7 +387,7 @@ The comparison of the blinking and the static case for three different values of
 
 \autoref{fig:Comparison Fisher-informaton and variance}\bbb\ compares the blinking and the static situation for sources with $\Lambda=10^3$~photons ($2\cdot10^3$~photons for blinking case) with three different background levels.
 
-For closely separated sources ($d<50$~nm$\ \sim\ 0.5$ pixel) with high signal to noise ratio (bright sources and low background $bg<100$) the blinking allows for higher localisation precision. For sources emerged in high background ($bg\sim\Lambda$) the static sources are preferable even for small separation (blue curve in \autoref{fig:Comparison variances ration}). However, this setting corresponds to extremely noisy data \autoref{fig:effect of the background and illustration of the noisy sources with backgroud}e with very high variance of the localisation estimation ($\sqrt{\var(d)}\sim d$). 
+For closely separated sources ($d<50$~nm$\ \sim\ 0.5$ pixel) with high signal to noise ratio (bright sources and low background $bg<100$) the blinking allows for higher localisation precision. For sources emerged in high background ($bg\sim\Lambda$) the static sources are preferable even for small separation (blue curve in \autoref{fig:FREM ratio fixed bg}). However, this setting corresponds to very noisy data (see \autoref{fig:PSF int bg} for $\Lambda=1000$, $b>100$) with poor localisation estimation precision ($\sqrt{\var(d)}\sim d$, see intersection of blue and black dotted curve in \autoref{fig:FREM fixed bg}). 
 
 The region of $d$ over which the blinking is preferable to the static case depends both on the source intensity and the background levels. The higher the signal to noise ratio the larger the region over which the blinking gives higher localisation precision. For large separations the static sources give smaller variance. In this regime the variance for the static sources provides the lower bound on the blinking case as shown in \autoref{sub:Appendix Time-distribution-Integrating out}.
 

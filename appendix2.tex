@@ -187,7 +187,7 @@ given by generalisation of \autoref{eq:Fisher Info for Poisson}
 The covariance matrix $\bm{Q}$ is then 
 %
 \begin{equation}
-	\bm{Q}=\bm{I}^{-1}(\theta)=\frac{1}{I_{11}I_{12}-I_{12}^2}\left(
+	\bm{Q}=\bm{I}^{-1}(\theta)=\frac{1}{I_{11}I_{22}-I_{12}^2}\left(
 	\begin{array}{cc}
 		I_{22} & -I_{12}\\
 		-I_{12} & I_{11}
@@ -197,7 +197,7 @@ The covariance matrix $\bm{Q}$ is then
 and the variance of $d=c_1-c_2$ 
 %
 \begin{equation}
-	\var(d)=(1,-1)^T\cdot\bm{Q}\cdot(1,-1)=\frac{I_{11}+I_{22}+2I_{12}}{I_{11}I_{12}-I_{12}^2}=\frac{p}{q}
+	\var(d)=(1,-1)^T\cdot\bm{Q}\cdot(1,-1)=\frac{I_{11}+I_{22}+2I_{12}}{I_{11}I_{22}-I_{12}^2}=\frac{p}{r}
 	\label{eq:variance alternative}
 \end{equation}
 
@@ -284,8 +284,8 @@ which is the sum of variances for estimation two separated sources.
 %
 if $q_k(c_i)$ (and $q_k'(c_i)$) have a finite support.
 
-For non-pixelised version, negligible background $b/\Lambda\ll1$ and for Gaussian approximation of the PSF ($q(x-a)\propto\exp\left(-\frac{(x-a)^2}{2\sigma^2}\right)$ (with
-$\sigma=\frac{\sqrt{2}}{2\pi}\frac{\lambda}{NA}$ \cite{Zhang2007}) we have $q'(x)=\frac{1}{\sigma^2}xq(x)$ and $q'^2/q=\frac{1}{\sigma^4}x^2q$ which gives $\int q'^2/qdx=\frac{1}{\sigma^4}\int qx^2=\frac{1}{\sigma^4}\sigma^2=\frac{1}{\sigma^2}$ and therefore $I_{ii}=\frac{\Lambda_i}{\sigma^2}$ 
+For non-pixelised version, negligible background $b/\Lambda\ll1$ and for Gaussian approximation of the PSF ($q(x-a)\propto\exp\left(-\frac{(x-a)^2}{2\sigma^2}\right)$) with
+$\sigma=\frac{\sqrt{2}}{2\pi}\frac{\lambda}{NA}$ (\cite{Zhang2007}) we have $q'(x)=\frac{1}{\sigma^2}xq(x)$ and $q'^2/q=\frac{1}{\sigma^4}x^2q$ which gives $\int q'^2/qdx=\frac{1}{\sigma^4}\int qx^2=\frac{1}{\sigma^4}\sigma^2=\frac{1}{\sigma^2}$ and therefore $I_{ii}=\frac{\Lambda_i}{\sigma^2}$ 
 
 \begin{alignat*}{1}
 	\var(d\rightarrow\infty) & =\sigma^2\left(\frac{1}{\Lambda_1}+\frac{1}{\Lambda_2}\right)
@@ -294,6 +294,25 @@ $\sigma=\frac{\sqrt{2}}{2\pi}\frac{\lambda}{NA}$ \cite{Zhang2007}) we have $q'(x
 \paragraph*{Limit $\Lambda_i=0,\ \Lambda_j\neq0$}
 then $I_{ii}\equiv0$ and $I_{ij}\equiv0$ and so $\det(\bm{I}(\theta))\equiv0$, and matrix is singular. In the limit $\Lambda_i\rightarrow0$ the
 variance \autoref{eq:variance alternative} $\var(d)\rightarrow\infty$. 
+
+
+For equally strong sources ($\Lambda_1= \Lambda_2=\Lambda$) the original FREM formula gives identical results as our proposed one. Due to symmetry we get equality of the diagonal terms $I_{11}=I_{22}$. From \autoref{eq:variance alternative}
+\begin{alignat}{1}
+	\var^{-1}(d)
+	&=\frac{I_{11}^2-I_{12}^2}{2(I_{11}+I_{12})}\nonumber\\
+	&=\frac{1}{2}\left(I_{11}-I_{12}\right)
+\end{alignat}
+%
+From  \autoref{eq:Fisher Information alternative - Individual} we get
+\begin{alignat}{2}
+	\var^{-1}(d)
+	&=\frac{\Lambda}{2}\sum_k\left[\frac{\left(q'_k(c_1)\right)^2-q'_k(c_1)q'_k(c_2)}{q_k(c_1)+q_k(c_2)+b/\Lambda} \right]\nonumber\\
+	&=\frac{\Lambda}{4}\sum_k\left[\frac{\left(q'_k(c_1)-q'_k(c_2)\right)^2}{q_k(c_1)+q_k(c_2)+b/\Lambda} \right],
+\end{alignat}
+% 
+where we used $\sum_k\left(q'_k(c_1)\right)^2=\sum_k\left(q'_k(c_2)\right)^2$. Comparison with \autoref{eq:Fisher Info Pixelised - Ram} shows the equality fo the boht fomula for the situation of equally strong sources $\Lambda_1=\Lambda_2$.
+
+For sources with different intensity $\Lambda_1\neq\Lambda_2$ can be shown that the ratio between the original FREM and our proposed formula for a given distance $d$ is a function of $\Lambda_1/\Lambda_2$. 
 
 %==========================================
 %==========================================
@@ -402,13 +421,20 @@ Then all entries in $I_{pq}$ are equal and the matrix is singular. For the limit
 
 \paragraph*{Limit $d\rightarrow\infty$}
 
-Sources are far apart and $\lambda^1$ and $\lambda^2$ do not have a common overlap. For $k'$ where $\frac{\partial\lambda_{k'}^p}{\partial c_p}\neq0,\,\frac{\partial\lambda_{k'}^q}{\partial c_p}\equiv0$ and $\Po(n_{k'},\lambda_{k'}^3)=\Po(n_{k'},\lambda_{k'}^1)$.
+Sources are far apart and $\lambda^1$ and $\lambda^2$ do not have a common overlap. For $k'$ where $\frac{\partial\lambda_{k'}^p}{\partial c_p}\neq0,\,\frac{\partial\lambda_{k'}^q}{\partial c_p}\equiv0$ and $\Po(n_{k'},\lambda_{k'}^3)=\Po(n_{k'},\lambda_{k'}^1)$. Also $\sum_\alpha\Po(\lambda_k^\alpha)=2\Po(\lambda_k^{\alpha=p})+2\Po(b)$ in the region where $\frac{\partial\lambda^{\alpha=p}}{\partial c_p}\neq 0$.
+
 From \autoref{eq:Fisher Info Integrated Out - diagonal entries} the cross terms vanishes ($I_{pq}=0$ because $\frac{\partial\Po(\lambda^p)}{\partial c_p}\frac{\partial\Po(\lambda^q)}{\partial c_{q}}=0$). The diagonal elements 
 %
 \begin{alignat*}{1}
-	I_{pp} & =\sum_{k=1}^N\E_k\left[\frac{\left(2\frac{\partial\Po(\lambda_k^p)}{\partial c_p}\right)^2}{\left(2\Po(\lambda_k^p)\right)^2}\right]\\
- 	& =\sum_{k=1}^N\E_k\left[\frac{\left(\Po(\lambda_k^p)\frac{\left(n_k-\lambda_k^p\right)}{\lambda_k^p}\frac{\partial\lambda_k^p}{\partial c_p}\right)^2}{\left(\Po(\lambda_k^p)\right)^2}\right]\\
- 	& =\sum_{k=1}^N\left(\frac{1}{\lambda_k^p}\frac{\partial\lambda_k^p}{\partial c_p}\right)^2\E_k\left[\left(n_k-\lambda_k^p\right)^2\right]\\
+	I_{pp} & =\sum_{k=1}^N\E_k\left[\frac{\left(2\frac{\partial\Po(\lambda_k^p)}{\partial c_p}\right)^2}{\left(2\Po(\lambda_k^p)+2\Po(b)\right)^2}\right]\\
+ 	& =\sum_{k=1}^N\E_k\left[\frac{\left(\Po(\lambda_k^p)\frac{\left(n_k-\lambda_k^p\right)}{\lambda_k^p}\frac{\partial\lambda_k^p}{\partial c_p}\right)^2}{\left(\Po(\lambda_k^p)+\Po(b)\right)^2}\right]
+\end{alignat*}
+%
+for $b=0$
+%
+\begin{alignat*}{1}
+	I_{pp} 
+	 &=\sum_{k=1}^N\left(\frac{1}{\lambda_k^p}\frac{\partial\lambda_k^p}{\partial c_p}\right)^2\E_k\left[\left(n_k-\lambda_k^p\right)^2\right]\\
  	& =\sum_{k=1}^N\left(\frac{1}{\lambda_k^p}\frac{\partial\lambda_k^p}{\partial c_p}\right)^2\frac{1}{4}\sum_{n_k\geq0}\left(\sum_{i=1}^4\Po(\lambda_k^\alpha)\left(n_k-\lambda_k^p\right)^2\right)\\
  	& =\sum_{k=1}^N\left(\frac{1}{\lambda_k^p}\frac{\partial\lambda_k^p}{\partial c_p}\right)^2\frac{1}{4}\sum_{n_k\geq0}\left(2\Po(\lambda_k^p)\left(n_k-\lambda_k^p\right)^2\right)\\
  	& =\sum_{k=1}^N\left(\frac{1}{\lambda_k^p}\frac{\partial\lambda_k^p}{\partial c_p}\right)^2\frac{1}{2}\lambda_k^p\\
