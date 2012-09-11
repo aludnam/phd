@@ -304,10 +304,12 @@ The difference is less significant for larger separation of sources and both for
 	\begin{tabular}{cc}
 		\subfloat[FREM (fixed $b=$100 photons)]{\includegraphics[width=\wf]{\qd gFREM/images/FREM_bg100fix}
 		\label{fig:FREM fixed bg}}
+		%For bg=0 the ratio should converge to 1/sqrt(2)=0.7
 		&\subfloat[Ratio of curves form (a)]{\includegraphics[width=\wf]{\qd gFREM/images/FREM_ratio_bg100fix}
 		\label{fig:FREM ratio fixed bg}}\tabularnewline
 		\subfloat[FREM (fixed $\Lambda=3\times10^3$ photons)]{\includegraphics[width=\wf]{\qd gFREM/images/FREM_int3000fix}
 		\label{fig:FREM fixed int}}		
+		%For bg=0 the ratio should converge to 1/sqrt(2)=0.7
 		&\subfloat[Ratio of curves form (c)]{\includegraphics[width=\wf]{\qd gFREM/images/FREM_ratio_int3000fix}
 		\label{fig:FREM ratio fixed int}}
 	\end{tabular}	
@@ -315,7 +317,7 @@ The difference is less significant for larger separation of sources and both for
 	\label{fig:Comparison Fisher-informaton and variance}
 \end{figure}
 %
-\Autoref{fig:Comparison Fisher-informaton and variance} compares FREM as a function of separation $d$ for the static \autoref{eq:FI - individual} and the blinking case \autoref{eq:FI-blinking}. To make a fair comparison, we used $\Lambda$ and $b$ values for the intensity and the background, respectively, for the blinking and $\Lambda^{static}=2\Lambda$ and $b^{static}=4b$ for the static case. This is ment to correspond to the situation, when insted of observing all four states of $\lambda^\alpha$ (\autoref{eq:lambda states}) in four different frames, we sum these frames together (make four times longer acquisiton time) for the static case. This gives four times higher backgroud/pixel values and two times higher intensity of each source.
+\Autoref{fig:Comparison Fisher-informaton and variance} compares FREM as a function of separation $d$ for the static \autoref{eq:FI - individual} and the blinking case \autoref{eq:FI-blinking}. \cut{To make a fair comparison, we used $\Lambda$ and $b$ values for the intensity and the background, respectively, for the blinking and $\Lambda^{static}=2\Lambda$ and $b^{static}=4b$ for the static case. This is ment to correspond to the situation, when insted of observing all four states of $\lambda^\alpha$ (\autoref{eq:lambda states}) in four different frames, we sum these frames together (make four times longer acquisiton time) for the static case. This gives four times higher backgroud/pixel values and two times higher intensity of each source.}
 
 Three different intensities of the sources are considered in a semi-logaritmic plot \autoref{fig:FREM fixed bg}. All curves are computed for a fixed background level $b=100$ photons/pixel. For bright sources (red curves) the blinking (dashed curves) allows for higher precision of the separation $d$ estiamation, when compared to the static situation (dashed curves are under the solid lines). However, as the sources become weaker and more separated, the static situation is preferable (blue curves). The ratio of the FREM values
 %
