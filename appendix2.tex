@@ -324,26 +324,30 @@ For sources with different intensity $\Lambda_1\neq\Lambda_2$ can be shown that 
 
 \section{Time distribution of the intensities - known intensity states in the individual frames\label{sec:Appendix - blinking not integrated}}
 We assume a likelihood dependent on parameter $\bm{\Lambda_t}$ (for example $\bm{\Lambda_t}=(\Lambda_1,\Lambda_2)_t$ - intensty of two sources at frame $t$, $T$ different time slices). If we know the configuration of $\bm{\Lambda^\alpha_t}$ in each frame, then we can write: 
-$
+
 \begin{equation}
-	l_T(\theta,\Lambda)=\prod_{k=1}^K\prod_{t=1}^Tp(n_k|\theta,\Lambda_t)p(\Lambda_t)
+	l_T(\theta,\Lambda)=\prod_{k=1}^K\prod_{t=1}^Tp(n_k|\theta,\Lambda_t)
 \end{equation}
 
 \begin{equation}
-	\mathcal{L}_T(\theta,\Lambda)=\sum_{k=1}^K\sum_{t=1}^T\left[\log\left(l_k(\theta,\Lambda_t)\right)+\log\left(p(\Lambda_t)\right)\right]
+	\mathcal{L}_T(\theta,\Lambda)=\sum_{k=1}^K\sum_{t=1}^T\log\left(l_k(\theta,\Lambda_t)\right)
 \end{equation}
 %
-as $p(\Lambda)$ is not dependent on $\theta$ then
+derivatives with respect to the parameter $\theta$:
 %
-\begin{equation}
-	\frac{\partial\mathcal{L}_T(\theta,\Lambda)}{\partial \theta}=\sum_{k=1}^K\sum_{t=1}^T\frac{\partial\log\left(l_k(\theta,\Lambda_t)\right)}{\partial \theta}=\sum_{t=1}^T\frac{\partial\mathcal{L}(\theta,\Lambda_t)}{\partial \theta}
-\end{equation}
+\begin{alignat*}{1}
+	\frac{\partial\mathcal{L}_T(\theta,\Lambda)}{\partial \theta}
+	&=\sum_{k=1}^K\sum_{t=1}^T\frac{\partial\log\left(l_k(\theta,\Lambda_t)\right)}{\partial \theta}\\
+	&=\sum_{t=1}^T\frac{\partial\mathcal{L}(\theta,\Lambda_t)}{\partial \theta}, 
+\end{alignat*}
 %
-but in the expectation equation \autoref{eq:app-Fisher Info Definition} the time dependence appears as
+where $\mathcal{L}(\theta,\Lambda_t)$ is a log-likelihood for frame $t$.
+
+The probability $p(\bm{\Lambda^\alpha})$ of the state $\alpha$ appears in the expectation equation \autoref{eq:app-Fisher Info Definition}:
 %
 \begin{alignat*}{1}
 	I_T(\theta) & =-\E_T\left[\sum_{t=1}^T\frac{\partial^2\mathcal{L}(\theta,\Lambda_t)}{\partial \theta^2}\right]=\sum_{t=1}^T-\E_T\left[\frac{\partial^2\mathcal{L}(\theta,\Lambda_t)}{\partial \theta^2}\right]=\sum_{t=1}^T\E_T\left[\left(\frac{\partial\mathcal{L}(\theta,\Lambda_t)}{\partial \theta}\right)^2\right]\\
-	& =\sum_{t=1}^T\int_{\Lambda_t}p(\Lambda_t)I(\theta)d\Lambda_t=\sum_t\int_{\Lambda_t}p(\Lambda_t)\sum_k\frac{1}{\lambda_k(\Lambda_t)}\left(\frac{\partial\lambda_k(\Lambda_t)}{\partial \theta}\right)^2d\Lambda_t.
+	& =\sum_{t=1}^T\int_{\Lambda_t}p(\Lambda_t)I_t(\theta)d\Lambda_t.
 \end{alignat*}
 %
 For discrete states of $\bm{\Lambda_t}$, for example  
@@ -359,10 +363,10 @@ we get
 	I_T(\theta)=\sum_t\sum_{\alpha}p(\bm{\Lambda^{\alpha}_t})I^{stat}_t(\theta,\bm{\Lambda^{\alpha}_{t}})
 \end{equation}
 %
-where the static Fisher Information for each frame $t$ (see \autoref{eq:app-Fisher Info for Poisson})
+where the Fisher Information for each frame $t$ (see \autoref{eq:app-Fisher Info for Poisson})
 %
 \begin{equation}
-	I^{stat}_t=\sum_k\frac{1}{\lambda_k(\Lambda_t)}\left(\frac{\partial\lambda_k(\Lambda_t)}{\partial \theta}\right)^2
+	I_t(\theta,\Lambda_t)=\sum_k\frac{1}{\lambda_k(\Lambda_t)}\left(\frac{\partial\lambda_k(\Lambda_t)}{\partial \theta}\right)^2
 \end{equation}
 %
  is computed for each configuration of $\bm{\Lambda_t^\alpha}$ and then summed with weights $p(\bm{\Lambda^\alpha})$. 
@@ -452,12 +456,14 @@ Sources are far apart and $\lambda^{\alpha=1}$ and $\lambda^{\alpha=2}$ do not h
 
 From \autoref{eq:app-Fisher Info Integrated Out - diagonal entries} the cross terms vanishes ($I_{pq}=0$ because $\frac{\partial\Po(\lambda^{\alpha=p})}{\partial c_p}\frac{\partial\Po(\lambda^{\alpha=q})}{\partial c_{q}}=0$). The diagonal elements 
 %
-\begin{alignat*}{1}
-	I_{pp} & =\sum_{k=1}^N\E_k\left[\frac{\left(2\frac{\partial\Po(\lambda_k^{\alpha=p})}{\partial c_p}\right)^2}{\left(2\Po(\lambda_k^{\alpha=p})+2\Po(b)\right)^2}\right]\\
- 	& =\sum_{k=1}^N\E_k\left[\frac{\left(\Po(\lambda_k^{\alpha=p})\frac{\left(n_k-\lambda_k^{\alpha=p}\right)}{\lambda_k^{\alpha=p}}\frac{\partial\lambda_k^{\alpha=p}}{\partial c_p}\right)^2}{\left(\Po(\lambda_k^{\alpha=p})+\Po(b)\right)^2}\right]
-\end{alignat*}
+\begin{alignat}{1}
+	I_{pp} 
+	& =\sum_{k=1}^N\E_k\left[\frac{\left(2\frac{\partial\Po(\lambda_k^{\alpha=p})}{\partial c_p}\right)^2}{\left(2\Po(\lambda_k^{\alpha=p})+2\Po(b)\right)^2}\right]\\
+ 	& =\sum_{k=1}^N\E_k\left[\frac{\left(\Po(\lambda_k^{\alpha=p})\frac{\left(n_k-\lambda_k^{\alpha=p}\right)}{\lambda_k^{\alpha=p}}\frac{\partial\lambda_k^{\alpha=p}}{\partial c_p}\right)^2}{\left(\Po(\lambda_k^{\alpha=p})+\Po(b)\right)^2}\right],
+	\label{eq:app-FREM blink limit infty bg}
+\end{alignat}
 %
-for $b=0$
+for $b=0$ ($\Po(b)=0$):
 %
 \begin{alignat*}{1}
 	I_{pp} 
@@ -469,6 +475,8 @@ for $b=0$
 \end{alignat*}
 %
 which is the \autoref{eq:app-Fisher Info for Poisson} (up to the factor $1/2$). The factor 1/2 comes from the fact that the source appears only in 50\% of the observations.
+
+For non zero background $b>0$ we cannot simplify \autoref{eq:app-FREM blink limit infty bg} due to the background term $\Po(b)$ in the denominator. But as the term is positive, the element $I_{pp}$ will be smaller. The background makes therefore the variance $\var(d)$ bigger as we would expect.
 
 %When the background is present % <---- I think this is incorrect.... becaouose the background in in \lambda^p_k
 %%

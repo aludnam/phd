@@ -211,7 +211,7 @@ which simulates a simple blinking model of two QDs. $\lambda_k^\alpha=\lambda_k(
 If the states of $\bm{\Lambda}$ in each acquired frame were known, we would write the likelihood function as 
 %
 \begin{equation}
-	l_T(\theta,\Lambda)=\prod_{k=1}^K\prod_{t=1}^Tp(n_k|\theta,\Lambda_t)p(\Lambda_t)
+	l_T(\theta,\Lambda)=\prod_{k=1}^K\prod_{t=1}^Tp(n_k|\theta,\Lambda_t)
 \end{equation}
 %
 and the expected Fisher information matrix would become (see \autoref{sec:Appendix - blinking not integrated} for details)
@@ -221,7 +221,7 @@ and the expected Fisher information matrix would become (see \autoref{sec:Append
 	\label{eq:Fisher Information Blinking Cheating}
 \end{equation}
 %
-which is the expectation value (with respect to the states $\bm{\Lambda}$) of the Fisher information matrix \autoref{eq:FI - entries} for each time frame. \fixme{fix the appendix to have it consistent!}
+which is the expectation value (with respect to the states $\bm{\Lambda}$) of the Fisher information matrix \autoref{eq:FI - entries} for each time frame, followed by the summation over all frames.
 
 However, we assume that the variable $\bm{\Lambda}$ is fully described by the probability $p(\bm{\Lambda})$ over the states. The exact state in time frame is unknown. Therefore we have to integrate over $\bm{\Lambda}$ and the likelihood function is then
 %
@@ -311,21 +311,22 @@ The difference is less significant for larger separation of sources and both for
 		%For bg=0 the ratio should converge to 1/sqrt(2)=0.7
 		&\subfloat[Ratio of the curves form (a)]{\includegraphics[width=\wf]{\qd gFREM/images/FREM_ratio_bg100fix}
 		\label{fig:FREM ratio fixed bg}}\tabularnewline
-		\subfloat[FREM (fixed $\Lambda=3\times10^3$ photons)]{\includegraphics[width=\wf]{\qd gFREM/images/FREM_int3000fix}
+		\subfloat[FREM (fixed $\Lambda=1500$ photons)]{\includegraphics[width=\wf]{\qd gFREM/images/FREM_int3000fix}
 		\label{fig:FREM fixed int}}		
 		%For bg=0 the ratio should converge to 1/sqrt(2)=0.7
 		&\subfloat[Ratio of the curves form (c)]{\includegraphics[width=\wf]{\qd gFREM/images/FREM_ratio_int3000fix}
 		\label{fig:FREM ratio fixed int}}
 	\end{tabular}	
-	\caption{{\it Left:} FREM (a) for fixed background $b=100$ photons and three different intensities $\Lambda$ of the sources and (c) for fixed intentisity $\Lambda=3\cdot 10^3$ photons and three different values of background $b$. Solid lines correspond to the blinking situation \autoref{eq:Fisher Information Blinking Integrating Out}, dashed lines correspond the static situation \autoref{eq:FI - individual}. {\it Right:} Ratio $r$ of the curves showing how many times is FREM for static situation higher than for the static situation.}
-	
-	
-	\label{fig:Comparison Fisher-informaton and variance}
+	\caption{{\it Left:} FREM (a) for fixed background $b=100$ photons and three different intensities $\Lambda$ of the sources and (c) for fixed total number of emitted photons $\Lambda=1500$ and three different values of background $b$. Solid lines correspond to the blinking situation \autoref{eq:Fisher Information Blinking Integrating Out}, dashed lines correspond the static situation \autoref{eq:FI - individual}. {\it Right:} Ratio $r$ of the curves showing how many times is FREM for static situation higher than for the static situation.}	\label{fig:FREM static blinking}
 \end{figure}
 %
-\Autoref{fig:Comparison Fisher-informaton and variance} compares FREM as a function of separation $d$ for the static \autoref{eq:FI - individual} and the blinking case \autoref{eq:FI-blinking}. \cut{To make a fair comparison, we used $\Lambda$ and $b$ values for the intensity and the background, respectively, for the blinking and $\Lambda^{static}=2\Lambda$ and $b^{static}=4b$ for the static case. This is meant to correspond to the situation, when instead of observing all four states of $\lambda^\alpha$ (\autoref{eq:lambda states}) in four different frames, we sum these frames together (make four times longer acquisition time) for the static case. This gives four times higher background/pixel values and two times higher intensity of each source.}
+In order to compare the blinking situation \autoref{eq:Fisher Information Blinking Integrating Out} with the static case \autoref{eq:FI - individual} we evaluated FREM as a function of the sources separation $d$. For the blinking situation we considered equal strength of the sources $\Lambda_1^{blink}=\Lambda_2^{blink}=2\Lambda$ and homogeneous background $b^{blink}$ in each pixel of each frame. Because the sources are on only in 50\% of the cases (see \autoref{eq:lambda states}), the total number of emitted photons per source per frame is $\Lambda$. 
 
-Three different intensities of the sources are considered in a semi-logaritmic plot \autoref{fig:FREM fixed bg}. All curves are computed for a fixed background level $b=100$ photons/pixel. For bright sources (red curves) the blinking (dashed curves) allows for higher precision of the separation $d$ estimation, when compared to the static situation (dashed curves are under the solid lines). However, as the sources become weaker and more separated, the static situation is preferable (blue curves). The ratio of the FREM values
+For the static case we considered the situation of two sources emitting with equal intensities $\Lambda_1^{static}=\Lambda_2^{static}$. To keep the total number of emitted photons per frame equal to the blinking case described above, we set the intensity $\Lambda_1^{static}=\Lambda_2^{static}=\Lambda$. Because we observe only one frame (as in blinking case), the background values are equal for blinking and static case $b^{blink}=b^{static}$.
+
+\Autoref{fig:FREM static blinking} compares FREM as a function of separation $d$ for the static and the blinking case. Three different values of the total number of photons emitted by source were considered in a semi-logaritmic plot \autoref{fig:FREM fixed bg}. All curves are computed for a fixed background level $b=100$ photons/pixel. 
+
+For bright sources (red curves) the blinking (dashed curves) allows for higher precision of the separation $d$ estimation, when compared to the static situation (dashed curves are under the solid lines). However, as the sources become weaker and more separated, the static situation is preferable (blue curves). The ratio of the FREM values
 %
 \begin{equation}
 	r=\sqrt{\frac{\var^{static}(d)}{\var(d)}}
@@ -342,57 +343,162 @@ for the blinking and the static case are shown in \autoref{fig:FREM ratio fixed 
 	\newcommand{\wf}{.48\textwidth}
 	\subfloat[Static]{\includegraphics[width=\wf]{\qd gFREM/images/FREM_Static_sep40fix}}
 	\subfloat[Blinking]{\includegraphics[width=\wf]{\qd gFREM/images/FREM_IntOut_sep40fix}}\\
-	\subfloat[Static]{\includegraphics[width=\wf]{\qd gFREM/images/FREM_Static_flat_sep40fix}}
-	\subfloat[Blinking]{\includegraphics[width=\wf]{\qd gFREM/images/FREM_IntOut_flat_sep40fix}}
+	\subfloat[Static - top view]{\includegraphics[width=\wf]{\qd gFREM/images/FREM_Static_flat_sep40fix}}
+	\subfloat[Blinking - top view]{\includegraphics[width=\wf]{\qd gFREM/images/FREM_IntOut_flat_sep40fix}}
 
-	\caption{{\it Top:} FREM for (a) static and (b) blinking situation for two sources separated by $d=40\unit{nm}$. {\it Bottom:} Top view on the surfaces. Red plane corresponds to FREM = $d$ = 40 nm. The region below the red plane have $\sqrt{\var(d)}<d$.}
-	\label{fig:}
+	\caption{{\it Top:} FREM for (a) static and (b) blinking situation for two sources separated by $d=40$ nm. {\it Bottom:} Top view on the surfaces. Red plane corresponds to situation when FREM is equal to the separation of the sources $d=40$ nm. The region above the red plane (black) have $\sqrt{\var(d)}>d$.}
+	\label{fig:FREM int bg}
 \end{figure}
 
 
-\begin{figure}[!hbt]
-	\centering
-	\newcommand{\wf}{.8\textwidth}
-	\includegraphics[width=\wf]{\qd gFREM/images/FREMvsBGvsInt_sep40fix}
-	\caption{Ratio $r$ of FREM (black surface) for static and the blinking situation for two sources separated by $d=40\unit{nm}$. Blinking is beneficial in the region, where the black surface is above red plane ($r=1$).}
-	\label{fig:FREM surface fixed sep}
-\end{figure}
+%\begin{figure}[!hbt]
+%	\centering
+%	\newcommand{\wf}{.8\textwidth}
+%	\includegraphics[width=\wf]{\qd gFREM/images/FREMvsBGvsInt_sep40fix}
+%	\caption{Ratio $r$ of FREM (black surface) for static and the blinking situation for two sources separated by $d=40\unit{nm}$. Blinking is beneficial in the region, where the black surface is above red plane ($r=1$).}
+%	\label{fig:FREM surface fixed sep}
+%\end{figure}
 %
-Intensity blinking is beneficial for bright sources with low background, or in other words for high signal-to-noise ratio data. In \autoref{fig:FREM surface fixed sep} we plotted the ratio $r$ (\autoref{eq:ratio}) of the static and blinking curves for two sources separated by $d=40\unit{nm}$ for a range of background and intensity values. The blinking situation gives higher precision in the region where the black surface is above the red plane defined by $r=1$. 
+%Intensity blinking is beneficial for bright sources with low background, or in other words for high signal-to-noise ratio data. In \autoref{fig:FREM surface fixed sep} we plotted the ratio $r$ (\autoref{eq:ratio}) of the static and blinking curves for two sources separated by $d=40\unit{nm}$ for a range of background and intensity values. The blinking situation gives higher precision in the region where the black surface is above the red plane defined by $r=1$. 
+%
 
+%\begin{figure}[!hbt]
+%	\centering
+%	\newcommand{\wf}{.2\textwidth}
+%	\newcommand{\dirim}{\qd gFREM/images/psf/}
+%	\newcommand{\vs}{.5}
+%	\begin{tabular}{|ccccc}
+%		\begin{sideways}\hspace{\vs cm}$\Lambda=5000$\end{sideways}
+%		&\includegraphics[width=\wf]{\dirim int5000_bg0}
+%		&\includegraphics[width=\wf]{\dirim int5000_bg100}
+%		&\includegraphics[width=\wf]{\dirim int5000_bg200}
+%		&\includegraphics[width=\wf]{\dirim int5000_bg300}\\
+%		\begin{sideways}\hspace{\vs cm}$\Lambda=2500$\end{sideways}
+%		&\includegraphics[width=\wf]{\dirim int2500_bg0}
+%		&\includegraphics[width=\wf]{\dirim int2500_bg100}
+%		&\includegraphics[width=\wf]{\dirim int2500_bg200}
+%		&\includegraphics[width=\wf]{\dirim int2500_bg300}\\
+%		\begin{sideways}\hspace{\vs cm}$\Lambda=1000$\end{sideways}
+%		&\includegraphics[width=\wf]{\dirim int1000_bg0}
+%		&\includegraphics[width=\wf]{\dirim int1000_bg100}
+%		&\includegraphics[width=\wf]{\dirim int1000_bg200}
+%		&\includegraphics[width=\wf]{\dirim int1000_bg300}\\
+%		&$b=0$ & $b=100$ & $b=200$ & $b=300$\\
+%		\hline	
+%	\end{tabular}
+%	\caption{Illustration of a source with intensity $\Lambda$ and background level $b$ corrupted with Poisson noise. Red dot indicates the position of the source.}
+%	\label{fig:PSF int bg}
+%\end{figure}
 
 \begin{figure}[!hbt]
 	\centering
-	\newcommand{\wf}{.2\textwidth}
-	\newcommand{\dirim}{\qd gFREM/images/psf/}
-	\newcommand{\vs}{.5}
-	\begin{tabular}{|ccccc}
-		\begin{sideways}\hspace{\vs cm}$\Lambda=5000$\end{sideways}
-		&\includegraphics[width=\wf]{\dirim int5000_bg0}
-		&\includegraphics[width=\wf]{\dirim int5000_bg100}
-		&\includegraphics[width=\wf]{\dirim int5000_bg200}
-		&\includegraphics[width=\wf]{\dirim int5000_bg300}\\
-		\begin{sideways}\hspace{\vs cm}$\Lambda=2500$\end{sideways}
-		&\includegraphics[width=\wf]{\dirim int2500_bg0}
-		&\includegraphics[width=\wf]{\dirim int2500_bg100}
+	\newcommand{\wf}{.15\textwidth}
+	\newcommand{\dirim}{\qd gFREM/images/psf2/}
+	\newcommand{\vs}{.4}
+	\begin{tabular}{c|ccccc}
+		\begin{sideways}\hspace{\vs cm}$b=300$\end{sideways}
+		&\includegraphics[width=\wf]{\dirim int2500_bg300}
+		&\includegraphics[width=\wf]{\dirim int2000_bg300}
+		&\includegraphics[width=\wf]{\dirim int1500_bg300}
+		&\includegraphics[width=\wf]{\dirim int1000_bg300}
+		&\includegraphics[width=\wf]{\dirim int500_bg300}\\
+		\begin{sideways}\hspace{\vs cm}$b=200$\end{sideways}
 		&\includegraphics[width=\wf]{\dirim int2500_bg200}
-		&\includegraphics[width=\wf]{\dirim int2500_bg300}\\
-		\begin{sideways}\hspace{\vs cm}$\Lambda=1000$\end{sideways}
-		&\includegraphics[width=\wf]{\dirim int1000_bg0}
-		&\includegraphics[width=\wf]{\dirim int1000_bg100}
+		&\includegraphics[width=\wf]{\dirim int2000_bg200}
+		&\includegraphics[width=\wf]{\dirim int1500_bg200}
 		&\includegraphics[width=\wf]{\dirim int1000_bg200}
-		&\includegraphics[width=\wf]{\dirim int1000_bg300}\\
-		&$b=0$ & $b=100$ & $b=200$ & $b=300$\\
-		\hline	
+		&\includegraphics[width=\wf]{\dirim int500_bg200}\\
+		\begin{sideways}\hspace{\vs cm}$b=100$\end{sideways}
+		&\includegraphics[width=\wf]{\dirim int2500_bg100}
+		&\includegraphics[width=\wf]{\dirim int2000_bg100}
+		&\includegraphics[width=\wf]{\dirim int1500_bg100}
+		&\includegraphics[width=\wf]{\dirim int1000_bg100}
+		&\includegraphics[width=\wf]{\dirim int500_bg100}\\
+		\begin{sideways}\hspace{\vs cm}$b=10$\end{sideways}
+		&\includegraphics[width=\wf]{\dirim int2500_bg10}
+		&\includegraphics[width=\wf]{\dirim int2000_bg10}
+		&\includegraphics[width=\wf]{\dirim int1500_bg10}
+		&\includegraphics[width=\wf]{\dirim int1000_bg10}
+		&\includegraphics[width=\wf]{\dirim int500_bg10}\\
+		\hline
+		&$\Lambda=2500$ & $\Lambda=2000$ & $\Lambda=1500$ & $\Lambda=1000$ & $\Lambda=500$\\
 	\end{tabular}
-	\caption{Illustration of a source with intensity $\Lambda$ and background level $b$ corrupted with Poisson noise.}
+	\caption{Illustration of a source with intensity $\Lambda$ (total number of emitted photons) and background level $b$ corrupted with Poisson noise. Red dot indicates the position of the source.}
 	\label{fig:PSF int bg}
 \end{figure}
+
+\begin{figure}[!hbt]
+	\centering
+	\newcommand{\wf}{.15\textwidth}
+	\newcommand{\dirim}{\qd gFREM/images/psf2/twosources_}
+	\newcommand{\vs}{.4}
+	\begin{tabular}{c|ccccc}
+		\begin{sideways}\hspace{\vs cm}$b=300$\end{sideways}
+		&\includegraphics[width=\wf]{\dirim int2500_bg300}
+		&\includegraphics[width=\wf]{\dirim int2000_bg300}
+		&\includegraphics[width=\wf]{\dirim int1500_bg300}
+		&\includegraphics[width=\wf]{\dirim int1000_bg300}
+		&\includegraphics[width=\wf]{\dirim int500_bg300}\\
+		\begin{sideways}\hspace{\vs cm}$b=200$\end{sideways}
+		&\includegraphics[width=\wf]{\dirim int2500_bg200}
+		&\includegraphics[width=\wf]{\dirim int2000_bg200}
+		&\includegraphics[width=\wf]{\dirim int1500_bg200}
+		&\includegraphics[width=\wf]{\dirim int1000_bg200}
+		&\includegraphics[width=\wf]{\dirim int500_bg200}\\
+		\begin{sideways}\hspace{\vs cm}$b=100$\end{sideways}
+		&\includegraphics[width=\wf]{\dirim int2500_bg100}
+		&\includegraphics[width=\wf]{\dirim int2000_bg100}
+		&\includegraphics[width=\wf]{\dirim int1500_bg100}
+		&\includegraphics[width=\wf]{\dirim int1000_bg100}
+		&\includegraphics[width=\wf]{\dirim int500_bg100}\\
+		\begin{sideways}\hspace{\vs cm}$b=10$\end{sideways}
+		&\includegraphics[width=\wf]{\dirim int2500_bg10}
+		&\includegraphics[width=\wf]{\dirim int2000_bg10}
+		&\includegraphics[width=\wf]{\dirim int1500_bg10}
+		&\includegraphics[width=\wf]{\dirim int1000_bg10}
+		&\includegraphics[width=\wf]{\dirim int500_bg10}\\
+		\hline	
+		&$\Lambda=2500$ & $\Lambda=2000$ & $\Lambda=1500$ & $\Lambda=1000$ & $\Lambda=500$\\
+	\end{tabular}
+	\caption{Illustration of two sources separated by $d=40$ nm with intensity $\Lambda$ (total number of emitted photons per source) and background level $b$ corrupted with Poisson noise. Red dots indicate the positions of the sources.}
+	\label{fig:two sources int bg}
+\end{figure}
+
+
+
+%\begin{figure}[!hbt]
+%	\centering
+%	\newcommand{\wf}{.2\textwidth}
+%	\newcommand{\dirim}{\qd gFREM/images/psf/twosources_}
+%	\newcommand{\vs}{.5}
+%	\begin{tabular}{|ccccc}
+%		\begin{sideways}\hspace{\vs cm}$\Lambda=5000$\end{sideways}
+%		&\includegraphics[width=\wf]{\dirim int5000_bg0}
+%		&\includegraphics[width=\wf]{\dirim int5000_bg100}
+%		&\includegraphics[width=\wf]{\dirim int5000_bg200}
+%		&\includegraphics[width=\wf]{\dirim int5000_bg300}\\
+%		\begin{sideways}\hspace{\vs cm}$\Lambda=2500$\end{sideways}
+%		&\includegraphics[width=\wf]{\dirim int2500_bg0}
+%		&\includegraphics[width=\wf]{\dirim int2500_bg100}
+%		&\includegraphics[width=\wf]{\dirim int2500_bg200}
+%		&\includegraphics[width=\wf]{\dirim int2500_bg300}\\
+%		\begin{sideways}\hspace{\vs cm}$\Lambda=1000$\end{sideways}
+%		&\includegraphics[width=\wf]{\dirim int1000_bg0}
+%		&\includegraphics[width=\wf]{\dirim int1000_bg100}
+%		&\includegraphics[width=\wf]{\dirim int1000_bg200}
+%		&\includegraphics[width=\wf]{\dirim int1000_bg300}\\
+%		&$b=0$ & $b=100$ & $b=200$ & $b=300$\\
+%		\hline	
+%	\end{tabular}
+%	\caption{Illustration of two sources with intensity $\Lambda$ and background level $b$ corrupted with Poisson noise. Red dots indicate the positions of the sources.}
+%	\label{fig:two sources int bg}
+%\end{figure}
+
 
 % This is for discussion
 In the blinking case \autoref{eq:Fisher Information Blinking Integrating Out} the dependency on $\Lambda$ is complicated as the expectation in \autoref{eq:Fisher Information Blinking Integrating Out} cannot be simplified and $\var(d)$ depends on $\Lambda$ through the parameter $\lambda_k^i(\Lambda)$ of the Poisson distribution in \autoref{eq:Fisher Information Blinking Integrating Out}. This gives rise to a non-linear relationship between $\var(d)$ and $\Lambda$.
 %
-The comparison of the blinking and the static case for three different values of the mean source intensity $\Lambda$ is shown in \autoref{fig:Comparison Fisher-informaton and variance}\aaa. In this figure the background intensity was fixed to $bg=100$~photons. The intensity of the blinking sources was set to $2\Lambda$ to keep the mean number of detected photons constant for the static and the blinking case (the blinking sources are on average `ON' only half of the time and so the average intensity is $\Lambda$). 
+The comparison of the blinking and the static case for three different values of the mean source intensity $\Lambda$ is shown in \autoref{fig:FREM static blinking}\aaa. In this figure the background intensity was fixed to $bg=100$~photons. The intensity of the blinking sources was set to $2\Lambda$ to keep the mean number of detected photons constant for the static and the blinking case (the blinking sources are on average `ON' only half of the time and so the average intensity is $\Lambda$). 
 
 %\begin{figure}[!htb]
 %	\centering
@@ -406,7 +512,7 @@ The comparison of the blinking and the static case for three different values of
 %\end{figure}
 
 
-\autoref{fig:Comparison Fisher-informaton and variance}\bbb\ compares the blinking and the static situation for sources with $\Lambda=10^3$~photons ($2\cdot10^3$~photons for blinking case) with three different background levels.
+\autoref{fig:FREM static blinking}\bbb\ compares the blinking and the static situation for sources with $\Lambda=10^3$~photons ($2\cdot10^3$~photons for blinking case) with three different background levels.
 
 For closely separated sources ($d<50$~nm$\ \sim\ 0.5$ pixel) with high signal to noise ratio (bright sources and low background $bg<100$) the blinking allows for higher localisation precision. For sources emerged in high background ($bg\sim\Lambda$) the static sources are preferable even for small separation (blue curve in \autoref{fig:FREM ratio fixed bg}). However, this setting corresponds to very noisy data (see \autoref{fig:PSF int bg} for $\Lambda=1000$, $b>100$) with poor localisation estimation precision ($\sqrt{\var(d)}\sim d$, see intersection of blue and black dotted curve in \autoref{fig:FREM fixed bg}). 
 
@@ -510,8 +616,8 @@ The situation of infinitely close sources $c_1^{true}=c_1^{true}$, shown in \aut
 %
 %\section{Conclusions} 
 %
-%The alternative derivation of the FREM provides correction to the formula published in \cite{Ram2006}. Results presented in \autoref{fig:Comparison Fisher-informaton and variance} suggest that the in certain setting (bright sources low background) the blinking sources can significantly increase the localisation precision compared to the static situation. This effect is stronger for close ($d<50\unit{nm}$) and bright ($\Lambda>1000\ \unit{photons}$) sources with lower background levels ($bg<100$). This corresponds to a realistic setting for QD data (simulated data shown in \autoref{fig:effect of the background and illustration of the noisy sources with background}\ccc). For well separated sources ($d\rightarrow\infty$ limit) the static situation provides lower bound for the localisation precision. 
+%The alternative derivation of the FREM provides correction to the formula published in \cite{Ram2006}. Results presented in \autoref{fig:FREM static blinking} suggest that the in certain setting (bright sources low background) the blinking sources can significantly increase the localisation precision compared to the static situation. This effect is stronger for close ($d<50\unit{nm}$) and bright ($\Lambda>1000\ \unit{photons}$) sources with lower background levels ($bg<100$). This corresponds to a realistic setting for QD data (simulated data shown in \autoref{fig:effect of the background and illustration of the noisy sources with background}\ccc). For well separated sources ($d\rightarrow\infty$ limit) the static situation provides lower bound for the localisation precision. 
 %
-%The regions where the blinking is preferable to the static case depends on the intensity of the sources (\autoref{fig:Comparison Fisher-informaton and variance}\aaa) as well as on the background levels (\autoref{fig:Comparison Fisher-informaton and variance}\bbb). Background have a large impact on the localisation precision as shown in \autoref{fig:effect of the background and illustration of the noisy sources with background} and it is desirable to keep is as low as possible. In practice a large proportion of the background intensity comes from the out of focus light. Typically TIRF (Total Internal Reflection Fluorescent microscopy) illumination of the sources is used to reduce the out-of-focus blur. However, different techniques such as local illumination of the sample can be used. 
+%The regions where the blinking is preferable to the static case depends on the intensity of the sources (\autoref{fig:FREM static blinking}\aaa) as well as on the background levels (\autoref{fig:FREM static blinking}\bbb). Background have a large impact on the localisation precision as shown in \autoref{fig:effect of the background and illustration of the noisy sources with background} and it is desirable to keep is as low as possible. In practice a large proportion of the background intensity comes from the out of focus light. Typically TIRF (Total Internal Reflection Fluorescent microscopy) illumination of the sources is used to reduce the out-of-focus blur. However, different techniques such as local illumination of the sample can be used. 
 %
 %In summary the bright sources (high signal-to-noise ratio) are desirable for the LM techniques. In this setting the blinking can provide higher localisation precision for closely spaced sources. QDs can be an order of magnitude brighter then the organic fluorescent markers (\autoref{sub:Quantum-dots}) and are promising candidates for LM. However, the Fisher information approach gives a lower bound for the variance. The actual localisation precision for the blinking sources depend on the ability to separate the individual emitters. This can be challenging for closely spaced sources and the separation might be the actual limiting factor for the localisation precision.
