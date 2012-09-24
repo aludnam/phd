@@ -104,7 +104,7 @@ This is the pixelised version (detection of the photons in K detectors - CCD cam
 %==========================================
 \clearpage{}
 \section{Two sources separated by a distance $d$\label{sub:Two-sources-separated}}
-(Comments on Fisher Information estimation as described in \cite{Ram2006}.)
+(Comments on Fisher Information estimation as described by Ram et al. \cite{Ram2006}.)
 
 
 For two sources separated by a distance $d$ we have a mean value of the intensity:
@@ -164,7 +164,7 @@ This is a suggestion how to fix the problems with limits for Fisher Information 
 We consider two sources located at $c_1$ and $c_2$, respectively. The expectation of the intensity is therefore expressed as (cf. \autoref{eq:app-expected intensity d/2}):
 %
 \begin{equation}
-	\lambda_k(d)=\Lambda_1q_k(x-c_1)+\Lambda_2q_k(x-c_2)+b
+	\lambda_k(\bm{c})=\Lambda_1q_k(x-c_1)+\Lambda_2q_k(x-c_2)+b
 	\label{eq:app-Expected intensity c_1 c_2}
 \end{equation}
 %
@@ -316,63 +316,49 @@ For sources with different intensity $\Lambda_1\neq\Lambda_2$ can be shown that 
 %==========================================
 
 \section{Time distribution of the intensities - averaging\label{sec:Appendix - blinking not integrated}}
-We assume a likelihood dependent on parameter $\bm{\Lambda}$ (for example $\bm{\Lambda_t}=(\Lambda_1,\Lambda_2)_t$ - intensity of two sources at frame $t$, $T$ different time slices). If we knew the configuration of $\bm{\Lambda_t}$ in each frame, we would write for the likelihood: 
+We assume a likelihood dependent on parameter $\bm{\Lambda}$ (for example, $\bm{\Lambda}=(\Lambda_1,\Lambda_2)$ - intensity of two sources in the recorede frame). If we knew the configuration of $\bm{\Lambda}$ we would write the log-likelihood
 %
 \begin{equation}
-	l_T(\theta,\Lambda)=\prod_{k=1}^K\prod_{t=1}^Tp(n_k|\theta,\Lambda_t),
-\end{equation}
-%
-and for the log-likelihood
-%
-\begin{equation}
-	\mathcal{L}_T(\theta,\Lambda)=\sum_{k=1}^K\sum_{t=1}^T\log\left(l_k(\theta,\Lambda_t)\right).
+	\mathcal{L}(\theta,\Lambda)=\sum_{k=1}^K\log\left(l_k(\theta,\bm{\Lambda})\right).
 \end{equation}
 %
 Derivatives with respect to the parameter $\theta$:
 %
 \begin{alignat*}{2}
-	\frac{\partial\mathcal{L}_T(\theta,\Lambda)}{\partial \theta}
-	&=\sum_{k=1}^K\sum_{t=1}^T\frac{\partial\log\left(l_k(\theta,\Lambda_t)\right)}{\partial \theta}\\
-	&=\sum_{t=1}^T\frac{\partial\mathcal{L}(\theta,\Lambda_t)}{\partial \theta}, 
+	\frac{\partial\mathcal{L}(\theta,\bm{\Lambda})}{\partial \theta}
+	&=\sum_{k=1}^K\frac{\partial\log\left(l_k(\theta,\bm{\Lambda})\right)}{\partial \theta}\\
+	&=\frac{\partial\mathcal{L}(\theta,\bm{\Lambda})}{\partial \theta}. 
 \end{alignat*}
-%
-where $\mathcal{L}(\theta,\Lambda_t)$ is a log-likelihood for frame $t$.
 
-The probability $p(\bm{\Lambda})$ of the state $\alpha$ appears in the expectation equation \autoref{eq:app-Fisher Info Definition}:
+If we assume a probability distribution $p(\bm{\Lambda})$  of the intensity states $\bm{\Lambda}$ we can express the Fisher information (see \autoref{eq:app-Fisher Info Definition}):
 %
-\begin{alignat*}{2}
-	I_T(\theta) 
-	& =-\E_T\left[\sum_{t=1}^T\frac{\partial^2\mathcal{L}(\theta,\Lambda_t)}{\partial \theta^2}\right]=\sum_{t=1}^T-\E_T\left[\frac{\partial^2\mathcal{L}(\theta,\Lambda_t)}{\partial \theta^2}\right]=\sum_{t=1}^T\E_T\left[\left(\frac{\partial\mathcal{L}(\theta,\Lambda_t)}{\partial \theta}\right)^2\right]\\
-	& =\sum_{t=1}^T\int_{\Lambda_t}p(\Lambda_t)I_t(\theta)d\Lambda_t.
-\end{alignat*}
+\begin{equation*}
+	I(\theta) = \int_{\bm{\Lambda}}p(\bm{\Lambda})I_{\bm{\Lambda}}(\theta)d\bm{\Lambda},
+\end{equation*}
 %
-For discrete states of $\bm{\Lambda_t}$, for example  
+where $I_{\bm{\Lambda}}(\theta)$ is the Fisher information computed for a specific value of $\bm{\Lambda}$ (see \autoref{eq:app-Fisher Info Definition}).
+
+For discrete states of $\bm{\Lambda}$, for example  
 %
 \begin{alignat*}{4}
-	\bm{\Lambda_t}
+	\bm{\Lambda}
 	&=\left\{\bm{\Lambda^{\alpha=1}},\,\bm{\Lambda^{\alpha=2}},\,\bm{\Lambda^{\alpha=3}},\,\bm{\Lambda^{\alpha=4}}\right\}\\
 	&=\left\{[\Lambda_1,0],\,[\Lambda_2,0],\,[\Lambda_1,\Lambda_2],\,[0,0]\right\}
 \end{alignat*}	
 % 
 we get
 \begin{equation}
-	I_T(\theta)=\sum_t\sum_{\alpha}p(\bm{\Lambda^{\alpha}_t})I_t(\theta,\bm{\Lambda^{\alpha}_{t}}),
+	I(\theta)=\sum_{\alpha}p(\bm{\Lambda^\alpha})I_{\bm{\Lambda^\alpha}}(\theta),
 \end{equation}
 %
-where the Fisher Information for each frame $t$ (see \autoref{eq:app-Fisher Info for Poisson}) and for every configuration of $\bm{\Lambda_t=\Lambda^\alpha}$
-%
-\begin{equation}
-	I_t(\theta,\Lambda_t)=\sum_k\frac{1}{\lambda_k(\Lambda_t)}\left(\frac{\partial\lambda_k(\Lambda_t)}{\partial \theta}\right)^2
-\end{equation}
-%
- is averaged with weights $p(\bm{\Lambda^\alpha})$. 
+where the Fisher Information for every configuration of $\bm{\Lambda^\alpha}$ is averaged with weights $p(\bm{\Lambda^\alpha})$. 
 
 %==========================================
 %==========================================
 
 \section{Time distribution of the intensities - integrating out $\Lambda$}
 \label{sub:Appendix Time-distribution-Integrating out}
-If we do not know the configuration of the $\bm{\Lambda^\alpha_t}$ in each frame, then we have to rely only on the distribution $p(\Lambda)$ and integrate over it within the likelihood function:
+If we do not know the configuration of the $\bm{\Lambda^\alpha}$ in each frame, then we have to rely only on the distribution $p(\Lambda)$ and integrate over it within the likelihood function:
 %
 \begin{equation}
 	l_k(\theta)=\int_{\Lambda}l_k(\theta,\Lambda)d\Lambda=\int_{\Lambda}p(n_k|\theta,\Lambda)p(\Lambda)d\Lambda
@@ -405,7 +391,7 @@ with derivatives
 The Fisher information matrix diagonal entries:
 %
 \begin{alignat}{2}
-	I_{pp}(\theta) & =\E\left[\left(\sum_{k=1}^N\frac{1}{l_k}\frac{\partial l_k}{\partial c_p}\right)^2\right]\nonumber \\
+	I_{pp}(\bm{c}) & =\E\left[\left(\sum_{k=1}^N\frac{1}{l_k}\frac{\partial l_k}{\partial c_p}\right)^2\right]\nonumber \\
  	& =\E\left[\left\{ \sum_{k=1}^N\left(\frac{1}{\sum_{\alpha=1}^4\Po(\lambda_k^\alpha)}\frac{\partial\sum_{\alpha=1}^4\Po(\lambda_k^\alpha)}{\partial c_p}\right)\right\} \left\{ \sum_{l=1}^N\left(\frac{1}{\sum_{\alpha=1}^4\Po(\lambda_l^\alpha)}\frac{\partial\sum_{\alpha=1}^4\Po(\lambda_l^\alpha)}{\partial c_p}\right)\right\} \right]\nonumber \\
 	& =\sum_{k=1}^N\E_k\left[\frac{\left(\sum_{\alpha=1}^4\frac{\partial\Po(\lambda_k^\alpha)}{\partial c_p}\right)^2}{\left(\sum_{\alpha=1}^4\Po(\lambda_k^\alpha)\right)^2}\right],
 	\label{eq:app-Fisher Info Integrated Out - diagonal entries}
@@ -423,7 +409,7 @@ because the cross terms ($k,\, l$) in the sum (2nd row) are zeros:
 Expressing the derivatives and the expectation from \autoref{eq:app-Fisher Info Integrated Out - diagonal entries} we can write for the diagonal entries of the Fisher information matrix:
 %
 \begin{alignat*}{2}
-	I_{pp}(\theta) 
+	I_{pp}(\bm{c}) 
 	& =\sum_{k=1}^N\E_k\left[\left\{ \frac{\sum_{\alpha=1}^4\left(\Po(n_k;\lambda_k^\alpha)\frac{(n_k-\lambda_k^\alpha)}{\lambda_k^\alpha}\frac{\partial\lambda_k^\alpha}{\partial c_p}\right)}{\sum_{\alpha=1}^4\Po(n_k;\lambda_k^\alpha)}\right\} ^2\right]\\
  	& =\frac{1}{4}\sum_{k=1}^N\sum_{n_k\geq0}\frac{\left\{ \sum_{\alpha=1}^4\left(\Po(n_k;\lambda_k^\alpha)\frac{(n_k-\lambda_k^\alpha)}{\lambda_k^\alpha}\frac{\partial\lambda_k^\alpha}{\partial c_p}\right)\right\} ^2}{\sum_{\alpha=1}^4\Po(n_k;\lambda_k^\alpha)}
 \end{alignat*}
@@ -431,7 +417,7 @@ Expressing the derivatives and the expectation from \autoref{eq:app-Fisher Info 
 For the four states model we have $\lambda^{\alpha=3}(c_1,c_2)=\lambda^{\alpha=1}(c_1)+\lambda^{\alpha=2}(c_2)-b$ and so $\frac{\partial\lambda^{\alpha=3}}{\partial c_p}=\frac{\partial\lambda^{\alpha=p}}{\partial c_p}$ and $\frac{\partial\lambda^{\alpha=j}}{\partial c_p}=0,\, j\neq p$ for $p=\{1,2\},\: j=\{1,2,4\};$ so 
 %
 \begin{equation*}
-	I_{pp}(\theta) 
+	I_{pp}(\bm{c}) 
 	=\frac{1}{4}\sum_{k=1}^N\left(\frac{\partial\lambda_k^{\alpha=p}}{\partial c_p}\right)^2\sum_{n_k\geq0}\frac{\left\{\sum_{\alpha=\{p,3\}}\left(\Po(n_k;\lambda_k^\alpha)\frac{(n_k-\lambda_k^\alpha)}{\lambda_k^\alpha}\right)\right\}}{\sum_{\alpha=1}^4\Po(n_k;\lambda_k^\alpha)} ^2
 \end{equation*}
 
@@ -439,7 +425,7 @@ For the four states model we have $\lambda^{\alpha=3}(c_1,c_2)=\lambda^{\alpha=1
 The Fisher information matrix off-diagonal entries:
 %
 \begin{alignat*}{2}
-	I_{pq}(\theta) 
+	I_{pq}(\bm{c}) 
 	& =\sum_{k=1}^N\E_k\left[\frac{\left(\sum_{\alpha=1}^4\frac{\partial\Po(\lambda_k^\alpha)}{\partial c_p}\right)\left(\sum_{\alpha=1}^4\frac{\partial\Po(\lambda_k^\alpha)}{\partial c_q}\right)}{\left(\sum_{\alpha=1}^4\Po(\lambda_k^\alpha)\right)^2}\right]\nonumber \\
  	& =\frac{1}{4}\sum_{k=1}^N\left(\frac{\partial\lambda_k^{\alpha=p}}{\partial c_p}\right)\left(\frac{\partial\lambda_k^{\alpha=q}}{\partial c_q}\right)\times\\
 	&\times\sum_{n_k\geq0}\frac{\left(\sum_{\alpha=\{p,3\}}\Po(n_k;\lambda_k^\alpha)\frac{(n_k-\lambda_k^\alpha)}{\lambda_k^\alpha}\right)\left(\sum_{\alpha=\{q,3\}}\Po(n_k;\lambda_k^\alpha)\frac{(n_k-\lambda_k^\alpha)}{\lambda_k^\alpha}\right)}{\sum_{\alpha=1}^4\Po(n_k;\lambda_k^\alpha)}
@@ -455,16 +441,15 @@ Then all entries in $I_{pq}$ are equal and the matrix is singular. For the limit
 %
 Sources are far apart and $\lambda^{\alpha=1}$ and $\lambda^{\alpha=2}$ do not have a common overlap. For $k'$ where $\frac{\partial\lambda_{k'}^{\alpha=p}}{\partial c_p}\neq0,\,\frac{\partial\lambda_{k'}^{\alpha=q}}{\partial c_p}\equiv0$ and $\Po(n_{k'},\lambda_{k'}^{\alpha=3})=\Po(n_{k'},\lambda_{k'}^{\alpha=1})$. Also $\sum_\alpha\Po(\lambda_k^\alpha)=2\Po(\lambda_k^{\alpha=p})+2\Po(b)$ in the region where $\frac{\partial\lambda^{\alpha=p}}{\partial c_p}\neq 0$.
 
-From \autoref{eq:app-Fisher Info Integrated Out - diagonal entries} the cross terms vanishes ($I_{pq}=0$ because $\frac{\partial\Po(\lambda^{\alpha=p})}{\partial c_p}\frac{\partial\Po(\lambda^{\alpha=q})}{\partial c_{q}}=0$). The diagonal elements 
+From \autoref{eq:app-Fisher Info Integrated Out - diagonal entries} the cross terms vanish ($I_{pq}=0$ because $\frac{\partial\Po(\lambda^{\alpha=p})}{\partial c_p}\frac{\partial\Po(\lambda^{\alpha=q})}{\partial c_{q}}=0$). The diagonal elements 
 %
-\begin{alignat}{2}
+\begin{alignat}{3}
 	I_{pp} 
-	& =\sum_{k=1}^N\E_k\left[\frac{\left(2\frac{\partial\Po(\lambda_k^{\alpha=p})}{\partial c_p}\right)^2}{\left(2\Po(\lambda_k^{\alpha=p})+2\Po(b)\right)^2}\right]\\
- 	& =\sum_{k=1}^N\E_k\left[\frac{\left(\Po(\lambda_k^{\alpha=p})\frac{\left(n_k-\lambda_k^{\alpha=p}\right)}{\lambda_k^{\alpha=p}}\frac{\partial\lambda_k^{\alpha=p}}{\partial c_p}\right)^2}{\left(\Po(\lambda_k^{\alpha=p})+\Po(b)\right)^2}\right],
-	\label{eq:app-FREM blink limit infty bg}
+	& =\sum_{k=1}^N\E_k\left[\frac{\left(2\frac{\partial\Po(\lambda_k^{\alpha=p})}{\partial c_p}\right)^2}{\left(2\Po(\lambda_k^{\alpha=p})+2\Po(b)\right)^2}\right] \\
+ 	& =\sum_{k=1}^N\E_k\left[\frac{\left(\Po(\lambda_k^{\alpha=p})\frac{\left(n_k-\lambda_k^{\alpha=p}\right)}{\lambda_k^{\alpha=p}}\frac{\partial\lambda_k^{\alpha=p}}{\partial c_p}\right)^2}{\left(\Po(\lambda_k^{\alpha=p})+\Po(b)\right)^2}\right]\label{eq:app-FREM blink limit infty bg}
 \end{alignat}
 %
-for $b=0$ ($\Po(b)=0$):
+for $b=0$ $\left(\Po(b)=0\right)$:
 %
 \begin{alignat}{2}
 	I_{pp} 
@@ -472,7 +457,7 @@ for $b=0$ ($\Po(b)=0$):
  	& =\sum_{k=1}^N\left(\frac{1}{\lambda_k^{\alpha=p}}\frac{\partial\lambda_k^{\alpha=p}}{\partial c_p}\right)^2\frac{1}{4}\sum_{n_k\geq0}\left(\sum_{i=1}^4\Po(\lambda_k^\alpha)\left(n_k-\lambda_k^{\alpha=p}\right)^2\right)\nonumber\\
  	& =\sum_{k=1}^N\left(\frac{1}{\lambda_k^{\alpha=p}}\frac{\partial\lambda_k^{\alpha=p}}{\partial c_p}\right)^2\frac{1}{4}\sum_{n_k\geq0}\left(2\Po(\lambda_k^{\alpha=p})\left(n_k-\lambda_k^{\alpha=p}\right)^2\right)\nonumber\\
  	& =\sum_{k=1}^N\left(\frac{1}{\lambda_k^{\alpha=p}}\frac{\partial\lambda_k^{\alpha=p}}{\partial c_p}\right)^2\frac{1}{2}\lambda_k^{\alpha=p}\nonumber\\
- 	& =\frac{1}{2}\sum_{k=1}^N\frac{1}{\lambda_k^{\alpha=p}}\left(\frac{\partial\lambda_k^{\alpha=p}}{\partial c_p}\right)^2,
+ 	& =\frac{1}{2}\sum_{k=1}^N\frac{1}{\lambda_k^{\alpha=p}}\left(\frac{\partial\lambda_k^{\alpha=p}}{\partial c_p}\right)^2	\label{eq:app-FREM blink lim infty b=0}
 \end{alignat}
 %
 which is the expression for the static sources \autoref{eq:app-Fisher Info for Poisson}, up to a factor $1/2$. The factor 1/2 comes from the fact that the source appears only in 50\% of the observations. If we keep the number of photons constant in both blinking and the static case (by reducing the intensity of the static sources by factor of two) we get identical value of $\var(d)$ for the $d\rightarrow\infty$. 
