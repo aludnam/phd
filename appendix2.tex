@@ -25,13 +25,14 @@ where $l_k(\theta)=p(n_k|\theta)$ to emphasise the dependency on the parameter $
 
 Log-Likelihood:
 \begin{equation}
-	\mathcal{L}=\sum_{k=1}^K\mathcal{L_k}, 
+	\LL=\sum_{k=1}^K\LL_k, 
 \end{equation}
 %
 where
 %
 \begin{equation}
-	\mathcal{L_k}=\left(n_k\log\lambda_k-\lambda_k-\log n_k!\right). 
+	\LL_k=n_k\log\lambda_k-\lambda_k-\log n_k!. 
+	\label{eq:app-loglik}
 \end{equation}
 
 
@@ -42,70 +43,106 @@ where
 
 Fisher information:
 \begin{equation}
-	I(\theta)=-\E\left[\frac{\partial^2\mathcal{L}}{\partial\theta^2}\right]=\E\left[\left(\frac{\partial\mathcal{L}}{\partial\theta}\right)^2\right]=\E\left[\left(\sum_k\frac{\partial\log(l_k)}{\partial\theta}\right)^2\right]=\E\left[\left(\sum_k\frac{1}{l_k}\frac{\partial l_k}{\partial\theta}\right)^2\right]\label{eq:app-Fisher Info Definition}
+	I(\theta)=-\E\left[\frac{\partial^2\LL}{\partial\theta^2}\right]=\E\left[\left(\frac{\partial\LL}{\partial\theta}\right)^2\right]=\E\left[\left(\sum_k\frac{\partial\log(l_k)}{\partial\theta}\right)^2\right]=\E\left[\left(\sum_k\frac{1}{l_k}\frac{\partial l_k}{\partial\theta}\right)^2\right]\label{eq:app-Fisher Info Definition}
 \end{equation}
 
 
+%\begin{alignat}{2}
+%	I(\theta) 
+%	& =\E\left[\left(\sum_k\frac{1}{l_k}\frac{\partial l_k}{\partial\theta}\right)\left(\sum_m\frac{1}{l_m}\frac{\partial l_m}{\partial\theta}\right)\right]\\
+%	& =\E\left[\sum_k\frac{1}{l_k^2}\left(\frac{\partial l_k}{\partial\theta}\right)^2\right]+\E\left[\sum_k\sum_{m\neq k}\frac{1}{l_k}\frac{\partial l_k}{\partial\theta}\frac{1}{l_m}\frac{\partial l_m}{\partial\theta}\right]
+%\end{alignat}
 \begin{alignat}{2}
 	I(\theta) 
-	& =\E\left[\left(\sum_k\frac{1}{l_k}\frac{\partial l_k}{\partial\theta}\right)\left(\sum_m\frac{1}{l_m}\frac{\partial l_m}{\partial\theta}\right)\right]\\
-	& =\E\left[\sum_k\frac{1}{l_k^2}\left(\frac{\partial l_k}{\partial\theta}\right)^2\right]+\E\left[\sum_k\sum_{m\neq k}\frac{1}{l_k}\frac{\partial l_k}{\partial\theta}\frac{1}{l_m}\frac{\partial l_m}{\partial\theta}\right]
+	& =\E\left[\left(\sum_k\frac{\partial \LL_k}{\partial\theta}\right)\left(\sum_m\frac{\partial \LL_m}{\partial\theta}\right)\right]\\
+	& =\E\left[\sum_k\left(\frac{\partial \LL_k}{\partial\theta}\right)^2\right]+\E\left[\sum_k\sum_{m\neq k}\frac{\partial \LL_k}{\partial\theta}\frac{\partial \LL_m}{\partial\theta}\right]
 \end{alignat}
+
 %
 as $n_k$ are iid then the second term can be expressed as 
 %
 \begin{equation}
-	\E\left[\sum_k\sum_{m\neq k}\frac{1}{l_k}\frac{\partial l_k}{\partial\theta}\frac{1}{l_m}\frac{\partial l_m}{\partial\theta}\right] 
-	& =\sum_k\sum_{m\neq k}\E_k\left[\frac{1}{l_k}\frac{\partial l_k}{\partial\theta}\right]\E_m\left[\frac{1}{l_m}\frac{\partial l_m}{\partial\theta}\right]
+	\E\left[\sum_k\sum_{m\neq k}\frac{\partial \LL_k}{\partial\theta}\frac{\partial \LL_m}{\partial\theta}\right] 
+	=\sum_k\sum_{m\neq k}\E_k\left[\frac{\partial \LL_k}{\partial\theta}\right]\E_m\left[\frac{\partial \LL_m}{\partial\theta}\right],
 \end{equation}
 %
 where
 %
 \begin{equation}
-	\E_k\left[f(n_k)\right]=\sum_{n_k\geq0}p(n_k|\theta)f(n_k)
+	\E_k\left[f(n_k)\right]=\sum_{n_k\geq0}p(n_k|\theta)f(n_k).
 \end{equation}
 %
 But 
 \begin{equation}
-	\E_k\left[\frac{1}{l_k}\frac{\partial l_k}{\partial\theta}\right]=\sum_{n_k}l_k\frac{1}{l_k}\frac{\partial l_k}{\partial\theta}=\sum_{n_k}\frac{\partial l_k}{\partial\theta}=\frac{\partial\sum_{n_k}l_k}{\partial\theta}=0
+	\E_k\left[\frac{\partial \LL_k}{\partial\theta}\right]=\E_k\left[\frac{1}{l_k}\frac{\partial l_k}{\partial\theta}\right]=\sum_{n_k}l_k\frac{1}{l_k}\frac{\partial l_k}{\partial\theta}=\sum_{n_k}\frac{\partial l_k}{\partial\theta}=\frac{\partial}{\partial\theta}\sum_{n_k}p(n_k|\theta)=0
 \end{equation}
 
-as $\sum_{n_k}l_k=\sum_{n_k}p(n_k|\theta)=1$. The Fisher Information can then be expressed 
-%
-\begin{align*}
-	I(\theta) & =\E\left[\sum_k\frac{1}{l_k^2}\left(\frac{\partial l_k}{\partial\theta}\right)^2\right]\\
-	& =\sum_{k=1}^k\sum_{n_k\geq0}l_k\frac{1}{l_k^2}\left(\frac{\partial l_k}{\partial\theta}\right)^2\\
-	& =\sum_{k=1}^k\sum_{n_k\geq0}\frac{1}{l_k}\left(\frac{\partial l_k}{\partial\theta}\right)^2
-\end{align*}
+as $\sum_{n_k}p(n_k|\theta)=1$. 
 
-Inserting the derivatives of likelihood \autoref{eq:app-Likelihood of Poisson}: 
+The Fisher Information can then be expressed 
 %
 \begin{equation}
-	\frac{\partial l_k}{\partial\theta}=\frac{l_k(n_k-\lambda_k)}{\lambda_k}\frac{\partial\lambda_k}{\partial\theta}
+	I(\theta) =\E\left[\sum_k\left(\frac{\partial \LL_k}{\partial\theta}\right)^2\right]\\
+\end{equation}
+%	& =\sum_{k=1}^k\sum_{n_k\geq0}l_k\frac{1}{l_k^2}\left(\frac{\partial l_k}{\partial\theta}\right)^2\\
+%	& =\sum_{k=1}^k\sum_{n_k\geq0}\frac{1}{l_k}\left(\frac{\partial l_k}{\partial\theta}\right)^2
+%\end{alignat}
+
+and expressing the derivatives from \autoref{eq:app-loglik}
+%
+\begin{equation}
+	\frac{\partial \LL_k}{\partial\theta}=\left(\frac{n_k-\lambda_k}{\lambda_k} \right)\frac{\partial\lambda_k}{\partial\theta}
 \end{equation}
 %
-we obtain
+we get for Fisher information
 %
-\begin{align*}
-	I(\theta) 
-	& =\sum_{k=1}^k\sum_{n_k\geq0}\frac{l_k(n_k-\lambda_k)^2}{\lambda_k^2}\left(\frac{\partial\lambda_k}{\partial\theta}\right)^2\\
-	& =\sum_{k=1}^k\frac{1}{\lambda_k^2}\left(\frac{\partial\lambda_k}{\partial\theta}\right)^2\E_k\left[(n_k-\lambda_k)^2\right]
-\end{align*}
+\begin{alignat}{2}
+	I(\theta)
+	&=\E\left[\sum_k\frac{(n_k-\lambda_k)^2}{\lambda_k^2}\left(\frac{\partial\lambda_k}{\partial\theta}\right)^2\right]\\
+	&=\sum_k\frac{1}{\lambda_k^2}\left(\frac{\partial\lambda_k}{\partial\theta}\right)^2\E\left[(n_k-\lambda_k)^2\right].
+\end{alignat}
 %
-for Poisson $\var(n)=\mathrm{mean}(n)=\lambda$ gives 
+We recognize the variance $\var(n_k)=\E\left[(n_k-\lambda_k)^2\right]$. For Poisson variable 
 %
 \begin{equation}
-	\E_k\left[(n_k-\lambda_k)^2\right]=\var(n_k)=\lambda_k,
+	\var(n_k)=\mathrm{mean}(n_k)=\lambda_k,
 \end{equation}
 %
-and therefore
+and therefore Fisher Information becomes
 %
 \begin{equation}
-	I(\theta)=\sum_{k=1}^K\frac{1}{\lambda_k}\left(\frac{\partial\lambda_k}{\partial\theta}\right)^2.
-	\label{eq:app-Fisher Info for Poisson}   	  
+	I(\theta)=\sum_{k=1}^K\frac{1}{\lambda_k}\left(\frac{\partial \lambda_k}{\partial \theta}\right)^2.
+	\label{eq:app-Fisher Info for Poisson}
 \end{equation}
 
-This is the pixelised version (detection of the photons in K detectors - CCD camera and $\lambda_k=\int_{\Gamma_k}\lambda(x)dx$ where $\Gamma_k$ is an area of the pixels of the detector). 
+
+%Inserting the derivatives of likelihood \autoref{eq:app-Likelihood of Poisson}: 
+%%
+%\begin{equation}
+%	\frac{\partial l_k}{\partial\theta}=\frac{l_k(n_k-\lambda_k)}{\lambda_k}\frac{\partial\lambda_k}{\partial\theta}
+%\end{equation}
+%%
+%we obtain
+%%
+%\begin{alignat}{2}
+%	I(\theta) 
+%	& =\sum_{k=1}^k\sum_{n_k\geq0}\frac{l_k(n_k-\lambda_k)^2}{\lambda_k^2}\left(\frac{\partial\lambda_k}{\partial\theta}\right)^2\\
+%	& =\sum_{k=1}^k\frac{1}{\lambda_k^2}\left(\frac{\partial\lambda_k}{\partial\theta}\right)^2\E_k\left[(n_k-\lambda_k)^2\right]
+%\end{alignat}
+%%
+%for Poisson $\var(n)=\mathrm{mean}(n)=\lambda$ gives 
+%%
+%\begin{equation}
+%	\E_k\left[(n_k-\lambda_k)^2\right]=\var(n_k)=\lambda_k,
+%\end{equation}
+%%
+%and therefore
+%%
+%\begin{equation}
+%	I(\theta)=\sum_{k=1}^K\frac{1}{\lambda_k}\left(\frac{\partial\lambda_k}{\partial\theta}\right)^2.	   	  
+%\end{equation}
+%
+%This is the pixelised version (detection of the photons in K detectors - CCD camera and $\lambda_k=\int_{\Gamma_k}\lambda(x)dx$ where $\Gamma_k$ is an area of the pixels of the detector). 
 
 %==========================================
 %==========================================
@@ -151,10 +188,10 @@ If $\Lambda_1=\Lambda_2$ then $I(d=0)=0$ which means $\var(d=0)\rightarrow\infty
 \subparagraph*{Limit $d\rightarrow\infty$:}\ \\
 When sources are far apart then the mixing term in nominator in \autoref{eq:app-Fisher Info Pixelised - Ram} $\Lambda_1\Lambda_2\partial_{x}q(x-\frac{d}{2})\partial q(d+\frac{d}{2})=0$ as the $\partial_{x}q(x-\frac{d}{2})$ and $\partial_{x}q(x+\frac{d}{2})$ do not have common overlap. \Autoref{eq:app-Fisher Info Pixelised - Ram} then decomposes into two individual terms
 %
-\begin{equation*}
+\begin{equation}
 	I(d) 
 	=\frac{1}{4}\sum_{k=1}^K\left[\frac{\left(\Lambda_1q'_k(x-\frac{d}{2})\right)^2}{\Lambda_1q_k(x-\frac{d}{2})+b}+\frac{\left(\Lambda_2 q'_k(x+\frac{d}{2})\right)^2}{\Lambda_2q_k(x+\frac{d}{2})+b}\right]
-\end{equation*}
+\end{equation}
 %
 This corresponds to a sum of Fisher Information for localisation of individual sources. 
 
@@ -225,10 +262,10 @@ The individual terms of the Fisher Information matrix by using \autoref{eq:app-E
 %
 where $q_k(c_i)$ is the pixelised version (pixel area $\Gamma_k$) of the PSF
 %
-\begin{alignat*}{2}
+\begin{alignat}{2}
 	q_k(c_i) & =\int_{\Gamma_k}q(x-c_i)dx\\
 	q'_k(c_i) & =\int_{\Gamma_k}\frac{\partial q(x-c_i)}{\partial x}dx
-\end{alignat*}
+\end{alignat}
 %
 and $f_k(c_1,c_2)=\Lambda_1q_k(c_1)+\Lambda_2q_k(c_2)+b$.
  
@@ -239,10 +276,10 @@ Numerator $p=I_{11}+I_{22}+2I_{12}$ in \autoref{eq:app-variance alternative}
 
 The terms in the denominator $r=I_{11}I_{22}-I_{12}^2$ in \autoref{eq:app-variance alternative}
 %
-\begin{alignat*}{2}
+\begin{alignat}{2}
 	I_{11}I_{22} & =\Lambda_1^2\Lambda_2^2\sum_{k,l}^K\frac{\left(q'_k(c_1)q'_l(c_2)\right)^2}{f_k(c_1,c_2)f_l(c_1,c_2)}\\
 	I_{12}^2 & =\Lambda_1^2\Lambda_2^2\sum_{k,l}^K\frac{q'_k(c_1)q'_k(c_2)q'_l(c_1)q'_l(c_2)}{f_k(c_1,c_2)f_l(c_1,c_2)}
-\end{alignat*}
+\end{alignat}
 
 \subparagraph*{Limit $c_1\rightarrow c_2,\,(d\rightarrow0)\Rightarrow q_k(c_1)\rightarrow q_k(c_2)$:}\ \\
 %
@@ -266,9 +303,9 @@ The two terms in the denominator in \autoref{eq:app-variance alternative} are id
 %
 and therefore 
 %
-\begin{equation*}
+\begin{equation}
 	r=I_{11}I_{22}-I_{12}^2=\det\left[\bm{I}(\theta)\right] \equiv 0
-\end{equation*}
+\end{equation}
 %
 for any $\Lambda_i$. $\bm{I}(\theta)$ is therefore a singular matrix for $d=0$ and inversion $\bm{I}^{-1}(\theta)$ does not exist for $c_1=c_2$. However,  the limit $c_1\rightarrow c_2,\,(d\rightarrow0)$ gives $p\neq0,\, r\rightarrow0$ and $\var(d\rightarrow0)=\frac{p}{r}\rightarrow\infty$. The variance therefore diverges. 
 
@@ -290,9 +327,9 @@ if $q_k(c_i)$ (and $q_k'(c_i)$) have a finite support.
 For non-pixelised version, negligible background $b/\Lambda\ll1$ and for Gaussian approximation of the PSF ($q(x-a)\propto\exp\left(-\frac{(x-a)^2}{2\sigma^2}\right)$) with
 $\sigma=\frac{\sqrt{2}}{2\pi}\frac{\lambda}{NA}$ (\cite{Zhang2007}) we have $q'(x)=\frac{1}{\sigma^2}xq(x)$ and $q'^2/q=\frac{1}{\sigma^4}x^2q$ which gives $\int q'^2/qdx=\frac{1}{\sigma^4}\int qx^2=\frac{1}{\sigma^4}\sigma^2=\frac{1}{\sigma^2}$ and therefore $I_{ii}=\frac{\Lambda_i}{\sigma^2}$ 
 
-\begin{equation*}
+\begin{equation}
 	\var(d\rightarrow\infty) =\sigma^2\left(\frac{1}{\Lambda_1}+\frac{1}{\Lambda_2}\right)
-\end{equation*}
+\end{equation}
 
 \subparagraph*{Situation with one missing source $\Lambda_i=0,\ \Lambda_j\neq0$:}\ \\
 $I_{ii}\equiv0$ and $I_{ij}\equiv0$ and so $\det(\bm{I}(\theta))\equiv0$, and matrix is singular. In the limit $\Lambda_i\rightarrow0$ the
@@ -331,27 +368,27 @@ We assume a likelihood dependent on parameter $\bm{\Lambda}$ (for example, $\bm{
 %
 Derivatives with respect to the parameter $\theta$:
 %
-\begin{alignat*}{2}
+\begin{alignat}{2}
 	\frac{\partial\mathcal{L}(\theta,\bm{\Lambda})}{\partial \theta}
 	&=\sum_{k=1}^K\frac{\partial\log\left(l_k(\theta,\bm{\Lambda})\right)}{\partial \theta}\\
 	&=\frac{\partial\mathcal{L}(\theta,\bm{\Lambda})}{\partial \theta}. 
-\end{alignat*}
+\end{alignat}
 
 If we assume a probability distribution $p(\bm{\Lambda})$  of the intensity states $\bm{\Lambda}$ we can express the Fisher information (see \autoref{eq:app-Fisher Info Definition}):
 %
-\begin{equation*}
+\begin{equation}
 	I(\theta) = \int_{\bm{\Lambda}}p(\bm{\Lambda})I_{\bm{\Lambda}}(\theta)d\bm{\Lambda},
-\end{equation*}
+\end{equation}
 %
 where $I_{\bm{\Lambda}}(\theta)$ is the Fisher information computed for a specific value of $\bm{\Lambda}$ (see \autoref{eq:app-Fisher Info Definition}).
 
 For discrete states of $\bm{\Lambda}$, for example  
 %
-\begin{alignat*}{4}
+\begin{alignat}{4}
 	\bm{\Lambda}
 	&=\left\{\bm{\Lambda^{\alpha=1}},\,\bm{\Lambda^{\alpha=2}},\,\bm{\Lambda^{\alpha=3}},\,\bm{\Lambda^{\alpha=4}}\right\}\\
 	&=\left\{[\Lambda_1,0],\,[\Lambda_2,0],\,[\Lambda_1,\Lambda_2],\,[0,0]\right\}
-\end{alignat*}	
+\end{alignat}	
 % 
 we get
 \begin{equation}
@@ -406,38 +443,38 @@ The Fisher information matrix diagonal entries:
 %
 because the cross terms ($k,\, l$) in the sum (2nd row) are zeros: 
 %
-\begin{alignat*}{2}
+\begin{alignat}{2}
 	\E\left[\left(\frac{\sum_{\alpha=1}^4\frac{\partial\Po(\lambda_k^\alpha)}{\partial c_p}}{\sum_{\alpha=1}^4\Po(\lambda_k^\alpha)}\right)\left(\frac{\sum_{\alpha=1}^4\frac{\partial\Po(\lambda_l^\alpha)}{\partial c_p}}{\sum_{\alpha=1}^4\Po(\lambda_l^\alpha)}\right)\right] 
 	& =\E_k\left[\frac{\sum_{\alpha=1}^4\frac{\partial\Po(\lambda_k^\alpha)}{\partial c_p}}{\sum_{\alpha=1}^4\Po(\lambda_k^\alpha)}\right]\E_l\left[\frac{\sum_{\alpha=1}^4\frac{\partial\Po(\lambda_l^\alpha)}{\partial c_p}}{\sum_{\alpha=1}^4\Po(\lambda_l^\alpha)}\right]\\
  	& =\sum_{\alpha=1}^4\frac{\partial}{\partial c_p}\left(\sum_{n_k\geq0}\Po(\lambda_k^\alpha)\right)\sum_{\alpha=1}^4\frac{\partial}{\partial c_p}\left(\sum_{n_k\geq0}\Po(\lambda_l^\alpha)\right)\\
  	& =0
-\end{alignat*}
+\end{alignat}
 
 Expressing the derivatives and the expectation from \autoref{eq:app-Fisher Info Integrated Out - diagonal entries} we can write for the diagonal entries of the Fisher information matrix:
 %
-\begin{alignat*}{2}
+\begin{alignat}{2}
 	I_{pp}(\bm{c}) 
 	& =\sum_{k=1}^N\E_k\left[\left\{ \frac{\sum_{\alpha=1}^4\left(\Po(n_k;\lambda_k^\alpha)\frac{(n_k-\lambda_k^\alpha)}{\lambda_k^\alpha}\frac{\partial\lambda_k^\alpha}{\partial c_p}\right)}{\sum_{\alpha=1}^4\Po(n_k;\lambda_k^\alpha)}\right\} ^2\right]\\
  	& =\frac{1}{4}\sum_{k=1}^N\sum_{n_k\geq0}\frac{\left\{ \sum_{\alpha=1}^4\left(\Po(n_k;\lambda_k^\alpha)\frac{(n_k-\lambda_k^\alpha)}{\lambda_k^\alpha}\frac{\partial\lambda_k^\alpha}{\partial c_p}\right)\right\} ^2}{\sum_{\alpha=1}^4\Po(n_k;\lambda_k^\alpha)}
-\end{alignat*}
+\end{alignat}
 
 For the four states model we have $\lambda^{\alpha=3}(c_1,c_2)=\lambda^{\alpha=1}(c_1)+\lambda^{\alpha=2}(c_2)-b$ and so $\frac{\partial\lambda^{\alpha=3}}{\partial c_p}=\frac{\partial\lambda^{\alpha=p}}{\partial c_p}$ and $\frac{\partial\lambda^{\alpha=j}}{\partial c_p}=0,\, j\neq p$ for $p=\{1,2\},\: j=\{1,2,4\};$ so 
 %
-\begin{equation*}
+\begin{equation}
 	I_{pp}(\bm{c}) 
 	=\frac{1}{4}\sum_{k=1}^N\left(\frac{\partial\lambda_k^{\alpha=p}}{\partial c_p}\right)^2\sum_{n_k\geq0}\frac{\left\{\sum_{\alpha=\{p,3\}}\left(\Po(n_k;\lambda_k^\alpha)\frac{(n_k-\lambda_k^\alpha)}{\lambda_k^\alpha}\right)\right\}}{\sum_{\alpha=1}^4\Po(n_k;\lambda_k^\alpha)} ^2
-\end{equation*}
+\end{equation}
 
 
 The Fisher information matrix off-diagonal entries:
 %
-\begin{alignat*}{2}
+\begin{alignat}{2}
 	I_{pq}(\bm{c}) 
 	& =\sum_{k=1}^N\E_k\left[\frac{\left(\sum_{\alpha=1}^4\frac{\partial\Po(\lambda_k^\alpha)}{\partial c_p}\right)\left(\sum_{\alpha=1}^4\frac{\partial\Po(\lambda_k^\alpha)}{\partial c_q}\right)}{\left(\sum_{\alpha=1}^4\Po(\lambda_k^\alpha)\right)^2}\right] \\
  	& =\frac{1}{4}\sum_{k=1}^N\left(\frac{\partial\lambda_k^{\alpha=p}}{\partial c_p}\right)\left(\frac{\partial\lambda_k^{\alpha=q}}{\partial c_q}\right)\times\\
 	&\times\sum_{n_k\geq0}\frac{\left(\sum_{\alpha=\{p,3\}}\Po(n_k;\lambda_k^\alpha)\frac{(n_k-\lambda_k^\alpha)}{\lambda_k^\alpha}\right)\left(\sum_{\alpha=\{q,3\}}\Po(n_k;\lambda_k^\alpha)\frac{(n_k-\lambda_k^\alpha)}{\lambda_k^\alpha}\right)}{\sum_{\alpha=1}^4\Po(n_k;\lambda_k^\alpha)}
 	\label{eq:app-Fisher Info Integrated Out-off diagonal entries}
-\end{alignat*}
+\end{alignat}
 
 \subparagraph*{Limit $d\rightarrow0$:}\ \\
 %
