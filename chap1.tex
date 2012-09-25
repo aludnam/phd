@@ -471,9 +471,15 @@ Average precision (AP) is a mean of interpolated precision:
 \clearpage
 \section{NMF for realistic microscopy datasets \label{sec:NMF-for-real}}
 
-NMF becomes challenging when applied to a dataset with large number ($\sim 10^3$) of images, each containing $\sim 10^4-10^5$ pixels and $\sim10^2-10^4$ QDs. Beside an excessively large computational time, the local minima in NMF fitting complicate the optimisation \cite{Kim2008}. We address this partly by dividing the data into overlapping patches, so that NMF is applied to each of patch individually, and then these results are ``stitched'' back together. We also develop further methods to reduce local optima problems in the fitting procedure. 
+NMF becomes challenging when applied to a dataset with large number ($\sim 10^3$) of images, each containing $\sim 10^4-10^5$ pixels and $\sim10^2-10^4$ QDs. Beside an excessively large computational time, the local minima in NMF fitting complicate the optimisation \cite{Kim2008}. 
 
-A pipe-line for NMF evaluation of a realistic microscopy dataset is described in this section and some of the points are illustrated on simulated data. 
+We address this partly by dividing the data into overlapping patches, so that NMF is applied to each patch individually (see \autoref{sec:preproc}).  In the end, the results from the patches are ``stitched'' back together. 
+
+We also develop methods to reduce local optima problems in the fitting procedure (\inmf\ alogrithm discussed \autoref{sub: Iterative restarts}). 
+
+The results of the NMF can be used in two diffrerent ways. The separated individual sources $\bm{w}$ can be localised and the estimated positions can be used either directly or to create a sub-resolution image very much like in the conventional LM techniques (see \autoref{sub:Localisation-and-stitching}). A different approcach avoids the localisation step and creates the super-resolutin image directly from the estimated $\bm{w}$s by combining their ``squeezed'' version (see \autoref{sub:visualisation}). 
+
+The whole pipe-line for NMF evaluation of a realistic microscopy dataset is described in this section.  The individual steps of the procedure are illustrated on simulated data. 
 
 %==========================================
 
@@ -484,7 +490,6 @@ Raw data are calibrated such that the image intensity corresponds to the photon 
 To detect patches with low signal, the maximum intensity pixel in the time average of each patch $m_{p}=\max_{i}\left\langle \bm{D}_{p}(i,t)\right\rangle _{t}$ is compared to the maximum intensity pixel of the average of the whole data $m=\max_{i}\left\langle \bm{D}(i,t)\right\rangle _{t}$. The patches with $m_{p}/m< t_{m}$ are considered to contain only weak signal and are not considered for further evaluation. For our evaluation we usually set $t_{m}=0.25.$
 
 %==========================================
-\clearpage
 \subsection{Estimation of number of sources $K$\label{sub:Estimation-of-number-of-sources}}
 
 NMF \autoref{eq:NMF model element-wise} requires prior knowledge about the number of sources $K$ to be separated. Estimation of $K$ is a difficult task for noisy datasets. In preliminary work we explored this on simulated data ($\lambda_{em}=655\unit{nm}$, $NA=1.2$) with NMF model fitted for a range of $K$ values. 
@@ -758,7 +763,7 @@ To make a fair comparison with standard NMF, we made $15$ conventional NMF evalu
 
 The estimated sources can greatly vary in quality. While some $\bm{w}$'s are credible representation of a PSF, there are often $\bm{w}$'s which contain multiple PSFs while some correspond to background noise due to overestimation of $K$ (\autoref{sub:Estimation-of-number-of-sources}). Sources located close to the patch border, and therefore partially missing, should also be identified. These sources will likely appear in the adjacent patch entirely, because the overlap of the patches is set to approximately the extent of the (in focus) PSF (\autoref{sec:preproc}).
 
-If all the sources are expected to be in-focus and therefore have a fairly compact PSF with one global maximum (\autoref{fig:Simulted-PSF-different-focal-depths} left), we can use a simple procedure for identification of reasonable $\bm{w}$s:
+If all the sources are expected to be in-focus and therefore have a fairly compact PSF with one global maximum (left side of \autoref{fig:Simulted-PSF-different-focal-depths}), we can use a simple procedure for identification of reasonable $\bm{w}$s:
 %
 \begin{enumerate}
 	\item
@@ -785,7 +790,7 @@ Only the sources with one major local maximum of the convolution of PSF and $\bm
 		\includegraphics[width=\fw]{\qd S455/images/resw_65to80_col}\vspace{\barspace}\tabularnewline
 		\includegraphics[width=\fw]{\qd S455/images/resw_65to80_col_barInt}\tabularnewline
 	\end{tabular}	
-	\caption{Selection of the credible $\bm{w}$s (here ordered by $L_1$ norm). The green and blue boxes indicate the estimated ``credible'' sources (with only one major global maximum). The sources with blue frame have the maximum closer than two pixels to the border and can be therefore considered as partly missing sources. The sources with red frame have two local maxima of comparable strength. Bars under the figures show the normalised maximum value of the estimated $\bm{w}_{k}$ multiplied with mean brightness of the source estimated from the intensity matrix $\bm{H}$.}. 
+	\caption{Selection of the credible $\bm{w}$s (here ordered by $L_1$ norm). The green and blue boxes indicate the estimated ``credible'' sources (with only one major global maximum). The sources with blue frame have the maximum closer than two pixels to the border and can be therefore considered as partly missing sources. The sources with red frame have two local maxima of comparable strength. Bars under the figures show the normalised maximum value of the estimated $\bm{w}_{k}$ multiplied with mean brightness of the source estimated from the intensity matrix $\bm{H}$. The true number of sources in this simulated dataset was $K_{true}=72$.}. 
 	\label{fig:good w}	
 \end{figure}
 %
@@ -793,7 +798,16 @@ The process is illustrated in \autoref{fig:good w} on $\bm{w}$ estimated from th
 
 This approach would, however, fail when used on data with out-of-focus PSF, because the images of the out-of-focus PSF do not have one compact global maximum (\autoref{fig:Simulted-PSF-different-focal-depths} right).
 
-\fixme{Discuss here the linear classifier?}
+As we noted earlier in this section, the calssification method dicussed above is limited to the to the in-focus PSFs (with only one major local maximum of the intensity). To accomodate for the individually different shape of the PSF, such as out-of-focus PSF (right side of \autoref{fig:Simulted-PSF-different-focal-depths}) we have to use a different approach. 
+
+One possibility is to compute a set of ``features'' on each estimated $\bm{w_k}$ (and possibly on corresponding $\bm{h_k}$) and use a linear classifier to identify the class of each estimated source. The possible ``features'' can include, for example, $L_2$ norm, number of clusters in the thresholded image, maximum of the cross-correlation with the PSF, measure of smoothness of the estimated result, distance of the global maximum from the edge and many others. Each $\bm{w_k}$ then represents a point in a high-demensional feature space. The linear classifier assumes that the individual classes can be separated with linear manifolds in the feature space.
+
+However, the linear classifier has to be trained on a set of labelled data. The training therefore requires a manual labelling of at least several hundreds of $\bm{w}$s (assignment of the class to each $w_k$). In an ideal world, one training set would be sufficient for different datasets. The calsifier, once trained, would be applicable for results from diffrent datasets taken in a range of experimental conditions. However, our experience is that the classification performance varies significantly with change of the experimental parameters (size of the patch, pizel-size, background levels). 
+
+The performance, of course, depends on the set of ``features'' computed for each $\bm{w}$ and the development of some ``universal features'' might be a topic of future work. 
+
+ 
+
 
 %We use a linear classifier to automate the quality assessment of the estimated $\bm{w}_{k}$. We compute a set of features based on intensity values of $\bm{w}_{k}$, thresholded background image $\bm{b}_{k}=\bm{w}_{k}<t_b$, thresholded foreground image $\bm{f}_{k}=\bm{w}_{k}>t_f$ and an image of $\bm{w}_{k}$ smoothed with estimated in-focus PSF. The features are listed in \autoref{tab:Features}a and five classes for $\bm{w}_{k}$ are listed in \autoref{tab:Classes}b.
 %

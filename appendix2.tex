@@ -5,10 +5,10 @@
 %==========================================
 
 This is derivation of the fisher information for Poisson distributed
-variable $X$ with mean $\lambda$.
+variable $X$ with mean $\lambda(\theta)$.
 
 \begin{equation}
-X\sim\Po(n,\lambda)=p(n|\theta)=\frac{\lambda^{n}e^{-\lambda}}{n!}
+X\sim\Po(n;\lambda)=\frac{\lambda^{n}e^{-\lambda}}{n!}
 \end{equation}
 
 
@@ -25,8 +25,15 @@ where $l_k(\theta)=p(n_k|\theta)$ to emphasise the dependency on the parameter $
 
 Log-Likelihood:
 \begin{equation}
-	\mathcal{L}=\sum_k\left(n_k\log\lambda_k-\lambda_k-\log n_k!\right)
+	\mathcal{L}=\sum_{k=1}^K\mathcal{L_k}, 
 \end{equation}
+%
+where
+%
+\begin{equation}
+	\mathcal{L_k}=\left(n_k\log\lambda_k-\lambda_k-\log n_k!\right). 
+\end{equation}
+
 
 %==========================================
 %==========================================
@@ -39,18 +46,18 @@ Fisher information:
 \end{equation}
 
 
-\begin{alignat*}{2}
+\begin{alignat}{2}
 	I(\theta) 
-	& =\E\left[\left(\sum_k\frac{1}{l_k}\frac{\partial l_k}{\partial\theta}\right)\left(\sum_{m}\frac{1}{l_{m}}\frac{\partial l_{m}}{\partial\theta}\right)\right]\\
-	& =\E\left[\sum_k\frac{1}{l_k^2}\left(\frac{\partial l_k}{\partial\theta}\right)^2\right]+\E\left[\sum_k\sum_{m\neq k}\frac{1}{l_k}\frac{\partial l_k}{\partial\theta}\frac{1}{l_{m}}\frac{\partial l_{m}}{\partial\theta}\right]
-\end{alignat*}
+	& =\E\left[\left(\sum_k\frac{1}{l_k}\frac{\partial l_k}{\partial\theta}\right)\left(\sum_m\frac{1}{l_m}\frac{\partial l_m}{\partial\theta}\right)\right]\\
+	& =\E\left[\sum_k\frac{1}{l_k^2}\left(\frac{\partial l_k}{\partial\theta}\right)^2\right]+\E\left[\sum_k\sum_{m\neq k}\frac{1}{l_k}\frac{\partial l_k}{\partial\theta}\frac{1}{l_m}\frac{\partial l_m}{\partial\theta}\right]
+\end{alignat}
 %
 as $n_k$ are iid then the second term can be expressed as 
 %
-\begin{align*}
-	\E\left[\sum_k\sum_{m\neq k}\frac{1}{l_k}\frac{\partial l_k}{\partial\theta}\frac{1}{l_{m}}\frac{\partial l_{m}}{\partial\theta}\right] 
-	& =\sum_k\sum_{m\neq k}\E_k\left[\frac{1}{l_k}\frac{\partial l_k}{\partial\theta}\right]\E_{m}\left[\frac{1}{l_{m}}\frac{\partial l_{m}}{\partial\theta}\right]
-\end{align*}
+\begin{equation}
+	\E\left[\sum_k\sum_{m\neq k}\frac{1}{l_k}\frac{\partial l_k}{\partial\theta}\frac{1}{l_m}\frac{\partial l_m}{\partial\theta}\right] 
+	& =\sum_k\sum_{m\neq k}\E_k\left[\frac{1}{l_k}\frac{\partial l_k}{\partial\theta}\right]\E_m\left[\frac{1}{l_m}\frac{\partial l_m}{\partial\theta}\right]
+\end{equation}
 %
 where
 %
@@ -130,7 +137,7 @@ so we get by plugging into \autoref{eq:app-Fisher Info for Poisson} expression f
 %
 \begin{alignat}{2}
 	I(d)
-	&=\frac{1}{4}\sum_{k=1}^K\frac{\left(\Lambda_1\int_{\Gamma_k}\partial_{x}q(x-\frac{d}{2})dx-\Lambda_2\int_{\Gamma_k}\partial_{x}q(x+\frac{d}{2})dx\right)^2}{\Lambda_1\int_{\Gamma_k}q(x-\frac{d}{2})dx+\Lambda_2\int_{\Gamma_k}q(x+\frac{d}{2})dx+b}\nonumber\\
+	&=\frac{1}{4}\sum_{k=1}^K\frac{\left(\Lambda_1\int_{\Gamma_k}\partial_{x}q(x-\frac{d}{2})dx-\Lambda_2\int_{\Gamma_k}\partial_{x}q(x+\frac{d}{2})dx\right)^2}{\Lambda_1\int_{\Gamma_k}q(x-\frac{d}{2})dx+\Lambda_2\int_{\Gamma_k}q(x+\frac{d}{2})dx+b}\\
 	&=\frac{1}{4}\sum_{k=1}^N\frac{\left[\Lambda_1q_k'(-\frac{d}{2})-\Lambda_2q_k'(\frac{d}{2})\right]^2}{\Lambda_1q_k(-\frac{d}{2})+\Lambda_2q_k(\frac{d}{2})+b},
 	\label{eq:app-Fisher Info Pixelised - Ram}	
 \end{alignat}
@@ -297,14 +304,14 @@ variance \autoref{eq:app-variance alternative} $\var(d)\rightarrow\infty$.
 For equally strong sources ($\Lambda_1= \Lambda_2=\Lambda$) the original FREM formula gives identical results as our proposed one. Due to symmetry we get equality of the diagonal terms $I_{11}=I_{22}$. From \autoref{eq:app-variance alternative}
 \begin{alignat}{2}
 	\var^{-1}(d)
-	&=\frac{I_{11}^2-I_{12}^2}{2(I_{11}+I_{12})}\nonumber\\
+	&=\frac{I_{11}^2-I_{12}^2}{2(I_{11}+I_{12})}\\
 	&=\frac{1}{2}\left(I_{11}-I_{12}\right)
 \end{alignat}
 %
 From  \autoref{eq:app-Fisher Information alternative - Individual} we get
 \begin{alignat}{2}
 	\var^{-1}(d)
-	&=\frac{\Lambda}{2}\sum_k\left[\frac{\left(q'_k(c_1)\right)^2-q'_k(c_1)q'_k(c_2)}{q_k(c_1)+q_k(c_2)+b/\Lambda} \right]\nonumber\\
+	&=\frac{\Lambda}{2}\sum_k\left[\frac{\left(q'_k(c_1)\right)^2-q'_k(c_1)q'_k(c_2)}{q_k(c_1)+q_k(c_2)+b/\Lambda} \right]\\
 	&=\frac{\Lambda}{4}\sum_k\left[\frac{\left(q'_k(c_1)-q'_k(c_2)\right)^2}{q_k(c_1)+q_k(c_2)+b/\Lambda} \right],
 \end{alignat}
 % 
@@ -368,9 +375,9 @@ If we do not know the configuration of the $\bm{\Lambda^\alpha}$ in each frame, 
 We assume four state model of two sources: $\left\{ (\Lambda_1,0),(0,\Lambda_2),(\Lambda_1,\Lambda_2),(0,0)\right\}$: 
 %
 \begin{alignat}{4}
-	\lambda_k^{\alpha=1}&=\Lambda_1q_k(x-c_1) & &+b,\nonumber\\ 
-	\lambda_k^{\alpha=2}&=&\Lambda_2q_k(x-c_2) &+b,\nonumber\\ 
-	\lambda_k^{\alpha=3}&=\Lambda_1q_k(x-c_1)&+\Lambda_2q_k(x-c_2)&+b,\nonumber\\ 
+	\lambda_k^{\alpha=1}&=\Lambda_1q_k(x-c_1) & &+b,\\ 
+	\lambda_k^{\alpha=2}&=&\Lambda_2q_k(x-c_2) &+b,\\ 
+	\lambda_k^{\alpha=3}&=\Lambda_1q_k(x-c_1)&+\Lambda_2q_k(x-c_2)&+b,\\ 
 	\lambda_k^{\alpha=4}&=& &+b,
 \end{alignat}
 %
@@ -391,8 +398,8 @@ with derivatives
 The Fisher information matrix diagonal entries:
 %
 \begin{alignat}{2}
-	I_{pp}(\bm{c}) & =\E\left[\left(\sum_{k=1}^N\frac{1}{l_k}\frac{\partial l_k}{\partial c_p}\right)^2\right]\nonumber \\
- 	& =\E\left[\left\{ \sum_{k=1}^N\left(\frac{1}{\sum_{\alpha=1}^4\Po(\lambda_k^\alpha)}\frac{\partial\sum_{\alpha=1}^4\Po(\lambda_k^\alpha)}{\partial c_p}\right)\right\} \left\{ \sum_{l=1}^N\left(\frac{1}{\sum_{\alpha=1}^4\Po(\lambda_l^\alpha)}\frac{\partial\sum_{\alpha=1}^4\Po(\lambda_l^\alpha)}{\partial c_p}\right)\right\} \right]\nonumber \\
+	I_{pp}(\bm{c}) & =\E\left[\left(\sum_{k=1}^N\frac{1}{l_k}\frac{\partial l_k}{\partial c_p}\right)^2\right] \\
+ 	& =\E\left[\left\{ \sum_{k=1}^N\left(\frac{1}{\sum_{\alpha=1}^4\Po(\lambda_k^\alpha)}\frac{\partial\sum_{\alpha=1}^4\Po(\lambda_k^\alpha)}{\partial c_p}\right)\right\} \left\{ \sum_{l=1}^N\left(\frac{1}{\sum_{\alpha=1}^4\Po(\lambda_l^\alpha)}\frac{\partial\sum_{\alpha=1}^4\Po(\lambda_l^\alpha)}{\partial c_p}\right)\right\} \right] \\
 	& =\sum_{k=1}^N\E_k\left[\frac{\left(\sum_{\alpha=1}^4\frac{\partial\Po(\lambda_k^\alpha)}{\partial c_p}\right)^2}{\left(\sum_{\alpha=1}^4\Po(\lambda_k^\alpha)\right)^2}\right],
 	\label{eq:app-Fisher Info Integrated Out - diagonal entries}
 \end{alignat}
@@ -426,7 +433,7 @@ The Fisher information matrix off-diagonal entries:
 %
 \begin{alignat*}{2}
 	I_{pq}(\bm{c}) 
-	& =\sum_{k=1}^N\E_k\left[\frac{\left(\sum_{\alpha=1}^4\frac{\partial\Po(\lambda_k^\alpha)}{\partial c_p}\right)\left(\sum_{\alpha=1}^4\frac{\partial\Po(\lambda_k^\alpha)}{\partial c_q}\right)}{\left(\sum_{\alpha=1}^4\Po(\lambda_k^\alpha)\right)^2}\right]\nonumber \\
+	& =\sum_{k=1}^N\E_k\left[\frac{\left(\sum_{\alpha=1}^4\frac{\partial\Po(\lambda_k^\alpha)}{\partial c_p}\right)\left(\sum_{\alpha=1}^4\frac{\partial\Po(\lambda_k^\alpha)}{\partial c_q}\right)}{\left(\sum_{\alpha=1}^4\Po(\lambda_k^\alpha)\right)^2}\right] \\
  	& =\frac{1}{4}\sum_{k=1}^N\left(\frac{\partial\lambda_k^{\alpha=p}}{\partial c_p}\right)\left(\frac{\partial\lambda_k^{\alpha=q}}{\partial c_q}\right)\times\\
 	&\times\sum_{n_k\geq0}\frac{\left(\sum_{\alpha=\{p,3\}}\Po(n_k;\lambda_k^\alpha)\frac{(n_k-\lambda_k^\alpha)}{\lambda_k^\alpha}\right)\left(\sum_{\alpha=\{q,3\}}\Po(n_k;\lambda_k^\alpha)\frac{(n_k-\lambda_k^\alpha)}{\lambda_k^\alpha}\right)}{\sum_{\alpha=1}^4\Po(n_k;\lambda_k^\alpha)}
 	\label{eq:app-Fisher Info Integrated Out-off diagonal entries}
@@ -453,10 +460,10 @@ for $b=0$ $\left(\Po(b)=0\right)$:
 %
 \begin{alignat}{2}
 	I_{pp} 
-	 &=\sum_{k=1}^N\left(\frac{1}{\lambda_k^{\alpha=p}}\frac{\partial\lambda_k^{\alpha=p}}{\partial c_p}\right)^2\E_k\left[\left(n_k-\lambda_k^{\alpha=p}\right)^2\right]\nonumber\\
- 	& =\sum_{k=1}^N\left(\frac{1}{\lambda_k^{\alpha=p}}\frac{\partial\lambda_k^{\alpha=p}}{\partial c_p}\right)^2\frac{1}{4}\sum_{n_k\geq0}\left(\sum_{i=1}^4\Po(\lambda_k^\alpha)\left(n_k-\lambda_k^{\alpha=p}\right)^2\right)\nonumber\\
- 	& =\sum_{k=1}^N\left(\frac{1}{\lambda_k^{\alpha=p}}\frac{\partial\lambda_k^{\alpha=p}}{\partial c_p}\right)^2\frac{1}{4}\sum_{n_k\geq0}\left(2\Po(\lambda_k^{\alpha=p})\left(n_k-\lambda_k^{\alpha=p}\right)^2\right)\nonumber\\
- 	& =\sum_{k=1}^N\left(\frac{1}{\lambda_k^{\alpha=p}}\frac{\partial\lambda_k^{\alpha=p}}{\partial c_p}\right)^2\frac{1}{2}\lambda_k^{\alpha=p}\nonumber\\
+	 &=\sum_{k=1}^N\left(\frac{1}{\lambda_k^{\alpha=p}}\frac{\partial\lambda_k^{\alpha=p}}{\partial c_p}\right)^2\E_k\left[\left(n_k-\lambda_k^{\alpha=p}\right)^2\right]\\
+ 	& =\sum_{k=1}^N\left(\frac{1}{\lambda_k^{\alpha=p}}\frac{\partial\lambda_k^{\alpha=p}}{\partial c_p}\right)^2\frac{1}{4}\sum_{n_k\geq0}\left(\sum_{i=1}^4\Po(\lambda_k^\alpha)\left(n_k-\lambda_k^{\alpha=p}\right)^2\right)\\
+ 	& =\sum_{k=1}^N\left(\frac{1}{\lambda_k^{\alpha=p}}\frac{\partial\lambda_k^{\alpha=p}}{\partial c_p}\right)^2\frac{1}{4}\sum_{n_k\geq0}\left(2\Po(\lambda_k^{\alpha=p})\left(n_k-\lambda_k^{\alpha=p}\right)^2\right)\\
+ 	& =\sum_{k=1}^N\left(\frac{1}{\lambda_k^{\alpha=p}}\frac{\partial\lambda_k^{\alpha=p}}{\partial c_p}\right)^2\frac{1}{2}\lambda_k^{\alpha=p}\\
  	& =\frac{1}{2}\sum_{k=1}^N\frac{1}{\lambda_k^{\alpha=p}}\left(\frac{\partial\lambda_k^{\alpha=p}}{\partial c_p}\right)^2	\label{eq:app-FREM blink lim infty b=0}
 \end{alignat}
 %
