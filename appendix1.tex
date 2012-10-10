@@ -17,7 +17,7 @@ where $C$ is a constant independent on $\bm{W}$ or $\bm{H}$. The optimisation ca
 with respect to an objective function $f(\bm{W,H})=\mbox{KL}(\bm{D}\parallel\bm{WH})$. The explicit derivation of the objective function $f$ gives
 %
 \begin{alignat}{1}
-	\frac{\partial f(\bm{W,H})}{\partial w_{xk}} & =\sum_{t=1}^{T}h_{kt}-\left[((\bm{D}\oslash\bm{WH})\bm{H}^{\top}\right]_{xk}\nonumber \\
+	\frac{\partial f(\bm{W,H})}{\partial w_{xk}} & =\sum_{t=1}^{T}h_{kt}-\left[(\bm{D}\oslash\bm{WH})\bm{H}^{\top}\right]_{xk}\nonumber \\
 	\frac{\partial f(\bm{W,H})}{\partial h_{kt}} & =\sum_{x=1}^{N}w_{xk}-\left[\bm{W^{\top}}(\bm{D}\oslash\bm{WH})\right]_{xt},
 	\label{eq:gradients}
 \end{alignat}

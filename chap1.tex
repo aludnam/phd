@@ -55,12 +55,15 @@ Yet another approach to the LM data with overlapping sources problem has been pr
 	\newcommand{\barspace}{-.5cm}
 	\centering
 	\condcomment{\boolean{includefigs}}{ 
+	\subfloat[Intensity scaled to in-focus PSF]{
+	\includegraphics[width=\widthfig]{\qd S393/images/psf_outOfFocus_scaled}}\\
+	\subfloat[Intensity scaled for each frame]{
 	\begin{tabular}{l}
 		\includegraphics[width=\widthfig]{\qd S393/images/psf_outOfFocus}\vspace{\barspace}\tabularnewline		
 		\includegraphics[width=\widthfig]{\qd S393/images/psf_outOfFocus_intBars}
-	\end{tabular}
+	\end{tabular}}
 	}	
-	\caption{Simulated PSF in different depths of focus. The number in each figure indicates the distance in $\um$ from the in-focus plane. The maximum intensity relative to the in-focus PSF is indicated in the bars below and corresponds to about 10\% at $1\um$ and 3\% at $1.5\um$.}
+	\caption{Simulated PSF in different depths of focus.  The number in each figure indicates the distance in $\um$ from the in-focus plane. (a) Intensity scaled to the in-focus PSF. (b) The intensity was scaled in each freame. The maximum intensity relative to the in-focus PSF is indicated in the bars below and corresponds to about 10\% at $1\um$ and 3\% at $1.5\um$.}
 	\label{fig:Simulted-PSF-different-focal-depths}
 \end{figure}
 

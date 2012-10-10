@@ -5,10 +5,10 @@
 %==========================================
 
 This is derivation of the fisher information for Poisson distributed
-variable $X$ with mean $\lambda(\theta)$.
+variable $X$ with mean $\lambda(\theta)$
 
 \begin{equation}
-X\sim\Po(n;\lambda)=\frac{\lambda^{n}e^{-\lambda}}{n!}
+X\sim\Po(n;\lambda)=\frac{\lambda^{n}e^{-\lambda}}{n!}.
 \end{equation}
 
 
@@ -18,7 +18,8 @@ X\sim\Po(n;\lambda)=\frac{\lambda^{n}e^{-\lambda}}{n!}
 Likelihood of the Poisson distributed variable with detection $n_k$ in K pixels: 
 %
 \begin{equation}
-	l(\theta)=\prod_{k=1}^Kl_k=\prod_{k=1}^K\frac{\lambda_k^{n_k}e^{-\lambda_k}}{n_k!}\label{eq:app-Likelihood of Poisson}
+	l(\theta)=\prod_{k=1}^Kl_k=\prod_{k=1}^K\frac{\lambda_k^{n_k}e^{-\lambda_k}}{n_k!},
+	\label{eq:app-Likelihood of Poisson}
 \end{equation}
 %
 where $l_k(\theta)=p(n_k|\theta)$ to emphasise the dependency on the parameter $\theta$.
@@ -41,12 +42,13 @@ where
 
 \section{Fisher Information}
 
-Fisher information:
+Fisher information can be expressin in these eqvivalent forms:
 \begin{equation}
-	I(\theta)=-\E\left[\frac{\partial^2\LL}{\partial\theta^2}\right]=\E\left[\left(\frac{\partial\LL}{\partial\theta}\right)^2\right]=\E\left[\left(\sum_k\frac{\partial\log(l_k)}{\partial\theta}\right)^2\right]=\E\left[\left(\sum_k\frac{1}{l_k}\frac{\partial l_k}{\partial\theta}\right)^2\right]\label{eq:app-Fisher Info Definition}
+	I(\theta)=-\E\left[\frac{\partial^2\LL}{\partial\theta^2}\right]=\E\left[\left(\frac{\partial\LL}{\partial\theta}\right)^2\right]=\E\left[\left(\sum_k\frac{\partial\log(l_k)}{\partial\theta}\right)^2\right]=\E\left[\left(\sum_k\frac{1}{l_k}\frac{\partial l_k}{\partial\theta}\right)^2\right].
+	\label{eq:app-Fisher Info Definition}
 \end{equation}
 
-
+Therefore
 %\begin{alignat}{2}
 %	I(\theta) 
 %	& =\E\left[\left(\sum_k\frac{1}{l_k}\frac{\partial l_k}{\partial\theta}\right)\left(\sum_m\frac{1}{l_m}\frac{\partial l_m}{\partial\theta}\right)\right]\\
@@ -55,11 +57,10 @@ Fisher information:
 \begin{alignat}{2}
 	I(\theta) 
 	& =\E\left[\left(\sum_k\frac{\partial \LL_k}{\partial\theta}\right)\left(\sum_m\frac{\partial \LL_m}{\partial\theta}\right)\right]\\
-	& =\E\left[\sum_k\left(\frac{\partial \LL_k}{\partial\theta}\right)^2\right]+\E\left[\sum_k\sum_{m\neq k}\frac{\partial \LL_k}{\partial\theta}\frac{\partial \LL_m}{\partial\theta}\right]
+	& =\E\left[\sum_k\left(\frac{\partial \LL_k}{\partial\theta}\right)^2\right]+\E\left[\sum_k\sum_{m\neq k}\frac{\partial \LL_k}{\partial\theta}\frac{\partial \LL_m}{\partial\theta}\right].
 \end{alignat}
-
 %
-as $n_k$ are iid then the second term can be expressed as 
+Because $n_k$ are iid, the second term can be expressed as 
 %
 \begin{equation}
 	\E\left[\sum_k\sum_{m\neq k}\frac{\partial \LL_k}{\partial\theta}\frac{\partial \LL_m}{\partial\theta}\right] 
@@ -74,24 +75,21 @@ where
 %
 But 
 \begin{equation}
-	\E_k\left[\frac{\partial \LL_k}{\partial\theta}\right]=\E_k\left[\frac{1}{l_k}\frac{\partial l_k}{\partial\theta}\right]=\sum_{n_k}l_k\frac{1}{l_k}\frac{\partial l_k}{\partial\theta}=\sum_{n_k}\frac{\partial l_k}{\partial\theta}=\frac{\partial}{\partial\theta}\sum_{n_k}p(n_k|\theta)=0
+	\E_k\left[\frac{\partial \LL_k}{\partial\theta}\right]=\E_k\left[\frac{1}{l_k}\frac{\partial l_k}{\partial\theta}\right]=\sum_{n_k}l_k\frac{1}{l_k}\frac{\partial l_k}{\partial\theta}=\sum_{n_k}\frac{\partial l_k}{\partial\theta}=\frac{\partial}{\partial\theta}\sum_{n_k}p(n_k|\theta)=0,
 \end{equation}
-
+%
 as $\sum_{n_k}p(n_k|\theta)=1$. 
 
-The Fisher Information can then be expressed 
+The Fisher Information can then be written as 
 %
 \begin{equation}
-	I(\theta) =\E\left[\sum_k\left(\frac{\partial \LL_k}{\partial\theta}\right)^2\right]\\
+	I(\theta) =\E\left[\sum_k\left(\frac{\partial \LL_k}{\partial\theta}\right)^2\right]
 \end{equation}
-%	& =\sum_{k=1}^k\sum_{n_k\geq0}l_k\frac{1}{l_k^2}\left(\frac{\partial l_k}{\partial\theta}\right)^2\\
-%	& =\sum_{k=1}^k\sum_{n_k\geq0}\frac{1}{l_k}\left(\frac{\partial l_k}{\partial\theta}\right)^2
-%\end{alignat}
-
+%
 and expressing the derivatives from \autoref{eq:app-loglik}
 %
 \begin{equation}
-	\frac{\partial \LL_k}{\partial\theta}=\left(\frac{n_k-\lambda_k}{\lambda_k} \right)\frac{\partial\lambda_k}{\partial\theta}
+	\frac{\partial \LL_k}{\partial\theta}=\left(\frac{n_k-\lambda_k}{\lambda_k} \right)\frac{\partial\lambda_k}{\partial\theta},
 \end{equation}
 %
 we get for Fisher information
@@ -115,59 +113,29 @@ and therefore Fisher Information becomes
 	\label{eq:app-Fisher Info for Poisson}
 \end{equation}
 
-
-%Inserting the derivatives of likelihood \autoref{eq:app-Likelihood of Poisson}: 
-%%
-%\begin{equation}
-%	\frac{\partial l_k}{\partial\theta}=\frac{l_k(n_k-\lambda_k)}{\lambda_k}\frac{\partial\lambda_k}{\partial\theta}
-%\end{equation}
-%%
-%we obtain
-%%
-%\begin{alignat}{2}
-%	I(\theta) 
-%	& =\sum_{k=1}^k\sum_{n_k\geq0}\frac{l_k(n_k-\lambda_k)^2}{\lambda_k^2}\left(\frac{\partial\lambda_k}{\partial\theta}\right)^2\\
-%	& =\sum_{k=1}^k\frac{1}{\lambda_k^2}\left(\frac{\partial\lambda_k}{\partial\theta}\right)^2\E_k\left[(n_k-\lambda_k)^2\right]
-%\end{alignat}
-%%
-%for Poisson $\var(n)=\mathrm{mean}(n)=\lambda$ gives 
-%%
-%\begin{equation}
-%	\E_k\left[(n_k-\lambda_k)^2\right]=\var(n_k)=\lambda_k,
-%\end{equation}
-%%
-%and therefore
-%%
-%\begin{equation}
-%	I(\theta)=\sum_{k=1}^K\frac{1}{\lambda_k}\left(\frac{\partial\lambda_k}{\partial\theta}\right)^2.	   	  
-%\end{equation}
-%
-%This is the pixelised version (detection of the photons in K detectors - CCD camera and $\lambda_k=\int_{\Gamma_k}\lambda(x)dx$ where $\Gamma_k$ is an area of the pixels of the detector). 
-
 %==========================================
 %==========================================
-\clearpage{}
+\clearpage
 \section{Two sources separated by a distance $d$\label{sub:Two-sources-separated}}
-(Comments on Fisher Information estimation as described by Ram et al. \cite{Ram2006}.)
-
+This section comments on Fisher Information estimation as described by Ram et al. in \cite{Ram2006}.
 
 For two sources separated by a distance $d$ we have a mean value of the intensity:
 %
 \begin{equation}
-	\lambda=\Lambda_1f_1+\Lambda_2f_2
+	\lambda(x)=\Lambda_1f_1(x)+\Lambda_2f_2(x),
 \end{equation}
 %
 where $f_i$ and $\Lambda_i$ is the response function and intensity, respectively, of the source $i$. For translationally invariant PSF and in-focus sources: $f_1=q(x-\frac{d}{2})$ and $f_2=q(x+\frac{d}{2})$
 %
 \begin{equation}
-	\lambda(d)=\Lambda_1q(x-\frac{d}{2})+\Lambda_2q(x+\frac{d}{2})
+	\lambda(d)=\Lambda_1q(x-\frac{d}{2})+\Lambda_2q(x+\frac{d}{2}),
 	\label{eq:app-expected intensity d/2}
 \end{equation}
 %
 where $q$ is the PSF of the sources. For pixelised version (integral over pixel area $\Gamma_k$) with homogeneous background $b$ in each pixel the intensity can be expressed as:
 %
 \begin{equation}
-	\lambda_k(d)=\Lambda_1\int_{\Gamma_k}q(x-\frac{d}{2})dx+\Lambda_2\int_{\Gamma_k}q(x+\frac{d}{2})dx+b
+	\lambda_k(d)=\Lambda_1\int_{\Gamma_k}q(x-\frac{d}{2})dx+\Lambda_2\int_{\Gamma_k}q(x+\frac{d}{2})dx+b,
 \end{equation}
 %
 so we get by plugging into \autoref{eq:app-Fisher Info for Poisson} expression for the Fisher Information:
@@ -179,14 +147,18 @@ so we get by plugging into \autoref{eq:app-Fisher Info for Poisson} expression f
 	\label{eq:app-Fisher Info Pixelised - Ram}	
 \end{alignat}
 %
-where we set $q_k(z)=\int_{\Gamma_k}q(x-z)dx$ as the pixelised version of a point spread function translated by $z$ with $\Gamma_k$ being an area of the $k$th pixel, and $q'_k(z)=\int_{\Gamma_k}\frac{\partial q(x-z)}{\partial x}dx$ as the corresponding pixelised derivative.
+where we have set $q_k(z)=\int_{\Gamma_k}q(x-z)dx$ as the pixelised version of a point spread function translated by $z$ with $\Gamma_k$ being an area of the $k$th pixel, and $q'_k(z)=\int_{\Gamma_k}\frac{\partial q(x-z)}{\partial x}dx$ as the corresponding pixelised derivative.
 
+FREM is defined as a lower bound standard deviation ($\sqrt{\var(d)}$) of the source separation $d$ estimation
+\begin{equation}
+ 	\sqrt{\var(d)}\geq\textrm{FREM}=\sqrt{I^{-1}(\theta)}.
+\end{equation}¥
 
 \subparagraph*{Limit $d=0$:}\ \\
 If $\Lambda_1=\Lambda_2$ then $I(d=0)=0$ which means $\var(d=0)\rightarrow\infty$. However, for unequal sources $\Lambda_1\neq\Lambda_2$ this does not hold and the variance remains finite.
 
 \subparagraph*{Limit $d\rightarrow\infty$:}\ \\
-When sources are far apart then the mixing term in nominator in \autoref{eq:app-Fisher Info Pixelised - Ram} $\Lambda_1\Lambda_2\partial_{x}q(x-\frac{d}{2})\partial q(d+\frac{d}{2})=0$ as the $\partial_{x}q(x-\frac{d}{2})$ and $\partial_{x}q(x+\frac{d}{2})$ do not have common overlap. \Autoref{eq:app-Fisher Info Pixelised - Ram} then decomposes into two individual terms
+When the sources are far apart the mixing term in nominator in \autoref{eq:app-Fisher Info Pixelised - Ram} $\Lambda_1\Lambda_2\partial_{x}q(x-\frac{d}{2})\partial q(d+\frac{d}{2})=0$ as the $\partial_{x}q(x-\frac{d}{2})$ and $\partial_{x}q(x+\frac{d}{2})$ do not have common overlap. \Autoref{eq:app-Fisher Info Pixelised - Ram} then decomposes into two individual terms
 %
 \begin{equation}
 	I(d) 
@@ -196,62 +168,65 @@ When sources are far apart then the mixing term in nominator in \autoref{eq:app-
 This corresponds to a sum of Fisher Information for localisation of individual sources. 
 
 \subparagraph*{Situation with missing source $\Lambda_i=0,\ \Lambda_j\neq0$:}\ \\
-Even if one of the source is missing the Fisher information is strangely non-zero $I(d)\neq0$. The variance remains finite even if one of the sources is not present!
+Even if one of the source is missing the Fisher information is strangely non-zero $I(d)\neq0$. The variance remains finite even if one of the sources is not present! This is a consequence of the assumption that the sources are located symmetrically at $\pm d/2$ with respect to the origin. Therefore only one source is needed to determine the distance $d/2$.
 
 %==========================================
 %==========================================
 
 \section{An alternative way to derive Fisher information for two sources separated by $d$:}
 \label{sec:Appendix FI alternative}
-This is a suggestion how to fix the problems with limits for Fisher Information derived above. This gives infinite variance when one of the sources is no present. Also fix weird behaviour of unequal sources for the limit $d\rightarrow0$. 
+Below we show how to fix the problems with limits for Fisher Information derived above. This gives infinite variance when one of the sources is no present. Also fix strange behaviour of unequal sources for the limit $d\rightarrow0$. 
 
 We consider two sources located at $c_1$ and $c_2$, respectively. The expectation of the intensity is therefore expressed as (cf. \autoref{eq:app-expected intensity d/2}):
 %
 \begin{equation}
-	\lambda_k(\bm{c})=\Lambda_1q_k(x-c_1)+\Lambda_2q_k(x-c_2)+b
+	\lambda_k(\bm{c})=\Lambda_1q_k(x-c_1)+\Lambda_2q_k(x-c_2)+b.
 	\label{eq:app-Expected intensity c_1 c_2}
 \end{equation}
 %
 The distance between the sources is $d=c_1-c_2$. This is a linear combination $\bm{a}^T\cdot\bm{c}$ of the variable $\bm{c}=(c_1,c_2)^T$ where $\bm{a}=(1,-1)^T$. The variance of $d$ is given by 
 %
 \begin{equation}
-	\var(d)=\var(\bm{a}^T\cdot\bm{c})=\bm{a}^T\cdot\bm{Q}\cdot\bm{a}=Q_{11}+Q_{22}-2Q_{12}
+	\var(d)=\var(\bm{a}^T\cdot\bm{c})=\bm{a}^T\cdot\bm{Q}\cdot\bm{a}=Q_{11}+Q_{22}-2Q_{12},
 \end{equation}
 %
-where $\bm{Q}$ is a covariance matrix $\bm{Q}=\bm{I}^{-1}(\theta)$ and $\bm{I}(\theta)$ is the Fisher information matrix (symmetric
-$I_{12}=I_{21}$)
+where $\bm{Q}$ is a covariance matrix with lower bound expressed as an inverse of the the Fisher information matrix $\bm{Q}\geq\bm{I}^{-1}(\theta)$
 %
 \begin{equation}
 	\bm{I}(\theta)=\left(
 	\begin{array}{cc}
 		I_{11} & I_{12}\\
-		I_{12} & I_{22}
+		I_{21} & I_{22},
 	\end{array}\right)
 \end{equation}
 %
 given by generalisation of \autoref{eq:app-Fisher Info for Poisson}
 %
 \begin{equation}
-	I_{ij}(\theta)=\sum_{k=1}^K\frac{1}{\lambda_k}\frac{\partial\lambda_k}{\partial c_i}\frac{\partial\lambda_k}{\partial c_j}
+	I_{ij}(\theta)=\sum_{k=1}^K\frac{1}{\lambda_k}\frac{\partial\lambda_k}{\partial c_i}\frac{\partial\lambda_k}{\partial c_j}.
 	\label{eq:app-Fisher Info general lambda}
 \end{equation}
 %
-The covariance matrix $\bm{Q}$ is then 
+Not that the Fisher information matrix is symmetrical $I_{12}=I_{21}$ due to exchangebilily of the derivatives.
+ 
+The covariance matrix $\bm{Q}$ is therefore
 %
 \begin{equation}
-	\bm{Q}=\bm{I}^{-1}(\theta)=\frac{1}{I_{11}I_{22}-I_{12}^2}\left(
+	\bm{Q}\geq\bm{I}^{-1}(\theta)=\frac{1}{I_{11}I_{22}-I_{12}^2}\left(
 	\begin{array}{cc}
 		I_{22} & -I_{12}\\
 		-I_{12} & I_{11}
 	\end{array}\right)
 \end{equation}
 %
-and the variance of $d=c_1-c_2$ 
+and the variance of $d=c_1-c_2$ estimator
 %
-\begin{equation}
-	\var(d)=(1,-1)^T\cdot\bm{Q}\cdot(1,-1)=\frac{I_{11}+I_{22}+2I_{12}}{I_{11}I_{22}-I_{12}^2}=\frac{p}{r}
+\begin{alignat}{2}
+	\var(d)
+	&=(1,-1)^T\cdot\bm{Q}\cdot(1,-1)\\
+	&\geq\frac{I_{11}+I_{22}+2I_{12}}{I_{11}I_{22}-I_{12}^2}=\frac{p}{r}.
 	\label{eq:app-variance alternative}
-\end{equation}
+\end{alignat}
 
 The individual terms of the Fisher Information matrix by using \autoref{eq:app-Expected intensity c_1 c_2} in \autoref{eq:app-Fisher Info general lambda}
 %
@@ -269,28 +244,30 @@ where $q_k(c_i)$ is the pixelised version (pixel area $\Gamma_k$) of the PSF
 %
 and $f_k(c_1,c_2)=\Lambda_1q_k(c_1)+\Lambda_2q_k(c_2)+b$.
  
-Numerator $p=I_{11}+I_{22}+2I_{12}$ in \autoref{eq:app-variance alternative}
+Then the numerator $p=I_{11}+I_{22}+2I_{12}$ in \autoref{eq:app-variance alternative} is given by
 \begin{equation}
-	p=\sum_{k=1}^K\frac{1}{f_k(c_1,c_2)}\left[\Lambda_1^2q'^2{}_k(c_1)+\Lambda_2^2q'{}_k^2(c_2)+2\Lambda_1\Lambda_2q'_k(c_1)q'_k(c_2)\right]
+	p=\sum_{k=1}^K\frac{1}{f_k(c_1,c_2)}\left[\Lambda_1^2q'^2{}_k(c_1)+\Lambda_2^2q'{}_k^2(c_2)+2\Lambda_1\Lambda_2q'_k(c_1)q'_k(c_2)\right].
 \end{equation}
 
-The terms in the denominator $r=I_{11}I_{22}-I_{12}^2$ in \autoref{eq:app-variance alternative}
+The terms in the denominator $r=I_{11}I_{22}-I_{12}^2$ in \autoref{eq:app-variance alternative} are given by
 %
 \begin{alignat}{2}
 	I_{11}I_{22} & =\Lambda_1^2\Lambda_2^2\sum_{k,l}^K\frac{\left(q'_k(c_1)q'_l(c_2)\right)^2}{f_k(c_1,c_2)f_l(c_1,c_2)}\\
 	I_{12}^2 & =\Lambda_1^2\Lambda_2^2\sum_{k,l}^K\frac{q'_k(c_1)q'_k(c_2)q'_l(c_1)q'_l(c_2)}{f_k(c_1,c_2)f_l(c_1,c_2)}
 \end{alignat}
 
-\subparagraph*{Limit $c_1\rightarrow c_2,\,(d\rightarrow0)\Rightarrow q_k(c_1)\rightarrow q_k(c_2)$:}\ \\
+We now consider the limits of the very close sources ($d\rightarrow 0$) and well separated emitters ($d\rightarrow\infty$) for FREM.
+
+\subparagraph*{Close sources limit: $d\rightarrow0 \Rightarrow c_1\rightarrow c_2 \Rightarrow q_k(c_1)\rightarrow q_k(c_2)$:}\ \\
 %
 \begin{equation}
 	p=(\Lambda_1^2+\Lambda_2^2+2\Lambda_1\Lambda_2)\sum_{k=1}^K\frac{q'{}_k^2(c)}{f_k(c,c)},
 \end{equation}
 %
-which can be further simplified by explicitly writing $f_k(c_1,c_2)$
+which can be further simplified by explicitly substituing $f_k(c_1,c_2)$
 %
 \begin{equation}
-	p=(\Lambda_1+\Lambda_2)\sum_{k=1}^K\frac{q'{}_k^2(c)}{q_k(c)+b/(\Lambda_1+\Lambda_2)}
+	p=(\Lambda_1+\Lambda_2)\sum_{k=1}^K\frac{q'{}_k^2(c)}{q_k(c)+b/(\Lambda_1+\Lambda_2)}.
 \end{equation}
 %
 $q_k$ and $(q'_k)^2$ are strictly positive functions, therefore the sum is not zero and $p$ is non-zero for any $\Lambda_1,\,\Lambda_2$. 
@@ -307,49 +284,90 @@ and therefore
 	r=I_{11}I_{22}-I_{12}^2=\det\left[\bm{I}(\theta)\right] \equiv 0
 \end{equation}
 %
-for any $\Lambda_i$. $\bm{I}(\theta)$ is therefore a singular matrix for $d=0$ and inversion $\bm{I}^{-1}(\theta)$ does not exist for $c_1=c_2$. However,  the limit $c_1\rightarrow c_2,\,(d\rightarrow0)$ gives $p\neq0,\, r\rightarrow0$ and $\var(d\rightarrow0)=\frac{p}{r}\rightarrow\infty$. The variance therefore diverges. 
+for any $\Lambda_i$. $\bm{I}(\theta)$ is therefore a singular matrix for $d=0$ and inverse $\bm{I}^{-1}(\theta)$ does not exist for $c_1=c_2$. However,  the limit $c_1\rightarrow c_2,\,(d\rightarrow0)$ gives $p\neq0,\, r\rightarrow0$ and FREM$=\frac{p}{r}\rightarrow\infty$. FREM therefore diverges for sources with any combination of source intenisties $\Lambda_1$ and $\Lambda_2$. This is in contratst to the original FREM formula \autoref{eq:app-Fisher Info Pixelised - Ram} wich gives diveriging FREM only for equally strong sources $\Lambda_1=\Lambda_2$. 
 
-\subparagraph*{Limit $d\rightarrow\infty$:}\ \\
-The cross term $I_{ij}$ in \autoref{eq:app-Fisher Information alternative - Individual} vanishes ($I_{ij}=0,\: i\neq j$) because of the multiplication $q'_k(c_1)q'_k(c_2)$ which is zero for largely separated PSF with finite support (if the support of $q_k(c_1)$ and $q_k(c_2)$ do not have mutual overlap). Then from \autoref{eq:app-variance alternative} 
+\subparagraph*{Well separated sources limit $d\rightarrow\infty$:}\ \\
+The cross term $I_{ij}$ in \autoref{eq:app-Fisher Information alternative - Individual} vanishes ($I_{ij}=0,\: i\neq j$) because of the multiplication $q'_k(c_1)q'_k(c_2)$, which is very close to zero for well separated PSFs. This assumes that the PSF (and its first derivative) decreases to negligible values for distance far from the center of the PSF. Then from \autoref{eq:app-variance alternative} 
 %
 \begin{equation}
-	\var(d)=\frac{1}{I_{11}}+\frac{1}{I_{22}}
+	\var(d)\geq\frac{1}{I_{11}}+\frac{1}{I_{22}},
 \end{equation}
 %
-which is the sum of variances for estimation two separated sources.
+which is the sum of bounds on variances for localisatoin of two individual sources:
+%
+\begin{alignat}{2}
+	I_{ii}
+	&=\Lambda_i^2\sum_{k=1}^K\frac{q_k'^2(c_i)}{\Lambda_1q_k(c_1)+\Lambda_2q_k(c_2)+b}\\
+	&=\Lambda_i\sum_{k=1}^K\frac{q_k'^2(c_i)}{q_k(c_i)+b/\Lambda_i}.
+	\label{eq:app-I d to infty}
+\end{alignat}
+%
+We used the fact that the PSFs $q(c_1)$ and $q(c_2)$ are well separated and decrase (with its first derivatives) towards zero in the regions far from their center. Therefore the $q(c_j)$ is negligible in the region where $q'(c_i)$ ($j\neq i$) have any significant values. The term $\Lambda_jq(c_j)$ in the denominator can be therefore neglected. 
 
+
+If we use Gaussian approximation of the PSF (see Zhang et al. \cite{Zhang2007})
+%
 \begin{equation}
-	I_{ii}=\Lambda_i^2\sum_{k=1}^K\frac{q_k'^2(c_i)}{\Lambda_1q_k(c_1)+\Lambda_2q_k(c_2)+b}=\Lambda_i\sum_{k=1}^K\frac{q_k'^2(c_i)}{q_k(c_i)+b/\Lambda_i}
+	q(x-c_i)=\frac{1}{Z}\exp\left(-\frac{(x-c_i)^2}{2\sigma^2}\right)
+\end{equation}
+% 
+with derivatives with respect to $c_i$
+%
+\begin{alignat}{2}
+ 	q'(x-c_i) 
+	&=\frac{x-c_i}{\sigma^2}\frac{1}{Z}\exp\left(-\frac{(x-c_i)^2}{2\sigma^2}\right)\\
+	&=\frac{x-c_i}{\sigma^2}q(x-c_i),
+\end{alignat}
+%
+then from \autoref{eq:app-I d to infty} for the situation with negligible background $b/\Lambda\ll1$
+%
+\begin{equation}
+	I_{ii}=\frac{\Lambda_i}{\sigma^4}\sum_k\int_{\Gamma_k}(x-c_i)^2q(x-c_i)dx.
 \end{equation}
 %
-if $q_k(c_i)$ (and $q_k'(c_i)$) have a finite support.
-
-For non-pixelised version, negligible background $b/\Lambda\ll1$ and for Gaussian approximation of the PSF ($q(x-a)\propto\exp\left(-\frac{(x-a)^2}{2\sigma^2}\right)$) with
-$\sigma=\frac{\sqrt{2}}{2\pi}\frac{\lambda}{NA}$ (\cite{Zhang2007}) we have $q'(x)=\frac{1}{\sigma^2}xq(x)$ and $q'^2/q=\frac{1}{\sigma^4}x^2q$ which gives $\int q'^2/qdx=\frac{1}{\sigma^4}\int qx^2=\frac{1}{\sigma^4}\sigma^2=\frac{1}{\sigma^2}$ and therefore $I_{ii}=\frac{\Lambda_i}{\sigma^2}$ 
-
+Now using 
+%
+\begin{alignat}{2}
+	\sum_k\int_{\Gamma_k}(x-c_i)^2q(x-c_i)dx
+	&=\int_{\mathbb{R}^2}(x-c_i)^2q(x-c_i)dx\\
+	&=\sigma^2,
+\end{alignat}¥
+% 
+we obtain the terms of the Fisher information matrix
+%
 \begin{equation}
-	\var(d\rightarrow\infty) =\sigma^2\left(\frac{1}{\Lambda_1}+\frac{1}{\Lambda_2}\right)
+	I_{ii}=\frac{\Lambda_i}{\sigma^2}.
 \end{equation}
+%
+These terms corresponds to the localisation of the individual sources. The ``localisatoin precision'' for one souces $s_i$ as used in conventional localisatoin techniques is then bounded by $\sigma/\sqrt{\Lambda_i}$, which corresponds to ``squeezing'' of the intitial `` localisation uncertainity'' $\sigma$ by the square root of the souce's intensity. 
 
-\subparagraph*{Situation with one missing source $\Lambda_i=0,\ \Lambda_j\neq0$:}\ \\
+The lower bound on the source separation estimator variance is given by
+%
+\begin{equation}
+	\var(d\rightarrow\infty) \geq\sigma^2\left(\frac{1}{\Lambda_1}+\frac{1}{\Lambda_2}\right).
+\end{equation}
+%
+
+\subparagraph*{One sources missing: $\Lambda_i=0,\ \Lambda_j\neq0$:}\ \\
 $I_{ii}\equiv0$ and $I_{ij}\equiv0$ and so $\det(\bm{I}(\theta))\equiv0$, and matrix is singular. In the limit $\Lambda_i\rightarrow0$ the
-variance \autoref{eq:app-variance alternative} $\var(d)\rightarrow\infty$. 
+variance \autoref{eq:app-variance alternative} $\var(d)\rightarrow\infty$. This is agian in contrast to the original FREM computed from \autoref{eq:app-Fisher Info Pixelised - Ram}, which gives finite FREM even for one source missing (see discussion of limits in \autoref{sub:Two-sources-separated}). 
 
 %==========================================
 
-\section{Comparison of the original FREM with our proposed formula}
-For equally strong sources ($\Lambda_1= \Lambda_2=\Lambda$) the original FREM formula gives identical results as our proposed one. Due to symmetry we get equality of the diagonal terms $I_{11}=I_{22}$. From \autoref{eq:app-variance alternative}
+\section{Comparison of the original FREM with our version}
+For equally strong sources ($\Lambda_1= \Lambda_2=\Lambda$) the original FREM formula gives identical results as ours. In this situation \autoref{eq:app-Fisher Information alternative - Individual} gives equality of the diagonal terms $I_{11}=I_{22}$ for any $c_1$ and $c_2$. From \autoref{eq:app-variance alternative}
 \begin{alignat}{2}
 	\var^{-1}(d)
-	&=\frac{I_{11}^2-I_{12}^2}{2(I_{11}+I_{12})}\\
-	&=\frac{1}{2}\left(I_{11}-I_{12}\right)
+	&\geq\frac{I_{11}^2-I_{12}^2}{2(I_{11}+I_{12})}\\
+	&\geq\frac{1}{2}\left(I_{11}-I_{12}\right)
 \end{alignat}
 %
 From  \autoref{eq:app-Fisher Information alternative - Individual} we get
 \begin{alignat}{2}
 	\var^{-1}(d)
-	&=\frac{\Lambda}{2}\sum_k\left[\frac{\left(q'_k(c_1)\right)^2-q'_k(c_1)q'_k(c_2)}{q_k(c_1)+q_k(c_2)+b/\Lambda} \right]\\
-	&=\frac{\Lambda}{4}\sum_k\left[\frac{\left(q'_k(c_1)-q'_k(c_2)\right)^2}{q_k(c_1)+q_k(c_2)+b/\Lambda} \right],
+	&\geq\frac{\Lambda}{2}\sum_k\left[\frac{\left(q'_k(c_1)\right)^2-q'_k(c_1)q'_k(c_2)}{q_k(c_1)+q_k(c_2)+b/\Lambda} \right]\\
+	&\geq\frac{\Lambda}{4}\sum_k\left[\frac{\left(q'_k(c_1)-q'_k(c_2)\right)^2}{q_k(c_1)+q_k(c_2)+b/\Lambda} \right],
+	\label{eq:app-equivalence FREM orig and us}
 \end{alignat}
 % 
 where we used $\sum_k\left(q'_k(c_1)\right)^2=\sum_k\left(q'_k(c_2)\right)^2$. Comparison with \autoref{eq:app-Fisher Info Pixelised - Ram} shows the equality of the both formulas for the situation of equally strong sources $\Lambda_1=\Lambda_2$.
@@ -360,7 +378,7 @@ For sources with different intensity $\Lambda_1\neq\Lambda_2$ can be shown that 
 %==========================================
 
 \section{Time distribution of the intensities - averaging\label{sec:Appendix - blinking not integrated}}
-We assume a likelihood dependent on parameter $\bm{\Lambda}$ (for example, $\bm{\Lambda}=(\Lambda_1,\Lambda_2)$ - intensity of two sources in the recorede frame). If we knew the configuration of $\bm{\Lambda}$ we would write the log-likelihood
+We assume a likelihood dependent on parameter $\bm{\Lambda}$ (for example, $\bm{\Lambda}=(\Lambda_1,\Lambda_2)$ - intensity of two sources in the recorede frame). If we \emph{knew the configuration} of $\bm{\Lambda}$ we would write the log-likelihood
 %
 \begin{equation}
 	\mathcal{L}(\theta,\Lambda)=\sum_{k=1}^K\log\left(l_k(\theta,\bm{\Lambda})\right).
@@ -420,7 +438,7 @@ We assume four state model of two sources: $\left\{ (\Lambda_1,0),(0,\Lambda_2),
 %
 with uniform distribution over these states. We used uniform background intensity $b$ in each pixel of each frame. 
 
-From \autoref{eq:app-log lik - int out}:
+Assuming $p(\bm{\Lambda^\alpha})=1/4$ for $\alpha=1,..4$, then from \autoref{eq:app-log lik - int out}:
 %
 \begin{equation}
 	l_k(\theta)=\frac{1}{4}\sum_{\alpha=1}^4\Po(\lambda_k^\alpha),
@@ -432,7 +450,7 @@ with derivatives
 	\frac{\partial l_k}{\partial c_p}=\frac{1}{4}\sum_\alpha\frac{\partial\Po(\lambda_k^\alpha)}{\partial c_p}=\frac{1}{4}\sum_\alpha\left(\Po(\lambda_k^\alpha)\frac{(n_k-\lambda_k^\alpha)}{\lambda_k^\alpha}\frac{\partial\lambda_k^\alpha}{\partial c_p}\right).
 \end{equation}
 %
-The Fisher information matrix diagonal entries:
+The diagonal entries of the Fisher information matrix are give by:
 %
 \begin{alignat}{2}
 	I_{pp}(\bm{c}) & =\E\left[\left(\sum_{k=1}^N\frac{1}{l_k}\frac{\partial l_k}{\partial c_p}\right)^2\right] \\
@@ -466,12 +484,12 @@ For the four states model we have $\lambda^{\alpha=3}(c_1,c_2)=\lambda^{\alpha=1
 \end{equation}
 
 
-The Fisher information matrix off-diagonal entries:
+The off-diagonal entries of the  Fisher information matrix are given by:
 %
 \begin{alignat}{2}
 	I_{pq}(\bm{c}) 
 	& =\sum_{k=1}^N\E_k\left[\frac{\left(\sum_{\alpha=1}^4\frac{\partial\Po(\lambda_k^\alpha)}{\partial c_p}\right)\left(\sum_{\alpha=1}^4\frac{\partial\Po(\lambda_k^\alpha)}{\partial c_q}\right)}{\left(\sum_{\alpha=1}^4\Po(\lambda_k^\alpha)\right)^2}\right] \\
- 	& =\frac{1}{4}\sum_{k=1}^N\left(\frac{\partial\lambda_k^{\alpha=p}}{\partial c_p}\right)\left(\frac{\partial\lambda_k^{\alpha=q}}{\partial c_q}\right)\times\\
+ 	& =\frac{1}{4}\sum_{k=1}^N\left(\frac{\partial\lambda_k^{\alpha=p}}{\partial c_p}\right)\left(\frac{\partial\lambda_k^{\alpha=q}}{\partial c_q}\right)\\
 	&\times\sum_{n_k\geq0}\frac{\left(\sum_{\alpha=\{p,3\}}\Po(n_k;\lambda_k^\alpha)\frac{(n_k-\lambda_k^\alpha)}{\lambda_k^\alpha}\right)\left(\sum_{\alpha=\{q,3\}}\Po(n_k;\lambda_k^\alpha)\frac{(n_k-\lambda_k^\alpha)}{\lambda_k^\alpha}\right)}{\sum_{\alpha=1}^4\Po(n_k;\lambda_k^\alpha)}
 	\label{eq:app-Fisher Info Integrated Out-off diagonal entries}
 \end{alignat}

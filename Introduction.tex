@@ -1,5 +1,65 @@
 %!TEX root = thesis.tex
 \chapter{Introduction}
-This will be a general introduction to the problematics of the sub-resolution microscopy. Explaining what to expect in the individual chapters and making the outline of the STORY. 
+%This will be a general introduction to the problematics of the sub-resolution microscopy. Explaining what to expect in the individual chapters and making the outline of the STORY. 
 
+%==========================================
+%==========================================
+
+\section{Optical microscopy}
+
+Optical microscopy often referred as ``light microcopy'' has been around for over 400 years. Since the very early versions of Zacharias Janssen's or Galileo Galilei's compound microscopes from the beginning of 17\ths\ century, optical microscopy has undergone a long and steady process of development. Despite the speculations who was the actual inventor of the optical microscope, it was Anton van Leeuwenhoek who largely popularised the use of microscope as an instrument for observing minute details of the specimen and who introduce his simple instrument into biological research during the 17\ths\ century. 
+
+An important milestones was the pioneering work of Ernst Abbe \cite{Abbe1873} in the second half of 19\ths\ century. Abbe set a theoretical limit on the resolution of the microscope and mastered the design of objective lenses highly corrected for optical aberrations.
+
+During the 20\ths\ century with advances in technology the manufactures have produced lenses reaching the theoretical limits of the optical microscope performance. New techniques such as Zernike's phase contrast \cite{Zernike1942}, awarded the 1953 Nobel prize in physics, allowed observation of transparent specimens and had major impact on biological research such as in vivo study of cell cycle. 
+
+Introduction of the fluorescence microcopy in 20\ths\ century has revolutionised the use of optical microscope in biological and medical science. Fluorescence labels attached to a structures of interest with high specificity provide a strong intensity contrast in the microscopic image of the specimen. Moreover use of the light in the optical wavelength band allows for non-invasive observation of living specimen. The green fluorescence protein (GFP) isolated from jellyfish {\it Aequorea victoria}, allowed for direct expression of the fluorescent marker by the organism itself and further redefined the use of fluorescence microscopy in cell biology. The 2008 Nobel Prize in Chemistry was awarded to Martin Chalfie, Osamu Shimomura, and Roger Y. Tsien for their discovery and development of the GFP.
+
+The emergence of new techniques surpassing the classical resolution limit in the beginning of 21\st\ century has given another spin to the research in optical microcopy. The number of scientific publications in recent years show, that the optical microscopy remains a vibrant and exciting scientific domain.
+
+%==========================================
+%==========================================
+
+\section{Resolution limit}
+PSFs
+
+\begin{figure}[!bht]
+	\centering
+	\newcommand{\wf}{.48\textwidth}
+	\subfloat[Linear]{
+	\includegraphics[width=\wf]{figures/psfillustration/PSFAiryGauss}}
+	\subfloat[Logarithmic]{
+	\includegraphics[width=\wf]{figures/psfillustration/PSFAiryGauss_semilogy}}
+	\caption{PSF for 1.2 NA objective using $\lambda=625$ nm emission light. Blue line represents Airy pattern, red dashed lines shows Gaussian approximation. Green vertical lines mark the first minima of the Airy pattern at $\delta=318$ nm. $\delta$ corresponds to the radius of the Airy disk. (a) Linear, (b) logarithmic plot of the intensity highlighting the secondary maxima in the Airy pattern and the differences of the Gaussian approximation at the periphery of the function.}
+	\label{fig:PSF}
+\end{figure}
+
+
+\begin{figure}[!bht]
+	\centering
+	\newcommand{\wf}{.3\textwidth}	
+	\newcommand{\ndir}{figures/psfillustration/}
+	\begin{tabular}{ccc}
+		\subfloat[$d=\delta/2$]{\includegraphics[width=\wf]{\ndir Airy05}}
+		& \subfloat[$d=\delta$]{\includegraphics[width=\wf]{\ndir Airy1}}
+		& \subfloat[$d=2\delta$]{\includegraphics[width=\wf]{\ndir Airy2}}
+		\tabularnewline
+		\subfloat[$d=\delta/2$]{\includegraphics[width=\wf]{\ndir AiryPix05}}
+		& \subfloat[$d=\delta$]{\includegraphics[width=\wf]{\ndir AiryPix1}}
+		& \subfloat[$d=2\delta$]{\includegraphics[width=\wf]{\ndir AiryPix2}}
+		\tabularnewline
+		\subfloat[$d=\delta/2$]{\includegraphics[width=\wf]{\ndir Airy05profile}}
+		& \subfloat[$d=\delta$]{\includegraphics[width=\wf]{\ndir Airy1profile}}
+		& \subfloat[$d=2\delta$]{\includegraphics[width=\wf]{\ndir Airy2profile}}
+		\tabularnewline
+	\end{tabular}
+	\caption{Two PSFs (1.2 NA objective, $\lambda=625$ nm) separated by distance $d$. Location of the sources is indicated with red dots. The radius of the Airy disk corresponds to $\delta=318$ nm. (a) Continuous representation of the PSFs. (b) Pixelised version with pixel-size 80 nm. (c) Intensity profiles of the continuous version (blue lines) with individual PSFs (red and green dashed lines).}
+	\label{fig:Rayleigh}
+\end{figure}
+
+%==========================================
+%==========================================
+\clearpage
+\section{Super-resolution}
+shortly about  STED, LM, SIM
 
