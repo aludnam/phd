@@ -13,14 +13,7 @@ Details of all derivations are shown in \autoref{app:Appendix2}.
 %==========================================
 \section{Fundamental resolution measure (FREM)\label{sec:FREM}}
 
-The ability of an optical microscope to show spatial details in the specimen structure is fundamentally limited by diffraction. The radius of an airy disk is often considered as a ``classical resolution limit''. It is given by
-%
-\begin{equation}
- 	\delta=0.61\frac{\lambda}{NA}, 
-	\label{eq:Airy}
-\end{equation}
-%
-where $\lambda$ is a wavelength of the emitted light and $NA$ is a numerical aperture of the objective. This resolution limit comes from the empirical observation that if two sources are separated by a distance grater then $\delta$, then we can ``resolve'' them as two individual objects. If the separation is smaller then $\delta$ then the point spread functions of the two sources merge together to create a single object and sources therefore become ``unresolved''. The simplicity of the expression and the clear interpretation makes this limit popular in the microscopy community and is usually taken as a bench mark for the resolution techniques. However, being an empirical observation, the classical resolution limit does not take into account the statistical nature of the photon detection process. It applies to the noise-free situation with continuous representation of the point spread functions (detection with infinitely small pixels). \Autoref{eq:Airy} is sometimes called ``Raleigh resolution limit''. Note that Abbe resolution limit $\delta=0.5\frac{\lambda}{NA}$ related to the passband of spatial frequencies is also often used.
+The classical resolution limit \autoref{eq:Airy} discussed in \autoref{sed:Resolutin limit} relates to an empirical observation and does not take into account the statistical nature of the photon detection process. It applies to the noise-free situation with continuous representation of the point spread functions (detection with infinitely small pixels).
 
 Ram et al. \cite{Ram2006,Ram2006b} revised the resolution limit and defined a new measure, which considers the statistical process of the photon detection on a pixellated grid of a camera. The so called \emph{Fundamental resolution limit} (FREM) refers to the achievable precision of the estimator on distance between two sources. FERM reflects the fact, that the ``resolution limit'' is different for sources with different noise levels. The necessary separation between two sources in order to be ``resolved'' is smaller for bright, noise-free sources than for weak noisy emitters.
 
