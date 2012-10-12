@@ -526,6 +526,37 @@ which is the expression for the static sources \autoref{eq:app-Fisher Info for P
 
 For non zero background $b>0$ we cannot simplify \autoref{eq:app-FREM blink limit infty bg} due to the background term $\Po(b)$ in the denominator. However, as the term is positive, the element $I_{pp}$ will be decreasing with increasing background. The background makes therefore the variance $\var(d)$ bigger as we would expect.
 
+%==========================================
+%==========================================
+
+\section{Comments on ``dip'' in FREM curves for static sources}
+\label{sec:Appendix dip comments}
+These are several comments about the strange ``dip'' in the FREM curves for static sources (see \autoref{fig:FREM dip}). The expression for computing FREM for two sources with equal intensity is from \autoref{eq:var symmetric}
+\begin{equation}
+	\var(d)=\left[\frac{I_{11}-I_{22}}{2}\right]^{-1},
+	\label{eq:app-vard}
+\end{equation}
+%
+and the individual entries of the Fisher information matrix is from \autoref{eq:app-Fisher Information alternative - Individual}:
+\begin{equation}
+	I_{ij} =\Lambda\sum_{k=1}^{K}\frac{q'_k(c_i)q'_k(c_j)}{q_k(c_1)+q_k(c_2)+b/\Lambda};\; \ i,j=\{1,2\},
+\end{equation}
+%
+where $q_k$ and $q'_k$ are pixelised PSF and derivative, respectively. 
+
+For large background values ($b/\Lambda \gg \max[q_k(c_i)]$) the bottom term is nearly constant and therefore
+\begin{equation}
+	I_{ij} \approx C \sum_{k=1}^{K}q'_k(c_i)q'_k(c_j),
+\end{equation}
+where $C$ is a constant.
+
+From \autoref{eq:app-vard}
+\begin{equation}
+	\var(d)\approx \left[C/2 \sum_k \left(q'_k(c_1)^2-q'_k(c_1)q'_k(c_2)\right)\right]^{-1}
+\end{equation}
+
+For Gaussian approximation of the PSF, the expression can be integrated analytically. The resulting curve sows the identical ``dip'' in the curves.
+
 %When the background is present % <---- I think this is incorrect.... because the background in in \lambda^p_k
 %%
 %\begin{alignat*}{1}

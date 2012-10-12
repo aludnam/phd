@@ -1,6 +1,13 @@
 	%!TEX root = thesis.tex
-\chapter{Introduction}
+\chapter{Introduction\label{ch:Introduction}}
 %This will be a general introduction to the problematics of the sub-resolution microscopy. Explaining what to expect in the individual chapters and making the outline of the STORY. 
+The motif of this thesis is the resolution of an optical microcope. We present two different techiques providing images with resolution higher than the diffraction limit and demonstrate them on real biological samples. In the theoretical part of the thesis we discuss the effect of noise and fluorescence intermittency on the resolution limit. 
+
+After a general introducion in this chapter, we discuss a new approach in the localiation microcopy in Ch1\fixme{ref. to ch1}. Application of established machine learning technique of non-negative matrix factorisation (NMF) enables us to computationlly separate images of individual blinking fluorophores depsite their high mutual overlap in the recorded data. We show that with this approcach we can use quantum dots (QDs) as a fluorescent labels for super-resolution microcopy. QDs are extremely bright and stable fluorophores and the single QDs can be recorded using a standard CCD camera even withou EM enancement. Data acquisiton is therefore simple and does not require any specialsed hardware. It can be performed on any wide-field epi-fluorescence microscope equipped with camera which makes this super-resolution method very accesible to wide scientific community. 
+
+Ch2 \fixme{ref. to ch2} discusses the resolution criterion for noisy and pixelised data and shows that intermittency of the source's brightness (blinking) can be beneficial and provide higher resolution when compared to sources with static intensity. 
+
+The last chapter Ch3\fixme{ref. to ch3} we present structured illumination microscopy (SIM) combined with line-scanning (LS). Our goal is to introduce the SIM into more realistic and biologically relevant settings. This hig-resolution technique reduces the out-of-focus fluorescence background, which improves the modulation and the quality of the illumination pattern. The method enables resolution improvement in relatively thick and sensely labeled fluorescent samples, which opens SIM-based methodsto wider range of biological research. The reconstructed images reveal high details of the specimen’s inner structure and suffer less from the artefacts when compared to the conventional SIM methods.  
 
 %==========================================
 %==========================================
@@ -9,7 +16,7 @@
 
 Microscope is an instrument allowing us to see object too small for the naked eye. Optical microscope (often reffered as ``light microscope'') uses the light in the visible spectral range ($\lambda=400-800\unit{nm}$), which makes it particularly suitable for biological exploration. Visible light is minimally invasive for the sensitive biological samples and allows observation of living specimens. It is also minimally absorbed by water, which prevents the heating of the sample exposed to visible light.
 
-There are many different types of optical microcopes. The most common is observation of the specimen with transmited, reflected or fluorescent light. This thesis focusses on fluorescence microcopy and it is discussed further in \autoref{sec:Fluorescence microcopy}.
+There are many different types of optical microcopes. The most common is observation of the specimen with transmited, reflected or fluorescent light. This thesis focusses on fluorescence microcopy, which is discussed further in \autoref{sec:Fluorescence microcopy}.
 
 %==========================================
 %==========================================
@@ -18,11 +25,11 @@ There are many different types of optical microcopes. The most common is observa
 
 Optical microscopy has been around for over 400 years. Since the very early versions of Zacharias Janssen's or Galileo Galilei's compound microscopes from the beginning of 17\ths\ century, optical microscopy has undergone a long and steady process of development. Despite the speculations who was the actual inventor of the optical microscope, it was Anton van Leeuwenhoek who largely popularised the use of microscope as an instrument for observing minute details of the specimen and who introduce his simple instrument into biological research during the 17\ths\ century. 
 
-An important milestones was the pioneering work of Ernst Abbe \cite{Abbe1873} in the second half of 19\ths\ century. Abbe set a theoretical limit on the resolution of the microscope and mastered the design of objective lenses highly corrected for optical aberrations.
+An important milestones was the pioneering work of Ernst Abbe \cite{Abbe1873} in the second half of 19\ths\ century. Abbe set the theoretical limit on the resolution of the microscope and mastered the design of objective lenses highly corrected for optical aberrations.
 
 During the 20\ths\ century with advances in technology the manufactures have produced lenses reaching the theoretical limits of the optical microscope performance. New microscopy techniques such as Zernike's phase contrast \cite{Zernike1942}, awarded the 1953 Nobel prize in physics, allowed observation of transparent specimens and had major impact on biological research such as in vivo study of cell cycle. 
 
-The emergence of new microcopy methods surpassing the classical resolution limit (super-resolution microcopy) at the end of 20\ths\ century and the beginning of 21\st\ century has given another spin to the research in optical microcopy. The resolution of the super-resolution optical microcopes has reached the order of ten nanometers and some researchers propse the term ``optical nanoscopy'' to be used. However, super resolution micro/nano scopy remains a challenging task, especially when applied to living biological specimens. Two different super-resolutin techniques are discussed in this thesis. 
+The emergence of new microcopy methods surpassing the classical resolution limit (super-resolution microcopy) at the end of 20\ths\ century and the beginning of 21\st\ century has given another spin to the optical microscopy research. The resolution of the super-resolution optical microcopes has reached the order of ten nanometers and some researchers propse the term ``optical nanoscopy'' to be used. However, super resolution micro/nano scopy remains a challenging task, especially when applied to living biological specimens. Two different super-resolutin techniques are discussed in this thesis. 
 
 The number of scientific publications in the optical microcopt in recent years shows, that the optical microscopy remains a vibrant and exciting scientific domain.
 
@@ -35,9 +42,10 @@ An important characteristic of a microscope is so called ``point spread function
 %
 \begin{equation}
 	i(x)=\int q(x-x')o(x')dx'.
+	\label{eq:conv}
 \end{equation}  
 
-PSF therefore defines how much is the final image of the specimen going to be ``blurred'' during the imaging process. Integration is over the whole space of the image (typically 2D or 3D). 
+PSF therefore defines how much is the final image of the specimen going to be ``blurred'' during the imaging process. Integration in \autoref{eq:conv} is over the whole space of acquired data (typically 2D or 3D). 
 
 \begin{figure}[!bht]
 	\centering
@@ -56,7 +64,7 @@ In scalar theory, the two dimensional PSF of an optical microcope, known as ``Ai
 	q(\rho)=\frac{1}{Z}\left(\frac{J_1(\alpha \rho)}{\alpha \rho}\right),
 \end{equation}
 %
-where $Z$ is a normalizing constant, $J_1$ is the Bessel function of the first kind of order one, $\rho$ is the distance from the center of the image and $\alpha$ depends on the emission wavelength $\lambda_{em}$ and the numerical apperture of the objective $\unit{NA}$:
+where $Z$ is a normalizing constant, $J_1$ is the Bessel function of the first kind of order one and $\rho$ is the distance from the center of the image. $\alpha$ depends on the emission wavelength $\lambda_{em}$ and the numerical apperture of the objective $\unit{NA}$:
 %
 \begin{equation}
 	\alpha=2\pi\frac{\unit{NA}}{\lambda_{em}}.
@@ -141,9 +149,9 @@ There is a rich variety of super-resolution strategies, however they are all bas
 
 The ``selective'' activation can be achieved either by structured illuminated excitation or by stochastic activation of individual molecules. In the stochastic activation approach the nearby molecules are activated individually in different time fames. The images of the individual fluorophores in each frame are diffraction limited (they represent a single PSF), however given enough detected photons, they can be localised with precison significantly higher then the resolution limit. These ``localisation microcopy'' (LM) techniques include ``Photo-Activation LM'' PALM \cite{Betzig2006}, ``Fluorescence PALM'' fPALM \cite{Hess2006}, ``Stocastich Optical Reconstruction Microscopy'' STORM \cite{Rust2006} of ``Super-resolution Optical Fluoctuation Imaging'' (SOFI) \cite{Dertinger2009}. 
 
-In \fixme{ref. to ch1}, we discuss a new localisation microscopy method, which can deal with highly overalpping blinking sources. The individual sources can be ``separated'' computationally post acquisition and localised in the same manner as in the convetnional LM techniques. The method allows (but is not limited to) using QDs as exceptionally bright and photo-stable fluorescence labels.
+In ch1\fixme{ref. to ch1}, we discuss a new localisation microscopy method, which can deal with highly overalpping blinking sources. The individual sources can be ``separated'' computationally post acquisition and localised in the same manner as in the convetnional LM techniques. The method allows (but is not limited to) using QDs as exceptionally bright and photo-stable fluorescence labels.
 
-The structured illumination based methods includes modulate the fluorescence behaviour of the molecues within the diffraction limited area. The nearby molecues are driven to either ``ON'' or ``OFF'' states, which facilitates their discrimination.  These methods include ``Saturated Structured Illumination Microcopy'' (SSIM) \cite{Gustafsson2000,Heintzmann2002} and ``STimulated Emission Depletion microscopy'' (STED) \cite{Hell1994}). 
+The structured illumination based methods includes modulate the fluorescence behaviour of the molecues within the diffraction limited area. The nearby molecues are driven to either ``ON'' or ``OFF'' states, which facilitates their discrimination.  These methods include ``Saturated Structured Illumination Microcopy'' (SSIM) \cite{Gustafsson2000,Heintzmann2002} and ``STimulated Emission Depletion microscopy'' (STED) \cite{Hell1994}. 
 
 The last chaper \fixme{ref. to ch3} of this thesis introduces a combination of ``(linear) strured illumination microcopy'' with line scanning approach. This combination allows high resolution imaging in relatively thick fluore samples, which are challenging for most super-resolution techniques. The ``linear'' stands for the fact that the response of the fluorophores remains proportionla to the excitaion light. The resolution remains limited but can be increase up to a factor of two.  
 
