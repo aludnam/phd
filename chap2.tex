@@ -499,7 +499,6 @@ For high signal-to-noise ratio data (high $\Lambda$ and low $b$,  see bottom-lef
 %\end{figure}
 %
 
-\clearpage
 \begin{figure}[!bh]
 	\centering
 	\newcommand{\wf}{.48\textwidth}
@@ -675,6 +674,7 @@ The symmetry of the surface breaks when we consider two sources with unequal int
 Fisher information for the original FREM formula \autoref{eq:Ram FREM} is derived from the curvature of the surface along the top-left to bottom-right diagonal (symmetrical displacement of the sources with respect to the origin cf. \autoref{fig:FI space demo}). For the symmetrical situation $\Lambda_1=\Lambda_2$ the original FREM gives the correct results (see \autoref{app:Appendix2} for mathematical explanation), however, for the asymmetrical case $\Lambda_1\neq\Lambda_2$ the non-zero curvature along the diagonal results in finite FREM even for the limit $d\rightarrow 0$. Our proposed derivation of FREM from the Fisher information matrix (see \autoref{eq:var d from Q}) accommodates for the unequal sources correctly and gives diverging FREM for this limit. 
 
 %==========================================
+
 \subsection{Integrating out $\Lambda$ vs averaging\label{sub:Int out vs avg}}
 \begin{figure}[!hbt]
 	\centering
@@ -714,6 +714,18 @@ The scaling with $\Lambda$ and $b$ of the Fisher information entries for the bli
 
 In the non-zero background situation, $b$ appears within the argument of Poisson terms organised in a complicated fraction (see \autoref{eq:app-FREM blink limit infty bg} in \autoref{app:Appendix2}) and the dependence of the Fisher information matrix entries on the background is therefore highly non-linear.  
 
+%==========================================
+
+\subsection{Note on noise}
+
+Poisson noise models noise associated with photon detection \cite{PawleyHandbook2006}. This noise, derived from the nature of the signal itself, is often called ``shot noise'' and is present even under ideal imaging conditions free of any noise introduced by the sensor. Noise introduced by the sensor is usually divided into two components. Dark noise (or dark current) which represents the electrons thermally generated in the detector and the read-out noise (or read noise) associated with analog-to-digital conversion of the signal. Drak noise (Poisson distributed) is efficiently elliminated by cooling of the sensor and  is negligible in high-performance cameras.  Read-out noise is assumed to follow Gaussian distribution and is characterised by standard deviation (often called r.m.s.).  Read-out noise depends on the read-out frequency and can be reduced by optimizing the detector's electrical circuits design. Standard deviation of read-out noise for a typical scientific CCD camera is 5-10 electrons. 
+
+We assume Poisson distributed data throughout this chapter. We therefore neglect the read-out noise of the sensor and assume only shot noise to be present in the recorded images. Ram et al. \cite{Ram2006} shows a modification of Fisher information for model combining both Poisson (shot) and Gaussian (read-out) noise.
+
+%==========================================
+%==========================================
+
+\clearpage
 \section{Conclusions} 
 
 The alternative derivation of the FREM provides correction to the formula published by Ram et al. \cite{Ram2006}. Results presented in \autoref{fig:FREM static blinking} suggest that the blinking sources can significantly increase the localisation precision compared to the static situation, for equal total number of emitted photons. The increase of the localisation precision for blinking sources is stronger for close ($d<50\unit{nm}$) and bright ($\Lambda>1000\ \unit{photons}$) sources with lower background levels ($b<100$). These parameters corresponds to a realistic setting for QD data. For well separated sources ($d\rightarrow\infty$ limit) the static and the blinking situation gives identical results. 

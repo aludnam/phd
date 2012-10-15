@@ -46,6 +46,7 @@
 \usepackage{lineno}
 \usepackage{enumerate}
 \usepackage{rotating}
+\usepackage{pdfpages}
 
 
 \hyphenation{a-na-ly-sis}
@@ -95,6 +96,15 @@
 %this is to make captions with small bold labels
 %	\renewcommand{\captionfont}{\small}
 \renewcommand{\captionlabelfont}{\small\bfseries}
+
+% fancy backreferencing
+\renewcommand*{\backref}[1]{}
+\renewcommand*{\backrefalt}[4]{%
+    \ifcase #1 (Not cited.)%
+    \or        (Cited on page~#2.)%
+    \else      (Cited on pages~#2.)%
+    \fi}
+
 
 \newboolean{includefigs} 
 \newboolean{printpreliminary}
@@ -186,7 +196,7 @@ Igor, my faithful lab assistant.
 %\include{Background}
 \include{chap1}
 \include{chap2}
-%\include{chap3}
+\include{chap3}
 \appendix
 \include{appendix1}
 \include{appendix2}
