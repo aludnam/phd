@@ -55,7 +55,7 @@ Yet another approach to the LM data with overlapping sources problem has been pr
 	\newcommand{\barspace}{-.5cm}
 	\centering
 	\condcomment{\boolean{includefigs}}{ 
-	\subfloat[Intensity scaled to in-focus PSF]{
+	\subfloat[Intensity scaled to the in-focus PSF]{
 	\includegraphics[width=\widthfig]{\qd S393/images/psf_outOfFocus_scaled}}\\
 	\subfloat[Intensity scaled for each frame]{
 	\begin{tabular}{l}
@@ -1116,35 +1116,19 @@ The estimated density and the AP values obtained from the results of the \inmf\ 
 
 CSSTORM processes each input frame individually, independent of the rest of the dataset. This method tries to recover a sparse distribution of the active (``ON'') fluorophores in each frame considering a known PSF (shared with all sources). The output for each frame is an image showing the possible positions of the sources on a sub-pixel grid (8 times oversampled). Following \cite{Zhu2012}, we estimated the position of each source as a centre of mass of the small clusters formed on a sub-pixel grid. The AP (the mean of AP from individual frames) and the estimated density (the mean of estimated densities from the individual frames) are denoted as \textsf{CSSTORMind} and are shown as red curves in \autoref{fig:comparison AP,dens}. 
 
-We also processed the sum of all CSSTORM output frames which summarises all the estimated sources. The summed image was filtered with Gaussian kernel ($\sigma=1\unit{pixel}$). The result for different densities of the sources is shown in \autoref{fig:density 10 CSSTORM}-\ref{fig:density 40 CSSTORM}. The local maxima stronger than $5\%$ (discussed further in the text below) of the global maximum were identified (green crosses in \autoref{fig:density 10 CSSTORM}-\ref{fig:density 40 CSSTORM}). The positions of these local maxima were used as estimated sources' positions and used for computation of the AP. The true positives were used for density estimation (\autoref{sec:evaluation}). The results are denoted as \textsf{CSSTORM} and are shown as green curves in \autoref{fig:comparison AP,dens}.
+We also processed the sum of all CSSTORM output frames which summarises all the estimated sources. The summed image was filtered with Gaussian kernel ($\sigma=1\unit{pixel}$). The result for different densities of the sources is shown in \autoref{fig:density 10 CSSTORM}-\ref{fig:density 40 CSSTORM}. The local maxima stronger than $5\%$ of the global maximum were identified (green crosses in \autoref{fig:density 10 CSSTORM}-\ref{fig:density 40 CSSTORM}). We chose the threshold of $5\%$, because for this value the number of local maxima roughly corresponds to the true number of sources $K_{true}$. The positions of the local maxima were used as the estimated sources' positions for computation of the AP. The true positives were considered for density estimation (\autoref{sec:evaluation}). The results are denoted as \textsf{CSSTORM} and are shown as green curves in \autoref{fig:comparison AP,dens}.
 
 %parameters adjusted for the 3B evaluation: \texttt{blur.mu=0.37261, blur.sigma=0.1, intensity.rel\_sigma=}$K_{true}$
 As the last comparison technique, we used the 3B analysis for the simulated datasets. The prior parameters for the size of the PSF were adjusted to the true values. Also the true number of sources $K_{true}$ was used as an initial number of spots in the model. The 3B algorithm was run for at least 30 iterations. Following \cite{Cox2011}, the output coordinates of the 3B analysis were placed on a $100\times$ oversampled grid ($0.8\unit{nm}$ pixel-size) and convolved with a Gaussian ($\sigma=10\unit{pixels}$, which corresponds to $\sigma=8\unit{nm}$). The resulting image is shown as a grey-scale image in \autoref{fig:density 10 3B}-\ref{fig:density 40 3B}. Similar to analysis of the projected CSSTORM, we identified local maxima in the images (green crosses in \autoref{fig:density 10 3B}-\ref{fig:density 40 3B}). Only the maxima above a certain threshold were considered for evaluation. The threshold was set individually for each image, such that the number of local maxima roughly corresponds to the number of sources considered by the 3B analysis after the last iteration. The estimated density and the AP are denoted as \textsf{3B} and are shown in \autoref{fig:comparison AP,dens} as cyan lines. 
 
-The results in \autoref{fig:comparison AP,dens} suggest that CSSTORM cannot recover enough sources in individual frames (\textsf{CSSTORMind}, red lines). The density is severely underestimated which leads to many false negatives (FN) and therefore low recall values \autoref{eq:TP,FN} which penalises AP. However, CSSTORM recovers some subset of the sources in each frame and the sum projection show dramatically improved AP and density estimation (green lines in \autoref{fig:comparison AP,dens}). It should be noted, however, that the estimated density and AP from the sum projection is highly dependent on the threshold for considering local maxima (see above). We chose the threshold of $5\%$, because for this value the number of local maxima roughly corresponds to the true number of sources $K_{true}$.
+\Autoref{fig:comparison AP,dens} suggests that CSSTORM cannot recover enough sources in individual frames (\textsf{CSSTORMind}, red lines). The density is severely underestimated, which leads to many false negatives (FN) and therefore low recall values \autoref{eq:TP,FN} which penalises AP. However, CSSTORM recovers some subset of the sources in each frame and the sum projection show dramatically improved AP and density estimation (green lines in \autoref{fig:comparison AP,dens}). 
 
 The AP of the CSSTORM results is comparable with the AP of the \inmf\ algorithm \autoref{fig:comparison AP,dens}\bbb. \inmf\ performs slightly better at the higher densities of the sources (56\% as opposed to 44\% at density $50\um^{-2}$). However, visual inspection of the results shown in \autoref{fig:comparison density 10}\bbb,\ccc\ reveals that \inmf\ can discriminate even very close sources, while CSSTORM approximates these sources by one intensity maximum in the middle (bottom right corner in \autoref{fig:comparison density 10}\bbb,\ccc, for example). This is even more pronounced in the regions with higher densities. For example, in the bottom part of \autoref{fig:comparison density 40}\bbb,\ccc\ the sources organised in approximately parallel lines are represented by one intensity ``crest'' in the middle in the CSSTORM image \autoref{fig:density 10 CSSTORM}, whereas \inmf\ managed to pick almost all the individual sources \autoref{fig:density 10 NMF}. 
 
-For these simulated data 3B performs significantly worse than both \inmf\ and CSSTORM. The visualisation of the results in sources \autoref{fig:density 10 3B} underlines the poor performance of 3B for this simulated dataset.
+3B performs significantly worse than both \inmf\ and CSSTORM for these simulated data. The visualisation of the 3B results, shown in \autoref{fig:density 10 3B}, underlines the poor performance of 3B for this simulated dataset.
 
-For our computer (Intel(R) Core(TM)2 Duo @ 2GHz processor with 3GB of RAM), the computational time for the simulated dataset ($21\times21\times1000$ frames) was:
-\begin{description}
-	
-	\item[\inmf:]
-	$\sim 20 \unit{mins}$ for one complete run with $K=50$ sources and $K$ restarts.
-	
-	\item[CSSTORM:]
-	$\sim 260 \unit{mins}$.
-	
-	\item[3B analysis:]
-	More than $12$ hours for $\sim30$ iterations.
-\end{description}
-% utah: Intel(R) Core(TM)2 Duo CPU     E8400 @2GHz with 3GB of RAM
-% jupiter2:Intel(R) Xeon(R) CPU           X5450  @3GHz with 31GB of RAM
-% 21x21x10^3 frames 
-% NMF fir 80 sources takes 30 min
-% CSSTORM 260 min
-% 3B more than 5 hours for 50 iterations
+It should be noted, that the estimated density and AP from the sum projection for CSSTORM and 3B results are dependent on the threshold for considering local maxima (see above). There a number of possibilites how to choose the threshold value, but we tried to relate the number of local maxima to quantities that are possible to interprete in terms of each algorithm. For CSSTORM we chose the threshold to obtain number of local maxima approximately equivalent to $K_{true}$. For 3B we matched the number of local maxima to the numbers of sources considered by 3B algorithm after last iteration. In our opinion, this threshold settings can be used for a fair comparison with \inmf.
+%
 \begin{figure}[!p]
 	\centering
 	\newcommand{\sizef}{.95}
@@ -1355,7 +1339,7 @@ The experiments shown above are useful for a quantitative comparison of the diff
 \end{figure}
 %
 
-To achieve a smoother representation of the underlying structure, we used the sum of ten \inmf\ evaluations (see discussion in \autoref{sub:visualisation}) rather than only one \inmf\ run used for the data of randomly scattered sources in the section above. The result is visualised in \autoref{fig:comparison hash dens 12}\bbb. The same dataset was evaluated with 3B and CSSTORM, shown in  \autoref{fig:comparison hash dens 12}\ccc\ and \autoref{fig:comparison hash dens 12}\ddd, respectively. 
+To achieve a smoother representation of the underlying structure, we used the sum of ten \inmf\ evaluations (see discussion in \autoref{sub:visualisation}) rather than only one \inmf\ run used for the data of randomly scattered sources in the section above. The result is visualised in \autoref{fig:comparison hash dens 12}\bbb. The same dataset was evaluated with 3B and CSSTORM, shown in  \autoref{fig:comparison hash dens 12}\ccc\ and \autoref{fig:comparison hash dens 12}\ddd, respectively. Only one run of 3B (24 iterations) and CSSTORM has been used. 
 
 3B completely fails to recover the double parallel lines, replacing them with one intensity crest in between of the lines (blue arrow in \autoref{fig:comparison hash dens 12}\ddd). CSSTORM shows the double line structure of the hash symbol at the periphery of the specimen (green arrows in \autoref{fig:comparison hash dens 12}\ccc), however the double lines joins into a single line close to the centre of the cross  (blue arrow in \autoref{fig:comparison hash dens 12}\ccc). The hole ($150 \times 150 \unit{nm}$) in the middle of the specimen is completely unresolved and is replaced by an intensity maximum (red arrow in \autoref{fig:comparison hash dens 12}\ccc). 
 
@@ -1412,6 +1396,30 @@ Neither RL deconvolved images nor the second order SOFI was capable of discrimin
 %	\caption{Scale bar 400\unit{nm}.}
 %	\label{fig:comparison hash}
 %\end{figure}
+
+%==========================================
+
+\subsection{Comparison with other methods - computational time}
+
+For our computer (Intel(R) Core(TM)2 Duo @ 2GHz processor with 3GB of RAM), the computational time for the simulated dataset ($21\times21\times1000$ frames) was:
+%
+\begin{description}
+	
+	\item[\inmf:]
+	$\sim 20 \unit{mins}$ for one complete run with $K=50$ sources and $K$ restarts.
+	
+	\item[CSSTORM:]
+	$\sim 260 \unit{mins}$.
+	
+	\item[3B analysis:]
+	More than $12$ hours for $\sim30$ iterations.
+\end{description}
+% utah: Intel(R) Core(TM)2 Duo CPU     E8400 @2GHz with 3GB of RAM
+% jupiter2:Intel(R) Xeon(R) CPU           X5450  @3GHz with 31GB of RAM
+% 21x21x10^3 frames 
+% NMF fir 80 sources takes 30 min
+% CSSTORM 260 min
+% 3B more than 5 hours for 50 iterations
 
 %==========================================
 
@@ -1763,7 +1771,7 @@ Additional information about $\bm{W}$ or $\bm{H}$ (for example, upper bound on n
 
 In the other, rather heuristic, approach we can use the standard unconstrained NMF and employ the additional information as a quality criterion for the estimated $\bm{W}$ and $\bm{H}$. Results which does not satisfy this criterion can be recomputed by, for example, randomisation or splitting very bright sources or $\bm{w}$s with multiple local maxima into two or more individual components. \inmf\ belongs to this category.
 
-The disadvantage of the second approach is that it does not reduce the parameter space of the optimisation. Instead of reducing the number of local minima, it tries to search for the ``better'' ones. On the other hand, all the flexibility of NMF is maintained, which makes the method more robust. It is also more ``user friendly'', because it does not require any additional measurements for setting the constraints to the correct values.
+The disadvantage of the second approach is that it does not reduce the parameter space of the optimisation. Instead of reducing the number of local minima, it tries to search for the ``better'' ones. On the other hand, all the flexibility of NMF is maintained, which makes the method robust. It also reduces the number of parameters, which need to be set by user.
 
 It should be noted that NMF is applicable to any intermittent fluorescent dyes, such as blinking fluorescent dyes used in dSTORM technique \cite{VandeLinde2011}. Data with high densities of activated (and therefore overlapping) sources can be processed with \inmf. Such data require shorter total acquisition time compared to the conventional LM methods, where the individual emitters are separated physically by keeping the number of activated sources sufficiently small. However, \inmf\ is impractical for data with high bleaching rates. For example, in the standard fPALM techniques \cite{Hess2006}, each emitter is activated for one data frame (or few adjacent frames) and then irreversibly destroyed by photo-bleaching.  Even though \inmf\ is applicable to such data, it doesn't make use of the method's major strength, which is the identification of the sources reappearing throughout the dataset.  
  
