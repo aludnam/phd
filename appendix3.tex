@@ -1,0 +1,13 @@
+%!TEX root = thesis.tex
+\chapter{LS-SIM electronics\label{app:LSSIM electronics}}
+
+\begin{figure}[hbt]
+	\centering
+	\newcommand{\wf}{.8\textwidth}
+	\subfloat[Schematic of the trigger signals]{
+	\includegraphics[width=\wf]{\home Documents/Publications/LineScanPaper/figures/setupElectoricsCorrected/Media1a}}\\
+	\subfloat[Program listing]{
+	\includegraphics[width=\wf]{\home Documents/Publications/LineScanPaper/figures/setupFigure/listing}}		
+	\caption{Schematic of the trigger signals in the microscope. The scan-mirror is the master and triggers the camera when it starts moving in one edge of the field. Upon receiving {\sf EXTERNAL\_TRIGGER} the camera starts integrating in less than a microsecond and sets {\sf FIRE} to high. This triggers an interrupt in the micro-controller and it generates {\sf LIGHT\_ENABLE} to modulate the laser. The initial delays determine the position of the scanning lines.The values in the timing diagram (bottom right) were measured with a logic analyser (Logic16, Salea). These values correspond to an optimised timing of the LS-SIM system, such that the sum of the 32 line positions imprinted on the sample produced a homogeneous wide-field illumination.} 
+\end{figure}
+
