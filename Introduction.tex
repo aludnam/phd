@@ -1,20 +1,12 @@
 	%!TEX root = thesis.tex
 \chapter{Introduction\label{ch:Introduction}}
-%This will be a general introduction to the problematics of the sub-resolution microscopy. Explaining what to expect in the individual chapters and making the outline of the STORY. 
-The motif of this thesis is the resolution of an optical microscope. We present two different techniques providing images with resolution higher than the diffraction limit and demonstrate them on real biological samples. In the theoretical part of the thesis we discuss the effect of noise and fluorescence intermittency on the resolution limit. 
-
-After a general introduction in this chapter, we discuss a new approach in the localisation microscopy in \autoref{ch:NMF}. Application of established machine learning technique of non-negative matrix factorisation (NMF) enables us to computationally separate images of individual blinking fluorophores despite their high mutual overlap in the recorded data. We show that with this approach we can use quantum dots (QDs) as a fluorescent labels for super-resolution microscopy. QDs are extremely bright and stable fluorophores and the single QDs can be recorded using a standard CCD camera even without EM enhancement. Data acquisition is therefore simple and does not require any specialised hardware. It can be performed on any wide-field epi-fluorescence microscope equipped with camera which makes this super-resolution method very accessible to wide scientific community. 
-
-\Autoref{ch:Theoretical-limits-of the LM} discusses the resolution criterion for noisy and pixellated data and shows that intermittency of the sources' brightness (blinking) can be beneficial and provide higher resolution when compared to sources with static intensity. 
-
-In \autoref{ch:LSSIM} we present structured illumination microscopy (SIM) combined with line-scanning (LS). Our goal is to introduce the SIM into more realistic and biologically relevant settings. The line-scanning reduces the out-of-focus fluorescence background, which improves the modulation and the quality of the illumination pattern. The method enables resolution improvement in relatively thick and densely labeled fluorescent samples, which opens SIM-based methods to wider range of biological research. The reconstructed images reveal high details of the specimen’s inner structure and suffer less from the artefacts when compared to the conventional SIM methods.  
 
 %==========================================
 %==========================================
 
-\section{Optical microscope}
+\section{The optical microscope}
 
-Microscope is an instrument allowing us to see object too small for the naked eye. Optical microscope (often referred as ``light microscope'') uses the light in the visible spectral range ($\lambda\approx400-800\unit{nm}$), which makes it particularly suitable for biological exploration. Visible light is minimally invasive for the sensitive biological samples and allows observation of living specimens. It is also minimally absorbed by water, which prevents the heating of the sample while exposed to visible light.
+A microscope is an instrument allowing us to see an object, which is too small for the naked eye. An optical microscope (often referred as a ``light microscope'') uses light in the visible spectral range (wavelength $\approx400-800\unit{nm}$), which makes it particularly suitable for biological exploration. Visible light is minimally invasive for the sensitive biological samples and allows observation of living specimens. It is also minimally absorbed by water, which prevents heating of the sample while exposed to visible light.
 
 There are many different types of optical microscopes. The most common is a ``far-field'' microscope, where the light has to propagate for a distance significantly longer then its wavelength. The specimen is usually observed with transmitted, reflected or fluorescent light. This thesis focusses on fluorescence microscopy, which is further discussed in \autoref{sec:Fluorescence microscopy}.
 
@@ -23,29 +15,29 @@ There are many different types of optical microscopes. The most common is a ``fa
 
 \section{Brief historical overview}
 
-Optical microscopy has been around for over 400 years. Since the very early versions of Zacharias Janssen's or Galileo Galilei's compound microscopes from the beginning of 17\ths\ century, optical microscopy has undergone a long and steady process of development. Despite the speculations who was the actual inventor of the optical microscope, it was Anton van Leeuwenhoek who largely popularised the use of microscope as an instrument for observing minute details of the specimen and who introduce his simple instrument into biological research during the 17\ths\ century. 
+Optical microscopy has been around for over 400 years. Since the very early versions of Zacharias Janssen's or Galileo Galilei's compound microscopes from the beginning of 17\ths\ century, optical microscopy has undergone a long and steady process of development. Despite the speculations who was the actual inventor of the optical microscope, it was Anton van Leeuwenhoek who largely popularised the use of microscope as an instrument for observing minute details of the specimen, and who introduce his simple instrument into biological research during the 17\ths\ century. 
 
-An important milestones was the pioneering work of Ernst Abbe \cite{Abbe1873} in the second half of 19\ths\ century. Abbe set the theoretical limit on the resolution of the microscope and mastered the design of objective lenses highly corrected for optical aberrations.
+An important milestone was the pioneering work of Ernst Abbe \cite{Abbe1873} in the second half of 19\ths\ century. Abbe set the theoretical limit on the resolution of the microscope and mastered the design of objective lenses highly corrected for optical aberrations.
 
-With advances in technology the manufactures have produced lenses reaching the theoretical limits of the optical microscope performance. New microscopy techniques such as Zernike's phase contrast \cite{Zernike1942}, awarded the 1953 Nobel prize in physics, allowed observation of transparent specimens and had major impact on biological research such as in vivo study of cell cycle. 
+With advances in technology the manufactures have produced lenses reaching the theoretical limits of the optical microscope performance. New microscopy techniques such as Zernike's phase contrast \cite{Zernike1942} (awarded the 1953 Nobel prize in physics) allowed observation of transparent specimens, and had major impact on biological research such as in vivo study of cell cycle. 
 
-The emergence of new microscopy methods surpassing the classical resolution limit (super-resolution microscopy) at the end of 20\ths\ century and the beginning of 21\st\ century has given another spin to the optical microscopy research. The resolution of the super-resolution optical microscopes has reached the order of ten nanometers and some researchers proposed the term ``optical nanoscopy'' to be used. However, super resolution micro/nano-scopy remains a challenging task, especially when applied to living biological specimens. While most of the super-resolution techniques require a specialised and expensive hardware, some of the techniques, such as localisation microscopy (discussed in \autoref{ch:NMF}) can be performed on a standard fluorescent microscope. 
+The emergence of new microscopy methods surpassing the classical resolution limit (super-resolution microscopy) at the end of 20\ths\ century and the beginning of 21\st\ century has given another boost to optical microscopy research. The resolution of the super-resolution optical microscopes has reached the order of ten nanometers and some researchers have proposed that the term ``optical nanoscopy'' to be used. However, super resolution micro/nano-scopy remains a challenging task, especially when applied to living biological specimens. While most of the super-resolution techniques require a specialised and expensive hardware, some of the techniques, such as localisation microscopy (discussed in \autoref{ch:NMF}) can be performed on a standard fluorescent microscope. 
 
-The number of scientific publications in recent years shows, that the optical microscopy remains a vibrant and exciting scientific domain.
+The number of scientific publications in recent years shows that the optical microscopy remains a vibrant and exciting scientific domain.
 
 %==========================================
 %==========================================
 
 \section{Point spread function}
 
-An important characteristic of a microscope is so called ``point spread function'' (PSF). PSF represents the microscope's image of a point source. The image $i(x)$ of a specimen produced by an optical microscope can be described as a convolution between the object (specimen) $o(x)$ and the point spread function $q(x)$:
+An important characteristic of a microscope is so called ``point spread function'' (PSF). The PSF represents the microscope's image of a point source. The image $i(x)$ of a specimen produced by an optical microscope can be described as a convolution between the object (specimen) $o(x)$ and the point spread function $q(x)$:
 %
 \begin{equation}
 	i(x)=\int q(x-x')o(x')dx'.
 	\label{eq:conv}
 \end{equation}  
 
-PSF therefore defines how much is the final image of the specimen going to be ``blurred'' during the imaging process. Integration in \autoref{eq:conv} is over the whole space of acquired data (typically 2D or 3D). 
+The PSF therefore defines how much is the final image of the specimen is ``blurred'' during the imaging process. The integration in \autoref{eq:conv} is over the whole space of acquired data (typically 2D or 3D). 
 
 \begin{figure}[!bht]
 	\centering
@@ -58,7 +50,7 @@ PSF therefore defines how much is the final image of the specimen going to be ``
 	\label{fig:PSF}
 \end{figure}
 %
-In scalar theory, the two dimensional PSF of an optical microscope, known as the ``Airy pattern'', is described by
+Neglecting the effect of polarisation (scalar theory), the two dimensional PSF of an optical microscope, known as the ``Airy pattern'', is described by
 %
 \begin{equation}
 	q(\rho)=\frac{1}{Z}\left(\frac{J_1(\alpha \rho)}{\alpha \rho}\right),
@@ -70,6 +62,13 @@ where $Z$ is a normalising constant, $J_1$ is the Bessel function of the first k
 	\alpha=2\pi\frac{\unit{NA}}{\lambda_{em}}.
 \end{equation}
 % 
+The NA is defined as
+\begin{equation}
+	\unit{NA}=n\sin(\theta),
+\end{equation}
+%
+where $n$ is the refraction index of the immersion medium and $\theta$ is the half of the angle of the light cone entering the objective.
+
 An intensity profile of a PSF is sown in \autoref{fig:PSF}. The Airy pattern is also compared to a popular approximation of the PSF with Gaussian function \cite{Zhang2007} defined by standard deviation
 %
 \begin{equation}
@@ -110,7 +109,7 @@ The ability of an optical microscope to show spatial details in the specimen str
 	\label{eq:Airy}
 \end{equation}
 %
-where $\lambda_{em}$ is a wavelength of the emitted light and $NA$ is a numerical aperture of the objective. This resolution limit comes from the empirical observation that if two sources are separated by a distance grater then $\delta$, then we can ``resolve'' them as two individual objects (\autoref{fig:Rayleigh}\ccc). If the separation is smaller then $\delta$ then the point spread functions of the two sources merge together to create a single object and sources therefore become ``unresolved'' (\autoref{fig:Rayleigh}\aaa). The simplicity of the expression and the clear interpretation makes this limit popular in the microscopy community and is usually taken as a bench mark for the resolution techniques. \Autoref{eq:Airy} is sometimes called ``Raleigh resolution limit''. Note that ``Abbe resolution limit'' $\delta=0.5\frac{\lambda_{em}}{NA}$ related to the passband of spatial frequencies is also often used.
+where $\lambda_{em}$ is a wavelength of the emitted light and $NA$ is a numerical aperture of the objective. This resolution limit comes from the empirical observation that if two sources are separated by a distance greater then $\delta$, then we can ``resolve'' them as two individual objects (\autoref{fig:Rayleigh}\ccc). If the separation is smaller then $\delta$ then the point spread functions of the two sources merge together to create a single object and sources therefore become ``unresolved'' (\autoref{fig:Rayleigh}\aaa). The simplicity of the expression and the clear interpretation makes this limit popular in the microscopy community and is usually taken as a bench mark for the resolution techniques. \Autoref{eq:Airy} is sometimes called ``Raleigh resolution limit''. Note that ``Abbe resolution limit'' $\delta=0.5\frac{\lambda_{em}}{NA}$ related to the passband of spatial frequencies is also often used.
 
 The resolution limit \autoref{eq:Airy} relates to the noise-free situation with continuous representation of the PSF. The pixellation and noise associated with photon detection process can alter the ``resolution'' significantly. The influence of noise, pixellation or brightness intermittency to the resolution limit is discussed in \autoref{ch:Theoretical-limits-of the LM}. 
 
@@ -121,39 +120,56 @@ The resolution limit \autoref{eq:Airy} relates to the noise-free situation with 
 
 \section{Fluorescence microscopy\label{sec:Fluorescence microscopy}}
 
-Introduction of fluorescence microscopy in 20\ths\ century has revolutionised the use of optical microscope in biological and medical science. Fluorescence microscopy detects the fluorescence from the sample itself (auto-fluorescence) or more commonly from the fluorophores attached to the specimen. Fluorescence is typically generated with an excitation light. Important fact is that the excitation light is shifted towards the shorter wavelengths (Stoke's shift),  which allows efficient filtering of the excitation light from the fluorescence signal. 
+The iIntroduction of fluorescence microscopy in 20\ths\ century has revolutionised the use of optical microscope in biological and medical science. Fluorescence microscopy detects the fluorescence from the sample itself (auto-fluorescence) or more commonly from the fluorophores attached to the specimen. Fluorescence is typically generated with an excitation light. The important fact is that the excitation light is shifted towards the shorter wavelengths (Stokes shift),  which allows efficient filtering of the excitation light from the fluorescence signal. 
 
-Fluorescence labels can be attached to the structures of interest with high specificity and provide a strong intensity contrast in the microscopic image of the specimen. The fluorescence proteins, allows for direct expression of the fluorescent marker by the organism itself and further redefined the use of fluorescence microscopy in cell biology as a nearly non-invasive and highly specific technique. 
+Fluorescence labels can be attached to the structures of interest with high specificity and provide a strong intensity contrast in the microscopic image of the specimen. Fluorescent proteins allow for direct expression of the fluorescent marker by the organism itself, and have further redefined the use of fluorescence microscopy in cell biology as a nearly non-invasive and highly specific technique. 
 
- The first fluorescent protein used in microscopy (green fluorescent protein - GFP) has been isolated isolated from jellyfish {\it Aequorea victoria}. Nowadays modified versions of GFP and rich variety of fluorescent dyes cover the emission across the whole visible spectral range. A photo-activable and photo-switchable fluorescent proteins and dyes has also been discovered and are used in specific applications and microscopy methods. The 2008 Nobel Prize in Chemistry was awarded to Martin Chalfie, Osamu Shimomura, and Roger Y. Tsien for their discovery and development of the GFP.
+ The first fluorescent protein used in microscopy (green fluorescent protein - GFP) has been isolated isolated from jellyfish {\it Aequorea victoria} \cite{Tsien1998}. Nowadays modified versions of GFP and rich variety of fluorescent dyes cover the emission across the whole visible spectral range. Photo-activable and photo-switchable fluorescent proteins and dyes have also been discovered, and are used in specific applications and microscopy methods. The 2008 Nobel Prize in Chemistry was awarded to Martin Chalfie, Osamu Shimomura, and Roger Y. Tsien for their discovery and development of the GFP.
  
  
  %==========================================
 %==========================================
 
- \section{Quantum Dots\label{sec:Quantum-dots}}
+\section{Quantum Dots\label{sec:Quantum-dots}}
 
-Quantum dots (QDs) are promising fluorescent labels recently used in biological research.  QDs are semiconductor particles composed of about 100-100,000 atoms with diameter of the core $\sim2-10\unit{nm}$. The emission wavelength can be tuned by the diameter of the QD core. QD tend to have a broad excitation spectrum and a narrow emission spectrum when compared to the standard fluorescent dyes/proteins. QD are exceptionally photo-stable (when illuminated with continuous $\sim 50\unit{mW}$ laser they don't bleach even after 14~h, whereas the standard fluorescent dye ``fluorescein'' completely bleaches in less then 20 mins \cite{Jaiswal2004}). Moreover, QDs are order of magnitude brighter than traditional fluorophores \cite{Resch-Genger2008,Walling2009}. 
+Quantum dots (QDs) are promising fluorescent labels recently used in biological research.  QDs are inorganic crystals composed of 100-100,000 atoms of substances such as cadmium selenide (CdSe)  (diameter $\sim2-10\unit{nm}$) \cite{Alivisatos1996} and often coated with zinc sulphide (ZnS) shell conjugated with antibody molecule (diameter of the whole QD is $\sim10-30\unit{nm}$). The emission wavelength can be tuned by the diameter of the QD core. QDs tend to have a broad excitation spectrum and a narrow emission spectrum when compared to the standard fluorescent dyes/proteins. This facilitates the multicolour imaging with QDs. QDs are also exceptionally photo-stable (when illuminated with continuous $\sim 50\unit{mW}$ laser they don't bleach even after $14\sim\unit{h}$, whereas the standard fluorescent dye ``fluorescein'' completely bleaches in less then 20 mins \cite{Jaiswal2004}). Moreover, QDs are order of magnitude brighter than traditional fluorophores \cite{Resch-Genger2008,Walling2009}. 
 
-Commercially available QDs have a polymer coating with covalently attached linker or are conjugated with antibody molecule. This allows them be specifically attached to the structure of interest in the specimen the same way as the standard fluorescent labels. However, coated QD are relatively big ($\sim10-30\unit{nm}$) compared to the fluorescent dyes (fluorescenin size is $\sim1\unit{nm}$) or fluorescent proteins (GFP size is $\sim5\unit{nm}$) and they cannot diffuse through the cell membrane. This complicates the labelling of the structures in the interior of the cell. 
+Commercially available QDs have a polymer coating with a covalently attached linker, or are conjugated with an antibody molecule. This allows them be specifically attached to the structure of interest in the specimen the same way as standard fluorescent labels. However, coated QDs are relatively big ($\sim10-30\unit{nm}$) compared to the fluorescent dyes (fluorescenin size is $\sim1\unit{nm}$) or fluorescent proteins (GFP size is $\sim5\unit{nm}$) and they cannot diffuse through the cell membrane. This complicates the labelling of the structures in the interior of the cell. 
 
-An interesting property of the QDs is that under continuous excitation QDs exhibits a blinking behaviour (fluorescence intermittency). QDs switch between ``ON'' episodes ($\tau_{ON}$) of a rapid absorption-fluorescence cycling and ``OFF'' episodes ($\tau_{OFF}$), where no light is emitted despite the continuous excitation. Both ON-time and OFF-time probability densities follow and inverse power law $P(\tau_{ON/OFF})\propto1/\tau_{ON/OFF}^{m}$ \cite{Kuno2001, Stefani2009}. A comparison of QDs and the standard fluorescent dyes is described in Resch-Genger et al. review article \cite{Resch-Genger2008}.
+An interesting property of the QDs is that under continuous excitation QDs exhibit a blinking behaviour (fluorescence intermittency). QDs switch between ``ON'' episodes ($\tau_{ON}$) of a rapid absorption-fluorescence cycling and ``OFF'' episodes ($\tau_{OFF}$), where no light is emitted despite the continuous excitation. Both ON-time and OFF-time probability densities follow and inverse power law $P(\tau_{ON/OFF})\propto1/\tau_{ON/OFF}^{m}$ \cite{Kuno2001, Stefani2009}. A comparison of QDs and the standard fluorescent dyes is described in the review article Resch-Genger et al. \cite{Resch-Genger2008}.
 
 %==========================================
 %==========================================
+
 \section{Super-resolution\label{sec:super-resolution}}
 
 The resolution limit \autoref{eq:Airy} for a far-field optical microscope has been challenged in past two decades. Several research teams have reported sub-diffraction resolution in fluorescent samples. In fact, the resolution limit is no longer dictated by diffraction but rather by the signal-to-noise ratio. 
 
-There is a rich variety of super-resolution strategies, however they are all based on the physical properties of the fluorophores to be driven into emitting (``ON'') or non-emitting (``OFF'') states. This allows to distinguish individual emitters spaced with the sub-resolution distances. 
+There are a rich variety of super-resolution strategies, however they are all based on the physical properties of the fluorophores to be driven into emitting (``ON'') or non-emitting (``OFF'') states. This allows individual emitters spaced with the sub-resolution distances to be distinguish.
 
-The ``selective'' activation can be achieved either by structured illuminated excitation or by stochastic activation of individual molecules. In the stochastic activation approach the small random subset of molecules is activated for each acquisition frame. Nearby molecules are therefore activated individually in different time fames. In the conventional approach the activated subset must be sufficiently small to ensure that most emitters are separated by distances larger then the diffraction limit. The images of the individual fluorophores are diffraction limited (they represent a single PSF), however given enough detected photons, they can be localised with precision significantly higher then the resolution limit. These so called ``localisation microscopy'' (LM) techniques include ``Photo-Activation LM'' (PALM) \cite{Betzig2006}, ``Fluorescence PALM'' (fPALM) \cite{Hess2006}, ``Stochastic Optical Reconstruction Microscopy'' (STORM) \cite{Rust2006} or ``Super-resolution Optical Fluctuation Imaging'' (SOFI) \cite{Dertinger2009}. 
+``Selective'' activation can be achieved either by structured illuminated excitation or by stochastic activation of individual molecules. In the stochastic activation approach a small random subset of molecules is activated for each acquisition frame. Nearby molecules are therefore activated individually in different time fames. In the conventional approach the activated subset must be sufficiently small to ensure that most emitters are separated by distances larger then the diffraction limit. The images of the individual fluorophores are diffraction limited (they represent a single PSF), however given enough detected photons, they can be localised with precision significantly higher then the resolution limit. These so called ``localisation microscopy'' (LM) techniques include ``Photo-Activation LM'' (PALM) \cite{Betzig2006}, ``Fluorescence PALM'' (fPALM) \cite{Hess2006}, ``Stochastic Optical Reconstruction Microscopy'' (STORM) \cite{Rust2006} or ``Super-resolution Optical Fluctuation Imaging'' (SOFI) \cite{Dertinger2009}. 
 
 In \autoref{ch:NMF}, we discuss a new localisation microscopy method, which can deal with highly overlapping blinking sources. The individual sources can be ``separated'' computationally post acquisition and localised in the same manner as in the conventional LM techniques. The method allows (but is not limited to) using QDs as exceptionally bright and photo-stable fluorescence labels.
 
 The structured illumination based methods modulate the fluorescence behaviour of the molecules within the diffraction limited area. The nearby molecules are driven to either ``ON'' or ``OFF'' states, which facilitates their discrimination.  These methods include ``Saturated Structured Illumination microscopy'' (SSIM) \cite{Gustafsson2000,Heintzmann2002} and ``STimulated Emission Depletion microscopy'' (STED) \cite{Hell1994}. 
 
 The last chapter of this thesis (\autoref{ch:LSSIM}) introduces a combination of ``(linear) structured illumination microscopy'' with line scanning approach. This combination allows high resolution imaging in relatively thick fluorescent samples, which are challenging for most super-resolution techniques. The ``linear'' stands for the fact that the response of the fluorophores remains proportional to the excitation light. In this case the resolution remains limited, but can be increased by up to a factor of two.  
+
+
+%==========================================
+%==========================================
+
+%This will be a general introduction to the problematics of the sub-resolution microscopy. Explaining what to expect in the individual chapters and making the outline of the STORY. 
+
+\section{Overview of the thesis}
+
+%The motif of this thesis is the resolution of an optical microscope. We present two different techniques providing images with resolution higher than the diffraction limit and demonstrate them on real biological samples. In the theoretical part of the thesis we discuss the effect of noise and fluorescence intermittency on the resolution limit. 
+
+In \autoref{ch:NMF} we discuss a new approach to localisation microscopy. Application of the machine learning technique non-negative matrix factorisation (NMF) enables us to computationally separate images of individual blinking fluorophores despite their high mutual overlap in the recorded data. We show that with this approach we can use quantum dots (QDs) as a fluorescent labels for super-resolution microscopy. QDs are extremely bright and stable fluorophores, and the single QDs can be recorded using a standard CCD camera even without electron-multiplying (EM) enhancement. Data acquisition is therefore simple and does not require any specialised hardware. It can be performed on any wide-field epi-fluorescence microscope equipped with a camera, which makes this super-resolution method very accessible to a wide scientific community. 
+
+\Autoref{ch:Theoretical-limits-of the LM} discusses the resolution criterion for noisy and pixellated data, so-called fundamental resolution measure (FREM). We show that intermittency of the sources' brightness (blinking) can be beneficial and provide higher resolution when compared to sources with static intensity. 
+
+In \autoref{ch:LSSIM} we present structured illumination microscopy (SIM) combined with line-scanning (LS). Our goal is to introduce the SIM into more realistic and biologically relevant settings. The line-scanning reduces the out-of-focus fluorescence background, which improves the modulation and the quality of the illumination pattern. The method enables resolution improvement in relatively thick and densely labeled fluorescent samples, which opens SIM-based methods to a wider range of biological research. The reconstructed images reveal high details of the specimen's inner structure, and suffer less from the artefacts when compared to the conventional SIM methods.  
 
 
 % This is copied from the first year report: 

@@ -417,7 +417,7 @@ We set the threshold $r=\sigma/2$, where $\sigma=\frac{\sqrt{2}}{2\pi}\frac{\lam
 %Localisation error was estimated as an average distance between true locations and all estimated locations classified as TP. 
 The estimated density of the sources was counted as the number of all TP divided by the area of the image.
 
-The average precision (AP) \cite{Salton1986,Everingham2009} was used to summarise both localisation precision and ability to recover the individual sources. The estimated positions $e_k$ are ranked according to the square of the source's mean brightness
+The average precision (AP) \cite{Salton1986,Everingham2009} was used to summarise both localisation precision and ability to recover the individual sources. The estimated positions $e_k$ are ranked according to the square root of the source's mean brightness
 %
 \begin{equation}
 	b_k=\sqrt{\bar{N_k}}
@@ -480,7 +480,7 @@ We address this partly by dividing the data into overlapping patches, so that NM
 
 We also develop methods to reduce local optima problems in the fitting procedure (\inmf\ algorithm discussed \autoref{sub: Iterative restarts}). 
 
-The results of the NMF can be used in two different ways. The separated individual sources $\bm{w}$ can be localised and the estimated positions can be used either directly or to create a sub-resolution image very much like in the conventional LM techniques (see \autoref{sub:Localisation-and-stitching}). A different approach avoids the localisation step and creates the super-resolution image directly from the estimated $\bm{w}$s by combining their ``squeezed'' version (see \autoref{sub:visualisation}). 
+The results of the NMF can be used in two different ways. The separated individual sources $\bm{w}$ can be localised and the estimated positions can be used either directly or to create a sub-resolution image very much like in the conventional LM techniques (see \autoref{sub:Localisation-and-stitching}). A different approach avoids the localisation step and creates the super-resolution image directly from the estimated $\bm{w}$s by combining their ``squeezed'' versions (see \autoref{sub:visualisation}). 
 
 The whole pipe-line for NMF evaluation of a realistic microscopy dataset is described in this section.  The individual steps of the procedure are illustrated on simulated data. 
 
@@ -608,7 +608,7 @@ We therefore tried to estimate the number of sources $K$ using:
 	\caption{$K$ estimation for $10$ sources contained within a disk with radius \ima \ (left column), \imb \ (middle column) and \imc \ (right column). Lines for three datasets with different configuration of the sources are shown. $K_{true}$ is marked with red vertical line.}	\label{fig:K estimation}
 \end{figure}
 
-A reliable estimation of $K$ is a difficult task for higher source densities. \Autoref{fig:K estimation hist} shows the histograms of the estimated $K$s for ten different geometrical configurations of the sources with a given density. From the methods presented in this section  (\autoref{fig:K estimation hist}(a-c)), the analysis of the correlations in residuals (ACR) shows the best performance.
+A reliable estimation of $K$ is a difficult task for higher source densities. \Autoref{fig:K estimation hist} shows the histograms of the estimated $K$s for ten different geometrical configurations of the sources with a given density. From the three methods presented in this section  (\autoref{fig:K estimation hist}(a-c)), the analysis of the correlations in residuals (ACR) shows the best performance.
 %
 \begin{figure}[!hbt]
 	\newcommand{\sizef}{.4}		
@@ -772,7 +772,7 @@ If all the sources are expected to be in-focus and therefore have a fairly compa
 	\item
 	Each estimated source $\bm{w}$ is convolved with in-focus point spread function (PSF) (generated from the parameters of the experimental setup). This is to smooth the noise in the results and to enhance the structures at the scale of PSF. 
 	\item
-	Number of local maxima bigger than $50\%$ of the global maximum is counted. The threshold $50\%$ is arbitrary and it reflects our empirical experience that the peaks with intensity less than half of the brightest peak's intensity are not very visible in the scaled image of $\bm{w}$.
+	The number of local maxima with intensity larger than $50\%$ of the global maximum are counted. The threshold $50\%$ is arbitrary and it reflects our empirical experience that the peaks with intensity less than half of the brightest peak's intensity are not very visible in the scaled image of $\bm{w}$.
 \end{enumerate}
 
 Only the sources with one major local maximum of the convolution of PSF and $\bm{w}$ are considered for further evaluation. The distance of the maximum from the edge can indicate a partially missing source. 
@@ -803,15 +803,11 @@ This approach would, however, fail when used on data with out-of-focus PSF, beca
 
 As we noted earlier in this section, the classification method discussed above is limited to the to the in-focus PSFs (with only one major local maximum of the intensity). To accommodate for the individually different shape of the PSF, such as out-of-focus PSF (right side of \autoref{fig:Simulted-PSF-different-focal-depths}) we have to use a different approach. 
 
-One possibility is to compute a set of ``features'' on each estimated $\bm{w_k}$ (and possibly on corresponding $\bm{h_k}$) and use a linear classifier to identify the class of each estimated source. The possible ``features'' can include, for example, $L_2$ norm, number of clusters in the thresholded image, maximum of the cross-correlation with the PSF, measure of smoothness of the estimated result, distance of the global maximum from the edge and many others. Each $\bm{w_k}$ then represents a point in a high-dimensional feature space. The linear classifier assumes that the individual classes can be separated with linear manifolds in the feature space.
+One possibility is to compute a set of ``features'' on each estimated $\bm{w_k}$ (and possibly on the corresponding $\bm{h_k}$) and use a linear classifier to identify the class of each estimated source. The possible ``features'' can include, for example, the $L_2$ norm, the number of clusters in the thresholded image, the maximum of the cross-correlation with the PSF, a measure of smoothness of the estimated result, the distance of the global maximum from the edge, and many others. Each $\bm{w_k}$ then represents a point in a high-dimensional feature space. The linear classifier assumes that the individual classes can be separated with linear manifolds in the feature space.
 
-However, the linear classifier has to be trained on a set of labelled data. The training therefore requires a manual labelling of at least several hundreds of $\bm{w}$s (assignment of the class to each $w_k$). In an ideal world, one training set would be sufficient for different datasets. The classifier, once trained, would be applicable for results from different datasets taken in a range of experimental conditions. However, our experience is that the classification performance varies significantly with change of the experimental parameters (size of the patch, pixel-size, background levels). 
-
-The performance, of course, depends on the set of ``features'' computed for each $\bm{w}$ and the development of some ``universal features'' might be a topic of future work. 
+However, the linear classifier has to be trained on a set of labelled data. The training therefore requires a manual labelling of at least several hundreds of $\bm{w}$s (assignment of the class to each $w_k$). In an ideal world, one training set would be sufficient for different datasets. The classifier, once trained, would be applicable for results from different datasets taken in a range of experimental conditions. However, our experience is that the classification performance varies significantly with change of the experimental parameters (size of the patch, pixel-size, background levels). The performance, of course, depends on the set of ``features'' computed for each $\bm{w}$ and the development of some ``universal features'' might be a topic of future work. 
 
  
-
-
 %We use a linear classifier to automate the quality assessment of the estimated $\bm{w}_k$. We compute a set of features based on intensity values of $\bm{w}_k$, thresholded background image $\bm{b}_k=\bm{w}_k<t_b$, thresholded foreground image $\bm{f}_k=\bm{w}_k>t_f$ and an image of $\bm{w}_k$ smoothed with estimated in-focus PSF. The features are listed in \autoref{tab:Features}a and five classes for $\bm{w}_k$ are listed in \autoref{tab:Classes}b.
 %
 %
@@ -892,7 +888,7 @@ The sources close to the edge can be problematic to localise. If the source repr
 	\includegraphics[scale=\sizef]{\qd S575/figures/res_truepos_bar04um}}
 	\subfloat[\textpowers]{
 	\includegraphics[scale=\sizef]{\qd S575/figures/res_meaniter_coordTrue_bar04um}}
-	\caption{Visualisation of the results. Left column shows the results of one \inmf\ evaluation. Right column shows the sum of ten \inmf\ evaluations of the same dataset. (a,b) The conventional visualisation by placing Gaussians located at the positions of the estimated sources. (c,d) Powers of $\bm{w_k}$s.  Scale bar $400 \unit{nm}$.}
+	\caption{Visualisation of the results. Left column shows the results of one \inmf\ evaluation. Right column shows the sum of ten \inmf\ evaluations of the same dataset. (a,b) The conventional visualisation by placing Gaussians located at the positions of the estimated sources (green dots). (c,d) Powers of $\bm{w_k}$s. The true sources' locations are indicated with red dots.  Scale bar $400 \unit{nm}$.}
 	\label{fig:visualisation gaussf}
 \end{figure}
 
@@ -920,7 +916,7 @@ The conventional visualisation of the \inmf\ evaluation of the synthetic dataset
 	\label{fig:demo pow w}	
 \end{figure}
 
-We can use the estimated sources $\bm{w}$s directly without replacing them with ``ideal'' PSFs. By taking the power $p>1$ of the estimated sources $\bm{w}^p$ we achieve a ``shrinking'' of the individual $\bm{w}$ while keeping some characteristics of each source's shape (elongation along a certain direction, for example). 
+We can use the estimated sources $\bm{w}$s directly without replacing them with ``ideal'' PSFs. By taking the pixelwise power $p>1$ of the estimated sources $\bm{w}^p$ we achieve a ``shrinking'' of the individual $\bm{w}$ while keeping some characteristics of each source's shape (elongation along a certain direction, for example). 
 
 Oversampling of $\bm{w_k}$s (for example zero-padding of the Fourier transform of the $\bm{w_k}$'s image) is needed before taking the higher powers $p$. \Autoref{fig:demo pow w} shows the original estimated $\bm{w_k}$s and the corresponding up-sampled (by a factor of $r=4$) $\bm{w^p_k}$s taken to the power $p=5$. 
 
@@ -942,7 +938,7 @@ If we normalise the $L_1$ norm of $\bm{w}^p$ to one ($\sum_x \bm{w}^p(x)=1$), we
 	\includegraphics[scale=\sizef]{\qd S575/figures/res_meaniter_rf4_pow10_coordTrue_bar04um}}	
 	\subfloat[$p=30$]{
 	\includegraphics[scale=\sizef]{\qd S575/figures/res_meaniter_rf4_pow30_coordTrue_bar04um}}	
-	\caption{(a) Sum projection of the simulated dataset. (b-d) Visualisation using $\bm{w}^p$ for different values of $p$. The sum projections of ten different \inmf\ evaluations. Images of $\bm{w}$s were up-sampled by a factor of $r=4$. Scale bar $400 \unit{nm}$.}
+	\caption{(a) Sum projection of the simulated dataset. (b-d) Visualisation of the sum projections of ten different \inmf\ evaluations using $\bm{w}^p$ for different values of $p$. Images of $\bm{w}$s were up-sampled by a factor of $r=4$. Scale bar $400 \unit{nm}$.}
 	\label{fig:demo pow w result}	
 \end{figure}
 
@@ -1082,7 +1078,7 @@ Three different densities of the sources were considered. Each dataset was simul
 
 The downsampling of the dataset decreases the performance of the \inmf\ algorithm. The signal-to-noise ratio increases in each frame, due to downsampling, however, the variance of the blinking decreases because the ``ON'' and ``OFF'' states average out. The increase of the signal-to-noise ratio does not compensate for the deterioration of the AP due to decreased blinking variance (\autoref{sub:results - blinking behaviour}). 
 
-Note, that only the blue curve in \autoref{fig:AP subsampled} corresponding to $10\unit{\mu m^{-2}}$ reaches the true density. Both green and red curves underestimate the true density by a factor of two and three, respectively, even for data with fastest sampling. 
+Note, that only the blue curve in \autoref{fig:AP subsampled} corresponding to $10\unit{\mu m}^{-2}$ reaches the true density. Both green and red curves underestimate the true density by a factor of two and three, respectively, even for data with fastest sampling. 
 
 \cut{\emph{Maybe rather try this experiment with uniform random blinking. Because here the blinking rate is set to 0.5 (every other frame switch) and therefore any subsampling makes it worse.}}
 
@@ -1090,7 +1086,7 @@ Note, that only the blue curve in \autoref{fig:AP subsampled} corresponding to $
 
 \subsection{Comparison with other methods - randomly scattered sources\label{sub:results - comparison}} %Main competitors 3B \cite{Cox2011}, CSSTORM \cite{Zhu2012} and SOFI \cite{Dertinger2009}.	
 %timing: NMF algorithm 1: 25x25x1000 frames, 50 sources ->18 min on jupiter1, 21x21x1000 frames 80 sources -> 30 minutes on jupiter1
-We used simulated data of randomly scattered overlapping sources with densities $10$ to $50\ \unit{sources/\mu m^{2}}$ (\autoref{sub:Simul random}) to compare performance of \inmf\ with CSSTORM \cite{Zhu2012}, and the 3B analysis \cite{Cox2011}, discussed in \autoref{sec:Overlapping sources}. The code for both 3B and CSSTORM is freely available.  
+We used simulated data of randomly scattered overlapping sources with densities $10$ to $50\ \unit{sources/\mu m^{2}}$ (\autoref{sub:Simul random}) to compare performance of \inmf\ with CSSTORM \cite{Zhu2012}, and the 3B analysis \cite{Cox2011} (discussed in \autoref{sec:Overlapping sources}). The code for both 3B and CSSTORM is freely available.  
 
 A margin of three pixels was left empty in each simulated frame to ensure that there are no partially missing PSFs. The sum projections of the frames for densities $10 \um^{2}$ and $40 \um^{2}$ are shown in \autoref{fig:density 10 wf} and \ref{fig:density 40 wf}, respectively. Several individual data frames are shown in \autoref{fig:simulated data random}, illustrating highly overlapping sources (dataset displayed in \autoref{fig:simulated data random} does not contain the 3 pixel empty margin). We used three different geometrical configurations of the randomly scattered sources. The blinking behaviour was simulated as a telegraph process with asynchronous recording as described in \autoref{sub:results - blinking behaviour} (d) and illustrated in \autoref{fig:blinking}\ddd\ (switching rate on the oversampled time axes $\tilde{\gamma}=0.005$).
 
@@ -1127,7 +1123,7 @@ The AP of the CSSTORM results is comparable with the AP of the \inmf\ algorithm 
 
 3B performs significantly worse than both \inmf\ and CSSTORM for these simulated data. The visualisation of the 3B results, shown in \autoref{fig:density 10 3B}, underlines the poor performance of 3B for this simulated dataset.
 
-It should be noted, that the estimated density and AP from the sum projection for CSSTORM and 3B results are dependent on the threshold for considering local maxima (see above). There a number of possibilites how to choose the threshold value, but we tried to relate the number of local maxima to quantities that are possible to interprete in terms of each algorithm. For CSSTORM we chose the threshold to obtain number of local maxima approximately equivalent to $K_{true}$. For 3B we matched the number of local maxima to the numbers of sources considered by 3B algorithm after last iteration. In our opinion, this threshold settings can be used for a fair comparison with \inmf.
+It should be noted that the estimated density and AP from the sum projection for CSSTORM and 3B results are dependent on the threshold for considering local maxima (see above). There a number of possibilites how to choose the threshold value, but we tried to relate the number of local maxima to quantities that are possible to interpret in terms of each algorithm. For CSSTORM we chose the threshold to obtain number of local maxima approximately equivalent to $K_{true}$. For 3B we matched the number of local maxima to the numbers of sources considered by 3B algorithm after last iteration. In our opinion, these threshold settings can be used for a fair comparison with \inmf.
 %
 \begin{figure}[!p]
 	\centering
@@ -1307,7 +1303,7 @@ It should be noted, that the estimated density and AP from the sum projection fo
 
 \clearpage
 \subsection{Comparison with other methods - artificial structure\label{sub:results - comparison - structure}}
-The experiments shown above are useful for a quantitative comparison of the different methods. Randomly scattered sources are, however, of little practical interest. The main motivation of the super-resolution microscopy is to recover sub-diffraction details of a sample structure. Therefore we used simulated data with sources attached to an artificial structure to further compare the performance of the three methods. Simulated data are illustrated in \autoref{sub:Simul hash} with main parameters shown in \autoref{tab:Simulations parameters}. The distance between the parallel lines was set to $d=150\unit{nm}$ ($1.8 \unit{pixels}$), which corresponds to a half of the Airy disk's radius. The linear density was set to $\mu = 15\um^{-1}$ which corresponds to approximately $67\ \unit{nm}$ between adjacent sources. We used the same blinking behaviour (\autoref{fig:blinking}\ddd) as for the randomly scattered sources describe above. The sum projection of the data frames, equivalent to the wide-field image is shown in \autoref{fig:comparison hash dens 12}\aaa.
+The experiments shown above are useful for a quantitative comparison of the different methods. Randomly scattered sources are, however, of little practical interest. The main motivation of super-resolution microscopy is to recover sub-diffraction details of a sample structure. Therefore we used simulated data with sources attached to an artificial structure to further compare the performance of the three methods. The simulated data are illustrated in \autoref{sub:Simul hash} with main parameters shown in \autoref{tab:Simulations parameters}. The distance between the parallel lines was set to $d=150\unit{nm}$ ($1.8 \unit{pixels}$), which corresponds to a half of the Airy disk's radius. The linear density was set to $\mu = 15\um^{-1}$ which corresponds to approximately $67\ \unit{nm}$ between adjacent sources. We used the same blinking behaviour (\autoref{fig:blinking}\ddd) as for the randomly scattered sources describe above. The sum projection of the data frames, equivalent to the wide-field image is shown in \autoref{fig:comparison hash dens 12}\aaa.
 %
 \begin{figure}[!h]
 	\centering
@@ -1771,7 +1767,7 @@ Additional information about $\bm{W}$ or $\bm{H}$ (for example, upper bound on n
 
 In the other, rather heuristic, approach we can use the standard unconstrained NMF and employ the additional information as a quality criterion for the estimated $\bm{W}$ and $\bm{H}$. Results which does not satisfy this criterion can be recomputed by, for example, randomisation or splitting very bright sources or $\bm{w}$s with multiple local maxima into two or more individual components. \inmf\ belongs to this category.
 
-The disadvantage of the second approach is that it does not reduce the parameter space of the optimisation. Instead of reducing the number of local minima, it tries to search for the ``better'' ones. On the other hand, all the flexibility of NMF is maintained, which makes the method robust. It also reduces the number of parameters, which need to be set by user.
+The disadvantage of the second approach is that it does not reduce the parameter space of the optimisation. Instead of reducing the number of local minima, it tries to search for the ``better'' ones. On the other hand, all the flexibility of NMF is maintained, which makes the method robust. It also reduces the number of parameters which need to be set by the user.
 
 It should be noted that NMF is applicable to any intermittent fluorescent dyes, such as blinking fluorescent dyes used in dSTORM technique \cite{VandeLinde2011}. Data with high densities of activated (and therefore overlapping) sources can be processed with \inmf. Such data require shorter total acquisition time compared to the conventional LM methods, where the individual emitters are separated physically by keeping the number of activated sources sufficiently small. However, \inmf\ is impractical for data with high bleaching rates. For example, in the standard fPALM techniques \cite{Hess2006}, each emitter is activated for one data frame (or few adjacent frames) and then irreversibly destroyed by photo-bleaching.  Even though \inmf\ is applicable to such data, it doesn't make use of the method's major strength, which is the identification of the sources reappearing throughout the dataset.  
  

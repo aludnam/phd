@@ -3,7 +3,7 @@
 
 In this chapter, we discuss the resolution limit and its applications to localisation microscopy (LM) from the theoretical point of view. In \autoref{sec:FREM} we compare the classical resolution limit with fundamental resolution measure (FREM), introduced by Ram et al. \cite{Ram2006}. FREM accommodates the resolution criterion for situation of pixellated data corrupted with noise.
 
-\Autoref{sec:CR} introduces the \CR lower bound as a theoretical framework for description of the estimator covariance matrix. In \autoref{sec:FREM orig} we use \CR lower bound to show the derivation of the Ram's original FREM formula. We also discuss the limitations and problems of the original FREM. In \autoref{sub:An-alternative-derivation-FREM} we derive an alternative version of FREM and demonstrate that this version fixes strange and inconsistent behaviour of the original FREM. In \autoref{sec:FREM for blinking} we derive FREM for two emitters with intermittent intensity. This expression is relevant to localisation microscopy with blinking fluorophores, such as QDs (discussed in \autoref{ch:NMF}). \Autoref{sec:FREM results} compares FREM for blinking and static sources in different experimental conditions and identifies the regions and experimental parameters setting, where the intermittent behaviour of the intensity leads to considerable higher resolution. 
+\Autoref{sec:CR} introduces the \CR lower bound as a theoretical framework for description of the estimator covariance matrix. In \autoref{sec:FREM orig} we use \CR lower bound to show the derivation of the Ram's original FREM formula. We also discuss the limitations and problems of the original FREM. In \autoref{sub:An-alternative-derivation-FREM} we derive an alternative version of FREM and demonstrate that this version fixes strange and inconsistent behaviour of the original FREM. In \autoref{sec:FREM for blinking} we derive FREM for two emitters with intermittent intensity. This expression is relevant to localisation microscopy with blinking fluorophores, such as QDs (discussed in \autoref{ch:NMF}). The parameters used for data simluation are discussed in \autoref{sec:FREM simulations}. \Autoref{sec:FREM results} compares FREM for blinking and static sources in different experimental conditions and identifies the regions and experimental parameters setting, where the intermittent behaviour of the intensity leads to considerable higher resolution. The discussion of the results is in \autoref{sec:FREM discussion}. 
 
 Details of all derivations are shown in \autoref{app:Appendix2}.
 
@@ -48,7 +48,7 @@ The inequality \autoref{eq:Covariance vs Fisher information} is in the sense tha
 %==========================================
 \section{Original FREM formula\label{sec:FREM orig}}
 
-Ram et al. \cite{Ram2006} considered two sources separated by a distance $d$ and derived Fisher information
+Ram et al. \cite{Ram2006} considered two sources separated by a distance $d$ and derived the Fisher information
 %
 \begin{equation}
 	I(d)=\frac{1}{4}\sum_{k=1}^N\frac{\left[\Lambda_1q_k'(-\frac{d}{2})-\Lambda_2q_k'(\frac{d}{2})\right]^2}{\Lambda_1q_k(-\frac{d}{2})+\Lambda_2q_k(\frac{d}{2})+b},
@@ -57,7 +57,7 @@ Ram et al. \cite{Ram2006} considered two sources separated by a distance $d$ and
 %
 where $\Lambda_i$ is the intensity of the $i$th source, $b$ is the background level in each pixel, $q_k(z)=\int_{\Gamma_k}q(x-z)dx$ is the pixellated version of a point spread function translated by $z$ with $\Gamma_k$ being an area of the $k$th pixel, and $q'_k(z)=\int_{\Gamma_k}\frac{\partial q(x-z)}{\partial x}dx$ is the corresponding pixellated derivative. 
 
-Inverse of Fisher information bounds the variance of the estimator on $d$ 
+The inverse of the Fisher information bounds the variance of the estimator on $d$ 
 %
 \begin{equation}
 	\var(d)\geq I^{-1}(d).
@@ -72,7 +72,7 @@ FREM as a lower bound on the standard deviation is therefore
 
 A short summary of the derivation is shown in \autoref{app:Appendix2}. 
 
-However, closer inspection of FREM derived from Fisher information given by \autoref{eq:Ram FREM} reveals problematic behaviour of FREM in the limits $d\rightarrow 0$ (see discussion in \autoref{app:Appendix2}). The limit of very close emitters $d\rightarrow0$ gives, as we would expect, zero Fisher information $I(d)\rightarrow0$, and therefore FREM$\rightarrow\infty$. However this is only for situation, when the sources have equal intensities $\Lambda_1=\Lambda_2$. For emitters of unequal strength $\Lambda_1\neq\Lambda_2$ the variance remains finite even for sources infinitely close. 
+However, closer inspection of FREM derived from the Fisher information given by \autoref{eq:Ram FREM} reveals problematic behaviour of FREM in the limits $d\rightarrow 0$ (see discussion in \autoref{app:Appendix2}). The limit of very close emitters $d\rightarrow0$ gives, as we would expect, zero Fisher information $I(d)\rightarrow0$, and therefore FREM$\rightarrow\infty$. However this is only for situation, when the sources have equal intensities $\Lambda_1=\Lambda_2$. For emitters of unequal strength $\Lambda_1\neq\Lambda_2$ the variance remains finite even for sources infinitely close. 
 
 Another serious problem with this expression is that the sources are assumed to be located at $\pm d/2$, which implicitly assumes the knowledge of the origin. It is therefore not surprising that the formula \autoref{eq:Ram FREM} gives $I(d)\neq0$ (i.e. finite FREM) even for the situation when one source is missing ($\Lambda_i=0$), because, in fact, only one source is needed to determine the distance $d/2$. 
 
@@ -224,7 +224,7 @@ which is a simple model of, for example, two blinking quantum dots. The expected
 where homogeneous background $b$ was added to each pixel.
 
 %==========================================
-\subsection{Averaging Fisher information\label{sub:avg FI}}
+\subsection{Averaging the Fisher information\label{sub:avg FI}}
 
 The ``averaging'' of the Fisher Information matrix presented in this section assumes knowledge of the intensity state (ON/OFF) of each source in every acquired frame. This information is not accessible in the real situation. However, we show the derivation to emphasise the difference between this approach and the more realistic situation, where the intensity states are described by probability distribution (\autoref{sub:FI int out}). 
 
@@ -305,7 +305,7 @@ In \autoref{app:Appendix2} we show that the limit $d\rightarrow0$ gives $\var(d)
 %==========================================
 \clearpage
 \section{Experimental parameters and numerical evaluations\label{sec:FREM simulations}} 
-We made a comparison of the original FREM formula computed from Fisher information \autoref{eq:Ram FREM} with our proposed fixed FREM formula computed from \autoref{eq:FI - individual}, for sources with static intensity. We also compared the static situation with FREM for sources with intermittent intensity computed from \autoref{eq:FI-blinking}.
+We made a comparison of the original FREM formula computed from the Fisher information \autoref{eq:Ram FREM} with our proposed fixed FREM formula computed from \autoref{eq:FI - individual}, for sources with static intensity. We also compared the static situation with FREM for sources with intermittent intensity computed from \autoref{eq:FI-blinking}.
 
 We considered $625\unit{nm}$ emission light wavelength and $1.2\unit{NA}$ objective. Images were pixellated with $80\times80\unit{nm}$ pixels. Various intensity of the emitters $\Lambda_i$ and pixel background levels $b$ were considered.
 
@@ -349,7 +349,7 @@ The original FREM formula gives consistently lower FREM (dashed curves are under
 	r=\frac{\unit{FREM}^{static}(d)}{\unit{FREM}^{orig}(d)},
 \end{equation} 
 %
-and shows how many times is the original FREM lower when compared to our proposed expression. It can be shown that for a given distance $d$ the ratio is a function of $\Lambda_1/\Lambda_2$ and is therefore constant different intensities of $\Lambda_1$ for given separation $d$ (see \autoref{fig:Comparison FREM Ram and fix}\bbb), because in our case $\Lambda_1/\Lambda_2=1/2$.
+and shows how many times the original FREM is lower compared to our proposed expression. It can be shown that for a given distance $d$ the ratio is a function of $\Lambda_1/\Lambda_2$ and is therefore constant different intensities of $\Lambda_1$ for given separation $d$ (see \autoref{fig:Comparison FREM Ram and fix}\bbb), because in our case $\Lambda_1/\Lambda_2=1/2$.
 
 The difference is less significant for larger separation of the sources and both formulas converge to the same value in the limit $d\rightarrow \infty$ (see \autoref{app:Appendix2} for details).
 
@@ -511,7 +511,7 @@ For high signal-to-noise ratio data (high $\Lambda$ and low $b$,  see bottom-lef
 	\caption{FREM and measured standard deviation ($\sqrt{\var(d)}$) for the estimation of the separation between two simulated noisy static sources ($\Lambda_1=\Lambda_2=500$ photons). A homogeneous background of (a) $b=100$ photons/pixel and (b) $b=0$ photons/pixel was added to each simulated image before realisation of Poisson noise. FREM is shown as a red dashed line. Estimated standard deviation from 1000 different realisation of the Poisson noise is plotted with blue circles.}
 \end{figure}
 
-FREM formula for static sources derived from \autoref{eq:FI - individual} shows an interesting behaviour for weak sources with large background values. Red dashed curve in \autoref{fig:FREM dip} shows FREM for two sources of equal intensity $\Lambda_1=\Lambda_2=500$ photons with background $b=100$ photons/pixel. This parameter settings corresponds to the top line in \autoref{fig:two sources int d}. Contrary to our intuition, FREM is not monotonic with separation $d$ and FREM curve shows a ``dip'' for $d\approx300$ nm. This suggests that there is an ``optimal'' distance $d$ between the sources for which the separation can be estimated with highest precision.
+The FREM formula for static sources derived from \autoref{eq:FI - individual} shows an interesting behaviour for weak sources with large background values. The red dashed curve in \autoref{fig:FREM dip} shows FREM for two sources of equal intensity $\Lambda_1=\Lambda_2=500$ photons with background $b=100$ photons/pixel. This parameter settings corresponds to the top line in \autoref{fig:two sources int d}. Contrary to our intuition, FREM is not monotonic with separation $d$, and the FREM curve shows a ``dip'' for $d\approx300$ nm. This suggests that there is an ``optimal'' distance $d$ between the sources for which the separation can be estimated with highest precision.
 
 \begin{figure}[!bt]
 	\centering
@@ -570,11 +570,11 @@ FREM formula for static sources derived from \autoref{eq:FI - individual} shows 
 %
 After careful checking of the derivation and numerical calculations of the curves (see \autoref{sec:Appendix dip comments} in \autoref{app:Appendix2} for details), we interpret the dip to be a result of two competing factors. First factor is the decrease of FREM with increasing separation $d$. Our intuitive expectation is that the distance between well separated sources is easier to measure than for the close, overlapping ones. However, in the case of weak sources surrounded with large background, the well separated weak sources disappear in background noise (cf. right figure on the top line in \autoref{fig:two sources int d}). If the sources are close to each other and their PSFs overlap, the sum of their PSFs create a brighter object, which is easier to find in high background noise (middle of the top line in \autoref{fig:two sources int d}). The ``visibility'' of the overlapped sources increases with decreasing $d$ and represents the second competing factor. The dip in FREM curves is then an ``optimal separation'' $d$, where sources are already sufficiently separated to be localised with good precision but still well visible due to their overlap. The increase of the localisation precision with further increasing separation is not sufficient to compensate for the fact that sources ``disappear'' in noise.
 
-A qualitative confirmation of this contra-intuitive behaviour of FREM curves is shown on simulated data. We simulated two sources separated with distance $d$. The intensity and the background was set to the same values as for the theoretical FREM curves ($\Lambda_1=\Lambda_2=500$ photons, $b=100$ photons/pixel, see top row in \autoref{fig:two sources int d}). For each separation $d$ we created $M=1000$ images with different realisation of Poisson noise. Using MATLAB function {\tt fminsearch}, we found the maximum-likelihood estimator of the positions $\bm{c}_{ML}=(c^{ML}_1,c^{ML}_2)$ of two PSFs (see \autoref{eq:intensity pixel}). The initial position for the fitting procedure was set to the true values $\bm{c}_{true}$. The standard deviation of the $M$ estimators $d^{ML}=|c^{ML}_1-c^{ML}_2|$ is plotted with blue circles in \autoref{fig:FREM dip} and shows similar ``dip'' as the theoretical FREM curve.
+A qualitative confirmation of this counter-intuitive behaviour of FREM curves is shown on simulated data. We simulated two sources separated with distance $d$. The intensity and the background was set to the same values as for the theoretical FREM curves ($\Lambda_1=\Lambda_2=500$ photons, $b=100$ photons/pixel, see top row in \autoref{fig:two sources int d}). For each separation $d$ we created $M=1000$ images with different realisation of Poisson noise. Using MATLAB function {\tt fminsearch}, we found the maximum-likelihood estimator of the positions $\bm{c}_{ML}=(c^{ML}_1,c^{ML}_2)$ of two PSFs (see \autoref{eq:intensity pixel}). The initial position for the fitting procedure was set to the true values $\bm{c}_{true}$. The standard deviation of the $M$ estimators $d^{ML}=|c^{ML}_1-c^{ML}_2|$ is plotted with blue circles in \autoref{fig:FREM dip} and shows similar ``dip'' as the theoretical FREM curve.
 
-Dashed red line in \autoref{fig:FREM dip b=0} shows that FREM is monotonically decreasing with $d$ for zero background ($b=0$) situation. Qualitative confirmation of the theoretical curve by fitting the simulated data is plotted with blue circles in \autoref{fig:FREM dip b=0}. No dip is observed in this case. 
+The dashed red line in \autoref{fig:FREM dip b=0} shows that FREM is monotonically decreasing with $d$ for zero background ($b=0$) situation. Qualitative confirmation of the theoretical curve by fitting the simulated data is plotted with blue circles in \autoref{fig:FREM dip b=0}. No dip is observed in this case. 
 
-The measured standard deviation (blue circles) shows lower values than the theoretical lower bound (red dashed curve). This is due to the initialisation of the maximum-likelihood fitting with $\bm{c}_{true}$. Random initialisation would be more appropriate, but the measured standard deviation which would be above the FREM curve (now shown) does not provide curves smooth enough to show the ``dip'' clearly.
+The measured standard deviation (blue circles) shows lower values than the theoretical lower bound (red dashed curve). This is likely due to the initialisation of the maximum-likelihood fitting with $\bm{c}_{true}$. Random initialisation would be more appropriate, but the measured standard deviation which would be above the FREM curve (now shown) does not provide curves smooth enough to show the ``dip'' clearly.
 
 Note that FREM for blinking sources is strictly monotonically decreasing with $d$. 
 
@@ -623,7 +623,7 @@ In order to understand the behaviour of the Fisher information matrix, we visual
 %
 Note that the expectation is taken with respect to the ``true'' distribution $\lambda^{true}=\lambda(\bm{c}^{true})$, while the log-likelihood $\mathcal{L}$ is a function of $\bm{c}$. $A$ is independent of $\bm{c}$. 
 
-The surface in \autoref{fig:Expected-log-likelihood-Surface} shows how likely on average is a model with two sources $s_1$ and $s_2$ located at $c_1$ and $c_2$, respectively, for data generated from a model consisting of two sources $s_1^{true}$ and $s_2^{true}$ located at $c_1^{true}$ and $c_2^{true}$, respectively, corrupted with Poisson noise. Parameters of the simulation were $\Lambda=10^3$, $b=100$ and wavelength $625 \unit{nm}$.
+The surface in \autoref{fig:Expected-log-likelihood-Surface} shows average log-likelihood for is a model with two sources $s_1$ and $s_2$ located at $c_1$ and $c_2$, respectively, for data generated from a model consisting of two sources $s_1^{true}$ and $s_2^{true}$ located at $c_1^{true}$ and $c_2^{true}$, respectively, corrupted with Poisson noise. Parameters of the simulation were $\Lambda=10^3$, $b=100$ and wavelength $625 \unit{nm}$.
 
 \begin{figure}[hb]
 	\newcommand{\wf}{.48\textwidth}
@@ -671,7 +671,7 @@ The situation of infinitely close sources $c_1^{true}=c_1^{true}$, shown in \aut
 %
 The symmetry of the surface breaks when we consider two sources with unequal intensity ($\Lambda_1\neq\Lambda_2$), because such sources are no longer interchangeable. The situation for $\Lambda_2=2\Lambda_1$ is shown in \autoref{fig:LL surf different intensity}. The displacement of the stronger source ($s_2$), which corresponds to the movement along the vertical lines in \autoref{fig:LL surf different intensity}\eee-\hhh\ (see \autoref{fig:FI space demo} for explanation), has a dramatic effect on the likelihood of the model. The surface drops steeply in the horizontal direction, while decreases rather slowly along the horizontal line (displacement of the weaker source $s_1$). For the limit $d\rightarrow 0$, shown in \autoref{fig:LL surf different intensity}\ddd,\hhh, the flat crest in the origin still exist (which results divergence of $\var(d)$), however it is not aligned with the top-left to bottom-right diagonal as for the equal sources (see \autoref{fig:Expected-log-likelihood-Surface}\ddd,\hhh). There is a non-zero curvature along this diagonal.
 
-Fisher information for the original FREM formula \autoref{eq:Ram FREM} is derived from the curvature of the surface along the top-left to bottom-right diagonal (symmetrical displacement of the sources with respect to the origin cf. \autoref{fig:FI space demo}). For the symmetrical situation $\Lambda_1=\Lambda_2$ the original FREM gives the correct results (see \autoref{app:Appendix2} for mathematical explanation), however, for the asymmetrical case $\Lambda_1\neq\Lambda_2$ the non-zero curvature along the diagonal results in finite FREM even for the limit $d\rightarrow 0$. Our proposed derivation of FREM from the Fisher information matrix (see \autoref{eq:var d from Q}) accommodates for the unequal sources correctly and gives diverging FREM for this limit. 
+The Fisher information for the original FREM formula \autoref{eq:Ram FREM} is derived from the curvature of the surface along the top-left to bottom-right diagonal (symmetrical displacement of the sources with respect to the origin cf. \autoref{fig:FI space demo}). For the symmetrical situation $\Lambda_1=\Lambda_2$ the original FREM gives the correct results (see \autoref{app:Appendix2} for mathematical explanation), however, for the asymmetrical case $\Lambda_1\neq\Lambda_2$ the non-zero curvature along the diagonal results in finite FREM even for the limit $d\rightarrow 0$. Our proposed derivation of FREM from the Fisher information matrix (see \autoref{eq:var d from Q}) accommodates for the unequal sources correctly and gives diverging FREM for this limit. 
 
 %==========================================
 
@@ -683,13 +683,13 @@ Fisher information for the original FREM formula \autoref{eq:Ram FREM} is derive
 		\subfloat[FREM (fixed $b=$100 phot/pixel)]{\includegraphics[width=\wf]{\qd gFREM/images/FREM_intoutVSavg_bg100fix}}
 		\subfloat[Ratio of the curves form (a)]{\includegraphics[width=\wf]{\qd gFREM/images/FREM_intoutVSavg_ratio_bg100fix}}
 		
-	\caption{(a) Comparison of FREM computed from the Fisher information with integration over the states within the log-likelihood function \autoref{eq:FREM likelihood Lambda integrated out} (dashed lines) and the averaging of the Fisher information over different intensity states $\Lambda^{\alpha}$ \autoref{eq:FI avg} (solid lines). Dotted black lines corresponds to FREM$=d$ border. (b) Ratio of the ``sum'' (solid) to ``averaging'' (dashed) FREM curves. It shown how many times is the ``averaging'' FREM smaller than FREM derived from integrating over the states in Fisher information matrix.}
+	\caption{(a) Comparison of FREM computed from the Fisher information with integration over the states within the log-likelihood function \autoref{eq:FREM likelihood Lambda integrated out} (dashed lines) and the averaging of the Fisher information over different intensity states $\Lambda^{\alpha}$ \autoref{eq:FI avg} (solid lines). Dotted black lines corresponds to FREM$=d$ border. (b) Ratio of the ``sum'' (solid) to ``averaging'' (dashed) FREM curves. It shown how many times is the ``averaging'' FREM smaller than FREM derived from integrating over the states in the Fisher information matrix.}
 	\label{fig:FREM int out vs avg}
 \end{figure}
 % 
 As we pointed out in \autoref{sec:FREM for blinking}, in the real situation we do not know the intensity states $\bm{\Lambda^{\alpha}}$ of the individual emitters in each frame (see \autoref{eq:intensity states}). We have to therefore integrate (sum) over these states within the likelihood function \autoref{eq:FREM likelihood Lambda integrated out}, rather than average the Fisher information over different configurations of $\bm{\Lambda^{\alpha}}$ as in \autoref{eq:FI avg}. 
 
-To further emphasise the difference between the ``integrating over states in'' and ``averaging of'' Fisher information we plot FREM as a function of the separation $d$ for both concepts in \autoref{fig:FREM int out vs avg}.
+To further emphasise the difference between the ``integrating over states in'' and ``averaging of'' the Fisher information we plot FREM as a function of the separation $d$ for both concepts in \autoref{fig:FREM int out vs avg}.
 
 FREM computed from the averaged Fisher information is consistently lower for the whole range of $d$. The difference is less pronounced for data with higher signal-to-noise ratio (red curves). In the limit of well separated sources $d\rightarrow\infty$ the ``averaging'' FREM reduces to the ``static'' situation with half number of total number photons (see discussion in \autoref{sub:FREM static vs blinking}). For zero background values both expressions gives equal values of FREM in the limit $d\rightarrow\infty$ (see \autoref{app:Appendix2} for further details).
 
@@ -710,7 +710,7 @@ where $A$ and $B$ are independent of $\Lambda$ and $b$. The subscripts $\Lambda,
 
 Substitution into \autoref{eq:variance d alternative} shows that for low background the variance decreases proportionally to $\approx1/\Lambda$. In other words $M$ fold increase of the acquisition time ($M$ fold increase of the total number of emitted photons and of the background level $b$) will allow for $\sqrt{M}$ fold higher precision of the separation $d$ estimation.
 
-The scaling with $\Lambda$ and $b$ of the Fisher information entries for the blinking case is more complicated. In \autoref{app:Appendix2} we show, the blinking situation gives results equal to the static situation (up to a factor of 1/2 accounting for the half of the total number of emitted photons) for the limit of well separated sources ($d\rightarrow\infty$) and zero background (see \autoref{eq:app-FREM blink lim infty b=0} in \autoref{app:Appendix2}). 
+The scaling with $\Lambda$ and $b$ of the Fisher information entries for the blinking case is more complicated. In \autoref{app:Appendix2} we show, that the blinking situation gives results equal to the static situation (up to a factor of 1/2 accounting for the half of the total number of emitted photons) for the limit of well separated sources ($d\rightarrow\infty$) and zero background (see \autoref{eq:app-FREM blink lim infty b=0} in \autoref{app:Appendix2}). 
 
 In the non-zero background situation, $b$ appears within the argument of Poisson terms organised in a complicated fraction (see \autoref{eq:app-FREM blink limit infty bg} in \autoref{app:Appendix2}) and the dependence of the Fisher information matrix entries on the background is therefore highly non-linear.  
 
@@ -718,9 +718,9 @@ In the non-zero background situation, $b$ appears within the argument of Poisson
 
 \subsection{Note on noise}
 
-Poisson distribution models noise associated with photon detection \cite{PawleyHandbook2006}. This noise, derived from the nature of the signal itself, is often called ``shot noise'' and is present even under ideal imaging conditions free of any noise introduced by the sensor. Noise introduced by the sensor is usually divided into two components. The dark noise (or dark current) which represents the electrons thermally generated in the detector and the read-out noise (or read noise) associated with analog-to-digital conversion of the signal. The dark noise (Poisson distributed) is efficiently eliminated by cooling of the sensor and is negligible in high-performance cameras.  The read-out noise is assumed to follow a Gaussian distribution and is characterised by a standard deviation (often called r.m.s.).  The read-out noise depends on the read-out frequency and can be reduced by optimising the design of the detector's electrical circuits. The standard deviation of the read-out noise for a typical scientific CCD camera is 5-10 electrons. 
+The Poisson distribution models noise associated with photon detection \cite{PawleyHandbook2006}. This noise, derived from the nature of the signal itself, is often called ``shot noise'' and is present even under ideal imaging conditions free of any noise introduced by the sensor. Noise introduced by the sensor is usually divided into two components: the dark noise (or dark current), which represents the electrons thermally generated in the detector, and the read-out noise (or read noise) associated with analog-to-digital conversion of the signal. The dark noise (Poisson distributed) is efficiently eliminated by cooling of the sensor and is negligible in high-performance cameras.  The read-out noise is assumed to follow a Gaussian distribution and is characterised by a standard deviation (often called r.m.s.).  The read-out noise depends on the read-out frequency and can be reduced by optimising the design of the detector's electrical circuits. The standard deviation of the read-out noise for a typical scientific CCD camera is 5-10 electrons. 
 
-We assume Poisson distributed data throughout this chapter. We therefore neglect the read-out noise of the sensor and assume only the shot noise to be present in the recorded images. Ram et al. \cite{Ram2006} shows a modification of Fisher information for model combining both Poisson (shot) and Gaussian (read-out) noise.
+We assume Poisson distributed data throughout this chapter. We therefore neglect the read-out noise of the sensor and assume only the shot noise to be present in the recorded images. Ram et al. \cite{Ram2006} shows a modification of the Fisher information for model combining both Poisson (shot) and Gaussian (read-out) noise.
 
 %==========================================
 %==========================================
