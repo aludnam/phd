@@ -13,7 +13,7 @@ Details of all derivations are shown in \autoref{app:Appendix2}.
 
 The classical resolution limit \autoref{eq:Airy} discussed in \autoref{sec:Resolution limit} relates to an empirical observation and does not take into account the statistical nature of the photon detection process. It applies to noise-free situation. It also assumes that data were collected with sufficiently small pixels and the effect of pixellation is neglected. 
 
-Ram et al. \cite{Ram2006,Ram2006b} revised the resolution limit and defined a new measure, which considers the statistical process of the photon detection on a pixellated grid of a camera. The so called \emph{Fundamental resolution limit} (FREM) refers to the achievable precision of the estimator on distance between two sources. FERM reflects the fact, that the ``resolution limit'' is different for sources with different noise levels. If we want to ``resolve'' two sources, the necessary separation must be larger for weak emitters with high background than for bright sources with low background values.
+Ram et al. \cite{Ram2006,Ram2006b} revised the resolution limit and defined a new measure, which considers the statistical process of the photon detection on a pixellated grid of a camera. The so called \emph{Fundamental resolution measure} (FREM) refers to the achievable precision of the estimator on distance between two sources. FERM reflects the fact, that the ``resolution limit'' is different for sources with different noise levels. If we want to ``resolve'' two sources, the necessary separation must be larger for weak emitters with high background than for bright sources with low background values.
 
 Ram et al. defined FREM as a \CR lower bound on the standard deviation of the source separation estimation. FREM therefore does not provide ``resolution criterion'' such as \autoref{eq:Airy}, but gives as a notion about variability we can expect if we try to measure the distance between two emitters. We can set the ``resolution'' limit arbitrarily according to the measurement precision we are willing to accept. A natural choice for the ``acceptable precision'' is the distance between the sources. I.e. the standard deviation of the source separation measurement is equal to the separation itself. We use this ``natural resolution criterion'' throughout this chapter. 
 
@@ -413,7 +413,7 @@ for the blinking and the static case are shown in \autoref{fig:FREM ratio fixed 
 	\includegraphics[width=\wf]{\qd gFREM/images/FREM_IntOut_flat_sep40fix}
 	\label{fig:FREM int bg blinking top}
 	}
-	\caption{{\it Top:} FREM for (a) static and (b) blinking situation for two sources separated by $d=40$ nm. {\it Bottom:} Top view on the surfaces. Red plane corresponds to situation when FREM is equal to the separation of the sources $d=40$ nm. The region above the red plane (in black) does not allow precise estimation of the separation $d$ ($\unit{FREM}>d$).}
+	\caption{{\it Top:} FREM for (a) static and (b) blinking situation for two sources separated by $d=40$ nm. {\it Bottom:} Top view on the surfaces. Red plane corresponds to situation when FREM is equal to the separation of the sources $d=40$ nm. The region above the red plane (in black) does not allow precise estimation of the separation $d$ ($\unit{FREM}>d$). Examples of the data frames corresponding to points in the $\Lambda \times b$ plane shown (c) and (d) are in shown in  \autoref{fig:two sources int bg}.}
 	\label{fig:FREM int bg}
 \end{figure}
 %
@@ -421,7 +421,7 @@ For further comparison of the static and the blinking FREM, we fixed the separat
 
 \begin{figure}[!hbt]
 	\centering
-	\newcommand{\wf}{.15\textwidth}
+	\newcommand{\wf}{.14\textwidth}
 	\newcommand{\dirim}{\qd gFREM/images/psf2/text_twosources_}
 	\newcommand{\vs}{.4}
 	\begin{tabular}{c|ccccc}
@@ -501,23 +501,23 @@ For high signal-to-noise ratio data (high $\Lambda$ and low $b$,  see bottom-lef
 
 \begin{figure}[!bh]
 	\centering
-	\newcommand{\wf}{.48\textwidth}
+	\newcommand{\wf}{.45\textwidth}
 	\subfloat[b=100]{
-	\includegraphics[width=\wf]{\qd gFREM/images/FREMdip_Lambda500_b100}
+	\includegraphics[width=\wf]{\qd gFREM/images/FREMdip_conjgrad_Lambda500_b100}
 	\label{fig:FREM dip}}
 	\subfloat[b=0]{
-	\includegraphics[width=\wf]{\qd gFREM/images/FREMdip_Lambda500_b0}
+	\includegraphics[width=\wf]{\qd gFREM/images/FREMdip_conjgrad_Lambda500_b0}
 	\label{fig:FREM dip b=0}}
 	\caption{FREM and measured standard deviation ($\sqrt{\var(d)}$) for the estimation of the separation between two simulated noisy static sources ($\Lambda_1=\Lambda_2=500$ photons). A homogeneous background of (a) $b=100$ photons/pixel and (b) $b=0$ photons/pixel was added to each simulated image before realisation of Poisson noise. FREM is shown as a red dashed line. Estimated standard deviation from 1000 different realisation of the Poisson noise is plotted with blue circles.}
 \end{figure}
-
+%
 The FREM formula for static sources derived from \autoref{eq:FI - individual} shows an interesting behaviour for weak sources with large background values. The red dashed curve in \autoref{fig:FREM dip} shows FREM for two sources of equal intensity $\Lambda_1=\Lambda_2=500$ photons with background $b=100$ photons/pixel. This parameter settings corresponds to the top line in \autoref{fig:two sources int d}. Contrary to our intuition, FREM is not monotonic with separation $d$, and the FREM curve shows a ``dip'' for $d\approx300$ nm. This suggests that there is an ``optimal'' distance $d$ between the sources for which the separation can be estimated with highest precision.
 
 \begin{figure}[!bt]
 	\centering
-	\newcommand{\wf}{.13\textwidth}
+	\newcommand{\wf}{.12\textwidth}
 	\newcommand{\dirim}{\qd gFREM/images/psf3/text_twosources_}
-	\newcommand{\vs}{.1}
+	\newcommand{\vs}{.05}
 	\begin{tabular}{c|cccccc}
 %		\begin{sideways}\hspace{\vs cm}$\Lambda=3000$\end{sideways}
 %		&\includegraphics[width=\wf]{\dirim int3000_d50}
@@ -570,13 +570,13 @@ The FREM formula for static sources derived from \autoref{eq:FI - individual} sh
 %
 After careful checking of the derivation and numerical calculations of the curves (see \autoref{sec:Appendix dip comments} in \autoref{app:Appendix2} for details), we interpret the dip to be a result of two competing factors. First factor is the decrease of FREM with increasing separation $d$. Our intuitive expectation is that the distance between well separated sources is easier to measure than for the close, overlapping ones. However, in the case of weak sources surrounded with large background, the well separated weak sources disappear in background noise (cf. right figure on the top line in \autoref{fig:two sources int d}). If the sources are close to each other and their PSFs overlap, the sum of their PSFs create a brighter object, which is easier to find in high background noise (middle of the top line in \autoref{fig:two sources int d}). The ``visibility'' of the overlapped sources increases with decreasing $d$ and represents the second competing factor. The dip in FREM curves is then an ``optimal separation'' $d$, where sources are already sufficiently separated to be localised with good precision but still well visible due to their overlap. The increase of the localisation precision with further increasing separation is not sufficient to compensate for the fact that sources ``disappear'' in noise.
 
-A qualitative confirmation of this counter-intuitive behaviour of FREM curves is shown on simulated data. We simulated two sources separated with distance $d$. The intensity and the background was set to the same values as for the theoretical FREM curves ($\Lambda_1=\Lambda_2=500$ photons, $b=100$ photons/pixel, see top row in \autoref{fig:two sources int d}). For each separation $d$ we created $M=1000$ images with different realisation of Poisson noise. Using MATLAB function {\tt fminsearch}, we found the maximum-likelihood estimator of the positions $\bm{c}_{ML}=(c^{ML}_1,c^{ML}_2)$ of two PSFs (see \autoref{eq:intensity pixel}). The initial position for the fitting procedure was set to the true values $\bm{c}_{true}$. The standard deviation of the $M$ estimators $d^{ML}=|c^{ML}_1-c^{ML}_2|$ is plotted with blue circles in \autoref{fig:FREM dip} and shows similar ``dip'' as the theoretical FREM curve.
+A qualitative confirmation of this counter-intuitive behaviour of FREM curves is shown on simulated data. We simulated two sources separated with distance $d$. The intensity and the background was set to the same values as for the theoretical FREM curves ($\Lambda_1=\Lambda_2=500$ photons, $b=100$ photons/pixel, see top row in \autoref{fig:two sources int d}). For each separation $d$ we created $M=1000$ images with different realisation of Poisson noise. Using conjugate gradient optimization (NETLAB function {\tt conjgrad} \cite{Nabney}), we found the maximum-likelihood estimator of the positions $\bm{c}_{ML}=(c^{ML}_1,c^{ML}_2)$ of two PSFs (see \autoref{eq:intensity pixel}). The initial position for the fitting procedure was set to the true values $\bm{c}_{true}$. The standard deviation of the $M$ estimators $d^{ML}=|c^{ML}_1-c^{ML}_2|$ is plotted with blue circles in \autoref{fig:FREM dip} and shows a ``dip'' similar to the one in the theoretical FREM curve.
 
 The dashed red line in \autoref{fig:FREM dip b=0} shows that FREM is monotonically decreasing with $d$ for zero background ($b=0$) situation. Qualitative confirmation of the theoretical curve by fitting the simulated data is plotted with blue circles in \autoref{fig:FREM dip b=0}. No dip is observed in this case. 
 
-The measured standard deviation (blue circles) shows lower values than the theoretical lower bound (red dashed curve). This is likely due to the initialisation of the maximum-likelihood fitting with $\bm{c}_{true}$. Random initialisation would be more appropriate, but the measured standard deviation which would be above the FREM curve (now shown) does not provide curves smooth enough to show the ``dip'' clearly.
+The measured values of the standard deviation (blue circles) are lower than the theoretical lower bound (red dashed curve). This is likely due to the initialisation of the maximum-likelihood fitting with $\bm{c}_{true}$. Random initialisation would be more appropriate, but the measured standard deviation which would be above the FREM curve (now shown) does not provide curves smooth enough to show the ``dip'' clearly.
 
-Note that FREM for blinking sources is strictly monotonically decreasing with $d$. 
+\cut{Note that FREM for blinking sources is strictly monotonically decreasing with $d$. }
 
 
 %==========================================
@@ -732,7 +732,7 @@ The alternative derivation of the fundamental resolution measure (FREM) provides
 
 Background has a large impact on the localisation precision and it is desirable to keep is as low as possible. In practice a large proportion of the background intensity comes from the out of focus light. Typically TIRF (Total Internal Reflection Fluorescent microscopy) illumination of the sources is used to reduce the out-of-focus blur. However, different techniques such as sparse illumination of the sample can be used. 
 
-Note that \CR lower bound approach gives a lower bound for the variance. The actual localisation precision depends on the specific algorithm we use for localisation of the individual sources. Our proposed LM algorithm discussed in \autoref{ch:NMF} computationally separates the overlapping sources before localisation. The ability to separate the individual emitters is the limiting factor in this case. In our previous work \cite{Mandula2010b} we showed that we can separate two overlapping blinking sources separated by distance as small as $30\unit{nm}$. However, the separation becomes much harder with increasing number of emitters in the sub-diffraction area.  
+Note that \CR lower bound approach gives a lower bound for the variance. The actual localisation precision depends on the specific algorithm we use for localisation of the individual sources. Our proposed LM algorithm discussed in \autoref{ch:NMF} computationally separates the overlapping sources before localisation. The ability to separate the individual emitters is the limiting factor in this case. In our previous work \cite{Mandula2010b} we showed that we can discriminate two overlapping blinking sources as closely spaced as $30\unit{nm}$. However, the separation becomes much harder with increasing number of emitters in the sub-diffraction area.  
 
 In summary the bright sources with low background levels (high signal-to-noise ratio) are desirable for the LM techniques. In this setting the blinking provides higher localisation precision for closely spaced sources. QDs can be an order of magnitude brighter than the organic fluorescent markers (see \autoref{sec:Quantum-dots}) and are promising candidates for localisation microscopy (LM) techniques. 
 

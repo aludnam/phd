@@ -36,9 +36,7 @@ There has been interest in using quantum dots (QDs) as sources for localisation 
 
 Several techniques dealing with overlapping sources have been proposed recently. Most of these methods model the LM data using a known image of a single source, the so called point spread function (PSF). Most often a single PSF is assumed to be shared by all sources in the dataset.
 
-There are two main groups of the algorithms addressing the overlapping sources in the LM data. 
-
-The first group operates separately on each frame of the LM dataset: a method proposed in \cite{Huang2011} tries to fit multiple PSFs into each frame of the dataset while the CSSTORM proposed in \cite{Zhu2012} make use of compressed sampling to recover the sparse vector representing the distribution of the fluorophores' locations. The DAOSTORM algorithm \cite{Holden2011} applies iterative fitting and subtracting procedure in each frame. CSSTORM is supposed to deal with higher densities than DAOSTORM (supplementary materials to \cite{Zhu2012}).
+There are two main groups of the algorithms addressing the overlapping sources in the LM data. The first group operates separately on each frame of the LM dataset: a method proposed in \cite{Huang2011} tries to fit multiple PSFs into each frame of the dataset while the CSSTORM proposed in \cite{Zhu2012} make use of compressed sampling to recover the sparse vector representing the distribution of the fluorophores' locations. The DAOSTORM algorithm \cite{Holden2011} applies iterative fitting and subtracting procedure in each frame. CSSTORM is supposed to deal with higher densities than DAOSTORM (supplementary materials to \cite{Zhu2012}).
 
 Because each frame of the dataset is treated independently, these methods ignore the fact that some sources can stay ON for several successive frames or can even reappear in different frames due to blinking. These can generally deal with moderately overlapping sources with densities $<10\unit{sources/\mu m^{2}}$ \cite{Huang2011,Holden2011,Zhu2012}.
 
@@ -263,7 +261,7 @@ However, (blind) RL deconvolution solves a different problem than NMF. RL deconv
 
 Modified updates imposing radial symmetry constraints on the PSF were also proposed. There exist several modified updates derived using EM algorithm which impose some constraints on $\bm{o}$ or $\bm{w}$. \cite{Joshi:93} gives updates where Good's roughness measure ($\int\frac{\left|\nabla f(x)\right|^{2}}{f(x)}dx$) on the original image $\bm{o}$ is used as a regularisation term. This biases the solution towards the `smooth' images and avoids speckle artefacts in the reconstructions that are sometimes experienced in deconvolution methods. 
 
-\cite{Fish:95} use RL `blind' algorithm (updates on both $\bm{o}$ and $\bm{w}$) but after some number of iterations they fit some approximation of the PSF to the estimated $\bm{w}$ and uses this fit as a new $\bm{w}$. They claim that in noisy images this `semi-blind' deconvolution can perform better than the one with known PSF. The comparison of the regularised RL versions and some other deconvolution techniques has been shown in \cite{Kempen1997BA,Verveer1999}. RL usually performs well for noisy images.
+Fish et al. \cite{Fish1995} use RL `blind' algorithm (updates on both $\bm{o}$ and $\bm{w}$) but after some number of iterations they fit some approximation of the PSF to the estimated $\bm{w}$ and uses this fit as a new $\bm{w}$. They claim that in noisy images this `semi-blind' deconvolution can perform better than the one with known PSF. The comparison of the regularised RL versions and some other deconvolution techniques has been shown in \cite{Kempen1997BA,Verveer1999}. RL usually performs well for noisy images.
 
 %==========================================
 %==========================================
@@ -1399,17 +1397,26 @@ Neither RL deconvolved images nor the second order SOFI was capable of discrimin
 
 For our computer (Intel(R) Core(TM)2 Duo @ 2GHz processor with 3GB of RAM), the computational time for the simulated dataset ($21\times21\times1000$ frames) was:
 %
-\begin{description}
+
+\begin{tabular}{ll}
+	{\bf\inmf} & $\sim 20 \unit{mins}$ for one complete run with $K=50$ sources and $K$ restarts.\\
 	
-	\item[\inmf:]
-	$\sim 20 \unit{mins}$ for one complete run with $K=50$ sources and $K$ restarts.
+	{\bf CSSTORM} & $\sim 260 \unit{mins}$.\\
 	
-	\item[CSSTORM:]
-	$\sim 260 \unit{mins}$.
-	
-	\item[3B analysis:]
-	More than $12$ hours for $\sim30$ iterations.
-\end{description}
+	{\bf 3B analysis} & $>12$ hours for $30$ iterations.\\
+\end{tabular}
+
+%\begin{description}
+%
+%	\item[\inmf:]
+%	$\sim 20 \unit{mins}$ for one complete run with $K=50$ sources and $K$ restarts.
+%	
+%	\item[CSSTORM:]
+%	$\sim 260 \unit{mins}$.
+%	
+%	\item[3B analysis:]
+%	$>12$ hours for $\sim30$ iterations.
+%\end{description}
 % utah: Intel(R) Core(TM)2 Duo CPU     E8400 @2GHz with 3GB of RAM
 % jupiter2:Intel(R) Xeon(R) CPU           X5450  @3GHz with 31GB of RAM
 % 21x21x10^3 frames 
@@ -1418,7 +1425,30 @@ For our computer (Intel(R) Core(TM)2 Duo @ 2GHz processor with 3GB of RAM), the 
 % 3B more than 5 hours for 50 iterations
 
 %==========================================
+\subsection{Comparison with other methods - parameters setting}
 
+Each of the method requires a number of parameters to be explicitly set by user prior to the evaluation. The explicit parameters are summarised in the following table (n.a. stands for not applicable):
+
+\begin{table}[!h]
+\centering
+	\begin{tabular}{|l||c|c|c|}
+		\hline
+		{\it parameter}				& {\bf\inmf} & {\bf CSSTORM} & {\bf 3B analysis}\\ \hline
+		
+		PSF description		& NO  	& YES	& YES \\ \hline
+		\# of iterations in one run	& YES	& NO 	& YES \\ \hline
+		\# of runs				& YES	& n.a. 	& n.a.   \\ \hline	
+		\# of sources estimation	& YES	& NO	& YES \\ \hline
+		patch size and overlap	& YES 	& YES	& YES \\ \hline
+	\end{tabular}
+\end{table}
+
+For visualisation purposes all methods require setting of the oversampling rate of the resulting images of the results in addition. There is also a parameter for a slight ``blurring'' of the results: the variance of the gaussian kernel for 3B and CSSTORM  (see \autoref{sub:results - comparison}) and the ``power'' parameter $p$ for \inmf\ (see \autoref{fig:demo pow w result}).
+
+Note that these are only the parameters explicitly set by user. There are more parameters within each algorithm that are pre-set to their ``optimal'' values. 
+
+
+%==========================================
 \clearpage
 \subsection{Out of focus PSFs\label{sub:results - out of focus PSF}\label{sub:results - out of focus PSF real data}}
 %

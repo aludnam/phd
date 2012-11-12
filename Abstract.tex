@@ -1,21 +1,24 @@
-\documentclass[11pt]{article}
-\usepackage{geometry}                % See geometry.pdf to learn the layout options. There are lots.
-\geometry{letterpaper}                   % ... or a4paper or a5paper or ... 
-%\geometry{landscape}                % Activate for for rotated page geometry
-%\usepackage[parfill]{parskip}    % Activate to begin paragraphs with an empty line rather than an indent
-\usepackage{graphicx}
-\usepackage{amssymb}
-\usepackage{epstopdf}
-\DeclareGraphicsRule{.tif}{png}{.png}{`convert #1 `dirname #1`/`basename #1 .tif`.png}
-
-\title{Abstract}
-
-\author{Ond\v rej Mandula}
-\date{\today}                                           % Activate to display a given date or no date
-
-\begin{document}
-
-\maketitle
+%!TEX root = thesis.tex
+%
+%
+%\documentclass[11pt]{article}
+%\usepackage{geometry}                % See geometry.pdf to learn the layout options. There are lots.
+%\geometry{letterpaper}                   % ... or a4paper or a5paper or ... 
+%%\geometry{landscape}                % Activate for for rotated page geometry
+%%\usepackage[parfill]{parskip}    % Activate to begin paragraphs with an empty line rather than an indent
+%\usepackage{graphicx}
+%\usepackage{amssymb}
+%\usepackage{epstopdf}
+%\DeclareGraphicsRule{.tif}{png}{.png}{`convert #1 `dirname #1`/`basename #1 .tif`.png}
+%
+%\title{Abstract}
+%
+%\author{Ond\v rej Mandula}
+%\date{\today}                                           % Activate to display a given date or no date
+%
+%\begin{document}
+%
+%\maketitle
 
 %\begin{center}
 %	\line(1,0){250}
@@ -37,11 +40,10 @@
 %\begin{center}
 %	\line(1,0){250}
 %\end{center}
-
+%
 Fluorescence microscopy is an important tool for biological research. In this thesis we discuss two methods for super-resolution imaging of fluorescent samples. The first method represents an extension of localisation microscopy. We used non-negative matrix factorisation (NMF) to model a noisy dataset of highly overlapping fluorophores with intermittent intensities. We can recover images of individual sources from the optimised model, despite their high mutual overlap in the original dataset. This allows us to consider blinking quantum dots as bright and stable fluorophores for localisation microscopy. Moreover, NMF allows recovery of sources each having a unique shape. Such a situation can arise, for example, when the sources are located in different focal planes, and NMF can potentially be used for three dimensional super-resolution imaging. We discuss the practical aspects of applying NMF to real datasets, and show super-resolution images of biological samples labelled with quantum dots.
 
 The second optical microscopy method we discuss in this thesis is a member of the growing family of structured illumination techniques. Our main goal is to apply structured illumination to thick fluorescent samples generating a large out-of-focus background. The out-of-focus fluorescence background degrades the illumination pattern, and the reconstructed images suffer from influence of noise. We present a combination of structured illumination microscopy with line scanning. This technique reduces the out-of-focus fluorescence background, which improves the modulation and the quality of the illumination pattern and therefore facilitates reconstruction. We present super-resolution, optically sectioned images of a thick fluorescent sample, revealing details of the specimen's inner structure. 
 
 We also discuss a theoretical resolution limit for noisy and pixellated data. We correct previously published expression for the so-called fundamental resolution measure (FREM) and derive FREM for two fluorophores with intermittent intensity. We show that the intermittency of the sources (observed for quantum dots, for example) can increase the ``resolution'' defined in terms of FREM.
-
-\end{document}  
+%\end{document}  
