@@ -1227,7 +1227,7 @@ It should be noted that the estimated density and AP from the sum projection for
 	\includegraphics[scale=\sizef]{\qd S516/figures/demo_dens40_simiter1_bar4um}
 	\label{fig:density 40 3B}
 	}	
-	\caption{Comparison of the results for simulated of randomly scattered sources with density $40\um^{-2}$ ($14$ sources in total). Sum projection of the dataset with true sources' positions marked with red dots is shown in (a). Red circles show the true locations of the sources. The radius of the circles $r=0.7\unit{pixels}$ ($56\unit{nm}$) indicates the true-positive threshold distance. For further information see \autoref{sec:evaluation}. Scale bar 400\unit{nm}.}
+	\caption{Comparison of the results for simulated of randomly scattered sources with density $40\um^{-2}$ ($58$ sources in total). Sum projection of the dataset with true sources' positions marked with red dots is shown in (a). Red circles show the true locations of the sources. The radius of the circles $r=0.7\unit{pixels}$ ($56\unit{nm}$) indicates the true-positive threshold distance. For further information see \autoref{sec:evaluation}. Scale bar 400\unit{nm}.}
 	\label{fig:comparison density 40}
 \end{figure}
 
@@ -1787,7 +1787,30 @@ We compared performance of \inmf, CSSTORM and the 3B analysis on one patch of re
 \clearpage
 \section{Discussion\label{sec:Discussion}}
 
-\inmf\ can recover individual highly overlapping sources. \Autoref{fig:density 40 NMF} suggests that it is possible to identify most of the sources for up to densities $40\um^{-2}$. This corresponds to $\sim 10$ sources within an Airy disk (the radius of an Airy disk $\delta$ is sometimes referred to as the classical resolution limit). In fact, in the preliminary work \cite{Mandula2010b}, we demonstrated on simulated data with realistic levels of emitted photons and background, that \inmf\ can separate \emph{two} sources as close as $\sim \delta/7$ ($\sim \lambda_{em}/15$). However, \autoref{fig:visualisation gaussf}\ccc\ shows that \inmf\ cannot separate all the individual sources uniformly distributed on a line with $\sim \delta/3$ spacing ($80 \unit{nm}$, linear density $12.5 \um^{-1}$). One \inmf\ evaluation recovered only a subset of all the sources. In some cases one \inmf\ estimated source represents, in fact, several close emitters. That is why some of the estimated locations (green dots in \autoref{fig:visualisation gaussf}\bbb) fall in between two neighbouring emitters (red dots in \autoref{fig:visualisation gaussf}\bbb). Multiple runs of \inmf\ can recover varying subsets of sources. Therefore the sum of these evaluations can provide more complete information about the structure, see \autoref{fig:visualisation gf}, \ref{fig:hash NMF dens 12} and \ref{fig:tubulin WF and NMF}. 
+\inmf\ can recover individual highly overlapping sources. In the preliminary work \cite{Mandula2010b}, we demonstrated on simulated data with realistic levels of emitted photons and background, that \inmf\ can separate \emph{two} sources as close as $\sim \delta/7$ ($\sim \lambda_{em}/15$ or $42 \unit{nm}$ for our simulations with $\lambda_{em}=625 \unit{nm}$) even for emitters with uniformly distributed blinking behaviour (see \autoref{fig:blinking}\aaa), where both sources are present in almost all frames. However, as we discuss below, the situation becomes increasingly difficult with increasing number of sources in the sub-resolution area.
+
+\Autoref{fig:density 40 NMF} suggests that it is possible to identify most of the sources for densities up to $40\um^{-2}$ (46 identified sources out of 58) . The average distance $\bar{r}$ between two nearest neighbours for randomly scattered sources with density $\rho$ is given by \cite{Frieden1991}
+%
+\begin{equation}
+	\bar{r}=\frac{1}{2\sqrt{\rho}}.
+\end{equation}
+%
+The mean nearest neighbour distance corresponding to densities of randomly scattered sources used for our simulations (see \autoref{sub:results - comparison}) are summarised in the following table:
+%
+\begin{table}[!h]
+	\centering
+	\begin{tabular}{l|ccccc}
+		$\rho$ [$\unit{\um^{-2}}$]		& 10		& 20		& 30		& 40		& 50\\ \hline
+		$\bar{r}$ [$\unit{nm}$]		& 158	& 112	& 91		& 79		& 71
+	\end{tabular}
+	\caption{2D density $\rho$ of the randomly scattered and the corresponding mean nearest neighbour distance $\bar{r}$.\label{tab:density2dist}}
+\end{table}
+
+The density $40\um^{-2}$ corresponds to $\sim 10$ sources within an Airy disk or mean distance between the nearest neighbours of $79\unit{nm}$ (see \autoref{tab:density2dist}). The probability of the source to appear (``ON'') in each frame is 0.5 (see \autoref{fig:blinking}\ddd), which on average reduces the density of the sources in each recorded frame by a factor of two. For data with simulated density of $40\um^{-2}$ the mean distance between the nearest neighbouring ``ON'' sources in each frame is therefore $112 \unit{nm}$, (see \autoref{tab:density2dist}).  
+
+\Autoref{fig:visualisation gaussf}\ccc\ shows that \inmf\ cannot separate all the individual sources uniformly distributed on a line with $\sim \delta/3$ spacing ($80 \unit{nm}$, linear density $12.5 \um^{-1}$ or average spacing of ``ON'' sources $160 \unit{nm}$). One \inmf\ evaluation recovered only a subset of all the sources. In some cases one \inmf\ estimated source represents, in fact, several close emitters. That is why some of the estimated locations (green dots in \autoref{fig:visualisation gaussf}\bbb) fall in between two neighbouring emitters (red dots in \autoref{fig:visualisation gaussf}\bbb). Multiple runs of \inmf\ can recover varying subsets of sources. 
+Therefore the sum of these evaluations can provide more complete information about the structure, see \autoref{fig:visualisation gf}, \ref{fig:hash NMF dens 12} and \ref{fig:tubulin WF and NMF}. 
+
 
 QDs are characterised by broad absorption profiles and a narrow and spectrally tuneable emission spectrum. A range of colours (determined by the size of QD's core) is readily available on market. It is therefore possible to label the specimen with a mixture of QDs with a variety of colours and record the intermittent sources in several different spectral channels. This would lead to a reduction in density of the QDs in each colour channel and facilitate the separation of the individual sources. 
 
