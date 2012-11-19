@@ -357,22 +357,26 @@ variance \autoref{eq:app-variance alternative} $\var(d)\rightarrow\infty$. This 
 \section{Comparison of the original FREM with our version}
 For equally strong sources ($\Lambda_1= \Lambda_2=\Lambda$) the original FREM formula gives identical results as ours. In this situation \autoref{eq:app-Fisher Information alternative - Individual} gives equality of the diagonal terms $I_{11}=I_{22}$ for any $c_1$ and $c_2$. From \autoref{eq:app-variance alternative}
 \begin{alignat}{2}
-	\var^{-1}(d)
-	&\geq\frac{I_{11}^2-I_{12}^2}{2(I_{11}+I_{12})}\\
-	&\geq\frac{1}{2}\left(I_{11}-I_{12}\right)
+	\var(d)
+	&\geq\frac{2(I_{11}+I_{12})}{I_{11}^2-I_{12}^2}\\
+	&\geq\frac{2}{I_{11}-I_{12}}
+	\label{eq:app-FREM equal brightness}
 \end{alignat}
 %
-From  \autoref{eq:app-Fisher Information alternative - Individual} we get
-\begin{alignat}{2}
-	\var^{-1}(d)
-	&\geq\frac{\Lambda}{2}\sum_k\left[\frac{\left(q'_k(c_1)\right)^2-q'_k(c_1)q'_k(c_2)}{q_k(c_1)+q_k(c_2)+b/\Lambda} \right]\\
-	&\geq\frac{\Lambda}{4}\sum_k\left[\frac{\left(q'_k(c_1)-q'_k(c_2)\right)^2}{q_k(c_1)+q_k(c_2)+b/\Lambda} \right],
-	\label{eq:app-equivalence FREM orig and us}
-\end{alignat}
-% 
-where we used $\sum_k\left(q'_k(c_1)\right)^2=\sum_k\left(q'_k(c_2)\right)^2$. Comparison with \autoref{eq:app-Fisher Info Pixelised - Ram} shows the equality of the both formulas for the situation of equally strong sources $\Lambda_1=\Lambda_2$.
+Using $q_k(c_1)=q_k(-d/2)$ and $q_k(c_2)=q_k(+d/2)$ we can rewrite the original FREM expression \autoref{eq:app-Fisher Info Pixelised - Ram} using \autoref{eq:app-Fisher Information alternative - Individual}
+\begin{equation}
+	\var^{ORIG}(d)\geq\frac{4}{I_{11}-2I_{12}+I_{22}},	
+\end{equation}
+%
+which for $\Lambda_1=\Lambda_2$ ($I_{11}=I_{22}$) reduces to
+%
+\begin{equation}
+	\var^{ORIG}(d)\geq\frac{2}{I_{11}-I_{12}}. 		
+\end{equation}
 
-For sources with different intensity $\Lambda_1\neq\Lambda_2$ can be shown that the ratio between the original FREM and our proposed formula for a given distance $d$ is a function of $\Lambda_1/\Lambda_2$. 
+Comparison with \autoref{eq:app-FREM equal brightness} shows the equality of the both formulas for the situation of equally strong sources $\Lambda_1=\Lambda_2$.
+
+For sources with different intensity the expressions gives different resutls. If $\Lambda_2=\alpha\Lambda_1$, then can be shown, that for negligible values of $b/\Lambda_2$ the ratio between the original FREM and our proposed formula for $d\rightarrow\infty$ is $2\sqrt{2}/3$.
 
 %==========================================
 %==========================================
