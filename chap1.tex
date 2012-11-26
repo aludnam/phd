@@ -12,7 +12,7 @@ Application of the NMF algorithm to real microscopic data is explored in \autore
 
 We used synthetic data for analysing the performance of the algorithm in different experimental settings. The main simulations used in this chapter are described in \autoref{sec:simulations} and \autoref{sec:evaluation} explains the evaluation techniques for the comparison of the results.
 
-Finally, the NMF reconstructed images of synthetic and real data are presented in \autoref{sec:results}. In this section we also compare NMF with two other techniques (CSSTORM, 3B analysis) dealing with similar problematics. 
+Finally, the NMF reconstructed images of synthetic and real data are presented in \autoref{sec:results}. In this section we also compare NMF with two other techniques (CSSTORM, 3B analysis) dealing with similar problematic. 
 
 %==========================================
 %==========================================
@@ -210,7 +210,7 @@ Hoyer's sparse NMF algorithm minimises $\|\bm{D} - \bm{WH}\|^{2}$ rather than th
 	\label{fig: Hoyer sparsity 0.7}
 \end{figure}
 
-We used simulated data of randomly scattered sources with densities $10-50\,\um^{-2}$ to explored the ability of the Hoyer's algorithm to recover credible sources. The blinking intensity was assumed to be uniformly distributed on the interval $[0, 5000]$ photons. The background was set to $100$ photons/pixel and data were corrupted with Poisson noise. Prior to the evaluation with the Hoyer's algorithm, the true background value was subtracted from the data, clipping negative pixels to zero. The number of components $K$ was set to the true value used for simulation $K=K_{true}$. The algorithm was run for 1000 iterations. Running the algorithm for longer (2000, 5000) iterations did not improve the estimated results. 
+We used simulated data of randomly scattered sources with densities $10-50\,\um^{-2}$ to explore the ability of the Hoyer's algorithm to recover credible sources. The blinking intensity was assumed to be uniformly distributed on the interval $[0, 5000]$ photons. The background was set to $100$ photons/pixel and data were corrupted with Poisson noise. Prior to the evaluation with the Hoyer's algorithm, the true background value was subtracted from the data, clipping negative pixels to zero. The number of components $K$ was set to the true value used for simulation $K=K_{true}$. The algorithm was run for 1000 iterations. Running the algorithm for longer (2000, 5000) iterations did not improve the estimated results. 
 
 \Autoref{fig: Hoyer no sparsity constraint} shows estimated $\bm{W}$ with Hoyer's algorithm without sparsity constraints. This corresponds to conventional NMF. Note that most of the $\bm{w_k}$ for higher densities contain multiple sources \autoref{fig: Hoyer no sparsity constraint}\bbb,\ccc. Imposing the sparsity constraints $s=0.7$ on the columns of $\bm{W}$, estimated from the true PSF, gives better estimated sources for densities$<30\um^{-2}$  \autoref{fig: Hoyer sparsity 0.7}\aaa, however, for dense data the method fails to recover the individual sources and gives unsatisfactory results, see \autoref{fig: Hoyer sparsity 0.7}\ccc.
 
@@ -315,7 +315,7 @@ The blinking behaviour of the QDs was simulated as either:
  
 %==========================================
 \subsection{Randomly scattered sources\label{sub:Simul random}}
-The ability of the algorithm to separate individual overlapping sources was tested on simulated data of randomly scattered fluorophores. The density of the sources was in a range $\rho=10-50 \unit{sources/\mu m^{2}}$. This density range corresponds to $\sim 3-14$ sources in an Airy disk, respectively, for parameters from \autoref{tab:Simulations parameters}. Several frames of the simulated dataset for four different densities is shown in  \autoref{fig:simulated data random}. The mean projection of the frames, which corresponds to a wide-field images, is shown in \autoref{fig:simulated data random - mean}.
+The ability of the algorithm to separate individual overlapping sources was tested on simulated data of randomly scattered fluorophores. The density of the sources was in a range $\rho=10-50 \unit{sources/\mu m^{2}}$. This density range corresponds to $\sim 3-14$ sources in an Airy disk, respectively, for parameters from \autoref{tab:Simulations parameters}. Several frames of the simulated dataset for four different densities is shown in  \autoref{fig:simulated data random}. The mean projection of the frames, which corresponds to a wide-field image, is shown in \autoref{fig:simulated data random - mean}.
 
 \begin{figure}[!htb]	
 	\newcommand{\widthfig}{1\textwidth}
@@ -708,7 +708,7 @@ The algorithm was run for $K=15$, with the last component reserved for backgroun
 	\label{fig:Iterative restarts}
 \end{figure}
 
-The \inmf\ procedure leads to better local minima of the NMF optimisation problem. The $L_{2}$ norm sorting of the recovered $\bm{w}$s after each iteration (step 2a in \autoref{alg:restarts}) ensures that the sparsest components will be reused in subsequent evaluation. Gradually increasing number of sparse $\bm{w}$s with small $L_{2}$ norm are reused in subsequent restarts (step 2c in \autoref{alg:restarts}), whereas the $\bm{w}$s with large $L_{2}$ norm replaced by a random vector after each run (step 2d in \autoref{alg:restarts}). This ``soft'' sparsity enhancement allows for higher flexibility of the evaluated $\bm{w}$s and allows recovery of the sources with different individual sparsities such as the sources from different focal depths shown in \autoref{fig:Iterative restarts}\ddd. This is an advantage compared to the ``hard'' sparsity enhancement used in the Hoyer's algorithm (\autoref{sub:Hoyer}).
+The \inmf\ procedure leads to better local minima of the NMF optimisation problem. The $L_{2}$ norm sorting of the recovered $\bm{w}$s after each iteration (step 2a in \autoref{alg:restarts}) ensures that the sparsest components will be reused in subsequent evaluation. Gradually increasing number of sparse $\bm{w}$s with small $L_{2}$ norm is reused in subsequent restarts (step 2c in \autoref{alg:restarts}), whereas the $\bm{w}$s with large $L_{2}$ norm replaced by a random vector after each run (step 2d in \autoref{alg:restarts}). This ``soft'' sparsity enhancement allows for higher flexibility of the evaluated $\bm{w}$s and allows recovery of the sources with different individual sparsities such as the sources from different focal depths shown in \autoref{fig:Iterative restarts}\ddd. This is an advantage compared to the ``hard'' sparsity enhancement used in the Hoyer's algorithm (\autoref{sub:Hoyer}).
 
 The ``good'' sources, representing individual PSFs, can be identified after the termination of \inmf\ by analysing the resulting $\bm{W}$. In \autoref{fig:Iterative restarts}\ddd only first eight $\bm{w}$s show the ``credible'' PSFs, while rest of the $\bm{w}$s represent only noise (except for the last one, which models the homogeneous background offset).
 
@@ -1337,7 +1337,7 @@ The experiments shown above are useful for a quantitative comparison of the diff
 
 To achieve a smoother representation of the underlying structure, we used the sum of ten \inmf\ evaluations (see discussion in \autoref{sub:visualisation}) rather than only one \inmf\ run used for the data of randomly scattered sources in the section above. The result is visualised in \autoref{fig:comparison hash dens 12}\bbb. The same dataset was evaluated with 3B and CSSTORM, shown in  \autoref{fig:comparison hash dens 12}\ccc\ and \autoref{fig:comparison hash dens 12}\ddd, respectively. Only one run of 3B (24 iterations) and CSSTORM has been used. 
 
-3B completely fails to recover the double parallel lines, replacing them with one intensity crest in between of the lines (blue arrow in \autoref{fig:comparison hash dens 12}\ddd). CSSTORM shows the double line structure of the hash symbol at the periphery of the specimen (green arrows in \autoref{fig:comparison hash dens 12}\ccc), however the double lines joins into a single line close to the centre of the cross  (blue arrow in \autoref{fig:comparison hash dens 12}\ccc). The hole ($150 \times 150 \unit{nm}$) in the middle of the specimen is completely unresolved and is replaced by an intensity maximum (red arrow in \autoref{fig:comparison hash dens 12}\ccc). 
+3B completely fails to recover the double parallel lines, replacing them with one intensity crest in between of the lines (blue arrow in \autoref{fig:comparison hash dens 12}\ddd). CSSTORM shows the double line structure of the hash symbol at the periphery of the specimen (green arrows in \autoref{fig:comparison hash dens 12}\ccc), however the double lines joins into a single line close to the centre of the cross  (blue arrow in \autoref{fig:comparison hash dens 12}\ccc). The hole ($150 \times 150 \unit{nm}$) in the middle of the specimen is completely unresolved and is replaced by intensity maximum (red arrow in \autoref{fig:comparison hash dens 12}\ccc). 
 
 \inmf\ shows the double line structure all the way along the artificial specimen (green arrows in \autoref{fig:comparison hash dens 12}\bbb) and  the hole in the middle of the structure is clearly visible (red arrow in \autoref{fig:comparison hash dens 12}\bbb). \Autoref{fig:demo pow w result}\ddd\ demonstrates that the double lines and the hole in the middle can be observed even for a structure with lines as close as $d=100\unit{nm}$ ($1.25 \unit{pixels}$). 
 
@@ -1398,7 +1398,6 @@ Neither RL deconvolved images nor the second order SOFI was capable of discrimin
 \subsection{Comparison with other methods - computational time}
 
 For our computer (Intel(R) Core(TM)2 Duo @ 2GHz processor with 3GB of RAM), the computational time for the simulated dataset ($21\times21\times1000$ frames) was:
-%
 
 \begin{tabular}{ll}
 	{\bf\inmf} & $\sim 20 \unit{mins}$ for one complete run with $K=50$ sources and $K$ restarts.\\
@@ -1793,7 +1792,7 @@ We compared performance of \inmf, CSSTORM and the 3B analysis on one patch of re
 
 \inmf\ can recover individual highly overlapping sources. In the preliminary work \cite{Mandula2010b}, we demonstrated on simulated data with realistic levels of emitted photons and background, that \inmf\ can separate \emph{two} sources as close as $\sim \delta/7$ ($\sim \lambda_{em}/15 = 40 \unit{nm}$ for our simulations with $\lambda_{em}=625 \unit{nm}$) even for emitters with uniformly distributed blinking behaviour (see \autoref{fig:blinking}\aaa), where both sources are present in almost all frames. However, as we discuss below, the situation becomes increasingly difficult with larger number of sources in the sub-resolution area.
 
-\Autoref{fig:density 40 NMF} suggests that it is possible to identify most of the sources for densities up to $\rho=40\um^{-2}$ (46 identified sources out of 58). Further increase of $\rho$ leads to the significant uderestimation of the density (blue lines in \autoref{fig:comparison AP,dens}\aaa). The average distance $\bar{r}$ between two nearest neighbours for randomly scattered sources with density $\rho$ is given by \cite{Frieden1991}
+\Autoref{fig:density 40 NMF} suggests that it is possible to identify most of the sources for densities up to $\rho=40\um^{-2}$ (46 identified sources out of 58). Further increase of $\rho$ leads to the significant underestimation of the density (blue lines in \autoref{fig:comparison AP,dens}\aaa). The average distance $\bar{r}$ between two nearest neighbours for randomly scattered sources with density $\rho$ is given by \cite{Frieden1991}
 %
 \begin{equation}
 	\bar{r}=\frac{1}{2\sqrt{\rho}}.
@@ -1843,7 +1842,7 @@ The more promising strategy for determining the axial position of the emitters m
 \clearpage
 \section{Conclusion\label{sec:Conclusion}}
 
-In this chapter we demonstrated non-negative matrix factorisation (NMF) as a natural model for microscopic samples labelled with quantum dots. We described a practical pipeline for evaluation and visualisation of realistic datasets and the individual steps of the pipe-line were illustrated on simulated data. 
+In this chapter we demonstrated non-negative matrix factorisation (NMF) as a natural model for microscopic samples labelled with quantum dots. We described a practical pipeline for evaluation and visualisation of realistic datasets and the individual steps of the pipeline were illustrated on simulated data. 
 
 We introduced a procedure of NMF with iterative restarts (\inmf), which leads to better local minima in the optimisation procedure and shows robustness in terms of estimated number of sources contained in the data. 
 
