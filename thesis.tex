@@ -55,7 +55,7 @@
 \hyphenation{fluo-res-cent}
 \hyphenation{di-men-si-on-al}
 
-\linenumbers
+%\linenumbers
 
 %This makes brakcets around equations numbers in \autoref
 \makeatletter
@@ -97,6 +97,11 @@
 %	\renewcommand{\captionfont}{\small}
 \renewcommand{\captionlabelfont}{\small\bfseries}
 
+ %   General parameters, for ALL pages (copied from http://mintaka.sdsu.edu/GF/bibliog/latex/floats.html):
+ \renewcommand{\topfraction}{0.9}	% max fraction of floats at top
+ \renewcommand{\bottomfraction}{0.8}	% max fraction of floats at bottom
+ 
+ 
 % fancy backreferencing
 \renewcommand*{\backref}[1]{}
 \renewcommand*{\backrefalt}[4]{%
@@ -157,11 +162,19 @@
 % \graduationdate{February 1786}
 
 \abstract{
-Fluorescence microscopy is an important tool for biological research. In this thesis we discuss two methods for super-resolution imaging of fluorescent samples. The first method represents an extension of localisation microscopy. We used non-negative matrix factorisation (NMF) to model a noisy dataset of highly overlapping fluorophores with intermittent intensities. We can recover images of individual sources from the optimised model, despite their high mutual overlap in the original dataset. This allows us to consider blinking quantum dots as bright and stable fluorophores for localisation microscopy. Moreover, NMF allows recovery of sources each having a unique shape. Such a situation can arise, for example, when the sources are located in different focal planes, and NMF can potentially be used for three dimensional super-resolution imaging. We discuss the practical aspects of applying NMF to real datasets, and show super-resolution images of biological samples labelled with quantum dots.
+\singlespace
+\newcommand{\vs}{3}
 
-The second optical microscopy method we discuss in this thesis is a member of the growing family of structured illumination techniques. Our main goal is to apply structured illumination to thick fluorescent samples generating a large out-of-focus background. The out-of-focus fluorescence background degrades the illumination pattern, and the reconstructed images suffer from influence of noise. We present a combination of structured illumination microscopy with line scanning. This technique reduces the out-of-focus fluorescence background, which improves the modulation and the quality of the illumination pattern and therefore facilitates reconstruction. We present super-resolution, optically sectioned images of a thick fluorescent sample, revealing details of the specimen's inner structure. 
+Fluorescence microscopy is an important tool for biological research. However, the resolution of a standard fluorescence microscope is limited by diffraction, which makes it difficult to observe small details of a specimen’s structure. We have developed two fluorescence microscopy methods that achieve resolution beyond the classical diffraction limit.
 
-We also discuss a theoretical resolution limit for noisy and pixelated data. We correct previously published expression for the so-called fundamental resolution measure (FREM) and derive FREM for two fluorophores with intermittent intensity. We show that the intermittency of the sources (observed for quantum dots, for example) can increase the ``resolution'' defined in terms of FREM.
+\vspace{\vs mm}
+The first method represents an extension of localisation microscopy. We used non-negative matrix factorisation (NMF) to model a noisy dataset of highly overlapping fluorophores with intermittent intensities. We can recover images of individual sources from the optimised model, despite their high mutual overlap in the original dataset. This allows us to consider blinking quantum dots as bright and stable fluorophores for localisation microscopy. Moreover, NMF allows recovery of sources each having a unique shape. Such a situation can arise, for example, when the sources are located in different focal planes, and NMF can potentially be used for three dimensional super-resolution imaging. We discuss the practical aspects of applying NMF to real datasets, and show super-resolution images of biological samples labelled with quantum dots. It should be noted that this technique can be performed on any wide-field epifluorescence microscope equipped with a camera, which makes this super-resolution method very accessible to a wide scientific community.
+
+\vspace{\vs mm}
+The second optical microscopy method we discuss in this thesis is a member of the growing family of structured illumination techniques. Our main goal is to apply structured illumination to thick fluorescent samples generating a large out-of-focus background. The out-of-focus fluorescence background degrades the illumination pattern, and the reconstructed images suffer from the influence of noise. We present a combination of structured illumination microscopy and line scanning. This technique reduces the out-of-focus fluorescence background, which improves the quality of the illumination pattern and therefore facilitates reconstruction. We present super-resolution, optically sectioned images of a thick fluorescent sample, revealing details of the specimen's inner structure. 
+
+\vspace{\vs mm}
+In addition, in this thesis we also discuss a theoretical resolution limit for noisy and pixelated data. We correct a previously published expression for the so-called fundamental resolution measure (FREM) and derive FREM for two fluorophores with intermittent intensity. We show that the intensity intermittency of the sources (observed for quantum dots, for example) can increase the ``resolution'' defined in terms of FREM.
 }
 
 %% Now we start with the actual document.
@@ -177,6 +190,7 @@ Up to date version on:\\
 %================================
 \condcomment{\boolean{printpreliminary}}
 {
+
 \maketitle
 
 \begin{acknowledgements}
