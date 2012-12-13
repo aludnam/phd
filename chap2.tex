@@ -77,7 +77,7 @@ Closer inspection of FREM derived from the Fisher information given by \autoref{
 
 Another serious problem with this expression is that the sources are assumed to be located at $\pm d/2$, which implicitly assumes the knowledge of the origin. It is therefore not surprising that the formula \autoref{eq:Ram FREM} gives $I(d)\neq0$ (i.e. finite FREM) even when one source is missing ($\Lambda_i=0$), because, in fact, only one source is needed to determine the distance $d/2$. 
 
-In the following section we present an alternative derivation of FREM, which these problems. Our version gives diverging FREM for $d\rightarrow0$ for sources with different intensities. It also diverges in the situation when one of the sources is missing. For sources with equal intensities $\Lambda_1=\Lambda_2$ our version and the original version of FREM give identical results. 
+In the following section we present an alternative derivation of FREM, which resolves these problems. In contrast to the original FREM our version gives diverging FREM for $d\rightarrow0$ even for sources with different intensities. It also diverges in the situation when one of the sources is missing. For sources with equal intensities $\Lambda_1=\Lambda_2$ our version and the original version of FREM give identical results. 
 
 %==========================================
 %==========================================
@@ -145,14 +145,14 @@ If we suppose uncorrelated noise between pixels, we get the log-likelihood funct
 Inserting $\mathcal{L}$ into \autoref{eq:Fisher information general}, the elements of the Fisher information matrix become (see \autoref{eq:app-Fisher Information alternative - Individual} in \autoref{app:Appendix2} for details)
 %
 \begin{equation}
-	I_{ij}(\bm{c})=\sum_{k=1}^N\frac{1}{\lambda_k}\frac{\partial\lambda_k}{\partial c_i}\frac{\partial\lambda_k}{\partial c_j};\; \ i,j=\{1,2\}.
+	I_{ij}(\bm{c})=\sum_{k=1}^N\frac{1}{\lambda_k}\frac{\partial\lambda_k}{\partial c_i}\frac{\partial\lambda_k}{\partial c_j};\; \ i,j\in\{1,2\}.
 	\label{eq:FI - entries}
 \end{equation}
 %
 By substitution from \autoref{eq:intensity pixel} we get for the individual elements of the Fisher information matrix (see \autoref{eq:app-Fisher Information alternative - Individual} in \autoref{app:Appendix2} for details): 
 %
 \begin{equation}
-	I_{ij} =\Lambda_i\Lambda_j\sum_{k=1}^{K}\frac{q'_k(c_i)q'_k(c_j)}{\Lambda_1q_k(c_1)+\Lambda_2q_k(c_2)+b};\; \ i,j=\{1,2\},
+	I_{ij} =\Lambda_i\Lambda_j\sum_{k=1}^N\frac{q'_k(c_i)q'_k(c_j)}{\Lambda_1q_k(c_1)+\Lambda_2q_k(c_2)+b};\; \ i,j\in\{1,2\},
 	\label{eq:FI - individual}
 \end{equation}
 %
@@ -166,18 +166,18 @@ where $q_k(c_i)$ and $q'_k(c_i)$ are the pixelated versions (pixel area $\Gamma_
 For equally strong sources ($\Lambda_1=\Lambda_2=\Lambda$) we get a compact expression for the entries of the Fisher information: 
 %
 \begin{equation}
-	I_{ij} =\Lambda\sum_{k=1}^{K}\frac{q'_k(c_i)q'_k(c_j)}{q_k(c_1)+q_k(c_2)+b/\Lambda};\; \ i,j=\{1,2\},
+	I_{ij} =\Lambda\sum_{k=1}^N\frac{q'_k(c_i)q'_k(c_j)}{q_k(c_1)+q_k(c_2)+b/\Lambda};\; \ i,j\in\{1,2\},
 	\label{eq:FI - individual - equal strength}
 \end{equation}
 %
-and due to the symmetry of the entries ($I_{11}=I_{22}$ and $I_{12}=I_{21}$) the variance can be expressed as
+and due to the symmetry of the entries ($I_{11}=I_{22}$ and $I_{12}=I_{21}$) the variance \autoref{eq:variance d alternative} can be expressed as
 %
 \begin{equation}
 	\var(d)\geq\frac{2}{I_{11}-I_{12}}.
 	\label{eq:var symmetric}
 \end{equation}
 %
-Inserting the matrix elements \autoref{eq:FI - individual - equal strength} into \autoref{eq:var symmetric} shows that for situations where the background level is considerably smaller than the intensity $b/\Lambda\ll1$, the lower bound on variance scales as
+Inserting the matrix elements \autoref{eq:FI - individual - equal strength} into \autoref{eq:var symmetric} shows that for situations where the background level is considerably smaller than the intensity $b/\Lambda\ll1$, the lower bound on variance scales with the sources' intensity $\Lambda$ as
 %
 \begin{equation}
 	\var(d)\propto\frac{1}{\Lambda}. 
@@ -195,7 +195,7 @@ For well separated sources ($d\rightarrow\infty$) the off-diagonal elements of t
  	\var(d)\geq\frac{1}{I_{11}}+\frac{1}{I_{22}}.
 \end{equation}
 %
-Fraction $1/I_{ii}$ is the lower bound for the variance of an individual source $s_i$ localisation. The bound on the total variance is therefore composed from the sum of bounds on variances for localisation of individual sources, as we expect.
+Fraction $1/I_{ii}$ is the lower bound on the variance of the single source location $c_i$ estimator. This can be obtained from the general expression of Fisher information for Poisson distributed data (see \autoref{eq:app-Fisher Info for Poisson} in \autoref{app:Appendix2}). The bound on the total variance is therefore composed from the sum of bounds on variances for localisation of individual sources, as we expect.
 
 
 %==========================================
@@ -232,7 +232,7 @@ The ``averaging'' of the Fisher Information matrix presented in this section ass
 If the intensity states $\bm{\Lambda}$ \emph{were known}, we would write the log-likelihood function as 
 %
 \begin{equation}
-	\mathcal{L}(\theta,\Lambda)=\sum_{k=1}^K\log\left(l_k(\theta,\bm{\Lambda})\right).
+	\mathcal{L}(\theta,\Lambda)=\sum_{k=1}^N\log\left(l_k(\theta,\bm{\Lambda})\right).
 \end{equation}
 %
 and the expected Fisher information matrix would become (see \autoref{app:Appendix2} for details)
@@ -296,7 +296,7 @@ Expressing the derivatives and the expectation value gives
 \begin{alignat}{2}
 	I_{rs}(\theta)
 	&=\frac{1}{4}\sum_{k=1}^N\left(\frac{\partial\lambda_k^{\alpha=r}}{\partial c_r}\right)\left(\frac{\partial\lambda_k^{\alpha=s}}{\partial c_s}\right)\times \nonumber\\
-	&\times \sum_{n_k\geq0}\left[\frac{\left(\sum_{\alpha=\{r,3\}}\Po(n_k;\lambda_k^\alpha)\frac{(n_k-\lambda_k^\alpha)}{\lambda_k^\alpha}\right)\left(\sum_{\alpha=\{s,3\}}\Po(n_k;\lambda_k^\alpha)\frac{(n_k-\lambda_k^\alpha)}{\lambda_k^\alpha}\right)}{\sum_{\alpha=1}^4\Po(n_k;\lambda_k^\alpha)}\right].
+	&\times \sum_{n_k\geq0}\left[\frac{\left(\sum_{\alpha\in \{r,3\}}\Po(n_k;\lambda_k^\alpha)\frac{(n_k-\lambda_k^\alpha)}{\lambda_k^\alpha}\right)\left(\sum_{\alpha\in \{s,3\}}\Po(n_k;\lambda_k^\alpha)\frac{(n_k-\lambda_k^\alpha)}{\lambda_k^\alpha}\right)}{\sum_{\alpha=1}^4\Po(n_k;\lambda_k^\alpha)}\right].
 	\label{eq:FI-blinking}
 \end{alignat}
 %
@@ -308,11 +308,11 @@ In \autoref{app:Appendix2} we show that the limit $d\rightarrow0$ gives $\var(d)
 \section{Experimental parameters and numerical evaluations\label{sec:FREM simulations}} 
 We made a comparison of the original FREM formula computed from the Fisher information \autoref{eq:Ram FREM} with our proposed fixed FREM formula computed from \autoref{eq:FI - individual}, for sources with static intensity. We also compared the static situation with FREM for sources with intermittent intensity computed from \autoref{eq:FI-blinking}.
 
-We considered $625\unit{nm}$ emission light wavelength and $1.2\unit{NA}$ objective. Images were pixelated with $80\times80\unit{nm}$ pixels. Various intensity of the emitters $\Lambda_i$ and pixel background levels $b$ were considered.
+We considered $625\unit{nm}$ emission light wavelength and $1.2\unit{NA}$ objective. Images were pixelated with $80\times80\unit{nm}$ pixels. Various intensities of the emitters $\Lambda_i$ and pixel background levels $b$ were considered.
 
 The pixelated version $q_k(c_i)$ of the continuous PSF $q(x-c_i)$ and the corresponding derivatives $q'_k(c_i)$ from \autoref{eq:Ram FREM} and \autoref{eq:FI - individual} were computed by summing $10\times10$ pixels of $10\times$ oversampled images (approximation of the continuous PSF $q(x)$ on the $8\times8 \unit{nm}$ grid). The pixelated $\lambda^\alpha_k$ in \autoref{eq:Fisher Information Blinking Integrating Out} was computed in a similar manner. 
 
-The expectation values in \autoref{eq:Fisher Information Blinking Integrating Out} were evaluated using the expression \autoref{eq:FI-blinking}. The set of images for a range $n_k=[0..n_{max}]$ was computed to perform the summation $\sum_{n_k\geq0}$. The value of $n_{max}$ was set such that the Poisson cumulative distribution function $F$ for the maximum intensity $\max_{k,\alpha}(\lambda_k^\alpha)$ satisfies $F(n>n_{max})>1-t$, with $t=10^{-6}$.
+The expectation values in \autoref{eq:Fisher Information Blinking Integrating Out} were evaluated using the expression \autoref{eq:FI-blinking}. The set of images for a range $n_k=[0..n_{max}]$ was computed to perform the summation $\sum_{n_k\geq0}$. The value of $n_{max}$ was set such that the Poisson cumulative distribution function $F(n)$ for the pixel with the maximum intensity satisfies $F(n>n_{max})>1-t$, with $t=10^{-6}$.
 
 %==========================================
 %==========================================
@@ -325,10 +325,10 @@ We computed the FREM for simulated datasets corresponding to different experimen
 %==========================================
 \subsection{Comparison of the original and proposed FREM formula\label{sec:comparison orig and new FREM}}
 
-We compared FREM computed from the original \autoref{eq:Ram FREM} and our proposed \autoref{eq:FI - individual} formula of the Fisher information for two static sources. It can be shown (\autoref{app:Appendix2}), that if the sources have equal strength ($\Lambda_1=\Lambda_2$), both formulas give the identical results. However, for unequal sources $\Lambda_1\neq\Lambda_2$ the 
+We compared FREM computed from the original \autoref{eq:Ram FREM} and our proposed \autoref{eq:FI - individual} formula of the Fisher information for two static sources. It can be shown (\autoref{app:Appendix2}), that if the sources have equal strength ($\Lambda_1=\Lambda_2$), both formulas give identical results. However, for unequal sources $\Lambda_1\neq\Lambda_2$ the 
 FREM values differ significantly. 
 %
-\begin{figure}[!hbt]
+\begin{figure}[!bt]
 	\centering
 	\newcommand{\wf}{.49\textwidth}
 	\includegraphics[width=\wf]{\qd gFREM/images/FREM_statVsRAM_longrange_bg100fix}
@@ -336,7 +336,7 @@ FREM values differ significantly.
 %		\subfloat[FREM (fixed background 100 photons)]{\includegraphics[width=\wf]{\qd gFREM/images/FREM_statVsRAM_longrange_bg100fix}}
 %		&\subfloat[ratio]{\includegraphics[width=\wf]{\qd gFREM/images/FREM_staticVsRAM_ratio_longrange_bg100fix}}
 %	\end{tabular}	
-	\caption{Comparison of the original FREM formula computed from \autoref{eq:Ram FREM} (dashed line) and our proposed FREM formula \autoref{eq:FI - individual} (solid line) for two sources with unequal intensities $\Lambda_2=2\Lambda_1$ and background $b=100$ phot/pixel. The black dotted curve corresponds to FREM=$d$. This would be a straight line with unit gradient in a linear plot. \cut{(b) Ratio of the curves showing how many times is FREM higher for our proposed formula compared to the original formula.}} 
+	\caption{Comparison of the original FREM formula computed from \autoref{eq:Ram FREM} (dashed line) and our proposed FREM formula \autoref{eq:FI - individual} (solid line) for two sources with unequal intensities $\Lambda_2=2\Lambda_1$ and background $b=100$ photons/pixel. The black dotted curve corresponds to FREM=$d$. This would be a straight line with unit gradient in a linear plot. \cut{(b) Ratio of the curves showing how many times is FREM higher for our proposed formula compared to the original formula.}} 
 	\label{fig:Comparison FREM Ram and fix}
 \end{figure}
 
@@ -463,7 +463,7 @@ For further comparison of the static and the blinking FREM, we fixed the separat
 		\hline	
 		&$\Lambda=2500$ & $\Lambda=2000$ & $\Lambda=1500$ & $\Lambda=1000$ & $\Lambda=500$\\
 	\end{tabular}
-	\caption{Illustration of two simulated sources separated by $d=40$ nm with intensity $\Lambda$ (total number of emitted photons per source per frame) and the background $b$. Data were corrupted with Poisson noise. The red dots indicate the positions of the sources. The layout corresponds to \autoref{fig:FREM int bg}. Numbers at the top and the bottom of each figure state the ratio $r_B=100\unit{FREM}^{blink}/d$ and $r_S=100\unit{FREM}^{stat}/d$ for the blinking and the static situation, respectively, indicating the how many percent of the separation $d$ represents the FREM value. The smaller the values, the higher the precision of the distance estimator.}
+	\caption{Illustration of two simulated sources separated by $d=40$ nm with intensity $\Lambda$ (total number of emitted photons per source per frame) and the background $b$. Data were corrupted with Poisson noise. The red dots indicate the positions of the sources. The layout corresponds to \autoref{fig:FREM int bg}. Numbers at the top and the bottom of each figure state the ratio (in percent) $r_B=\unit{FREM}^{blink}/d\times100$ and $r_S=\unit{FREM}^{stat}/d\times100$ for the blinking and the static situation, respectively, indicating the how many percent of the separation $d$ represents the FREM value. The smaller the values, the higher the precision of the distance estimator.}
 	\label{fig:two sources int bg}
 \end{figure}
 %
@@ -519,7 +519,7 @@ For high signal-to-noise ratio data (high $\Lambda$ and low $b$,  see bottom-lef
 	\subfloat[b=0]{
 	\includegraphics[width=\wf]{\qd gFREM/images/FREMdip_conjgrad_Lambda500_b0}
 	\label{fig:FREM dip b=0}}
-	\caption{FREM and measured standard deviation ($\sqrt{\var(d)}$) for the estimation of the separation between two simulated noisy static sources ($\Lambda_1=\Lambda_2=500$ photons). A homogeneous background of (a) $b=100$ photons/pixel and (b) $b=0$ photons/pixel was added to each simulated image before realisation of Poisson noise.  FREM is shown as a red dashed line. Estimated standard deviation from 1000 different realisation of the Poisson noise is plotted with blue circles. (a) FREM curve shows a distinct ``dip'' at $300 \unit{nm}$ when background noise is present in the recorded images. (b) For background-free data FREM curves are monotonically decreasing.}
+	\caption{FREM and measured standard deviation ($\sqrt{\var(d)}$) for the estimation of the separation between two simulated noisy static sources ($\Lambda_1=\Lambda_2=500$ photons). A homogeneous background of (a) $b=100$ photons/pixel and (b) $b=0$ photons/pixel was added to each simulated image before realisation of Poisson noise.  FREM is shown as a red dashed line. Estimated standard deviation from 1000 different realisation of Poisson noise is plotted with blue circles. (a) FREM curve shows a distinct ``dip'' at $300 \unit{nm}$ when background noise is present in the recorded images. (b) For background-free data FREM curves are monotonically decreasing. The measured values are under the FREM curves due to the initialisation of the maximum-likelihood fitting with $\bm{c}_{true}$ (see discussion in the text).}
 	\label{fig:FREM dip both}
 \end{figure}
 %
@@ -576,7 +576,7 @@ The FREM formula for static sources derived from \autoref{eq:FI - individual} sh
 		\hline	
 		&$d=10$ & $d=50$ & $d=100$ & $d=200$ & $d=300$ & $d=400$\\
 	\end{tabular}
-	\caption{Two simulated sources separated by distance $d$ [nm] with intensity $\Lambda$ [total number of emitted photons per source]. The background was set to $b=100$ photons/pixel and the images were corrupted with Poisson noise. The red dots indicate the positions of the sources. Numbers at the top and the bottom of each figure state the ratio $r_B=100\unit{FREM}^{blink}/d$ and $r_S=100\unit{FREM}^{stat}/d$ for the blinking and the static situation, respectively, indicating the how many percent of the separation $d$ represents the FREM value. The smaller the values, the higher the precision of the distance estimator. The classical resolution limit $\delta$ (radius of an Airy disk) corresponds to $\delta=320$ nm.}
+	\caption{Two simulated sources separated by distance $d$ [nm] with intensity $\Lambda$ [total number of emitted photons per source]. The background was set to $b=100$ photons/pixel and the images were corrupted with Poisson noise. The red dots indicate the positions of the sources. Numbers at the top and the bottom of each figure state the ratio (in percent) $r_B=\unit{FREM}^{blink}/d\times 100$ and $r_S=\unit{FREM}^{stat}/d\times 100$ for the blinking and the static situation, respectively, indicating the how many percent of the separation $d$ represents the FREM value. The smaller the values, the higher the precision of the distance estimator. The classical resolution limit $\delta$ (radius of an Airy disk) corresponds to $\delta=320$ nm.}
 	\label{fig:two sources int d}
 \end{figure}
 %
@@ -597,7 +597,7 @@ Note that the measured values of the standard deviation (blue circles) are lower
 
 This section contains a general discussion about FREM and the results presented above. We also discuss and explain the strange behaviour of the original FREM curves. 
 
-In \autoref{sub:LL surface} we give some insight into the behaviour of FREM by visualisation of the expected log-likelihood surface and considering the Fisher information as a measure of the surface's curvature. \Autoref{sub:Int out vs avg} compares the difference between the averaging and integrating over the intensity states $\bm{\Lambda^\alpha}$ in the Fisher information matrix for blinking sources. In \autoref{sub:scaling} we comment on the scaling of FREM with background and the sources' intensity and in \autoref{sub:noise} we shortly discuss noise in the recorded images.
+In \autoref{sub:LL surface} we give some insight into the behaviour of FREM by visualisation of the expected log-likelihood surface. We consider the Fisher information as a measure of the surface's curvature. \Autoref{sub:Int out vs avg} compares the difference between the averaging and integrating over the intensity states $\bm{\Lambda^\alpha}$ in the Fisher information matrix for blinking sources. In \autoref{sub:scaling} we comment on the scaling of FREM with background and the sources' intensity and in \autoref{sub:noise} we shortly discuss noise in the recorded images.
 
 %==========================================
 \subsection{Visualisation of the expected log-likelihood surface\label{sub:LL surface}}
@@ -635,7 +635,7 @@ Note that the expectation is taken with respect to the ``true'' distribution $\l
 
 The surface in \autoref{fig:Expected-log-likelihood-Surface} shows the average log-likelihood for a model with two sources $s_1$ and $s_2$ located at $c_1$ and $c_2$, respectively, for data generated from a model consisting of two sources $s_1^{true}$ and $s_2^{true}$ located at $c_1^{true}$ and $c_2^{true}$, respectively, corrupted with Poisson noise. Parameters of the simulation were $\Lambda=10^3$, $b=100$ and wavelength $625 \unit{nm}$.
 
-\begin{figure}[hb]
+\begin{figure}[!tb]
 	\newcommand{\wf}{.48\textwidth}
 	\centering
 	\subfloat[]{\includegraphics[width=\wf]{./figures/FisherInfoSurfaceMovementDemo/FIsurfaceDemo1}\label{fig:FI space demo1}} 
@@ -646,7 +646,7 @@ The surface in \autoref{fig:Expected-log-likelihood-Surface} shows the average l
 	\label{fig:FI space demo}
 \end{figure}
 %
-The correspondence between the $(c_1,c_2)$ space of \autoref{fig:Expected-log-likelihood-Surface} and the movement of the sources is illustrated in \autoref{fig:FI space demo}. The coordinates $(c_1,c_2)$ represent the positions of two sources on a line $l$ intersecting both sources $s_1$ and  $s_2$. The origin $o=(0,0)$ corresponds to the geometric centre between $c_1^{true}$ and $c_2^{true}$. Moving along the top-left to bottom-right diagonal (\autoref{fig:FI space demo1}) represents a symmetrical movement of $s_1$ and $s_2$  in opposite directions with respect to $o$, while moving parallel to the top-right to bottom-left diagonal (\autoref{fig:FI space demo2}) represents the translation of $s_1$ and $s_2$ together along $l$, while keeping their distance from each other constant. Moving along a vertical line corresponds to the situation, where the position of $s_1$ fixed while $s_2$ is moving (\autoref{fig:FI space demo3}) and vice versa for horizontal lines (\autoref{fig:FI space demo4}).
+The correspondence between the $(c_1,c_2)$ space of \autoref{fig:Expected-log-likelihood-Surface} and the physical movement of the sources is illustrated in \autoref{fig:FI space demo}. The coordinates $(c_1,c_2)$ represent the positions of two sources on a line $l$ intersecting both sources $s_1$ and  $s_2$. The origin $o=(0,0)$ corresponds to the geometric centre between $c_1^{true}$ and $c_2^{true}$. Moving along the top-left to bottom-right diagonal (\autoref{fig:FI space demo1}) represents a symmetrical movement of $s_1$ and $s_2$  in opposite directions with respect to $o$, while moving parallel to the top-right to bottom-left diagonal (\autoref{fig:FI space demo2}) represents the translation of $s_1$ and $s_2$ together along $l$, while keeping their distance from each other constant. Moving along a vertical line corresponds to the situation, where the position of $s_1$ fixed while $s_2$ is moving (\autoref{fig:FI space demo3}) and vice versa for horizontal lines (\autoref{fig:FI space demo4}).
 
 For well-separated sources the surface (\autoref{fig:Expected-log-likelihood-Surface}\aaa) has a sharp maximum at $\bm{c}^{true}=(c_1^{true},c_2^{true})$ (red dot in \autoref{fig:Expected-log-likelihood-Surface}\aaa). In fact, there is another equivalent maximum (blue cross in \autoref{fig:Expected-log-likelihood-Surface}\aaa) as the points are interchangeable and the surface is symmetrical along top-right to bottom-left diagonal. It is important to note that the surface falls sharply in all directions around the maximum. In other words, the likelihood of a model $s_1$ and $s_2$ for data generated from $s_1^{true}$ and $s_2^{true}$ drops quickly once the $s_1$ and $s_2$ move anywhere from the ``true'' locations $\bm{c}^{true}$.
 
