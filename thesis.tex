@@ -55,8 +55,9 @@
 \hyphenation{fluo-res-cent}
 \hyphenation{fluo-ro-pho-res}
 \hyphenation{di-men-si-on-al}
+\hyphenation{de-conv-lucy}
 
-\linenumbers
+%\linenumbers
 
 %This makes brakcets around equations numbers in \autoref
 \makeatletter
@@ -113,9 +114,7 @@
 
 
 \newboolean{includefigs} 
-\newboolean{printpreliminary}
 \setboolean{includefigs}{true} % set to {false} to make output without figures
-\setboolean{printpreliminary}{true} % set to {ture} to make preliminary section visible
 
 \newcommand{\fix}{\marginpar{FIX}}
 \newcommand{\new}{\marginpar{NEW}}
@@ -166,7 +165,7 @@
 \singlespace
 \newcommand{\vs}{3}
 
-Fluorescence microscopy is an important tool for biological research. However, the resolution of a standard fluorescence microscope is limited by diffraction, which makes it difficult to observe small details of a specimen’s structure. We have developed two fluorescence microscopy methods that achieve resolution beyond the classical diffraction limit.
+Fluorescence microscopy is an important tool for biological research. However, the resolution of a standard fluorescence microscope is limited by diffraction, which makes it difficult to observe small details of a specimen's structure. We have developed two fluorescence microscopy methods that achieve resolution beyond the classical diffraction limit.
 
 \vspace{\vs mm}
 The first method represents an extension of localisation microscopy. We used non-negative matrix factorisation (NMF) to model a noisy dataset of highly overlapping fluorophores with intermittent intensities. We can recover images of individual sources from the optimised model, despite their high mutual overlap in the original dataset. This allows us to consider blinking quantum dots as bright and stable fluorophores for localisation microscopy. Moreover, NMF allows recovery of sources each having a unique shape. Such a situation can arise, for example, when the sources are located in different focal planes, and NMF can potentially be used for three dimensional super-resolution imaging. We discuss the practical aspects of applying NMF to real datasets, and show super-resolution images of biological samples labelled with quantum dots. It should be noted that this technique can be performed on any wide-field epifluorescence microscope equipped with a camera, which makes this super-resolution method very accessible to a wide scientific community.
@@ -183,24 +182,23 @@ In addition, in this thesis we also discuss a theoretical resolution limit for n
 
 %% First, the preliminary pages
 \begin{preliminary}
+
 %================================
  % Comment this line out when finished
 \noindent Version: \today \ \currenttime \fix\\
 Up to date version on:\\ 
 \url{https://www.dropbox.com/s/5dtktv8cygan971/thesis.pdf}
+
 %================================
-\condcomment{\boolean{printpreliminary}}
-{
 
 \maketitle
 
 \begin{acknowledgements}
-I would like to thank to my supervisors Chris Williams and Rainer Heintzmann for their guidance. I would like to give special thanks to Ivana \v Sumanovac for preparation of 3T3 fibroblast cells and Otto Baumann and Eva Simbürger for providing the Calliphora sample.
+I would like to thank to my supervisors Chris Williams and Rainer Heintzmann for their guidance. I would like to give special thanks to Ivana \v Sumanovac for preparation of 3T3 fibroblast cells and Otto Baumann and Eva Simbürger for providing the Calliphora sample. My thanks go to Ingo Kleppe and Gerhard Krampert for providing us with ZEISS ELYRA-S system with a line-scanning module. I would also like to acknowledge Aur\' elie Jost, Helen Ramsden, Martin Kielhorn, Jakub Nedbal, Kai Wicker and Hugh Pastol for helpful discussion and help with revision of this manuscript. 
 \end{acknowledgements}
 
 \standarddeclaration
 % \dedication{To my mummy.}
-}
 {
 
 \singlespace
@@ -211,11 +209,8 @@ I would like to thank to my supervisors Chris Williams and Rainer Heintzmann for
 % \listoffigures
 % \listoftables
 \end{preliminary}
-%\include{Workingplan}
-%\include{Structure}
 
 \include{Introduction}
-%\include{Background}
 \include{chap1}
 \include{chap2}
 \include{chap3}
@@ -228,7 +223,6 @@ I would like to thank to my supervisors Chris Williams and Rainer Heintzmann for
 %\bibliographystyle{apalike}
 \bibliographystyle{unsrt}
 %\bibliographystyle{alpha}
-
 
 %% If you want the bibliography single-spaced (which is allowed), uncomment the next line.
 \singlespace

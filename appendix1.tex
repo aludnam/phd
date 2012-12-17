@@ -1,7 +1,7 @@
 %!TEX root = thesis.tex
 \chapter{NMF Algorithm\label{app:NMF-algorithm}}
 
-Classic NMF updates \cite{Lee2001} minimises the generalised KL divergence between the data matrix $\bm{D}$ and its factorised version $\bm{WH}$ (see \autoref{eq:KL divergence})
+The classic NMF updates \cite{Lee2001} minimise the generalised KL divergence between the data matrix $\bm{D}$ and its factorised version $\bm{WH}$ (see \autoref{eq:KL divergence})
 %
 \begin{equation}
 	\mbox{KL}(\bm{D}\parallel\bm{WH})=-\sum_{xt}\left(d_{xt}\log\sum_{k=1}^Kw_{xk}h_{kt}-\sum_{k=1}^Kw_{xk}h_{kt}\right)+C,
@@ -15,7 +15,7 @@ where $C$ is a constant independent on $\bm{W}$ or $\bm{H}$. The optimisation ca
 	\label{eq:gradient descend}
 \end{alignat}
 %
-with respect to an objective function $f(\bm{W,H})=\mbox{KL}(\bm{D}\parallel\bm{WH})$. The explicit derivation of the objective function $f$ gives
+with respect to the objective function $f(\bm{W,H})=\mbox{KL}(\bm{D}\parallel\bm{WH})$. The explicit derivation of the objective function $f$ gives
 %
 \begin{alignat}{1}
 	\frac{\partial f(\bm{W,H})}{\partial w_{xk}} & =\sum_{t=1}^T h_{kt}-\left[(\bm{D}\oslash\bm{WH})\bm{H}^{\top}\right]_{xk}\nonumber \\
@@ -42,7 +42,7 @@ which leads to compact multiplicative updates
 \end{alignat}
 %
 
-Auxiliary constraints $J^{W}(\bm{W})$, $J^{H}(\bm{H})$ can be added to the objective function $f(\bm{W,H})$ to enhance certain characteristics of $\bm{W}$, $\bm{H}$:
+Penalty terms $J^{W}(\bm{W})$, $J^{H}(\bm{H})$ can be added to the objective function $f(\bm{W,H})$ to enforce auxiliary constraints \cite{Berry2007}:
 %
 \begin{equation}
 	f(\bm{W,H})=f(\bm{W,H})+\beta^{W}J^{W}(\bm{W})+\beta^{H}J^{H}(\bm{H}).

@@ -1,24 +1,25 @@
 %!TEX root = thesis.tex
 \chapter{Theoretical Limits for LM \label{ch:Theoretical-limits-of the LM}}
 
-In this chapter, we discuss the resolution limit and its application to localisation microscopy (LM) from the theoretical point of view. In \autoref{sec:FREM} we compare the classical resolution limit with fundamental resolution measure (FREM), introduced by Ram et al. \cite{Ram2006}. FREM accommodates the resolution criterion for situation of pixelated data corrupted with noise.
+In this chapter, we discuss the resolution limit and its application to localisation microscopy (LM) from the theoretical point of view. 
 
-\Autoref{sec:CR} introduces the \CR lower bound as a theoretical framework for description of the estimator covariance matrix. In \autoref{sec:FREM orig} we use the \CR lower bound to show the derivation of the Ram's original FREM formula. We also discuss the limitations and problems of the original FREM. In \autoref{sub:An-alternative-derivation-FREM} we derive an alternative version of FREM and demonstrate that this version fixes strange and inconsistent behaviour of the original FREM. In \autoref{sec:FREM for blinking} we derive FREM for two emitters with intermittent intensity. This expression is relevant to localisation microscopy with blinking fluorophores, such as QDs (discussed in \autoref{ch:NMF}). The parameters used for data simulation are discussed in \autoref{sec:FREM simulations}. \Autoref{sec:FREM results} compares FREM for blinking and static sources in different experimental conditions and identifies the regions and experimental parameters setting, where the intermittent behaviour of the intensity allows considerable higher resolution. The discussion of the results is in \autoref{sec:FREM discussion}. 
+In \autoref{sec:FREM} we compare the classical resolution limit with fundamental resolution measure (FREM), introduced by Ram et al. \cite{Ram2006}. FREM accommodates the resolution criterion for situation of pixelated data corrupted with noise. \Autoref{sec:CR} introduces the \CR (CR) lower bound as a theoretical framework for description of the estimator covariance matrix. In \autoref{sec:FREM orig} we use the CR lower bound to show the derivation of the Ram's original FREM formula. We also discuss the limitations and problems of the original FREM. In \autoref{sub:An-alternative-derivation-FREM} we derive an alternative version of FREM and demonstrate that this version fixes strange and inconsistent behaviour of the original FREM. In \autoref{sec:FREM for blinking} we derive FREM for two emitters with intermittent intensity. This expression is relevant to localisation microscopy with blinking fluorophores, such as QDs (discussed in \autoref{ch:NMF}). The parameters used for data simulation are discussed in \autoref{sec:FREM simulations}. \Autoref{sec:FREM results} compares FREM for blinking and static sources in different experimental conditions and identifies the regions and experimental parameters setting, where the intermittent behaviour of the intensity allows considerable higher resolution. The discussion of the results is in \autoref{sec:FREM discussion}. 
 
-Details of the derivations are shown in \autoref{app:Appendix2}.
+Details of the derivations can be found in \autoref{app:Appendix2}.
 
 %==========================================
 %==========================================
 
+\clearpage
 \section{Fundamental resolution measure (FREM)\label{sec:FREM}}
 
-The classical resolution limit \autoref{eq:Airy} discussed in \autoref{sec:Resolution limit} relates to an empirical observation and does not take into account the statistical nature of the photon detection process. It applies to noise-free situation. It also assumes that data were collected with sufficiently small pixels and the effect of pixelation is neglected. 
+The classical resolution limit \autoref{eq:Airy} discussed in \autoref{sec:Resolution limit} relates to an empirical observation and does not take into account the statistical nature of the photon detection process. The classical resolution limit applies to a noise-free situation and neglects the pixelation of data. 
 
-Ram et al. \cite{Ram2006,Ram2006b} revised the resolution limit and defined a new measure, which considers the statistical process of the photon detection on a pixelated grid of a camera. The so-called \emph{Fundamental resolution measure} (FREM) refers to the achievable precision of the estimator on distance between two sources. FREM reflects the fact, that the ``resolution limit'' is different for sources with different noise levels. If we want to ``resolve'' two sources, the necessary separation must be larger for weak emitters with high background than for bright sources with low background values.
+Ram et al. \cite{Ram2006,Ram2006b} revised the resolution limit and defined a new measure, which considers the statistical process of photon detection on a pixelated grid of a camera. The so-called \emph{Fundamental resolution measure} (FREM) refers to the achievable precision of the estimator on distance between two sources. FREM reflects the fact, that the ``resolution limit'' is different for sources with different noise levels. If we want to ``resolve'' two sources, the necessary separation must be larger for noisy data (weak emitters with high background) than for data with high signal-to-noise ratio (bright sources with low background values).
 
-Ram et al. defined FREM as a \CR lower bound on the standard deviation of the source separation estimation. FREM therefore does not provide ``resolution criterion'' such as \autoref{eq:Airy}, but gives as a notion about variability we can expect if we try to measure the distance between two emitters. We can set the ``resolution'' limit arbitrarily according to the measurement precision we are willing to accept. A natural choice for the ``acceptable precision'' is the distance between the sources. I.e. the standard deviation of the source separation measurement is equal to the separation itself. We use this ``natural resolution criterion'' throughout this chapter. 
+Ram et al. defined FREM as the \CR (CR) lower bound on the standard deviation of the source separation estimatior. FREM therefore does not provide ``resolution criterion'' such as \autoref{eq:Airy}, but gives us a notion about variability we can expect if we try to measure the distance between two emitters. We can set the ``resolution'' limit arbitrarily according to the measurement precision we are willing to accept. A natural choice for the ``acceptable precision'' is the distance between the sources. I.e. the standard deviation of the source separation measurement is equal to the separation itself. We use this ``natural resolution criterion'' throughout this chapter. 
 
-It is important to note that FREM defined as a \CR lower bound does not consider any specific algorithm for the separation estimation. FREM is derived from the generative model of the dataset.  The standard deviation lower bound can be achieved only with the ``most optimal'' algorithm. 
+It is important to note that FREM defined as the CR lower bound does not consider any specific algorithm for the estimation of the source separation. FREM is derived from the generative model of the dataset.  The standard deviation lower bound can be achieved only with the ``optimal'' algorithm. 
 
 %For the standard LM techniques such as PALM and STORM \cut{(\autoref{sub:PALM,-STORM})} the spatial resolution limit is determined by the localisation precision for an individual source, because only individual, well separated sources are considered for localisation. 
 
@@ -75,7 +76,7 @@ A short summary of the derivation is shown in \autoref{app:Appendix2}.
 
 Closer inspection of FREM derived from the Fisher information given by \autoref{eq:Ram FREM} reveals problematic behaviour of FREM in the limits $d\rightarrow 0$ (see discussion in \autoref{app:Appendix2}). The limit of very close emitters $d\rightarrow0$ gives, as we would expect, zero Fisher information $I(d)\rightarrow0$, and therefore FREM$\rightarrow\infty$. However, this is only for situation, when the sources have equal intensities $\Lambda_1=\Lambda_2$. For emitters of unequal strength $\Lambda_1\neq\Lambda_2$ the variance remains finite even for sources infinitely close. 
 
-Another serious problem with this expression is that the sources are assumed to be located at $\pm d/2$, which implicitly assumes the knowledge of the origin. It is therefore not surprising that the formula \autoref{eq:Ram FREM} gives $I(d)\neq0$ (i.e. finite FREM) even when one source is missing ($\Lambda_i=0$), because, in fact, only one source is needed to determine the distance $d/2$. 
+Another problem with this expression is that the sources are assumed to be located at $\pm d/2$, which implies the knowledge of the origin. It is therefore not surprising that the formula \autoref{eq:Ram FREM} gives non-zero Fisher information $I(d)\neq0$ (i.e. finite FREM) even when one source is missing ($\Lambda_i=0$), because, in fact, only one source is needed to determine the distance $d/2$. 
 
 In the following section we present an alternative derivation of FREM, which resolves these problems. In contrast to the original FREM our version gives diverging FREM for $d\rightarrow0$ even for sources with different intensities. It also diverges in the situation when one of the sources is missing. For sources with equal intensities $\Lambda_1=\Lambda_2$ our version and the original version of FREM give identical results. 
 
@@ -189,13 +190,13 @@ In \autoref{app:Appendix2} we show the equivalence of the original FREM \autoref
 
 FREM computed from \autoref{eq:FI - individual} have reasonable behaviour in the limits $d\rightarrow0$ and $d\rightarrow\infty$ (see \autoref{sec:Appendix FI alternative} for details). The limit of very close sources ($d\rightarrow0$) gives FREM$\rightarrow\infty$ for any value of $\Lambda_i$ and $\Lambda_j$. Also, in contrast to the original FREM expression, FREM diverges if one of the sources is missing $\Lambda_i=0$, because we do not make any assumption about the symmetry with respect to the origin. 
 
-For well separated sources ($d\rightarrow\infty$) the off-diagonal elements of the Fisher information matrix vanish ($I_{ij}=0$ for $i\neq j$) and from \autoref{eq:variance d alternative} we get
+For well-separated sources ($d\rightarrow\infty$) the off-diagonal elements of the Fisher information matrix vanish ($I_{ij}=0$ for $i\neq j$) and from \autoref{eq:variance d alternative} we get
 %
 \begin{equation}
  	\var(d)\geq\frac{1}{I_{11}}+\frac{1}{I_{22}}.
 \end{equation}
 %
-Fraction $1/I_{ii}$ is the lower bound on the variance of the single source location $c_i$ estimator. This can be obtained from the general expression of Fisher information for Poisson distributed data (see \autoref{eq:app-Fisher Info for Poisson} in \autoref{app:Appendix2}). The bound on the total variance is therefore composed from the sum of bounds on variances for localisation of individual sources, as we expect.
+Fraction $1/I_{ii}$ is the lower bound on the variance of the single source location $c_i$ estimator. This can be obtained from the general expression of the Fisher information for Poisson distributed data (see \autoref{eq:app-Fisher Info for Poisson} in \autoref{app:Appendix2}). The bound on the total variance is therefore composed from the sum of bounds on variances for localisation of individual sources, as we expect.
 
 
 %==========================================
@@ -300,7 +301,7 @@ Expressing the derivatives and the expectation value gives
 	\label{eq:FI-blinking}
 \end{alignat}
 %
-In \autoref{app:Appendix2} we show that the limit $d\rightarrow0$ gives $\var(d)\rightarrow\infty$ and the limit $d\rightarrow\infty$ gives $\var(d)\geq\frac{1}{I_{11}}+\frac{1}{I_{22}}$. We also show, that for well separated sources ($d\rightarrow\infty$) and negligible background ($b\ll\Lambda$) the variance $\var(d)$ is identical for both blinking and static situation, if the total number of emitted photons is kept constant. 
+In \autoref{app:Appendix2} we show that the limit $d\rightarrow0$ gives $\var(d)\rightarrow\infty$ and the limit $d\rightarrow\infty$ gives $\var(d)\geq\frac{1}{I_{11}}+\frac{1}{I_{22}}$. We also show, that for well-separated sources ($d\rightarrow\infty$) and negligible background ($b\ll\Lambda$) the variance $\var(d)$ is identical for both blinking and static situation, if the total number of emitted photons is kept constant. 
 
 %==========================================
 %==========================================
@@ -336,21 +337,13 @@ FREM values differ significantly.
 %		\subfloat[FREM (fixed background 100 photons)]{\includegraphics[width=\wf]{\qd gFREM/images/FREM_statVsRAM_longrange_bg100fix}}
 %		&\subfloat[ratio]{\includegraphics[width=\wf]{\qd gFREM/images/FREM_staticVsRAM_ratio_longrange_bg100fix}}
 %	\end{tabular}	
-	\caption{Comparison of the original FREM formula computed from \autoref{eq:Ram FREM} (dashed line) and our proposed FREM formula \autoref{eq:FI - individual} (solid line) for two sources with unequal intensities $\Lambda_2=2\Lambda_1$ and background $b=100$ photons/pixel. The black dotted curve corresponds to FREM=$d$. This would be a straight line with unit gradient in a linear plot. \cut{(b) Ratio of the curves showing how many times is FREM higher for our proposed formula compared to the original formula.}} 
+	\caption{Comparison of the original FREM formula computed from \autoref{eq:Ram FREM} (dashed line) and our proposed FREM formula \autoref{eq:FI - individual} (solid line) for two sources with unequal intensities $\Lambda_2=2\Lambda_1$ and background $b=100$ photons/pixel. The black dotted curve corresponds to FREM=$d$ (``natural resolution limit''). This would be a straight line with unit gradient in a linear plot.} 
 	\label{fig:Comparison FREM Ram and fix}
 \end{figure}
 
 The sources $s_i$ were represented with an in-focus PSF centred at $c_i$. The intensity of $s_2$ was set to double of the intensity of $s_1$: $\Lambda_2=2\Lambda_1$. Three different intensity levels $\Lambda_1=500,\,3000$ and $10^4$ photons with homogeneous background $b=100\unit{photons/pixel}$ were considered. \Autoref{fig:Comparison FREM Ram and fix} shows FREM (lower bound on $\sqrt{\var(d)}$) for a range of sources separations $d$ evaluated with the original FREM, computed from \autoref{eq:Ram FREM} (dashed line) and our proposed FREM \autoref{eq:FI - individual} (solid line).
 
 The original FREM formula gives consistently lower FREM (dashed curves are under the solid lines for the whole range of $d$ in \Autoref{fig:Comparison FREM Ram and fix}). The original FREM (dashed curves) also tends to finite values even for $d\rightarrow 0$. We discuss this behaviour further in \autoref{sub:LL surface}. 
-
-%	\Autoref{fig:Comparison FREM Ram and fix}\bbb{} shows the ratio of the curves
-%	%
-%	\begin{equation}
-%		r=\frac{\unit{FREM}^{static}(d)}{\unit{FREM}^{orig}(d)},
-%	\end{equation} 
-%	%
-%	and shows how many times the original FREM is lower compared to our proposed expression. The difference is less significant for larger separation of the sources, however the formulas never converge to the same value (see \autoref{app:Appendix2} for details).
 
 %==========================================
 
@@ -654,7 +647,7 @@ Once the true sources $s_1^{true}$ and $s_2^{true}$ come closer together (\autor
 
 Once the sources $s_1^{true}$ and $s_2^{true}$ get very close, the saddle point in $o$ disappears and turns into a flat crest (\autoref{fig:Expected-log-likelihood-Surface}\ddd). The likelihood becomes insensitive to small variations of $s_1$ and $s_2$. 
 
-The Fisher information matrix \autoref{eq:Fisher information general} describes the curvature (Hessian) at $\bm{c}^{true}$ (red dot in \autoref{fig:Expected-log-likelihood-Surface}\aaa). For well separated sources \autoref{fig:Expected-log-likelihood-Surface}\aaa{}, the curvature is very high in all directions, resulting in a large determinant of the Hessian matrix, which in turn results in a small variance $\var(d)$ of the distance $d=\left|c_1^{true}-c_2^{true}\right|$ estimation  (see \autoref{eq:inverse I}). Once the ``true'' sources get closer, the curvature at the surface maximum decreases leading to larger $\var(d)$. For very close ``true'' sources, the determinant of Hessian becomes zero, and the lower bound on $\var(d)$ diverges. 
+The Fisher information matrix \autoref{eq:Fisher information general} describes the curvature (Hessian) at $\bm{c}^{true}$ (red dot in \autoref{fig:Expected-log-likelihood-Surface}\aaa). For well-separated sources \autoref{fig:Expected-log-likelihood-Surface}\aaa{}, the curvature is very high in all directions, resulting in a large determinant of the Hessian matrix, which in turn results in a small variance $\var(d)$ of the distance $d=\left|c_1^{true}-c_2^{true}\right|$ estimation  (see \autoref{eq:inverse I}). Once the ``true'' sources get closer, the curvature at the surface maximum decreases leading to larger $\var(d)$. For very close ``true'' sources, the determinant of Hessian becomes zero, and the lower bound on $\var(d)$ diverges. 
 
 The situation of infinitely close sources $c_1^{true}=c_2^{true}$, shown in \autoref{fig:Expected-log-likelihood-Surface}\ddd{}  is equivalent to the situation with one source of double intensity and the second source missing, resulting in a divergence of $\var(d)$ in accordance with our discussion of \autoref{eq:FI - individual} of the limit $d\rightarrow 0$ (see \autoref{sec:Appendix FI alternative} in \autoref{app:Appendix2}).
 
@@ -745,11 +738,11 @@ We assume Poisson distributed data throughout this chapter. We therefore neglect
 \clearpage
 \section{Conclusions} 
 
-The alternative derivation of the fundamental resolution measure (FREM) provides a correction to the original formula published by Ram et al. \cite{Ram2006}. The results presented in \autoref{fig:FREM static blinking} suggest that the blinking sources can significantly increase the localisation precision compared to the static situation if the total number of emitted photons is kept equal. The increase of the localisation precision for blinking sources is stronger for close ($d<50\unit{nm}$) and bright ($\Lambda>1000$ photons/source/frame) sources with lower background levels ($b<100$ photons/pixel/frame). For well-separated sources ($d\rightarrow\infty$ limit) the static and the blinking situation give identical results. 
+The alternative derivation of the fundamental resolution measure (FREM) provides correction to the original formula published by Ram et al. \cite{Ram2006}. The results presented in \autoref{fig:FREM static blinking} suggest that the blinking sources can significantly increase localisation precision compared to the static situation if the total number of emitted photons is kept equal. The increase of the localisation precision for blinking sources is stronger for close ($d<50\unit{nm}$) and bright ($\Lambda>1000$ photons/source/frame) sources with lower background levels ($b<100$ photons/pixel/frame). For well-separated sources ($d\rightarrow\infty$) the static and the blinking situations give identical results. 
 
-Background has a large impact on the localisation precision and it is desirable to keep it as low as possible. In practice a large proportion of the background intensity comes from the out of focus light. Typically TIRF (Total Internal Reflection Fluorescent microscopy) illumination of the sources is used to reduce the out-of-focus blur. However, different techniques such as sparse illumination of the sample can be used. 
+Background has a large impact on the localisation precision. It is desirable to keep background as low as possible. In practice a large proportion of the background intensity comes from the out-of-focus light. Typically TIRF (Total Internal Reflection Fluorescent microscopy) illumination of the sources is used to reduce the out-of-focus blur. However, different techniques such as sparse illumination of the sample can be used. 
 
-Note that the \CR lower bound approach gives a lower bound for the variance of the distance $d$ estimator. The actual ``localisation precision'' depends on the specific algorithm we use for the localisation of the individual sources. For example, our proposed LM algorithm discussed in \autoref{ch:NMF} computationally separates the overlapping sources before localisation. The ability to separate the individual emitters is the limiting factor in this case. It is also important to note that the ``localisation'' becomes much harder with increasing number of emitters in the sub-diffraction area.
+Note that the \CR lower bound approach gives a lower bound for the variance of the distance $d$ estimator. The actual ``localisation precision'' depends on the specific algorithm we use for localising the individual sources. For example, our proposed LM algorithm discussed in \autoref{ch:NMF} computationally separates the overlapping sources before localisation. The ability to separate the individual emitters is the limiting factor in this case. It is also important to note that the ``localisation'' becomes much harder with increasing number of emitters in the sub-diffraction area.
 
 In summary bright sources with low background levels (high signal-to-noise ratio) are desirable for the LM techniques. In this setting the blinking provides lower FREM values for closely spaced sources. This makes bright sources with intermittent intensity, such as quantum dots, an interesting candidate for localisation microscopy.
 

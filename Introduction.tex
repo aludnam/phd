@@ -6,7 +6,7 @@
 
 \section{Optical microscope} % no articles in the headings
 
-A microscope is an instrument allowing us to see an object which is too small for a naked eye. An optical microscope (often referred to as a ``light microscope'') uses light in the visible spectral range (wavelength $\approx400-800\unit{nm}$), which makes it particularly suitable for biological exploration. Visible light is minimally invasive for the sensitive biological samples and allows observation of living specimens. Visible light is also minimally absorbed by water, which prevents heating of the sample.
+A microscope is an instrument allowing us to see objects, which are too small for a naked eye. An optical microscope (often referred to as a ``light microscope'') uses light in the visible spectral range (wavelength $\approx400-800\unit{nm}$), which makes it particularly suitable for biological exploration. Visible light is minimally invasive for the sensitive biological samples and allows observation of living specimens. Visible light is also minimally absorbed by water, which prevents heating of the sample.
 
  The most common optical microscope is a ``far-field'' microscope, where the light has to propagate over a distance significantly longer than its wavelength. The specimen is observed with transmitted, reflected or fluorescent light. Fluorescence microscopy is further discussed in \autoref{sec:Fluorescence microscopy}. The focus of this thesis is on far-field fluorescence optical microscopy.
 
@@ -30,7 +30,7 @@ The number of scientific publications in recent years shows that even after four
 
 \section{Point spread function}
 
-An important characteristic of a microscope is the so called ``point spread function'' (PSF). The PSF represents an image of a point source. The image $i(x)$ of a specimen produced by an optical microscope can be described as a convolution between the object (specimen) $o(x)$ and the point spread function $q(x)$:
+An important characteristic of a microscope is the so-called ``point spread function'' (PSF). The PSF represents an image of a point source. The image $i(x)$ of a specimen produced by an optical microscope can be described as a convolution between the object (specimen) $o(x)$ and the point spread function $q(x)$:
 %
 \begin{equation}
 	i(x)=\int q(x-x')o(x')dx'.
@@ -123,7 +123,7 @@ The introduction of fluorescence microscopy in the 20\ths\ century has revolutio
 
 Fluorescence labels can be attached to the structures of interest with high specificity and provide a strong intensity contrast in the microscopic image of the specimen. Fluorescent proteins (FPs) allow for direct expression of the fluorescent marker by the organism itself. FPs have further redefined the use of fluorescence microscopy in cell biology as a nearly non-invasive and highly specific technique. 
 
-The first fluorescent protein used in microscopy (green fluorescent protein - GFP) has been isolated from the jellyfish {\it Aequorea victoria} \cite{Tsien1998}. Nowadays, a modified versions of GFP and a rich variety of fluorescent dyes cover the emission across the whole visible spectral range. Photo-activable and photo-switchable fluorescent proteins and dyes have also been discovered, and are used in specific applications and microscopy methods. The 2008 Nobel Prize in Chemistry was awarded to Martin Chalfie, Osamu Shimomura, and Roger Y. Tsien for their discovery and development of the GFP.
+The first fluorescent protein used in microscopy (green fluorescent protein - GFP) has been isolated from the jellyfish {\it Aequorea victoria} \cite{Tsien1998}. Nowadays, modified versions of GFP and a rich variety of fluorescent dyes cover the emission across the whole visible spectral range. Photo-activable and photo-switchable fluorescent proteins and dyes have also been discovered, and are used in specific applications and microscopy methods. The 2008 Nobel Prize in Chemistry was awarded to Martin Chalfie, Osamu Shimomura, and Roger Y. Tsien for their discovery and development of the GFP.
  
 %==========================================
 %==========================================
@@ -145,7 +145,7 @@ The resolution limit \autoref{eq:Airy} for a far-field optical microscope has be
 
 There is a rich variety of super-resolution strategies in fluorescence microscopy. However, all these methods are based on driving the nearby fluorophores into emitting (ON) and non-emitting (OFF) states. This allows distinguishing the individual emitters separated by a sub-resolution distance.
 
-``Selective'' activation can be achieved either by spatially structured excitation (structured illumination) or by stochastic activation of the individual fluorophores. In the stochastic activation approach, a small random subset of fluorophores is activated for each acquisition frame. For the conventional methods, the activated subset must be sufficiently small to ensure that the majority of the activated emitters are separated by distances larger than the diffraction limit. In this case each acquired frame consists of several well separated (non overlapping) PSFs. The individual fluorophores can be localised by, for example, fitting each PSF with a Gaussian function. Given enough detected photons, the localisation precision can be significantly higher than the resolution limit. The activation-acquisition cycle is typically repeated for several thousands acquisition frames. Super-resolution fluorescent images are produced by visualisation all the estimated fluorophores locations. 
+``Selective'' activation can be achieved either by spatially structured excitation (structured illumination) or by stochastic activation of the individual fluorophores. In the stochastic activation approach, a small random subset of fluorophores is activated for each acquisition frame. For the conventional methods, the activated subset must be sufficiently small to ensure that the majority of the activated emitters are separated by distances larger than the diffraction limit. In this case each acquired frame consists of several well-separated (non-overlapping) PSFs. The individual fluorophores can be localised by, for example, fitting each PSF with a Gaussian function. Given enough detected photons, the localisation precision can be significantly higher than the resolution limit. The activation-acquisition cycle is typically repeated for several thousands acquisition frames. Super-resolution fluorescent images are produced by visualisation all the estimated fluorophores locations. 
 
 Methods based on this simple strategy are called by a general term ``localisation microscopy'' (LM). Various names for LM have been proposed: ``Photo-Activation Localisation Microscopy'' (PALM) \cite{Betzig2006}, ``fluorescence PALM'' (fPALM) \cite{Hess2006} or ``Stochastic Optical Reconstruction Microscopy'' (STORM) \cite{Rust2006}.  
 
