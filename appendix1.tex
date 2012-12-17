@@ -1,7 +1,7 @@
 %!TEX root = thesis.tex
 \chapter{NMF Algorithm\label{app:NMF-algorithm}}
 
-The classic NMF updates \cite{Lee2001} minimise the generalised KL divergence between the data matrix $\bm{D}$ and its factorised version $\bm{WH}$ (see \autoref{eq:KL divergence})
+The classic NMF updates \cite{Lee2001} minimise the generalised Kullback \textendash{} Leibler (KL) divergence between the data matrix $\bm{D}$ and its factorised version $\bm{WH}$ (see \autoref{eq:KL divergence})
 %
 \begin{equation}
 	\mbox{KL}(\bm{D}\parallel\bm{WH})=-\sum_{xt}\left(d_{xt}\log\sum_{k=1}^Kw_{xk}h_{kt}-\sum_{k=1}^Kw_{xk}h_{kt}\right)+C,
@@ -19,7 +19,7 @@ with respect to the objective function $f(\bm{W,H})=\mbox{KL}(\bm{D}\parallel\bm
 %
 \begin{alignat}{1}
 	\frac{\partial f(\bm{W,H})}{\partial w_{xk}} & =\sum_{t=1}^T h_{kt}-\left[(\bm{D}\oslash\bm{WH})\bm{H}^{\top}\right]_{xk}\nonumber \\
-	\frac{\partial f(\bm{W,H})}{\partial h_{kt}} & =\sum_{x=1}^N w_{xk}-\left[\bm{W^{\top}}(\bm{D}\oslash\bm{WH})\right]_{xt},
+	\frac{\partial f(\bm{W,H})}{\partial h_{kt}} & =\sum_{x=1}^N w_{xk}-\left[\bm{W^{\top}}(\bm{D}\oslash\bm{WH})\right]_{xt}\ ,
 	\label{eq:gradients}
 \end{alignat}
 %
