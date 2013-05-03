@@ -6,22 +6,22 @@
 
 \section{Optical microscope} % no articles in the headings
 
-A microscope is an instrument allowing us to see objects, which are too small for a naked eye. An optical microscope (often referred to as a ``light microscope'') uses light in the visible spectral range (wavelength $\approx400-800\unit{nm}$), which makes it particularly suitable for biological exploration. Visible light is minimally invasive for the sensitive biological samples and allows observation of living specimens. Visible light is also minimally absorbed by water, which prevents heating of the sample.
+A microscope is an instrument allowing us to see objects, which are too small for a naked eye. An optical microscope (often referred to as a ``light microscope'') uses light in the visible spectral range (wavelength $\approx400-700\unit{nm}$), which makes it particularly suitable for biological exploration. Visible light is minimally invasive for sensitive biological samples and allows observation of living specimens. Visible light is also minimally absorbed by water, which prevents heating of the sample.
 
- The most common optical microscope is a ``far-field'' microscope, where the light has to propagate over a distance significantly longer than its wavelength. The specimen is observed with transmitted, reflected or fluorescent light. Fluorescence microscopy is further discussed in \autoref{sec:Fluorescence microscopy}. The focus of this thesis is on far-field fluorescence optical microscopy.
+ The most common optical microscope is a ``far-field'' microscope, where the light has to propagate over a distance significantly longer than its wavelength. The specimen is observed with transmitted, reflected or fluorescent light. Fluorescence microscopy is discussed further in \autoref{sec:Fluorescence microscopy}. The focus of this thesis is on far-field fluorescence optical microscopy.
 
 %==========================================
 %==========================================
 
 \section{Brief historical overview}
 
-Optical microscopy has been around for over 400 years. Since the very early versions of Zacharias Janssen's or Galileo's compound microscopes from the beginning of 17\ths{} century, optical microscopy has undergone a long and steady process of development. Despite the speculation who was the actual inventor of the optical microscope, it was Anton van Leeuwenhoek who largely popularised the use of the microscope as an instrument for observing the minute details of the specimen. Leeuwenhoek also introduced his simple instrument into biological research during the 17\ths{} century.
+Optical microscopy has been around for over 400 years. Since the very early versions of Zacharias Janssen's or Galileo's compound microscopes from the beginning of 17\ths{} century, optical microscopy has undergone a long and steady process of development. Despite the speculation as to who was the actual inventor of the optical microscope, it was Anton van Leeuwenhoek who largely popularised the use of the microscope as an instrument for observing the minute details of the specimen. Leeuwenhoek also introduced his simple instrument into biological research during the 17\ths{} century.
 
 An important milestone was the pioneering work of Ernst Abbe \cite{Abbe1873} in the second half of the 19\ths{} century. Abbe set the theoretical resolution limit for the optical microscope and mastered the design of objective lenses highly corrected for optical aberrations.
 
 With advances in technology in the 20\ths{} century, the manufactures have produced lenses reaching the theoretical limits of the optical microscope performance. The 1953 Nobel prize in physics was awarded to Frits Zernike for discovery of the phase contrast \cite{Zernike1942}. This method allows observation of transparent specimens, and had major impact on biological research such as in vivo study of cell cycle. 
 
-The emergence of new microscopy methods surpassing the classical resolution limit (super-resolution microscopy) at the end of the 20\ths{} century and at the beginning of the 21\st{} century has given another boost to optical microscopy research. The resolution of the super-resolution optical microscopes has reached the order of ten nanometres and some researchers have proposed the term ``optical nanoscopy'' to be used. However, super resolution micro/nano-scopy remains a challenging task, especially when applied to living biological specimens. While most of the super-resolution techniques require a highly specialised and expensive hardware, some of the techniques, such as localisation microscopy (discussed in \autoref{ch:NMF}) can be performed with a conventional fluorescent microscope. 
+The emergence of new microscopy methods surpassing the classical resolution limit (super-resolution microscopy) at the end of the 20\ths{} century and at the beginning of the 21\st{} century has given another boost to optical microscopy research. The resolution of the super-resolution optical microscopes has reached the order of ten nanometres and some researchers have proposed the term ``optical nanoscopy'' to be used \cite{Egner2007, Hell2007, Hell2009}. However, super resolution micro/nano-scopy remains a challenging task, especially when applied to living biological specimens. While most of the super-resolution techniques require a highly specialised and expensive hardware, some of the techniques, such as localisation microscopy (discussed in \autoref{ch:NMF}) can be performed with a conventional fluorescent microscope. 
 
 The number of scientific publications in recent years shows that even after four centuries of development the optical microscopy remains a vibrant and exciting scientific domain.
 
@@ -37,7 +37,7 @@ An important characteristic of a microscope is the so-called ``point spread func
 	\label{eq:conv}
 \end{equation}  
 
-The PSF therefore defines how much is the image of the specimen ``blurred'' during the imaging process. The integration in \autoref{eq:conv} is over the whole space of acquired data (typically 2D or 3D). 
+The PSF therefore defines how much the image of the specimen is ``blurred'' during the imaging process. The integration in \autoref{eq:conv} is over the whole space of acquired data (typically 2D or 3D). Note, that \autoref{eq:conv} applies to the situation with spatially invariant PSF. It also assumes that PSF is fully determined by the optical system. The influence of the specimen on the shape of the PSF is neglected. In a real experiment, PSF can be locally distorted by the aberrations introduced by the specimen or by the imperfections in the optical setup.
 
 \begin{figure}[!bht]
 	\centering
@@ -56,7 +56,7 @@ Neglecting the effect of polarisation (scalar theory), the two-dimensional PSF o
 	q(\rho)=\frac{1}{Z}\left(\frac{J_1(\alpha \rho)}{\alpha \rho}\right),
 \end{equation}
 %
-where $Z$ is the normalising constant, $J_1$ is the Bessel function of the first kind of order one and $\rho$ is the distance from the centre of the image. The parameter $\alpha$ depends on the emission wavelength $\lambda_{em}$ and the numerical aperture of the objective $\unit{NA}$:
+where $Z=\int q(\rho) d\rho$ is the normalising constant, $J_1$ is the Bessel function of the first kind of order one and $\rho$ is the distance from the centre of the image. The parameter $\alpha$ depends on the emission wavelength $\lambda_{em}$ and the numerical aperture of the objective $\unit{NA}$:
 %
 \begin{equation}
 	\alpha=2\pi\frac{\unit{NA}}{\lambda_{em}}.
@@ -112,18 +112,18 @@ The ability of an optical microscope to show spatial details in the specimen str
 %
 where $\lambda_{em}$ is the wavelength of the emitted light and $\unit{NA}$ is the numerical aperture of the objective \autoref{eq:NA}. The resolution limit \autoref{eq:Airy} comes from the \emph{empirical} observation: two sources separated by a distance greater than $\delta$ can be ``resolved'' as two individual objects (see \autoref{fig:Rayleigh}\ccc). If the separation is smaller than $\delta$, the point spread functions overlap significantly and the sources become ``unresolved'' (see \autoref{fig:Rayleigh}\aaa). The resolution limit defined by \autoref{eq:Airy}, sometimes called  the ``Raleigh resolution limit'',  is often taken as the benchmark for different resolution techniques. Note that the ``Abbe resolution limit'' $\delta=0.5\lambda_{em}/\unit{NA}$ related to the passband of spatial frequencies is also used.
 
-The resolution limit \autoref{eq:Airy} relates to the noise-free situation with continuous representation of the PSF (the top line of \autoref{fig:Rayleigh}). However, the pixelation and noise associated with the photon-detection process can alter the resolution significantly. The influence of noise, pixelation or brightness intermittency to the resolution is discussed in \autoref{ch:Theoretical-limits-of the LM}. 
+The resolution limit \autoref{eq:Airy} relates to the noise-free situation with continuous representation of the PSF (the top line of \autoref{fig:Rayleigh}). However, the pixelation and noise associated with the photon-detection process can deteriorate the resolution significantly. The influence of noise, pixelation or brightness intermittency to the resolution is discussed in \autoref{ch:Theoretical-limits-of the LM}. 
 
 %==========================================
 %==========================================
 
 \section{Fluorescence microscopy\label{sec:Fluorescence microscopy}}
 
-The introduction of fluorescence microscopy in the 20\ths\ century has revolutionised the use of optical microscopy in biological and medical science. Fluorescence is generated by fluorescent molecules or nanostructures (commonly called fluorophores) during the relaxation of their electronic structure to the ground state.  The fluorophores are driven into higher energetic state with an excitation light of a specific wavelength. The fluorescent light is typically shifted towards the longer wavelengths (Stokes shift),  which allows an efficient filtering of the excitation light from the fluorescence signal. Fluorescence microscopy detects the fluorescence from the sample itself (auto-fluorescence) or more commonly from the fluorophores attached to the specimen.
+The introduction of fluorescence microscopy in the 20\ths\ century has revolutionised the use of optical microscopy in biological and medical science. Fluorescence is generated by fluorescent molecules or nanostructures (commonly called fluorophores) during the relaxation of their electronic structure to the ground state.  The fluorophores are driven into higher energetic state with an excitation light of a specific wavelength. The fluorescent light is typically shifted towards the longer wavelengths (Stokes shift),  which allows an efficient filtering of the excitation light from the fluorescence signal. Fluorescence microscopy detects the fluorescence from the sample itself (auto-fluorescence) or more commonly from the fluorophores attached to the specimen \cite{PawleyHandbook2006}.
 
-Fluorescence labels can be attached to the structures of interest with high specificity and provide a strong intensity contrast in the microscopic image of the specimen. Fluorescent proteins (FPs) allow for direct expression of the fluorescent marker by the organism itself. FPs have further redefined the use of fluorescence microscopy in cell biology as a nearly non-invasive and highly specific technique. 
+Fluorescence labels can be attached to the structures of interest with high specificity and provide a strong intensity contrast in the microscopic image of the specimen. Fluorescent proteins (FPs) allow for direct expression of the fluorescent marker by the organism itself \cite{Fernandez-Suarez2008}. FPs have further redefined the use of fluorescence microscopy in cell biology as a nearly non-invasive and highly specific technique. 
 
-The first fluorescent protein used in microscopy (green fluorescent protein - GFP) has been isolated from the jellyfish {\it Aequorea victoria} \cite{Tsien1998}. Nowadays, modified versions of GFP and a rich variety of fluorescent dyes cover the emission across the whole visible spectral range. Photo-activable and photo-switchable fluorescent proteins and dyes have also been discovered, and are used in specific applications and microscopy methods. The 2008 Nobel Prize in Chemistry was awarded to Martin Chalfie, Osamu Shimomura, and Roger Y. Tsien for their discovery and development of the GFP.
+The first fluorescent protein used in microscopy (green fluorescent protein - GFP) has been isolated from the jellyfish {\it Aequorea victoria} \cite{Tsien1998}. Nowadays, modified versions of GFP and a rich variety of fluorescent dyes cover the emission across the whole visible spectral range \cite{Fernandez-Suarez2008}. Photo-activable and photo-switchable fluorescent proteins and dyes have also been discovered, and are used in specific applications and microscopy methods \cite{Bock2007,Hirvonen2008, Rego2011a}. The 2008 Nobel Prize in Chemistry was awarded to Martin Chalfie, Osamu Shimomura, and Roger Y. Tsien for their discovery and development of the GFP.
  
 %==========================================
 %==========================================
@@ -160,7 +160,6 @@ The structured illumination based methods modulate the fluorescence behaviour of
 
 %==========================================
 %==========================================
-
 \clearpage
 \section{Overview of the thesis}
 
