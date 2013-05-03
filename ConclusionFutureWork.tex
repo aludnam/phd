@@ -1,0 +1,23 @@
+%!TEX root = thesis.tex
+\chapter{Conclusions and Future Work\label{ch:Summary}}
+
+\section{Conclusion}
+
+In this thesis we have made three contributions to super-resolution methods for fluorescence microscopy:
+
+We have shown that non-negative matrix factorisation with iterative restarts (\inmf{}) can separate highly overlapping intermittent sources with arbitrary shape. \inmf{} is comparable in performance to other recently published methods (CSSTORM and 3B analysis). We introduced average precision (AP) as a quantitative measure for comparing the performance of the \inmf{} algorithm. AP can be used for data, with known true locatins of the sources (e.g. simulated data). We compared \inmf{} with CSSTORM and the 3B analysis and demonstrated superior performance of \inmf{} on simulated data of highly overlapping sources. We described a pipeline for evaluating and visualising realistic datasets, and used \inmf{} to show super-resolution images of experimental data consisting of tubulin structures labelled with quantum dots. \inmf{} is a promising and very accessible technique with the potential to deliver super-resolution images of three-dimensional samples.
+
+The combination of structured illumination with line scanning (LS-SIM) presented in this thesis provides images of thick fluorescent samples with resolution improvement in the lateral plane. Line scanning reduces the out-of-focus background and the LS-SIM images suffer less from reconstruction artefacts when compared to conventional structured illumination. LS-SIM reveals the fine details of biological specimens' inner structures with higher resolution than line-confocal microscopy and with the image quality superior to conventional structure illumination.
+
+In addition we discuss the theoretical resolution limit for noisy and pixelated datasets. We present an alternative derivation of fundamental resolution measure (FREM), correcting the original formula published by Ram et al. \cite{Ram2006}. We show that fluorescence intermittency (such as quantum dots blinking) can be beneficial for resolution when compared to the sources with static intensity.
+
+%==========================================
+%==========================================
+
+\section{Future Work}
+
+The unique ability of the \inmf{} algorithm to recover sources with different shapes discussed in \autoref{sub:results - out of focus PSF real data} allows extension of the super-resolution imaging to three dimensional samples. The axial position of a fluorophore can be determined from the shape of the recovered out-of-focus PSF by, for example, determination of the diameter of the outmost ring \cite{Speidel2003}. However, the conventional out-of-focus PSF decreases quickly in brightness when compared to the in-focus PSF (see \autoref{fig:Simulted-PSF-different-focal-depths}). This makes it difficult to separate overlapping sources located in different focal planes. The brightness of a tailored PSF, such as the double helix PSF \cite{Quirin2011} or the PSF with introduced astigmatism \cite{Huang2008} is less sensitive to defocus. The out-of-focus PSF remains compact over defocus of several micrometres. On the other hand, the in-focus PSF is less bright than the one in the system without aberrations. The axial position is determined from the specific changes of the PSF shape. Testing the \inmf{} algorithm on data with a tailored PSF is a logical extension of the current work. 
+
+We also want to apply \inmf{} to specimens labelled with standard organic fluorophores dyes. For example, dSTORM \cite{VandeLinde2011} exploits the repetitive transfer of conventional fluorescent probes between bright ON states  and stable and reversible dark OFF states. This results in blinking of the fluorescent sources. The determination of the overlapping sources with \inmf{} can significantly speed up the data acquisition.
+
+Separate publications from \autoref{ch:NMF} and \autoref{ch:Theoretical-limits-of the LM} are in preparation.
