@@ -50,7 +50,7 @@ The PSF therefore defines how much the image of the specimen is ``blurred'' duri
 	\label{fig:PSF}
 \end{figure}
 %
-Neglecting the effect of polarisation (scalar theory), the two-dimensional PSF of an optical microscope, known as the ``Airy pattern'', is described by
+Neglecting the effect of polarisation (scalar theory), the two-dimensional PSF of an optical microscope, known as the ``Airy pattern'', is described by \cite{Born1999}
 %
 \begin{equation}
 	q(\rho)=\frac{1}{Z}\left(\frac{J_1(\alpha \rho)}{\alpha \rho}\right),
@@ -68,9 +68,9 @@ The $\unit{NA}$ is defined as
 	\label{eq:NA}
 \end{equation}
 %
-where $n$ is the refractive index of the immersion medium and $2\theta$ is the angle of the light cone entering the objective.
+where $n$ is the refractive index of the immersion medium and $2\theta$ is the angle of the light cone entering the objective. Note that the refractive index is a fucntion of wevelength $n\sim n(\lambda)$. Dispersion in the sample and in the optics can lead to the PSF corrupted with spherical aberration when a range of wavelengths is used \cite{SCALETTAR1996}.
 
-An intensity profile of a PSF is shown in \autoref{fig:PSF}. The Airy pattern is also compared to the popular approximation of the PSF with a Gaussian function \cite{Zhang2007} defined by a standard deviation
+An intensity profile of an unaberrated PSF is shown in \autoref{fig:PSF}. The Airy pattern is also compared to the popular approximation of the PSF with a Gaussian function \cite{Zhang2007} defined by a standard deviation
 %
 \begin{equation}
 	\sigma=\frac{\sqrt{2}}{2\pi}\frac{\lambda_{em}}{\unit{NA}}.
@@ -103,7 +103,7 @@ An intensity profile of a PSF is shown in \autoref{fig:PSF}. The Airy pattern is
 	\label{fig:Rayleigh}
 \end{figure}
 %
-The ability of an optical microscope to show spatial details in the specimen structure is fundamentally limited by diffraction. The radius $\delta$ of the Airy disk (see \autoref{fig:PSF}) is often considered as the ``classical resolution limit''. It is given by
+The ability of an optical microscope to show spatial details in the specimen structure is fundamentally limited by diffraction \cite{Born1999}. The radius $\delta$ of the Airy disk (see \autoref{fig:PSF}) is often considered as the ``classical resolution limit''. It is given by \cite{Born1999}
 %
 \begin{equation}
  	\delta=0.61\frac{\lambda_{em}}{\unit{NA}}, 
