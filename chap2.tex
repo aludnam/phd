@@ -6,11 +6,10 @@ In this chapter, we discuss the resolution limit and its application to localisa
 In \autoref{sec:FREM} we compare the classical resolution limit with fundamental resolution measure (FREM), introduced by Ram et al. \cite{Ram2006}. FREM accommodates the resolution criterion for situation of pixelated data corrupted with noise. \Autoref{sec:CR} introduces the \CR (CR) lower bound as a theoretical framework for description of the estimator covariance matrix. In \autoref{sec:FREM orig} we use the CR lower bound to show the derivation of the Ram's original FREM formula. We also discuss the limitations and problems of the original FREM. In \autoref{sub:An-alternative-derivation-FREM} we derive an alternative version of FREM and demonstrate that this version fixes strange and inconsistent behaviour of the original FREM. Throughout the chapter we use our version of FREM. We call the Ram's version the "original FREM". In \autoref{sec:FREM for blinking} we derive FREM for two emitters with intermittent intensity. This expression is relevant to localisation microscopy with blinking fluorophores, such as QDs (discussed in \autoref{ch:NMF}). The parameters used for data simulation are discussed in \autoref{sec:FREM simulations}. \Autoref{sec:FREM results} compares FREM for blinking and static sources in different experimental conditions and identifies the regions and experimental parameters setting, where the intermittent behaviour of the intensity allows considerable higher resolution. The discussion of the results is in \autoref{sec:FREM discussion}. 
 
 Details of the derivations can be found in \autoref{app:Appendix2}.
-
+\afterpage{\clearpage}
 %==========================================
 %==========================================
 
-\clearpage
 \section{Fundamental resolution measure (FREM)\label{sec:FREM}}
 
 The classical resolution limit \autoref{eq:Airy} discussed in \autoref{sec:Resolution limit} relates to an empirical observation and does not take into account the statistical nature of the photon detection process. The classical resolution limit applies to a noise-free situation and neglects the pixelation of data. 
@@ -236,18 +235,18 @@ If the intensity states $\bm{\Lambda}$ \emph{were known}, we would write the log
 	\mathcal{L}(\theta,\Lambda)=\sum_{k=1}^N\log\left(l_k(\theta,\bm{\Lambda})\right).
 \end{equation}
 %
-and the expected Fisher information matrix would become (see \autoref{app:Appendix2} for details)
+and the expected Fisher information matrix would become an average over the individual known states (see \autoref{app:Appendix2} for details)
 %
 \begin{equation*}
-	I(\theta) = \int_{\bm{\Lambda}}p(\bm{\Lambda})I_{\bm{\Lambda}}(\theta)d\bm{\Lambda},
+	I(\theta) = \int_{\bm{\Lambda}}p(\bm{\Lambda})I(\theta,\bm{\Lambda})d\bm{\Lambda},
 \end{equation*}
 %
-where $I_{\bm{\Lambda}}(\theta)$ is the Fisher information computed for a specific value of $\bm{\Lambda}$ (see \autoref{eq:FI - entries}).
+where  $p(\bm{\Lambda})$ is the distribution of the $\bm{\Lambda}$ states and $I(\theta,\bm{\Lambda})$ is the Fisher information computed for a specific value of $\bm{\Lambda}$ (see \autoref{eq:intensity pixel} and \autoref{eq:FI - entries}).
 %
 For discrete states of $\bm{\Lambda}^\alpha$ shown in \autoref{eq:lambda states} we get
 %
 \begin{equation}
-	I(\theta)=\sum_{\alpha}p(\bm{\Lambda}^\alpha)I_{\bm{\Lambda}^\alpha}(\theta),
+	I(\theta)=\sum_{\alpha}p(\bm{\Lambda}^\alpha)I(\theta,\bm{\Lambda}^\alpha),
 	\label{eq:FI avg}
 \end{equation}
 %
@@ -302,10 +301,10 @@ Expressing the derivatives and the expectation value gives
 \end{alignat}
 %
 In \autoref{app:Appendix2} we show that the limit $d\rightarrow0$ gives $\var(d)\rightarrow\infty$ and the limit $d\rightarrow\infty$ gives $\var(d)\geq\frac{1}{I_{11}}+\frac{1}{I_{22}}$. We also show, that for well-separated sources ($d\rightarrow\infty$) and negligible background ($b\ll\Lambda$) the variance $\var(d)$ is identical for both blinking and static situation, if the total number of emitted photons is kept constant. 
+\afterpage{\clearpage}
+%==========================================
+%==========================================
 
-%==========================================
-%==========================================
-\clearpage
 \section{Experimental parameters and numerical evaluations\label{sec:FREM simulations}} 
 We made a comparison of the original FREM formula computed from the Fisher information \autoref{eq:Ram FREM} with our proposed fixed FREM formula computed from \autoref{eq:FI - individual}, for sources with static intensity. We also compared the static situation with FREM for sources with intermittent intensity computed from \autoref{eq:FI-blinking}.
 
@@ -314,11 +313,11 @@ We considered $625\unit{nm}$ emission light wavelength and $1.2\unit{NA}$ object
 The pixelated version $q_k(c_i)$ of the continuous PSF $q(x-c_i)$ and the corresponding derivatives $q'_k(c_i)$ from \autoref{eq:Ram FREM} and \autoref{eq:FI - individual} were computed by summing $10\times10$ pixels of $10\times$ oversampled images (approximation of the continuous PSF $q(x)$ on the $8\times8 \unit{nm}$ grid). The pixelated $\lambda^\alpha_k$ in \autoref{eq:Fisher Information Blinking Integrating Out} was computed in a similar manner. 
 
 The expectation values in \autoref{eq:Fisher Information Blinking Integrating Out} were evaluated using the expression \autoref{eq:FI-blinking}. The set of images for a range $n_k=[0..n_{max}]$ was computed to perform the summation $\sum_{n_k\geq0}$. The value of $n_{max}$ was set such that the Poisson cumulative distribution function $F(n)$ for the pixel with the maximum intensity satisfies $F(n>n_{max})>1-t$, with $t=10^{-6}$.
-
+\afterpage{\clearpage}
 %==========================================
 %==========================================
 
-\clearpage
+
 \section{Results\label{sec:FREM results}}
 
 We computed the FREM for simulated datasets corresponding to different experimental settings, such as the separation of the sources $d$, the total number of emitted photons by each source $\Lambda$ and the background offset $b$ in the recorded frames. FREM gives us the lower bound on the standard deviation ($\sqrt{\var(d)}$) for the measurement of the source separation $d$. The source separation equivalent to FREM ($d$=FREM) can be considered as a ``natural resolution limit'', which takes the statistical nature of the photon detection into account.
@@ -502,7 +501,8 @@ For high signal-to-noise ratio data (high $\Lambda$ and low $b$,  see bottom-lef
 %	\label{fig:PSF int bg}
 %\end{figure}
 %
-\clearpage
+\afterpage{\clearpage}
+
 \begin{figure}[!bh]
 	\centering
 	\newcommand{\wf}{.45\textwidth}
@@ -578,11 +578,11 @@ After careful checking of the derivation and the numerical calculations of the c
 A qualitative confirmation of this counter-intuitive behaviour is shown on simulated data in \autoref{fig:FREM dip both}. We simulated two sources separated with a distance $d$. The intensity and the background was set to the same values as for the theoretical $\unit{FREM}^{static}$ curves ($\Lambda_1=\Lambda_2=500$ photons, $b=100$ photons/pixel, see top row in \autoref{fig:two sources int d}). For each separation $d$ we created $M=1000$ images with different realisation of Poisson noise. Using conjugate gradient optimisation (NETLAB function {\tt conjgrad} \cite{Nabney}), we found the maximum-likelihood estimator of the positions $\bm{c}_{ML}=(c^{ML}_1,c^{ML}_2)$ of two PSFs (see \autoref{eq:intensity pixel}). The initial position for the fitting procedure was set to the true values $\bm{c}_{true}$. The standard deviation of the $M$ estimators $d^{ML}=|c^{ML}_1-c^{ML}_2|$ is plotted with blue circles in \autoref{fig:FREM dip} and shows a ``dip'' similar to the one in the theoretical $\unit{FREM}^{static}$ curve. For zero background ($b=0$) $\unit{FREM}^{static}$ is monotonically decreasing (the dashed red line in \autoref{fig:FREM dip b=0}). Standard deviation of the $M$ estimators is plotted with blue circles in \autoref{fig:FREM dip b=0}. No dip is observed in this case. 
 
 Note that the measured values of the standard deviation (blue circles) are lower than the theoretical lower bound (red dashed curve). This is likely due to the initialisation of the maximum-likelihood fitting with $\bm{c}_{true}$. Random initialisation would be more appropriate, but the measured standard deviation does not provide curves smooth enough to show the ``dip'' clearly.
-
+\afterpage{\clearpage}
 %==========================================
 %==========================================
 
-\clearpage
+
 \section{Discussion\label{sec:FREM discussion}}
 
 This section contains a general discussion about FREM and the results presented above. We also discuss and explain the strange behaviour of the original FREM curves. 
@@ -728,11 +728,10 @@ The scaling with $\Lambda$ and $b$ of the Fisher information entries for the bli
 The Poisson distribution models noise associated with the photon detection \cite{PawleyHandbook2006}. This noise, derived from the nature of the signal itself, is often called ``shot noise'' \cite{Schottky1918} and is present even under ideal imaging conditions free of any noise introduced by the sensor. Noise introduced by the sensor is usually divided into two components: the dark noise (or dark current), which represents the electrons thermally generated in the detector, and the read-out noise (or read noise) associated with analogue-to-digital conversion of the signal. The dark noise (Poisson distributed) is efficiently eliminated by the cooling of the sensor and is negligible in high-performance cameras.  The read-out noise is assumed to follow a Gaussian distribution and is characterised by a standard deviation (often called r.m.s.).  The read-out noise depends on the read-out frequency and can be reduced by optimising the design of the detector's electrical circuits. The standard deviation of the read-out noise for a typical scientific CCD camera is 5-10 electrons. 
 
 We assume Poisson distributed data throughout this chapter. We therefore neglect the read-out noise of the sensor and assume only the shot noise to be present in the recorded images. Ram et al. \cite{Ram2006} shows a modification of the Fisher information for a model combining both Poisson (shot) and Gaussian (read-out) noise.
-
+\afterpage{\clearpage}
 %==========================================
 %==========================================
 
-\clearpage
 \section{Conclusions} 
 
 The alternative derivation of the fundamental resolution measure (FREM) provides correction to the original formula published by Ram et al. \cite{Ram2006}. The results presented in \autoref{fig:FREM static blinking} suggest that the blinking sources can significantly increase localisation precision compared to the static situation if the total number of emitted photons is kept equal. The increase of the localisation precision for blinking sources is stronger for close ($d<50\unit{nm}$) and bright ($\Lambda>1000$ photons/source/frame) sources with lower background levels ($b<100$ photons/pixel/frame). For well-separated sources ($d\rightarrow\infty$) the static and the blinking situations give identical results. 

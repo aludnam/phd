@@ -1,0 +1,182 @@
+\documentclass[11pt, oneside]{article}  
+\usepackage[margin=0.5cm]{geometry}                % See geometry.pdf to learn the layout options. There are lots.
+\geometry{letterpaper}                   % ... or a4paper or a5paper or ... 
+%\geometry{landscape}                % Activate for for rotated page geometry
+%\usepackage[parfill]{parskip}    % Activate to begin paragraphs with an empty line rather than an indent
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{epstopdf}
+\usepackage{color}
+\newcommand{\tc}[1]{\textcolor{red}{\\ #1\\}}
+
+\setlength\parindent{0pt}
+\title{Ond\v rej Mandula Corrections}
+\begin{document}
+
+\maketitle
+\tc{Please clarify or correct the issues listed below.}
+
+\tc{Introduction: Clarify the precise goal or goals of the project: make a distinction between source localization, structure inference and density estimation, or at least discuss this matter so it is clear what your methods need to achieve. In the rest of the thesis make sure it is clear which problem is being addressed by each experiment.}
+- I added more on this in in the introduction of the chapter 2 and in sections 2.6, 2.8, 2.8.3 and 2.8.4. \tc{Page 1.  Visible light 400-700nm?}- I changed 400-800 to 400-700nm. \tc{Page 1 invasive for the sensitive $\rightarrow$ invasive for sensitive}- Fixed.\tc{Page 1 further discussed $\rightarrow$discussed further}- Fixed.\tc{Page 2 speculation who $\rightarrow$ speculation as to who}- Fixed.\tc{Page 2.  Abbe, but where does Rayleigh fit in to the diffraction limit?}- This is discussed in section 1.4 ÒResolution limitÓ.\tc{Page 2. After Òoptical nanoscopyÓ, need references.}- Fixed.\tc{Page 3.  Is the PSF a function of the specimen or the microscope, or both?}- Added some discussion after Eq.1.1.\tc{Page 3 is the image of the specimen $\rightarrow$ the image of the specimen is}- Fixed. \tc{Page 3.  Why do you show me the Gaussian response?  You say on Page 4 that it is popular to do this, but some may disagree.}- The Gaussian approximation of the PSF is often used in optical microscopy. I plotted the Gaussian approximation with the Airy function to highlight the differences between the two (mentioned in the legend of the figure 1.1). \tc{Page 3, 4.  What does Z depend on?  It strikes me that the choice of Z has a very significant effect.}- Z is the normalising constant (I added the integral in the text after the Eq. 1.2), therefore it parametrically depends on $\alpha$ from Eq.1.3.  \tc{Page 4. Equation (1.4): strictly speaking n should be n(lambda).  How would this change NA and therefore the PSF?}- I added a comment on this (+ reference) below Eq. 1.4. \tc{Page 4.  What is diffraction?}- I added a reference: Born M, Wolf E (1999) Principles of optics (Cambridge University Press). \tc{Page 5.  You say that noise may alter the resolution significantly.  Can noise ever improve the resolution?}- ÒAlterÓ replaced by ÒdeteriorateÓ.\tc{Page 6.  Hardly any referencesÉ}- Added reference related to Fluorescence:Pawley JB ed. (2006) Handbook Of Biological Confocal Microscopy. And review article about fluorescent proteins:Fern‡ndez-Su‡rez M, Ting AY (2008) Fluorescent probes for super-resolution imaging in living cells. Nature reviews Molecular cell biology 9:929Ğ43.And three more references to super-resolution techniques using photo-switchable fluorescence proteins. \tc{Page 7.  Typo ÒfluoresceinÓ.}- ?\tc{Page 11 Here or elsewhere. Additional (e.g. 4-5 pages) literature review is needed covering an overview of other related areas of microscopy and literature covering related methods on those areas  inc spectral microscopy, use of ICA, NMF etc. in other areas of microscopy, the results they find and potential implication of those results for this work, the general background for NMF methods (there are multiple NMF methods, and the relative appropriateness of each approach for this setting.  }- I added a section 2.4.1 discussing the NMF in biological research (gene-expression data, spectral microscopy and lifetime imaging). I related the different problematics to our NMF model Eq. 2.1 and discussed the model selection (estimation of the number of components K) in different applications.
+- Different NMF methods are referenced towards the introduction of section 2.2 and in sections 2.2.1, 2.2.2 and 2.4.2.
+\tc{Page 11 the NMF algorithm $\rightarrow$ the NMF algorithm of \ref{} - there are many.}- Fixed. \tc{Page 9.  Could get rid of large blank space.}
+- Fixed.\tc{Page 12.  Why in localisation microscopy is the improvement limited to a factor of 2?}- It is not limited by a factor of 2. I wrote that LM can achieve resolution below the classical resolution limit $\sim\lambda/2$. I changed the text to clarify this. \tc{Page 13.  What do you mean by ÒexcessiveÓ?}- Replaced ÒexcessiveÓ by ÒlongÓ and mentioned a typical range of the acquisition time.\tc{Page 13.  You have already introduced PSF.  You also say that Òoften a single psf is assumedÉÓ.  Need a reference for this.}- References added. \tc{Page 15.  Figures are very small, and without scale bars.}>>>
+\tc{Page 16.  Again, could get rid of large blank space.}- Fixed.
+\tc{Page 16.  Your algorithm accounts for Poisson noise Ğ could it account for other types of noise?}- The algorithm can be modified to account for Gaussian noise (minimizing the sum of square of differences between data and model).\tc{Page 17 Constraint $\rightarrow$ Constrained.}- Fixed.\tc{Page 18.  IÕm on page 18 and IÕm not clear why you want to use NMF rather than PMF.  What does NMF do that PMF doesnÕt?}
+- I mention in Section 2.2 that positive matrix factorisation preceded NMF. PMF does the same task but the algorithm become widely known as "NMF" after Lee and Seung 1999 paper in Nature. \tc{Page 21.  Figure 2.1. leftÉ where?}- ÒleftÓ replaced by Òleft sideÓ.\tc{Page 21.  Need more detail on sparsity and how this compares to real specimens containing fluorophores.  Realistically, how do you determine s in practice?}- I probably do not understand the first question. The sparsity is applied to the image of the individual separated sources not to the specimen with fluorophores (raw data). - The desired sparsity of the estimated can be computed from a simulated PSF, for example. \tc{Page 22.  How many photons do you need to acquire an Airy disk?}
+- In Fig. 3.4 and 3.6 I show Airy discs for different number of photons in the presence of Poisson noise.  \tc{Page 22. Again, the images are tiny.}
+>>>
+\tc{Page 23 Figure 2.3 shows estimated W $\rightarrow$ shows the estimated W}- Fixed.\tc{Page 24. Why did you choose a background of 100 photons/pixel?}- As mentioned in Sec.2.5 "Simulations" this corresponds to measured experimental values for QD labelled data. 
+\tc{Page 24.  Typo ÒRichardsonÓ.}
+- Fixed.
+\tc{Page 26.  You choose n=1.5.  Is this for the QD or for the specimen?}
+- n=1.5 is the refractive index of the immersion oil (between objective and cover glass). QDs are dried directly on the surface of the cover-glass.   
+\tc{Page 27.  You describe the projection corresponds to a wide-field image.  I donÕt know what pixel diameter you are using, but is a camera likely to have 15 pixels within 1.2 um?  How does one achieve diffraction limited resolution with a camera when the pixel size is ~6um?}
+- The pixel size of the camera in the sample plane is 80 nm (=1.2um/15), see table 2.1
+
+- Camera pixel size is demagnified by the objective to the sample plain. In our case 80nm pixel size is below the Nyquist limit 120nm (computed from the abbe resolution limit in section 1.4).
+
+- Added note about this in the text in section 2.5 "Simulations".
+\tc{Page 27.  How do you achieve your ÒrandomnessÓ in your datasets?}
+- The true positions of the sources were generated from homogeneous poisson process (added text in 2.5.1).
+\tc{Page 28.  You do not discuss this figure at all Ğ what is the message here?}
+- I reference to this figure in Section 2.5.1. I added comment in the legend of the figures that this projection of the data shows high overlap of the emitters in the WF image. 
+\tc{Page 29.  Why does this not look anything like a hash Ô\#Õ symbol?}
+- The simulated structure is below the resolution limit of the system. Therefore the double line structure cannot be observed in WF images. I comment on this in the legend of Fig. 2.8. 
+\tc{Page 34.  Another large blank space.}
+- Fixed.
+\tc{Page 35.  What is excessively large computational time?}
+- Replaced by "long computational time" and added note on complexity of the updates with respect to the number of pixels.
+\tc{Page 35.  For the ÒstitchingÓ process, how long does this take and so is it compatible with live cell imaging?}
+- The division to the patches and stitching is done post-acquisition. It does not change the acquisition time. For our experiments the acquisition time was approximately 1 min. We assume that during this time the cell does not move. It might be applicable to "slowly moving" cells. I added a comment on this towards the end of section 2.9.
+\tc{Page 36.  ÒEstimation of K is difficult for noisy datasetsÓ.  What would you describe as ÒnoisyÓ Ğ is this subjective or numerical?  }
+- We performed the simulations for simulations with parameters (number of detected photons, background, etc as shown in table 2.1) corresponding to the experimental conditions. For these conditions I found it quite difficultÉ I mentioned it in the text in section 2.7.2. 
+\tc{Page 39 Please discuss the use of ACR for estimating K in a real data scenario.}
+- Added a comment about this towards the end of section 2.7.2.
+\tc{Page 40.  Why choose delta, 1.5delta and 2.0 delta?}
+- As shown in fig. 2.15 for 2.0 delta situation, all the methods delivered very precise estimate. Therefore I chose this as the upper limit. For 1.0 delta all the methods more or less failed and therefore I set that as a lower limit. I choose delta 1.5 as an intermediate value between 1.0 and 2.0. 
+\tc{Page 40. Results on iNMF before discussing it is peculiar. Please at least forward reference.}
+- Fixed, added forward reference.
+\tc{Page 41 ÒWe have not found good resultsÓ Explain why.}
+- I added comment on this in section 2.7.3 that NMF tends to get persistently stuck in the local optima. 
+\tc{Page 42 Algorithm 1. Sorting Ğ decreasing or increasing?}
+- Added decreasing order in the text.
+\tc{Page 42 are still allowed to change during the iterations. But do they actually change?}
+- Yes, they do change. I added comment on it in section 2.7.3.
+\tc{Page 43.  Fig 2.16 is too small to tell what is going on Ğ step for a hint?}
+- I added more comments about the figure to the figure caption. 
+\tc{Page 43 iNMF leads to better local minima: unsubstantiated claim. Provide substantiation.}
+- I added figures 2.17 and 2.18 to provide the substantiation of the claim. 
+\tc{Page 44 - 46.  How do you assess ÔcredibilityÕ?  I am concerned that you are compromising some good and rigorous statistics with some vague or subjective assumptions. Please clarify a quantitative measure you could use to evaluate credibility and demonstrate it does: This need systematic evaluations over many runs and data samples not just visual inspection from one selected run.}
+- As I mention towards the end of the section 2.7.4 the 'credibility' of the sources can be assessed with linear classifier. However as I also mentioned that "the linear classifier has to be trained on a set of labelled data. The training therefore requires a manual labelling of at least several hundreds of Ws" and is therefore impractical.
+
+\tc{Page 46 Not very visible. Visibility is not an issue. Clarify this statement. }
+- Visibility was used as an empirical criterion for setting the arbitrary threshold. I clarified the statement. 
+\tc{Page 49.  Example Ğ figure 2.20.  The RHS *looks* better than the LHS, but do you have quantitative evidence to describe this numerically, for example?}
+- Fig. 2.29 shows that iNMF cannot recover all sources in very dense data. Therefore the results on the LHS (result of one iNMF evaluation) have discontinuities in the structure as some of the emitters are missing. Different runs on iNMF recover different subsets of the sources due to different randomness in the initialisation. The mean of several evaluation (shown in RHS) shows more continuous representation of the structure.
+\tc{Page 51.  Does the Ô\#Õ symbol really appear so bright in the ÔcrossÕ as in figure 2.22?  I suspect not.}
+- I am not sure I understand the comment. The \# symbol appears brighter at the 'cross' as the density is higher at the crossing - there are sources from the vertical and horizontal bars at the same time. 
+\tc{Page 52 Ò...recover a great variety of blinking patterns.Ó Where is this demonstrated? Refer. }
+- I changed the formulation of the sentence in section 2.8.1 and discussed more about this in this section and in 2.9.
+\tc{Page 53.  Blinking.  Is this really so ÔonÕ off or not?  How does the blinking amplitude compare to the fluctuation in the detector noise or in the amplitude fluctuations in laser intensity over time?}
+- In reality the blinking is not entirely binary. For this reason I considered blinking behaviour shown in Fig. 2.23d with some intermediate values between maxima and minima. I comment on it in section 2.8.1. For an emitter with PSF corresponding to parameters in Tab. 2.1 the maximum pixels contain ~9\% of the total emitted photons. If we an emitter with 1000 photons, the mean value in the brightness pixel will be 1000*0.09=90 photons and the standard deviation of the intensity fluctuations  due to Poisson noise will be sqrt(1000*.09)~9 photons.
+
+\tc{Page 58. Density recovery is unmotivated. Ensure this is made clear here or in the introduction.}
+- I added more on this in in the introduction of the chapter 2 and in sections 2.6, 2.8, 2.8.3 and 2.8.4. 
+\tc{Page 63.  Need details here on the time taken to run different numbers of iNMF iterations.  \#\#scratch that Ğ itÕs on page 66. ~200 mins for one dataset?  Ouch!}
+\tc{Page 71.  Is this an 8-bit image?  Does the number of bits matter?}
+- The evaluation is done in double precision (64 bits), however the images are stored as  16-bit unsigned integers. The low-bit images can be perceived as more pixellated due to abrupt changes in the intensity from pixel to pixel. High-bit images are large for storage. The number of bits matter (if I understand the question correctly). 
+\tc{Page 71.  What is the size of the image Ğ need scale bar.}
+- I added the size of each patch in the legend of the figure. Note, that this image is for demonstration of the division of large image into patches. An image of the same dataset with scale bar is shown in fig. 2.40. 
+\tc{Page 79.  This is great in 2D, but what about the third dimension?}
+- As discussed towards the end of Sec. 2.9 the information about the axial position of the emitter can be determined from the shape of the recovered PSF.
+As I discuss in section 2.8.7, iNMF can recover overlapping out-of-focus PSFs, with different shapes despite their overlap in the original data. Whether can iNMF be used for 3D imaging. 
+
+
+\tc{P83 How would you measure resolution (eq 1.6) empirically?}
+- The resolution in the evaluated samples can be, for example, line profile of linear structures (such as we did in Fig.4.2j).
+ 
+\tc{P83 Practical camera grids?}
+- I am sorry but I do not understand this question. Pixels in the CCD camera are usually of rectangular shape organised in a regular rectangular grid. 
+
+\tc{P83 Please talk me through how arbitrary this is, and how close to 'optimal' is possible.}
+- As I write in section 2.9 we demonstrated on simulated data that iNMF can separate two sources as close as 40nm for some specific parameters of the simulation. These parameters correspond to the dashed green curve in Fig. 3.2a. The "natural" resolution limit (intersection with the blacked dotted line - FREM=d) for this curve is ~20nm.
+\tc{P84 How likely is it that two sources will have equal PSFs?}
+- For high quality objective and homogeneous embedding medium we can assume the PSF to be translationally invariant. If the two point sources are in the same focal plane then they will have equal PSF.  
+\tc{P84 Eqn 3.1. Do not write down the inequality (which is non-standard) You could use $\preceq$ which is more standard, or better still IMO just state in 3.1 that$ Q-I^{-1}$ is positive semi-definite.}
+- This is noted below eq.3.2.
+\tc{P84 Òan area of the kth pixelÓ-> the region of the kth pixel. }
+-  Fixed.
+\tc{P86 Best not to use lambda for intensity (e.g. eq 3.10)}
+- I am sorry.
+\tc{P89 Eqn below 3.21 does not make sense: the statement is ÒIf the intensity states were knownÓ but then there is an expectation over the intensity states. Also 3.13 does not sufficiently define $I_\Lambda$. - Define that here. State the Fisher Information you want to compute and show that results in the expected Fisher Information. }
+- I changed the formulation before eq.3.21 stating that if the states were known, the resulting Fisher information would be an average over the known states. And I clarified the reference to Eq. 3.13. 
+\tc{p91 What is the purpose in oversampling?}
+- To approximate the continuous PSF recorded on the pixelised grid.
+\tc{P94 and throughout chapter. There is some lack of clarity about what FREM measure is used where. Ensure there is no ambiguity. }
+- I added upper superscripts to the FREM in the text to make ti more explicit which FREM I am referring to. I also tried to clarify this in the introductory page of the chapter.
+\tc{P96 Please talk me through fig 3.3?}
+- Fig. 3.3a and 3.3b show FREM surfaces for static and blinking situation, respectively. The red plane is located at the distance "d" from the origin, where "d" is the separation of the two sources. The intersection of the red plane with black FREM surface show where FREM is equal to the separation of the sources. (I called this "a natural resolution limit" in sec 3.1). The area, where the black surface is above the red plane correspond to the situation where the standard deviation of the estimation of the separation of the two sources is higher then the actual separation (very noisy data). On the other hand, the area, where the black FREM surface is below the red plane, corresponds to situations where the separation of the two sources can be estimated precisely - (with low std when compared to the separation). The 3.3c and 3.3d shows the surfaces from the top to show that for blinking situation the area, where the separation can be estimated precisely is larger then for the static situation. 
+\tc{p98 In fig 3.5 is this really 'measured'?}
+- It is measured from the simulated data with different realisation of Poisson noise. 
+\tc{P98 If there is a dip at d=300nm, how does this compare with the classical Abbe-modified Rayleigh relation at 633nm \& 1.25 NA?}
+- For our simulation (625nm, 1.2NA) the Abbe resolution criterion is 625/(2*1.2)=260nm. 
+\tc{P99 With so few pixels/unit area of specimen, how accurate are your results?}
+- The accuracy of the result (estimation of the distance between the two sources) relates to FREM as FREM specify the standard deviation of the estimator. The pixellation it taken into account throughout Eq. 3.11.
+\tc{P108 Need references: you didn't invent shot noise!}
+- I added reference. I think I don't claim the invention by saying Énoise often called "shot noise"É
+\tc{P110 What was your role in this work c.f. your co-authors?}
+- G. Krampert, I. Kleppe, and R. Heintzmann has designed the ELYRA setup with scanning head. Me and Martin Kielhorn have developed the electronic part of the setup synchronising  the line scanning with switching of the laser light. I have taken the experimental data and optimised the acquisition procedure (on/off ratio, number of scanning lines, reduced photobleaching by randomising the phases in the scanned patternÉ). I have evaluated data together with Kai Wicker and Rainer Heintzmann and I have written the manuscript. All the authors discussed the manuscript before submission. 
+
+- I clarified this in the Introduction to chapter 4.
+
+\tc{How does this fit in with the rest of your thesis?  }
+- This chapter contain work I did during my visit of Rainer Heintzmann laboratory in Jena. It is a separate side project on another optical microcopy technique exploring the resolution improvement. 
+
+
+\tc{And how does it fit with Taejoong Kim et al 2009 Meas. Sci. Technol. 20 055501 doi:10.1088/0957-0233/20/5/055501Enhancement of fluorescence confocal scanning microscopy lateral resolution by use of structured illumination?  }
+- Kim et al work is cited in the chapter 4: I mention towards the end of the chapter 4.1 Kim et al work has proposed the technique and demonstrated it on simulated data. We showed the experimental results and comment on specific details of the data acquisition and data processing. 
+
+\tc{And MyoungKi Ahn et al 2011 Meas. Sci. Technol. 22 015503 doi:10.1088/0957-0233/22/1/015503Cross structured illumination for high speed high resolution line scanning confocal microscopy?}
+- Ahn et al. work is a theoretical study of a standard WF-SIM setup and has not been cited. The proposed setup is a rather complicated way to introduce a wide-field structured illumination pattern (alignment of 4 cylindrical lenses and 4 linear polarisers with high precision is needed).
+\tc{P112 How did the image rotator function? Spec of cylindrical lens?}
+- The image rotator is an "AbbeĞKoenig" reflecting prism. However, Zeiss asked us not to disclose thisÉ 
+
+\tc{P113 This is a very strange figure Ğ the microscope is neither inverted or upright! Also, presumably it is used in fluorescence mode, but you do not mention this. Fix this figure so the depictation is of a real microscope.}
+- I clarified this in the text in section 4.2.1. The method is, however, applicable to both inverted or upright microscope. The configuration of the objective with respect to the specimen does not make any difference for the LS-SIM method itself. 
+
+\tc{P115 How did you choose/prepare this specimen?}
+- We chose this specimen because it is relatively thick (~30um) and densely stained throughout the volume. This gives lot of out-of-focus fluorescence and makes the standard SIM reconstruction difficult (see Section 4.3). The specimens were prepared by Otto Baumann (see Section 4.3 and Acknowledgement).
+
+\tc{P116 Difficult to compare e\&f with g\&h.  Is it really better?  Please convince me :-).}
+- We show that LS-SIM images (g,f) have better resolution then LS image (e,f). We show this by plotting an intensity profile in (j) of one filament (red and blue lines in (e) and (g), respectively.)  
+
+\tc{p116 Although data acquisition took 75s, how long did the SIM reconstruction take?}
+- The reconstruction of the shown data took ~3 mins on my laptop computer. 
+
+\tc{P117 Why is wf-sim more noisy than ls-sim?  Is the true for non-sim?  Is it a function of the detection, rather than excitation method?}
+- As I point out in the second paragraph of section 4.4 (Discussion), LS-SIM image is less corrupted with noise artefacts when compared with WF-SIM. This is due to suppression of the out-of-focus background by line-scanning, which improves the signal-to-noise ratio and makes the SIM reconstruction more accurate. 
+Non-sim image are surely not corrupted with SIM reconstruction artefacts...
+
+- In the first paragraph of section 4.4 I mention, that the amount of out-of-focus light is a function or the ON/OFF ratio in each frame (Fig.4.1a). Therefor the amount of the artefacts is a function of the illumination pattern.
+
+
+\tc{P118 What happens in z?}
+- Line scanning provides optical sectioning and therefore fills in a missing cone region in the optical transfer function (the same way as confocal does). SIM on its own has sectioning capabilities as well (second paragraph in Section 4.1). (LS)SIM therefore increases the spatial resolution in z. 
+
+\tc{Appendix A. I strongly advise starting with the Poisson noise model (which can be motivated in this situation), and deriving the NMF from that.  At the moment this appendix is arbitrary and unmotivated as there is no motivation for minimizing A1.}
+- The motivation for minimising the KL divergence is mentioned in the main text (Eqs. 2.6 and 2.7). This goal of this appendix is to show how the Lee-Seung updates comes from the gradient descend with specific learning constants ($\alpha$) with KL divergence as an objective function. \tc{General remarks: the thesis is low on references.  Refs required:p3, for PSF description.
+P4, for Rayleigh resolution limit.}
+- added reference:
+Born M, Wolf E (1999) Principles of optics (Cambridge University Press).
+\tc{P5 For fluorescence microscopy}
+- added reference:
+James B. Pawley, editor. Handbook Of Biological Confocal Microscopy, volume 13. Springer US, Boston, MA, third edition, 2006.
+\tc{p83 onwards: needs more refs on FREM \& origin.}
+- FREM has been introduced by S. Ram and J. Ober in 2006. References to their work are throughout chapter 3 of the thesis.
+ \tc{Chapter 4: needs more references for context.  It reads like a scientific paper rather than a thesis chapter. See above re: Kim \& Ahn papers.}
+- I added more references in sec. 4.1.
+
+
+>>> make sure the figure number are ok (after adding Fig. 2.17 and 2.18.)
+\end{document}  

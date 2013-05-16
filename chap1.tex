@@ -66,10 +66,10 @@ Moreover, 3B assumes a mono-exponential decay of the fluorescence for the indivi
 Yet another approach to the LM data with overlapping sources has been proposed in a method called SOFI (Super-resolution Optical Fluctuation Imaging) \cite{Dertinger2010b}. Instead of separating the individual emitters, SOFI analyses higher order statistics of the intensity fluctuation. The intensity values in the SOFI image, however, reflect the fluctuation behaviour, rather than the strength of the emitters. The non-linear relation between the sources' strength and the intensity in the reconstructed image leads to structural artefacts such as apparent discontinuities, cavities and holes in otherwise continuous structures. Sources, which do not blink will not appear in the SOFI image at all. Recently, this issue has been, to a certain extent, addressed by balanced SOFI (bSOFI) in \cite{Geissbuehler2012}.
 
 In this chapter we propose non-negative matrix factorisation (NMF) as a model for overlapping sources. NMF models the whole dataset, taking into account the reappearance of the sources during the acquisition (fluorescence blinking). The intensity in the reconstructed image can be related to the strength of the individual emitters. NMF can deal with highly  overlapping sources with unknown different shapes and variety of blinking behaviour. Moreover our algorithm accounts for Poisson noise in the recorded data. 
+\afterpage{\clearpage}
+%==========================================
+%==========================================
 
-%==========================================
-%==========================================
-\clearpage
 \section{Non-negative matrix factorisation\label{sec:NMF}}
 Non-negative matrix factorisation (NMF) solves the approximative factorisation of an $N\times T$ data matrix $\bm{D}$ with non-negative entries:
 %
@@ -136,10 +136,10 @@ Additional constraints can be imposed on $\bm{W}$ and $\bm{H}$ matrices. Imposin
 
 \subsection{Gamma - Poisson model \label{sub:GaP}}
 A generative model for NMF \autoref{eq:NMF model} is represented by the gamma-Poisson (GaP) model. This model has been proposed by John Canny \cite{Canny2004} as a probabilistic model for documents. The entries $h_{kt}$ of the intensity matrix $\bm{H}$ in \autoref{eq:NMF model element-wise} are regarded as latent variables generated from a Gamma distribution with parameters $\alpha_k, \beta_k$ and the data are modelled as a Poisson variable with mean $\bm{WH}$. Variables $\theta = \{\bm{w}_k,\alpha_k, \beta_k\}; k = 1..K$ are then parameters of the GaP model.
+\afterpage{\clearpage}
+%==========================================
+%==========================================
 
-%==========================================
-%==========================================
-\clearpage
 \section{NMF as a natural model for QD data\label{sec: NMF QD}}
 Non-negative matrix factorisation (NMF) \cite{Lee1999,Lee2001} is a natural model for QD data. NMF decomposes a movie of blinking QDs into spatial and temporal parts, i.e.,\ time independent emission profiles of the individual sources (PSFs) and fluctuating intensities of each source, respectively. NMF imposes non-negativity constraints on both the spatial and the temporal components, which are natural constraints for the source profiles and intensities of blinking QDs.
 
@@ -210,26 +210,21 @@ The NMF model is fitted to data iteratively using multiplicative updates \autore
 where $n$ denotes the iteration of the update.
 
 Note that the divergence \autoref{eq:KL divergence} is convex with respect to $\bm{H}$ and $\bm{W}$ individually, but not in both variables together \cite{Lee2001}, leading to local optima.
-
+\afterpage{\clearpage}
 %==========================================
 %==========================================
 
-\clearpage
 \section{Related work \label{sec:NMF related}}
-This section points to published work relevant to the NMF application to QD data. An algorithm for NMF with sparsity constraints is reviewed and demonstrated on simulated data in \autoref{sub:Hoyer}. \Autoref{sub:ICA} discusses the proposed independent component analysis (ICA) as a model for QD data and \autoref{sub:RL deconvolution} shows a link between NMF and the Richardson \textendash{} Lucy deconvolution.
+This section points to published work using NMF as a versatile tool for analysis of biological data in \autoref{sub:NMF in bio}. It also points to work relevant to the NMF application to QD data. An algorithm for NMF with sparsity constraints is reviewed and demonstrated on simulated data in \autoref{sub:Hoyer}. \Autoref{sub:ICA} discusses the proposed independent component analysis (ICA) as a model for QD data and \autoref{sub:RL deconvolution} shows a link between NMF and the Richardson \textendash{} Lucy deconvolution.
 
 %==========================================
-\subsection{NMF in biological research}
+\subsection{NMF in biological research\label{sub:NMF in bio}}
 
-NMF has been recently been used for analysis of biological data. The review of NMF as a data analytical and interpretive tool in computational biology can be found in \cite{Devarajan2008}. The most common application of NMF in computational biology has been in the area of molecular pattern discovery, especially for gene and protein expression microarray studies. NMF is well suited method for this problem as there is no a priori information about the expected expression pattern for a given set of genes. The $N\times T$ data matrix $\bm{D}$ in the NMF model \autoref{eq:NMF approx} is created from the observation of the expression levels of $N$ genes (typically thousands) in $T$ different samples (typically less than 100). The columns of $N\times K$ matrix $\bm{W}$ are the linear combination of genes and are often called ``metagenes''.  The columns of the $K\times T$ matrix $\bm{H}$ represent the metagene expression pattern of the corresponding sample.
+NMF has been recently used for analysis of various biological data. The review of NMF as a data analytical and interpretive tool in computational biology can be found in \cite{Devarajan2008}. The most common application of NMF in computational biology has been in the area of molecular pattern discovery, especially for gene and protein expression microarray studies. NMF is well suited method for this problem as there is no a priori information about the expected expression pattern for a given set of genes. The $N\times T$ data matrix $\bm{D}$ in the NMF model \autoref{eq:NMF approx} is created from the observation of the expression levels of $N$ genes (typically thousands) in $T$ different samples (typically less than 100). The columns of $N\times K$ matrix $\bm{W}$ are the linear combination of individual genes and are often called ``metagenes''.  The columns of the $K\times T$ matrix $\bm{H}$ represent the metagene expression pattern in the corresponding sample.
 
-NMF has proved to be a successful method in the recovery of biologically meaningful classes. For example, Kim and Tidor \cite{Kim2003} applied NMF as a tool to cluster genes and predict functional cellular relationships in yeast using gene expression data, while Heger and Holm \cite{Heger2003} used it for the recognition of sequence patterns among related proteins. Brunet et al. \cite{Brunet2004} applied it to cancer microarray data for the recovery of tumor subtypes. They also developed a method for selecting the number of metagenes $K$. Each sample (total $T$ samples) is placed into a cluster corresponding to the most highly expressed metagene in the sample. E.g. sample $j$ is placed in cluster $i$ if the $h_{ij}$ is the largest entry in column $j$ of the matrix $\bm{H}$. They define a $T\times T$ connectivity matrix $\bm{C}$ with entry $c_{ij}=1$ if samples $i$ and $j$ belong to the same cluster abd $c_{ij}=0$ if they belong to different clusters. The consensus matrix $\bar{\bm{C}}$ is computed as an averge over $\bm{C}$ resulting from many ($\sim100$) runs of NMF. The entries of $\bar{\bm{C}}$ represent the probability that samples $i$ and $j$ will cluster together. If the clustering is stable teh values of $\bar{\bm{C}}$ will be close to either $0$ or $1$. They proposed a measure of stability based on a cophonetic correlation coefficient $\rho_K$ which indicates the dispersion of the consensus matrix for a given number of components $K$. In a perfect consensus matrix, where all entries are either $0$ or $1$ the cophonetic correlation coefficient $\rho_K=1$. If the entries of $\bar{\bm{C}}$ are scattered between $0$ and $1$ the value is $\rho_K<1$. They compute $\rho_K$ for a range of $K$s and select the one wher $\rho_K$ begins to fall. However, inspecting the provided figures we can observe that $\rho_K$ drops rather gradually and unambiguous estimateion of $K$ is difficult. Also note that for each value of $K$ the NMF has to be evaluated $\sim 100$ times to  estimate the consensus matrix $\bar{\bm{C}}$. This is feasible only for small $K$ ($<5$), which is typically case in the gene expression data. However, this method of $K$ estimation is prohibitive for our application of NMF to QD data, where then typical $K$s are in the range of $10-100$.
+NMF has proved to be a successful method in the recovery of biologically meaningful classes in gene-expression data. For example, Kim and Tidor \cite{Kim2003} applied NMF as a tool to cluster genes and predict functional cellular relationships in yeast, while Heger and Holm \cite{Heger2003} used it for the recognition of sequence patterns among related proteins. Brunet et al. \cite{Brunet2004} applied NMF to cancer microarray data for the recovery of tumour subtypes. They also developed a method for selecting the number of metagenes $K$: each sample (total $T$ samples) is placed into a cluster corresponding to the most highly expressed metagene in the sample. E.g. sample $j$ is placed in cluster $i$ if the $h_{ij}$ is the largest entry in column $j$ of the matrix $\bm{H}$. They define a $T\times T$ connectivity matrix $\bm{C}$ with entry $c_{ij}=1$ if samples $i$ and $j$ belong to the same cluster and $c_{ij}=0$ if they belong to different clusters. The consensus matrix $\bar{\bm{C}}$ is computed as an average over $\bm{C}$ resulting from many ($\sim100$) runs of NMF. The entries of $\bar{\bm{C}}$ represent the probability that samples $i$ and $j$ will cluster together. If the clustering is stable then the values of $\bar{\bm{C}}$ will be close to either $0$ or $1$. They proposed a measure of stability based on a cophonetic correlation coefficient $\rho_K$ which indicates the dispersion of the consensus matrix for a given number of components $K$. In a perfect consensus matrix, where all entries are either $0$ or $1$ the cophonetic correlation coefficient $\rho_K=1$. If the entries of $\bar{\bm{C}}$ are scattered between $0$ and $1$ the value is $\rho_K<1$. They compute $\rho_K$ for a range of $K$s and select the one where $\rho_K$ begins to fall. However, inspecting the provided figures in \cite{Brunet2004} we can observe that $\rho_K$ drops rather gradually and unambiguous estimation of $K$ is difficult. Also note that for each value of $K$ the NMF has to be evaluated $\sim 100$ times to  estimate the consensus matrix $\bar{\bm{C}}$. This is feasible only for small $K$ ($<5$), which is typically case in the gene expression data. However, this method of $K$ estimation is prohibitive for our application of NMF to QD data, where then typical $K$s are in the range of $10-100$.
 
-Rabinovich et al. \cite{Rabinovich2003} has proposed NMF for accurate automated spectral decomposition of histologically stained tissue sections. The images ($N$ pixels) stained with {\it known} number of colors $K$ are recoreded in $T$ spectral channels creatint the $N\times T$ data matirx $\bm{D}$. NMF decomposes this matrix into $\bm{W}$, with entries $w_ij$ indicating the contribution of the  $j$ the dye into the $i$th pixel and the rows of the matrix $\bm{H}$ represent the spectra of each dye. They have found similar performance of NMF and independent component analysis (ICA) by comparing the results to the ground truth data. Note, that the selection of $K$ is dictated by the number of colors used for histological staining and tehrefor no algorithm for $K$ estimation is needed. Similarly the NMF has been used  fior fluresecnece microcopy data by Neher et al. \cite{Neher2009}. In this case, the  fluorescence images were recorded under excitation with different wavelength of the excitation light. The spatial distribution and excitation spectral properties of different fluorescent labels ($K$ is known) were estimted from the factorised matrices $\bm{W}$ and $\bm{H}$, respecitvely.
-
-
-% a model selection algorithm for NMF based on consensus clustering [42] that enables the choice of the appropriate number of clusters in a dataset. Similarly, Gao and Church [43] applied the Sparse NMF approach [20] for uncovering cancer subtypes using microarray data. A similar approach is described by Kim and Park [44]. Carrasco et al. [45] applied NMF for unsupervised clustering of array comparative genomic hybridization data and identified distinct genomic subtypes as well as patient subgroups in multiple myeloma (MM). Their analysis uncovered four distinct subclasses, revealing the molecular heterogeneity of MM and the division of the traditional hyperdiploid class into two subclasses.
-%%%
+Rabinovich et al. \cite{Rabinovich2003} has proposed NMF for accurate automated spectral decomposition of histologically stained tissue sections. The images ($N$ pixels) stained with {\it known} number of colours $K$ are recorded in $T$ spectral channels creating the $N\times T$ data matrix $\bm{D}$. NMF decomposes this matrix into $\bm{W}$, with entries $w_{ij}$ indicating the contribution of the  $j$th the dye into the $i$th pixel and the rows of the matrix $\bm{H}$ represent the spectra of each dye. They have found similar performance of NMF and independent component analysis (ICA) by comparing the results to the ground truth data. Note, that the selection of $K$ is dictated by the number of colours used for histological staining and therefore no algorithm for $K$ estimation is needed. Similarly the NMF has been used  for fluorescence microcopy data by Neher et al. \cite{Neher2009}. In this case, the  fluorescence images were recorded under excitation with different wavelength of the excitation light. The spatial distribution and excitation spectral properties of different fluorescent labels ($K$ is known) were estimated from the factorised matrices $\bm{W}$ and $\bm{H}$, respectively.
 
 NMF has also been used in variety of disciplines directly related to optical microscopy. Pande et al. \cite{Pande2012} use NMF for analysis of multispectral time-domain fluorescence life time imaging (FLIM) data. The spatio-temporal/spectral data were obtained by measuring the fluorescent decay in different positions (raster scan) of the sample. The fluorescent decay in three spectral channels has been recorded in each position. The $T$ columns of the $N\times T$ data matrix $\bm{D}$ in \autoref{eq:NMF approx} has been created by concatenating the decays from the three channels into $N\times 1$ vector for each pixel ($T$ pixels in total). Note that the spatial and temporal/spectral domain are reversed when compared to our application to QD data in \autoref{sec: NMF QD}. The $N\times K$ NMF estimated components ($\bm{W}$ in \autoref{eq:NMF approx}) were interpreted as spectral signatures of pure components. The $K\times T$ components $\bm{H}$  (see \autoref{eq:NMF approx}) were interpreted as the quantity of the pure components in each pixel and therefore provide information about the  composition in each position. The three recovered pure components were identified with the spectral signature ($\bm{W}$) as collagen, lipids and elastin. The spatial matrix $\bm{H}$ then provides information about the content of each constituent in different positions of the specimen. The recovery of $K=3$ components from the measured data was based on the biochemical understanding of the specimen (histological section of a human coronary artery tissue). The work does not address the estimation of $K$ in more general cases.
 
@@ -343,11 +338,10 @@ The updates for $\bm{o}$ and $\bm{w}$ are technically identical to the Lee and S
 Modified updates imposing radial symmetry constraints on the PSF were also proposed. There exist several modified updates derived using EM algorithm which impose some constraints on $\bm{o}$ or $\bm{w}$. Joshi \cite{Joshi:93} gives updates, where Good's roughness measure ($\int\frac{\left|\nabla f(x)\right|^2}{f(x)}dx$) on the original image $\bm{o}$ is used as a regularisation term. This biases the solution towards the smooth images and avoids speckle artefacts in the reconstructions, that are sometimes experienced in deconvolution methods. 
 
 Fish et al. \cite{Fish1995} use blind RL algorithm (updates on both $\bm{o}$ and $\bm{w}$) but after some number of iterations they fit an approximation of the PSF to the estimated $\bm{w}$ and use this fit as a new $\bm{w}$. They claim that in noisy images this ``semi-blind'' deconvolution can perform better than the one with known PSF. The comparison of the regularised RL versions and some other deconvolution techniques has been shown in \cite{Kempen1997BA,Verveer1999}. RL usually performs well for noisy images.
-
+\afterpage{\clearpage}
 %==========================================
 %==========================================
 
-\clearpage
 \section{Simulations \label{sec:simulations}}
 In this section we describe how we generated the simulated datasets. Simulated data were used for testing the performance of the algorithm in different experimental settings.
 %Main competitors 3B \cite{Cox2011}, CSSTORM \cite{Zhu2012} and SOFI \cite{Dertinger2009}.	
@@ -468,11 +462,10 @@ A dataset with sources arranged in a shape of a hash symbol (\#) was used for te
 \end{figure} 
 %
 The distance $d$ between the parallel lines and the linear density of the sources $\mu$ were two main parameters of the structure. The brightness and the background values are shown in \autoref{tab:Simulations parameters}. \Autoref{fig:simulated data hash} shows several frames of the simulated dataset for different linear densities $\mu$ and distances between parallel lines $d$. The distance $d=150\unit{nm}$ corresponds to the half of the Airy disk radius. The mean projections of the frames are shown in \autoref{fig:simulated data hash - mean}.  
-
+\afterpage{\clearpage}
 %==========================================
 %==========================================
 
-\clearpage
 \section{Evaluation of the results\label{sec:evaluation}}
 
 The performance of the algorithm applied on a simulated dataset can be quantitatively measured, because the true locations of the sources are known. We used several measures to compare the performance on simulated datasets consisting of randomly scattered in-focus PSFs (see \autoref{fig:simulated data random}). 
@@ -546,11 +539,10 @@ Average precision (AP) is then defined as the mean of interpolated precision:
 	AP=\frac{1}{11}\sum_{\tilde{R}}{P_{interp}(\tilde{R})}.
 	\label{eq:AP}
 \end{equation}
-
+\afterpage{\clearpage}
 %==========================================
 %==========================================
 
-\clearpage
 \section{NMF for realistic microscopy datasets \label{sec:NMF-for-real}}
 
 NMF becomes challenging when applied to a dataset with large number ($\sim 10^3$) of images, each containing more than $10^4$ pixels and more than $10^2$ QDs. Beside long computational time (teh computational complexity of the NMF updates scales linearly with the number of pixels - see \autoref{sec:NMF}), the local minima in NMF fitting complicate the optimisation \cite{Kim2008}. 
@@ -706,9 +698,9 @@ A reliable estimation of $K$ is a difficult task for higher source densities. \A
 Both LB and ACR require evaluation of the model for a reasonable range of possible $K$s. The range can be estimated from PCA  (\autoref{fig:K estimation hist}\ccc), because the principal coefficients can be computed directly from the data matrix $\bm{D}$.
 
 In the following section we will be discussing an iterative procedure of the NMF algorithm (\inmf{}) which can deal with moderate overestimation of $K$  (estimated from PCA). The correct number of sources can be estimated additionally by analysing the optimised matrix $\bm{W}$ and selecting the ``credible'' sources $\bm{w}_k$. Therefore evaluation for only one overestimated value of $K$, rather than a range of $K$s, is required. The histogram of the $K$s estimated with the iterative algorithm is shown in  \autoref{fig:K estimation hist}\ddd{} for comparison. \inmf{} gives the most accurate estimates. 
-
+\afterpage{\clearpage}
 %==========================================
-\clearpage
+
 \subsection{Tackling local optima in NMF fitting with iterative restarts \label{sub: Iterative restarts}}
 
 Although the Lee and Seung algorithm is convex with respect to $\bm{W}$ and $\bm{H}$ separately, it is non-convex in both simultaneously \cite{Lee2001}. Multiple restarts can be used to address the problem of local optima, but we have not found good solutions with this approach. NMF tends to get persistantly stuck in the local optima of the optimisation landscape. Instead, we exploit some prior knowledge about the problem, namely that the PSFs are likely to have a fairly compact structure (see \autoref{fig:Simulted-PSF-different-focal-depths}). As the estimated sources $\bm{w}_k$ are normalised to have the $L_1$ norm equal to one (i.e.,\ $\sum_j w_{jk}=1$, see \autoref{sec: NMF QD}), we use the inverse $L_2$ norm to rank the columns $\bm{w}_k$'s of the matrix $\bm{W}$. Note that Hoyer's sparsity \autoref{eq:Hoyers sparsity} is an $L_1/L_2$ measure normalised to the $[0..1]$ interval \cite{Kim2008}. 
@@ -1043,10 +1035,10 @@ As we show in \autoref{fig:visualisation gaussf}\ccc, the visualisation of a sin
 \end{figure}
 
 The power parameter $p$ defines the final ``resolution'' in the reconstructed image. Larger values of $p$ give ``higher resolution'' but the reconstructed structures are more ``discontinuous''. \Autoref{fig:demo pow w result} shows the sum projection of ten \inmf{} runs for different values of $p$. This image can be compared with the conventional visualisation in \autoref{fig:visualisation gaussf}\ccc,\ddd. 
+\afterpage{\clearpage}
+%==========================================
+%==========================================
 
-%==========================================
-%==========================================
-\clearpage
 \section{Results \label{sec:results}}
 We used simulated data for exploring the behaviour of \inmf{} in different experimental regimes. In \autoref{sub:results - blinking behaviour} and \ref{sub:results - number of frames} we used the average precision and the estimated density as a quantitative quality assessments of the algorithm performance on simulated data. 
 
@@ -1401,8 +1393,8 @@ It should be noted that the estimated density and AP from the sum projection for
 %\end{figure}
 
 %==========================================
+\afterpage{\clearpage}
 
-\clearpage
 \subsection{Comparison with other methods - artificial structure\label{sub:results - comparison - structure}}
 The experiments shown above are useful for a quantitative comparison of the different methods. The criterion for the quality assessment of the results was the ability to precisely estimate locations of the individual emitters.  Randomly scattered sources are, however, of little practical interest. The main motivation of super-resolution microscopy is to recover sub-diffraction details of a sample structure. Therefore we used simulated data with sources attached to an artificial structure to further compare the performance of the three methods. The simulated data are illustrated in \autoref{sub:Simul hash} with main parameters shown in \autoref{tab:Simulations parameters}. The distance between the parallel lines was set to $d=150\unit{nm}$ ($1.8 \unit{pixels}$), which corresponds to half the Airy disk's radius (see \autoref{tab:Simulations parameters}). The linear density was set to $\mu = 15\um^{-1}$ which corresponds to approximately $67\ \unit{nm}$ spacing between adjacent sources. We used the same blinking behaviour (\autoref{fig:blinking}\ddd) as for the randomly scattered sources describe above. The sum projection of the data frames, equivalent to the wide-field image is shown in \autoref{fig:comparison hash dens 12}\aaa.
 %
@@ -1548,10 +1540,10 @@ Each of the method requires a number of parameters to be explicitly set by user 
 For visualisation purposes all methods require setting of the oversampling rate of the resulting images of the results in addition. There is also a parameter for a slight ``blurring'' of the results: the variance of the Gaussian kernel for 3B and CSSTORM  (see \autoref{sub:results - comparison}) and the ``power'' parameter $p$ for \inmf{} (see \autoref{fig:demo pow w result}).
 
 Note that these are only the parameters explicitly set by user. There are more parameters within each algorithm that are pre-set to their ``optimal'' values. 
-
+\afterpage{\clearpage}
 
 %==========================================
-\clearpage
+
 \subsection{Out-of-focus PSFs\label{sub:results - out of focus PSF}\label{sub:results - out of focus PSF real data}}
 %
 \begin{figure}[!tb]	
@@ -1670,7 +1662,8 @@ For the simulated data of slanted bar \autoref{fig:Data-true-estimations}\aaa, I
 %
 For the real data of randomly scattered QDs \autoref{fig:Real-data-QDrandom}\aaa, some of the ICA estimated sources resemble the out-of-focus PSFs (for example, components 4 and 7 in \autoref{fig:ICA QD random}), however most of the sources contain large regions of negative values (blue pixels in \autoref{fig:ICA QD random}) and the overall quality is inferior to the \inmf{} results \autoref{fig:Real-data-QDrandom}\bbb. Most of the estimated components clearly combine several overlapping PSFs together (components 1, 9 and 12, for example). 
 %==========================================
-\clearpage
+\afterpage{\clearpage}
+
 \subsection{Real data: QD stained tubulin fibres\label{sub:results - tubulin}}
 We applied the pipeline described in \autoref{sec:NMF-for-real} to a stack of $T=10^3$ frames ($128\times128$ pixels) of $\alpha$-tubulin fibres of a 3T3 fibroblast cell imuno-labelled with QDs (QD625, \emph{Invitrogen}). The experimental parameters are shown in \autoref{tab:parameters experiment}.
 
@@ -1882,11 +1875,12 @@ We compared performance of \inmf{}, CSSTORM and the 3B analysis on one patch of 
 	\caption{Parameters of the experiment.}\label{tab:Parameters of the (a) simulations (b) real data}
 	\label{tab:parameters experiment}
 \end{table}
+\afterpage{\clearpage}
 
 %==========================================
 %==========================================
 
-\clearpage
+
 \section{Discussion\label{sec:Discussion}}
 
 \inmf{} can recover individual highly overlapping sources of arbitrary shape. In the preliminary work \cite{Mandula2010b}, we demonstrated on simulated data that \inmf{} can separate \emph{two} sources as close as $\sim \delta/7$ ($\sim \lambda_{em}/15 = 40 \unit{nm}$ for $\lambda_{em}=625 \unit{nm}$, $1000$ frames, mean intensity $500$ photons/source/frame and background 100 photons/pixel/frame). The emitters were simulated with uniformly distributed blinking behaviour (see \autoref{fig:blinking}\aaa), where both sources are present in almost all frames. However, as we discuss below, the situation becomes increasingly difficult with larger number of sources in the sub-resolution area.
@@ -1937,10 +1931,10 @@ The ability to recover the individually different overlapping sources makes \inm
 The more promising strategy for determining the axial position of the emitters might be using a tailored PSF, such as the double helix PSF \cite{Quirin2011} or the PSF with introduced astigmatism \cite{Huang2008}. Such PSFs specifically change their shapes with the axial location. Moreover, the PSF, however distorted, remains fairly compact over an interval of several micrometres. The difference in the brightness of the in-focus and out-of-focus PSFs is less pronounced (the in-focus PSF is less bright than the one in the system without aberrations), facilitating the separation of individual overlapping emitters. Testing \inmf{} on data with tailored PSF \cite{Huang2008,Quirin2011} might be a subject for future work. 
 
 Note that \inmf{} assumes the sources are spatially fixed during the acquisition ($\sim 1$ min). Significant movement of the specimen during the data acquisition would produce artifacts. \inmf{} can therfore be used only to live cells with movement on the scale of minutes (``slowly'' moving cells). The total acquisition time can be shortened by reducing the number of frames. However, this can make recovery of individual sources from high density data difficult (\autoref{fig:AP subsampled}). As pointed out by Shroff et al. \cite{Shroff2008} there is a trade-off between the spatial and the temporal resolution in LM.
- 
+\afterpage{\clearpage} 
 %==========================================
 %==========================================
-\clearpage
+
 \section{Conclusion\label{sec:Conclusion}}
 
 In this chapter we demonstrated the non-negative matrix factorisation (NMF) as a natural model for microscopic samples labelled with quantum dots. We described a practical pipeline for the evaluation and the visualisation of realistic datasets. The individual steps of the pipeline were illustrated on simulated data.
