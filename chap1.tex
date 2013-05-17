@@ -50,14 +50,14 @@ Modelling the whole dataset from a known PSF with maximum posterior (MAP) fittin
 	\centering
 	\condcomment{\boolean{includefigs}}{ 
 	\subfloat[Intensity scaled to the in-focus PSF]{
-	\includegraphics[width=\widthfig]{\qd S393/images/psf_outOfFocus_scaled}}\\
+	\includegraphics[width=\widthfig]{\qd S393/images/psf_outOfFocus_scaled_scaleBar1um}}\\
 	\subfloat[Intensity scaled for each frame]{
 	\begin{tabular}{l}
-		\includegraphics[width=\widthfig]{\qd S393/images/psf_outOfFocus}\vspace{\barspace}\tabularnewline		
+		\includegraphics[width=\widthfig]{\qd S393/images/psf_outOfFocus_scaleBar1um}\vspace{\barspace}\tabularnewline		
 		\includegraphics[width=\widthfig]{\qd S393/images/psf_outOfFocus_intBars}
 	\end{tabular}}
 	}	
-	\caption{Simulated PSF in different depths of focus.  The number in each figure indicates the distance in $\um$ from the in-focus plane. (a) Intensity scaled to the in-focus PSF. (b) Intensity scaled in each frame. The maximum intensity relative to the in-focus PSF is indicated in the bars below and corresponds to about 10\% at $1\um$ and 3\% at $1.5\um$.}
+	\caption{Simulated PSF in different depths of focus.  The number in each figure indicates the distance in $\um$ from the in-focus plane. (a) Intensity scaled to the in-focus PSF. (b) Intensity scaled in each frame. The maximum intensity relative to the in-focus PSF is indicated in the bars below and corresponds to about 10\% at $1\um$ and 3\% at $1.5\um$. Scale bar $1\um$.}
 	\label{fig:Simulted-PSF-different-focal-depths}
 \end{figure}
 %
@@ -250,37 +250,37 @@ Note that the assumption that all columns have identical ``sparseness'' might be
 
 Hoyer's sparse NMF algorithm minimises $\|\bm{D} - \bm{WH}\|^2$ rather than the KL divergence \autoref{eq:KL divergence}. This cost function corresponds to the Gaussian rather than Poisson noise assumption, which can be significant especially for low-intensity images (fast acquisition time, for example). 
 
-\begin{figure}[!tb] %copied from S433_report.tex
+\begin{figure}[!tbh] %copied from S433_report.tex
 	\newcommand{\sizefig}{.9}
 	\centering
 	\subfloat[$10 \unit{sources/\um^2}$]{	
-	\includegraphics[scale=\sizefig]{\qd S429/figures/resN_simiter1_1to14}}\\
+	\includegraphics[scale=\sizefig]{\qd S429/figures/resN_simiter1_1to7}}\\
 %	\subfloat[$20 \unit{sources/\um^2}$]{	
 %	\includegraphics[scale=\sizefig]{\qd S430/figures/resN_simiter1_1to14}}\\
 	\subfloat[$30 \unit{sources/\um^2}$]{	
-	\includegraphics[scale=\sizefig]{\qd S431/figures/resN_simiter1_1to14}}\\
+	\includegraphics[scale=\sizefig]{\qd S431/figures/resN_simiter1_1to7}}\\
 %	\subfloat[$40 \unit{sources/\um^2}$]{	
 %	\includegraphics[scale=\sizefig]{\qd S432/figures/resN_simiter1_1to14}}\\
 	\subfloat[$50 \unit{sources/\um^2}$]{	
-	\includegraphics[scale=\sizefig]{\qd S433/figures/resN_simiter1_1to14}}\\	
-	\caption{$\bm{W}$ estimated with Hoyer's algorithm with no sparsity constraints. This corresponds to conventional NMF. Evaluation of the simulated data of randomly scattered sources with different densities. Shown first 14 estimated components.}
+	\includegraphics[scale=\sizefig]{\qd S433/figures/resN_simiter1_1to7}}\\	
+	\caption{$\bm{W}$ estimated with Hoyer's algorithm with no sparsity constraints. This corresponds to conventional NMF. Evaluation of the simulated data of randomly scattered sources with different densities. Shown first 7 estimated components.}
 	\label{fig: Hoyer no sparsity constraint}
 \end{figure}
 
-\begin{figure}[b!] %copied from S433_report.tex
+\begin{figure}[htb!] %copied from S433_report.tex
 	\newcommand{\sizefig}{.9}
 	\centering
 	\subfloat[$10 \unit{sources/\um^2}$]{	
-	\includegraphics[scale=\sizefig]{\qd S429/figures/res07_simiter1_1to14}}\\
+	\includegraphics[scale=\sizefig]{\qd S429/figures/res07_simiter1_1to7}}\\
 %	\subfloat[$20 \unit{sources/\um^2}$]{	
 %	\includegraphics[scale=\sizefig]{\qd S430/figures/res07_simiter1_1to14}}\\
 	\subfloat[$30 \unit{sources/\um^2}$]{	
-	\includegraphics[scale=\sizefig]{\qd S431/figures/res07_simiter1_1to14}}\\
+	\includegraphics[scale=\sizefig]{\qd S431/figures/res07_simiter1_1to7}}\\
 %	\subfloat[$40 \unit{sources/\um^2}$]{	
 %	\includegraphics[scale=\sizefig]{\qd S432/figures/res07_simiter1_1to14}}\\
 	\subfloat[$50 \unit{sources/\um^2}$]{	
-	\includegraphics[scale=\sizefig]{\qd S433/figures/res07_simiter1_1to14}}\\	
-	\caption{Sparsity constraints $s=0.7$ on $\bm{W}$ estimated with Hoyer's algorithm from simulated data of randomly scattered sources with different densities. Shown first 14 estimated components.}
+	\includegraphics[scale=\sizefig]{\qd S433/figures/res07_simiter1_1to7}}\\	
+	\caption{Sparsity constraints $s=0.7$ on $\bm{W}$ estimated with Hoyer's algorithm from simulated data of randomly scattered sources with different densities. Shown first 7 estimated components.}
 	\label{fig: Hoyer sparsity 0.7}
 \end{figure}
 
@@ -288,6 +288,7 @@ We used simulated data of randomly scattered sources with densities $10-50\,\um^
 
 \Autoref{fig: Hoyer no sparsity constraint} shows estimated $\bm{W}$ with Hoyer's algorithm without sparsity constraints. This corresponds to conventional NMF. Note that most of the $\bm{w}_k$ for higher densities contain multiple sources \autoref{fig: Hoyer no sparsity constraint}\bbb,\ccc. Imposing the sparsity constraints $s=0.7$ on the columns of $\bm{W}$, estimated from the true PSF, gives better estimated sources for densities$<30\um^{-2}$  \autoref{fig: Hoyer sparsity 0.7}\aaa, however, for dense data the method fails to recover the individual sources and gives unsatisfactory results, see \autoref{fig: Hoyer sparsity 0.7}\ccc.
 
+\afterpage{\clearpage}
 %==========================================
 
 \subsection{Independent component analysis\label{sub:ICA}}
@@ -421,7 +422,7 @@ The ability of the algorithm to separate individual overlapping sources was test
 \end{figure} 
 
 %==========================================
-\afterpage{\clearpage}
+\clearpage
 \subsection{Artificial structure\label{sub:Simul hash}}
 % 
 \cut{confusion with densities -> in simulations the density is in pixels^{-1} but here is in um^{-1}}
