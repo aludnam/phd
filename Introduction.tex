@@ -28,7 +28,7 @@ The number of scientific publications in recent years shows that even after four
 %==========================================
 %==========================================
 
-\section{Point spread function}
+\section{Point spread function\label{sec:PSF}}
 
 An important characteristic of a microscope is the so-called ``point spread function'' (PSF). The PSF represents an image of a point source. The image $i(x)$ of a specimen produced by an optical microscope can be described as a convolution between the object (specimen) $o(x)$ and the point spread function $q(x)$:
 %
@@ -68,7 +68,7 @@ The $\unit{NA}$ is defined as
 	\label{eq:NA}
 \end{equation}
 %
-where $n$ is the refractive index of the immersion medium and $2\theta$ is the angle of the light cone entering the objective. Note that the refractive index is a fucntion of wevelength $n\sim n(\lambda)$. Dispersion in the sample and in the optics can lead to the PSF corrupted with spherical aberration when a range of wavelengths is used \cite{SCALETTAR1996}.
+where $n$ is the refractive index of the immersion medium and $2\theta$ is the angle of the light cone entering the objective. Note that the refractive index is a function of wavelength $n\sim n(\lambda)$. Dispersion in the sample and in the optics can lead to the PSF corrupted with spherical aberration when a range of wavelengths is used \cite{SCALETTAR1996}.
 
 An intensity profile of an unaberrated PSF is shown in \autoref{fig:PSF}. The Airy pattern is also compared to the popular approximation of the PSF with a Gaussian function \cite{Zhang2007} defined by a standard deviation
 %
@@ -123,7 +123,7 @@ The introduction of fluorescence microscopy in the 20\ths\ century has revolutio
 
 Fluorescence labels can be attached to the structures of interest with high specificity and provide a strong intensity contrast in the microscopic image of the specimen. Fluorescent proteins (FPs) allow for direct expression of the fluorescent marker by the organism itself \cite{Fernandez-Suarez2008}. FPs have further redefined the use of fluorescence microscopy in cell biology as a nearly non-invasive and highly specific technique. 
 
-The first fluorescent protein used in microscopy (green fluorescent protein - GFP) has been isolated from the jellyfish {\it Aequorea victoria} \cite{Tsien1998}. Nowadays, modified versions of GFP and a rich variety of fluorescent dyes cover the emission across the whole visible spectral range \cite{Fernandez-Suarez2008}. Photo-activable and photo-switchable fluorescent proteins and dyes have also been discovered, and are used in specific applications and microscopy methods \cite{Bock2007,Hirvonen2008, Rego2011a}. The 2008 Nobel Prize in Chemistry was awarded to Martin Chalfie, Osamu Shimomura, and Roger Y. Tsien for their discovery and development of the GFP.
+The first fluorescent protein used in microscopy (green fluorescent protein - GFP) has been isolated from the jellyfish {\it Aequorea victoria} \cite{Tsien1998}. Nowadays, modified versions of GFP and a rich variety of fluorescent dyes cover the emission across the whole visible spectral range \cite{Fernandez-Suarez2008}. Photo-activable and photo-switchable fluorescent proteins and dyes have also been discovered, and are used in specific applications and microscopy methods, see e.g.\ \cite{Bock2007,Hirvonen2008, Rego2011a}. The 2008 Nobel Prize in Chemistry was awarded to Martin Chalfie, Osamu Shimomura, and Roger Y. Tsien for their discovery and development of the GFP.
  
 %==========================================
 %==========================================
@@ -132,7 +132,7 @@ The first fluorescent protein used in microscopy (green fluorescent protein - GF
 
 Quantum dots (QDs), recently used in biological research, are promising fluorescent labels.  QDs are inorganic crystals composed of 100-100,000 atoms of substances such as cadmium selenide (CdSe), with diameter $\sim2-10\unit{nm}$ \cite{Alivisatos1996}. QDs are often coated with a zinc sulphide (ZnS) shell conjugated with an antibody molecule. The diameter of the coated QDs is $\sim10-30\unit{nm}$. The emission wavelength can be tuned by the diameter of the QD core. QDs tend to have a broad excitation spectrum and a narrow emission spectrum when compared to the standard fluorescent dyes/proteins. This facilitates the multicolour imaging with QDs. QDs are also exceptionally photo-stable. It has been reported that QDs illuminated with continuous $\sim 50\unit{mW}$ laser do not bleach even after $14\unit{h}$, whereas the standard fluorescent dye ``fluorescein'' completely bleaches in less than 20 mins \cite{Jaiswal2004}. Moreover, QDs are an order of magnitude brighter than the traditional fluorophores \cite{Resch-Genger2008,Walling2009}. 
 
-Commercially available QDs have a polymer coating with a covalently attached linker, or are conjugated with an antibody molecule. This allows them to be specifically attached to the structure of interest in the specimen the same way as the standard fluorescent labels. However, coated QDs are relatively big ($\sim10-30\unit{nm}$) compared to the fluorescent dyes (fluorescenin size is $\sim1\unit{nm}$) or fluorescent proteins (GFP size is $\sim5\unit{nm}$). Therefore QDs cannot diffuse through the cell membrane, which complicates the labelling of the structures in the interior of the cell. 
+Commercially available QDs have a polymer coating with a covalently attached linker, or are conjugated with an antibody molecule. This allows them to be specifically attached to the structure of interest in the specimen the same way as the standard fluorescent labels. However, coated QDs are relatively big ($\sim10-30\unit{nm}$) compared to the fluorescent dyes (fluorescein size is $\sim1\unit{nm}$) or fluorescent proteins (GFP size is $\sim5\unit{nm}$). Therefore QDs cannot diffuse through the cell membrane, which complicates the labelling of the structures in the interior of the cell. 
 
 An interesting property of the QDs is that they exhibit ``fluorescence blinking'' (fluorescence intermittency) under continuous excitation. QDs switch between the ON episodes of a rapid absorption-fluorescence cycling and the OFF episodes, where no light is emitted despite the continuous excitation. Both ON-time ($\tau_{ON}$) and OFF-time ($\tau_{OFF}$) probability densities follow an inverse power law $P(\tau_{ON/OFF})\propto1/\tau_{ON/OFF}^{m}$ \cite{Kuno2001, Stefani2009}. A comparison of QDs and the standard fluorescent dyes is described in the Resch-Genger et al. review article \cite{Resch-Genger2008}.
 

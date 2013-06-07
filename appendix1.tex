@@ -7,7 +7,7 @@ The classic NMF updates \cite{Lee2001} minimise the generalised Kullback \texten
 	\mbox{KL}(\bm{D}\parallel\bm{WH})=-\sum_{xt}\left(d_{xt}\log\sum_{k=1}^Kw_{xk}h_{kt}-\sum_{k=1}^Kw_{xk}h_{kt}\right)+C,
 	\label{app-eq:KL}
 \end{equation}
-where $C$ is a constant independent on $\bm{W}$ or $\bm{H}$. The optimisation can be solved by a scaled gradient descent method:
+where $C$ is a constant independent on $\bm{W}$ or $\bm{H}$. In \autoref{sec: NMF QD} we show that minimising the KL divergence is equivalent to maximising the likelihood of the model under assumption of Poisson noise (see \autoref{eq:NMF model likelihood} and \autoref{eq:KL divergence}). The optimisation can be solved by a scaled gradient descent method:
 %
 \begin{alignat}{1}
 	\bm{W} & =\bm{W}-\alpha^{W}\frac{\partial f(\bm{W,H})}{\partial \bm{W}}\nonumber \\

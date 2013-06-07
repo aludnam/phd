@@ -1,7 +1,7 @@
 %!TEX root =  thesis.tex
 \chapter{Non-Negative Matrix Factorisation for Localisation Microscopy\label{ch:NMF}}
 
-We propose non-negative matrix factorisation (NMF) as a natural model for localisation microscopy of samples labelled with quantum dots (QDs) or other intermittent fluorophores. NMF can separate the individual highly overlapping sources with individual different shapes. We use the Lee-Seung NMF algorithm \cite{Lee2001}, which accounts for Poisson noise in the recorded images. This allows us to recover the individual intermittent sources from the noisy recordings. The separated sources can be localised with uncertainty smaller than the diffraction limit and provide information about sub-resolution details of the sample structure. In \autoref{sub:visualisation} we show that for flat (2D) samples the localised sources can be further processed and used to reconstruct the super-resolution image of the specimen.
+We propose non-negative matrix factorisation (NMF) as a natural model for localisation microscopy of samples labelled with quantum dots (QDs) or other intermittent fluorophores. NMF can separate the individual highly overlapping sources with individual different shapes. We use the Lee-Seung NMF algorithm \cite{Lee2001}, which accounts for Poisson noise in the recorded images. This allows us to recover the individual intermittent sources from the noisy recordings. The separated sources can be localised with uncertainty smaller than the diffraction limit and provide information about sub-resolution details of the sample structure. We show that for flat (2D) samples the localised sources can be further processed and used to reconstruct the super-resolution image of the specimen.
 
 The chapter is divided into the following sections: \Autoref{sec:LM} introduces the localisation microscopy (LM) technique and discusses the advantages and challenges of using quantum dots as fluorescent labels. It also contains a short review of recent methods dealing with LM data containing overlapping sources. 
 
@@ -9,10 +9,10 @@ The chapter is divided into the following sections: \Autoref{sec:LM} introduces 
 
 \Autoref{sec: NMF QD} shows NMF as a natural model for intermittent overlapping QDs and \autoref{sec:NMF related} discusses the alternative methods used for treating QD data. A link to a standard deconvolution technique is also mentioned. 
 
-Application of the NMF algorithm to real microscopic data is explored in \autoref{sec:NMF-for-real}. In this section we also present preliminary results to demonstrate specific problems of the topic.
+We used synthetic data for analysing the performance of the algorithm in different experimental settings. The main simulations used in this chapter are described in \autoref{sec:simulations}. \Autoref{sec:evaluation} explains the evaluation techniques for the comparison of the results. We used averaged precision (AP) as a quantitative measure of the performance of different algorithms using simulated data. AP is sumarises both precison and recall curves.
 
-We used synthetic data for analysing the performance of the algorithm in different experimental settings. The main simulations used in this chapter are described in \autoref{sec:simulations}. \Autoref{sec:evaluation} explains the evaluation techniques for the comparison of the results.
-
+Application of the NMF algorithm to real microscopic data is explored in \autoref{sec:NMF-for-real}. This includes the comparison of the different techniques for estimation of the number of sources in the dataset.  We also present results on how specific problems with the use of NMF on real data were overcome. We also propose different methods for visualisation of the results. 
+	
 Finally, the NMF reconstructed images of synthetic and real data are presented in \autoref{sec:results}. In this section we also compare NMF with two other techniques (CSSTORM, 3B analysis) dealing with a similar problem. 
 
 %==========================================
@@ -22,7 +22,7 @@ Finally, the NMF reconstructed images of synthetic and real data are presented i
 
 Localisation microscopy (LM), is a conceptually simple and accessible technique for super-resolution imaging of fluorescent samples. LM takes as input a stack of images ($10^2-10^4$ frames) containing an unknown number of fluorescent sources (fluorophores) with time-varying intensity and identifies the locations of these sources. If the sources are attached to structures of interest (e.g.\ in biological samples), then this provides useful information about the target structures. Provided enough photons are collected, the localisation of an individual source can be an order of magnitude below the classical diffraction limit \autoref{eq:Airy} \cite{Ober2004}. The super-resolution image is usually produced by visualisation of all estimated positions of the individual fluorophores (``pointillism'' \cite{Lidke2005}). 
 
-LM techniques are based on fluorescent sources with a transition between bright (ON) and dark (OFF) intensity states. Fluorescent proteins or organic dyes are used as fluorophores in the standard techniques (fPALM \cite{Hess2006}, STORM \cite{Rust2006}). In this case the density of the ON sources in each captured frame is controlled by photo-switching and must be optimised experimentally. High density of the ON fluorophores results in overlapping sources and complicates localisation (overlapping sources are usually discarded), whereas low density leads to a long total acquisition time \cite{Small2009}. Several thousands frames are typically required for an image reconstruction. The total acquisiton time can exceed ten minutes (17 mins for $10^4$ frames with $100$~ms acquisition time per frame). 
+LM techniques are based on fluorescent sources with a transition between bright (ON) and dark (OFF) intensity states. Fluorescent proteins or organic dyes are used as fluorophores in the standard techniques (fPALM \cite{Hess2006}, STORM \cite{Rust2006}). In this case the density of the ON sources in each captured frame is controlled by photo-switching and must be optimised experimentally. High density of the ON fluorophores results in overlapping sources and complicates localisation (overlapping sources are usually discarded), whereas low density leads to a long total acquisition time \cite{Small2009}. Several thousands frames are typically required for an image reconstruction. The total acquisition time can exceed ten minutes (17 mins for $10^4$ frames with $100$~ms acquisition time per frame). 
 
 %==========================================
 
@@ -34,7 +34,7 @@ There has been interest in using quantum dots (QDs) as sources for localisation 
 
 \subsection{Overlapping sources\label{sec:Overlapping sources}}
 
-Several techniques dealing with overlapping sources have been proposed recently \cite{Lidke2005,Harrington2008,Huang2011,Holden2011,Cox2011,Zhu2012}. Most of these methods model the LM data using a known image of a single source, the so called point spread function (PSF). Often a single point-spread function (PSF) is assumed to be shared by all sources in the dataset \cite{Harrington2008,Huang2011,Holden2011,Cox2011,Zhu2012}.
+Several techniques dealing with overlapping sources have been proposed recently \cite{Lidke2005,Harrington2008,Huang2011,Holden2011,Cox2011,Zhu2012}. Most of these methods model the LM data using a known image of a single source, the so called point spread function (PSF), see \autoref{sec:PSF}. Often a single point-spread function (PSF) is assumed to be shared by all sources in the dataset \cite{Harrington2008,Huang2011,Holden2011,Cox2011,Zhu2012}.
 
 There are two main groups of the algorithms addressing the overlapping sources in the LM data. The first group operates separately on each frame of the LM dataset: a method proposed by Huang et al. \cite{Huang2011} tries to fit multiple PSFs into each frame of the dataset. The DAOSTORM algorithm \cite{Holden2011} applies iterative fitting and subtracting procedure in each frame.  CSSTORM \cite{Zhu2012} makes use of compressed sampling to recover the sparse vector representing the distribution of the fluorophores' locations. CSSTORM is supposed to deal with higher densities than DAOSTORM (see supplementary materials to \cite{Zhu2012}).
 
@@ -48,7 +48,6 @@ Modelling the whole dataset from a known PSF with maximum posterior (MAP) fittin
 	\newcommand{\widthfig}{.95\textwidth}
 	\newcommand{\barspace}{-.5cm}
 	\centering
-	\condcomment{\boolean{includefigs}}{ 
 	\subfloat[Intensity scaled to the in-focus PSF]{
 	\includegraphics[width=\widthfig]{\qd S393/images/psf_outOfFocus_scaled_scaleBar1um}}\\
 	\subfloat[Intensity scaled for each frame]{
@@ -56,7 +55,6 @@ Modelling the whole dataset from a known PSF with maximum posterior (MAP) fittin
 		\includegraphics[width=\widthfig]{\qd S393/images/psf_outOfFocus_scaleBar1um}\vspace{\barspace}\tabularnewline		
 		\includegraphics[width=\widthfig]{\qd S393/images/psf_outOfFocus_intBars}
 	\end{tabular}}
-	}	
 	\caption{Simulated PSF in different depths of focus.  The number in each figure indicates the distance in $\um$ from the in-focus plane. (a) Intensity scaled to the in-focus PSF. (b) Intensity scaled in each frame. The maximum intensity relative to the in-focus PSF is indicated in the bars below and corresponds to about 10\% at $1\um$ and 3\% at $1.5\um$. Scale bar $1\um$.}
 	\label{fig:Simulted-PSF-different-focal-depths}
 \end{figure}
@@ -141,9 +139,8 @@ A generative model for NMF \autoref{eq:NMF model} is represented by the gamma-Po
 %==========================================
 
 \section{NMF as a natural model for QD data\label{sec: NMF QD}}
-Non-negative matrix factorisation (NMF) \cite{Lee1999,Lee2001} is a natural model for QD data. NMF decomposes a movie of blinking QDs into spatial and temporal parts, i.e.,\ time independent emission profiles of the individual sources (PSFs) and fluctuating intensities of each source, respectively. NMF imposes non-negativity constraints on both the spatial and the temporal components, which are natural constraints for the source profiles and intensities of blinking QDs.
-
-\begin{figure}[!tb]
+%
+\begin{figure}[!hbt]
 	\begin{equation}
 		\left[
 		\begin{array}{ccccc}
@@ -158,13 +155,15 @@ Non-negative matrix factorisation (NMF) \cite{Lee1999,Lee2001} is a natural mode
 		\hspace{.5cm}
 		\left[
 		\begin{array}{c}	
-		d_{1t}\\	d_{2t}\\	\vdots\\ \vdots\\ \vdots\\ d_{Nt}
+		d_{1t}\\	d_{2t}\\	\vdots\\ \vdots\\ d_{Nt}
 		\end{array}
 		\right]\nonumber
 	\end{equation}
 	\caption{Reshaping of one $n_x \times n_y$ frame $I_t$ of the movie $\{I_t\}_{t=1}^T$ into a $N\times 1$ ($N=n_x n_y$) column $\bm{d}_t$ of the matrix $\bm{D}$ by concatenating the columns of the image.}
 	\label{fig:reshape image}
 \end{figure}
+
+Non-negative matrix factorisation (NMF) \cite{Lee1999,Lee2001} is a natural model for QD data. NMF decomposes a movie of blinking QDs into spatial and temporal parts, i.e.,\ time independent emission profiles of the individual sources (PSFs) and fluctuating intensities of each source, respectively. NMF imposes non-negativity constraints on both the spatial and the temporal components, which are natural constraints for the source profiles and intensities of blinking QDs.
 
 Consider a $N\times T$ data matrix $\bm{D}$, where $N$ is the number of pixels in each frame, and $T$ is the number of time frames. The columns of $\bm{D}$ are the individual frames of the movie reshaped into $N\times 1$ vector by concatenating the columns of the image (see \autoref{fig:reshape image}). All entries in $\bm{D}$ are non-negative, i.e.,\ $d_{xt}\geq 0$. Under the NMF model \autoref{eq:NMF approx explicit}, $N\times T$ matrix $\bm{D}$ is factorised into a $N\times K$ spatial component matrix $\bm{W}$ (images of the $K$ individual sources) and the $K\times T$ temporal component matrix $\bm{H}$ (the intensities of the sources). In fact, we relax the demand for exact factorisation by factorisation of the noisy dataset expectation value:  
 %
@@ -196,7 +195,7 @@ The Lee and Seung NMF updates \autoref{eq:NMF classic updates} minimise the KL d
 	\label{eq:KL divergence}
 \end{equation}
 %
-where $C_2$ is independent of $\bm{W}$and $\bm{H}$. Comparison with the log-likelihood \autoref{eq:NMF model likelihood} shows that the minimum of the divergence with positivity constrains on $\bm{W}$ and $\bm{H}$ is equivalent to the maximum of the log-likelihood. 
+where $C_2$ is independent of $\bm{W}$and $\bm{H}$. Comparison with the log-likelihood \autoref{eq:NMF model likelihood} shows that the minimum of the divergence with positivity constrains on $\bm{W}$ and $\bm{H}$ is equivalent to the maximum of the log-likelihood. Note, that there is an alternative version of the algorithm minimizing the least squares $|\bm{D}-\bm{WH}|^2=\sum_{x,t}\left[d_{xt}-\sum_{k=1}^K w_{xk}h_{kt}\right]^2$ proposed by Lee and Seung \cite{Lee2001}. This objective function corresponds to the minimizing the likelihood of the model with respect to data corrupted with Gaussian noise. The original Paatero and Tapper "positive matrix factorisation" \cite{Paatero1994} used the least square approach. 
 
 There is a scaling indeterminacy between $\bm{W}$ and $\bm{H}$ in the NMF model. We fix this by setting the $L_1$ norm of each column of $\bm{W}$ to 1. The background fluorescence in the images is modelled as a ``flat'' component $\bm{w}_K = \bfone/N$ with corresponding intensity $\bm{h}_K$. The spatial part of the background component $\bm{w}_K$ is not updated during the optimisation, while the temporal part $\bm{h}_K$ is updated to account for changes in background levels during the data acquisition (due to bleaching or fluctuation of the excitation light, for example).
 
@@ -220,9 +219,9 @@ This section points to published work using NMF as a versatile tool for analysis
 %==========================================
 \subsection{NMF in biological research\label{sub:NMF in bio}}
 
-NMF has been recently used for analysis of various biological data. The review of NMF as a data analytical and interpretive tool in computational biology can be found in \cite{Devarajan2008}. The most common application of NMF in computational biology has been in the area of molecular pattern discovery, especially for gene and protein expression microarray studies. NMF is well suited method for this problem as there is no a priori information about the expected expression pattern for a given set of genes. The $N\times T$ data matrix $\bm{D}$ in the NMF model \autoref{eq:NMF approx} is created from the observation of the expression levels of $N$ genes (typically thousands) in $T$ different samples (typically less than 100). The columns of $N\times K$ matrix $\bm{W}$ are the linear combination of individual genes and are often called ``metagenes''.  The columns of the $K\times T$ matrix $\bm{H}$ represent the metagene expression pattern in the corresponding sample.
+NMF has been recently used for analysis of various biological data. A review of NMF as a data analytical and interpretive tool in computational biology can be found in \cite{Devarajan2008}. The most common application of NMF in computational biology has been in the area of molecular pattern discovery, especially for gene and protein expression microarray studies. NMF is a well-suited method for this problem as there is no a priori information about the expected expression pattern for a given set of genes. The $N\times T$ data matrix $\bm{D}$ in the NMF model \autoref{eq:NMF approx} is created from the observation of the expression levels of $N$ genes (typically thousands) in $T$ different samples (typically less than 100). The columns of $N\times K$ matrix $\bm{W}$ are the linear combination of individual genes and are often called ``metagenes''.  The columns of the $K\times T$ matrix $\bm{H}$ represent the metagene expression pattern in the corresponding sample.
 
-NMF has proved to be a successful method in the recovery of biologically meaningful classes in gene-expression data. For example, Kim and Tidor \cite{Kim2003} applied NMF as a tool to cluster genes and predict functional cellular relationships in yeast, while Heger and Holm \cite{Heger2003} used it for the recognition of sequence patterns among related proteins. Brunet et al. \cite{Brunet2004} applied NMF to cancer microarray data for the recovery of tumour subtypes. They also developed a method for selecting the number of metagenes $K$: each sample (total $T$ samples) is placed into a cluster corresponding to the most highly expressed metagene in the sample. E.g. sample $j$ is placed in cluster $i$ if the $h_{ij}$ is the largest entry in column $j$ of the matrix $\bm{H}$. They define a $T\times T$ connectivity matrix $\bm{C}$ with entry $c_{ij}=1$ if samples $i$ and $j$ belong to the same cluster and $c_{ij}=0$ if they belong to different clusters. The consensus matrix $\bar{\bm{C}}$ is computed as an average over $\bm{C}$ resulting from many ($\sim100$) runs of NMF. The entries of $\bar{\bm{C}}$ represent the probability that samples $i$ and $j$ will cluster together. If the clustering is stable then the values of $\bar{\bm{C}}$ will be close to either $0$ or $1$. They proposed a measure of stability based on a cophonetic correlation coefficient $\rho_K$ which indicates the dispersion of the consensus matrix for a given number of components $K$. In a perfect consensus matrix, where all entries are either $0$ or $1$ the cophonetic correlation coefficient $\rho_K=1$. If the entries of $\bar{\bm{C}}$ are scattered between $0$ and $1$ the value is $\rho_K<1$. They compute $\rho_K$ for a range of $K$s and select the one where $\rho_K$ begins to fall. However, inspecting the provided figures in \cite{Brunet2004} we can observe that $\rho_K$ drops rather gradually and unambiguous estimation of $K$ is difficult. Also note that for each value of $K$ the NMF has to be evaluated $\sim 100$ times to  estimate the consensus matrix $\bar{\bm{C}}$. This is feasible only for small $K$ ($<5$), which is typically case in the gene expression data. However, this method of $K$ estimation is prohibitive for our application of NMF to QD data, where then typical $K$s are in the range of $10-100$.
+NMF has proved to be a successful method in the recovery of biologically meaningful classes in gene-expression data. For example, Kim and Tidor \cite{Kim2003} applied NMF as a tool to cluster genes and predict functional cellular relationships in yeast, while Heger and Holm \cite{Heger2003} used it for the recognition of sequence patterns among related proteins. Brunet et al. \cite{Brunet2004} applied NMF to cancer microarray data for the recovery of tumour subtypes. They also developed a method for selecting the number of metagenes $K$: each sample (total $T$ samples) is placed into a cluster corresponding to the most highly expressed metagene in the sample. E.g. sample $j$ is placed in cluster $i$ if the $h_{ij}$ is the largest entry in column $j$ of the matrix $\bm{H}$. They define a $T\times T$ connectivity matrix $\bm{C}$ with entry $c_{ij}=1$ if samples $i$ and $j$ belong to the same cluster and $c_{ij}=0$ if they belong to different clusters. The consensus matrix $\bar{\bm{C}}$ is computed as an average over $\bm{C}$ resulting from many ($\sim100$) runs of NMF. The entries of $\bar{\bm{C}}$ represent the probability that samples $i$ and $j$ will cluster together. If the clustering is stable then the values of $\bar{\bm{C}}$ will be close to either $0$ or $1$. They proposed a measure of stability based on a cophonetic correlation coefficient $\rho_K$ which indicates the dispersion of the consensus matrix for a given number of components $K$. In a perfect consensus matrix, where all entries are either $0$ or $1$ the cophonetic correlation coefficient $\rho_K=1$. If the entries of $\bar{\bm{C}}$ are scattered between $0$ and $1$ the value is $\rho_K<1$. They compute $\rho_K$ for a range of $K$s and select the one where $\rho_K$ begins to fall. However, inspecting the provided figures in \cite{Brunet2004} we can observe that $\rho_K$ drops rather gradually and unambiguous estimation of $K$ is difficult. Also note that for each value of $K$ the NMF has to be evaluated $\sim 100$ times to  estimate the consensus matrix $\bar{\bm{C}}$. This is feasible only for small $K$ ($<5$), which is typically case in the gene expression data. However, this method of $K$ estimation is prohibitive for our application of NMF to QD data, where the typical $K$s are in the range of $10-100$.
 
 Rabinovich et al. \cite{Rabinovich2003} has proposed NMF for accurate automated spectral decomposition of histologically stained tissue sections. The images ($N$ pixels) stained with {\it known} number of colours $K$ are recorded in $T$ spectral channels creating the $N\times T$ data matrix $\bm{D}$. NMF decomposes this matrix into $\bm{W}$, with entries $w_{ij}$ indicating the contribution of the  $j$th the dye into the $i$th pixel and the rows of the matrix $\bm{H}$ represent the spectra of each dye. They have found similar performance of NMF and independent component analysis (ICA) by comparing the results to the ground truth data. Note, that the selection of $K$ is dictated by the number of colours used for histological staining and therefore no algorithm for $K$ estimation is needed. Similarly the NMF has been used  for fluorescence microcopy data by Neher et al. \cite{Neher2009}. In this case, the  fluorescence images were recorded under excitation with different wavelength of the excitation light. The spatial distribution and excitation spectral properties of different fluorescent labels ($K$ is known) were estimated from the factorised matrices $\bm{W}$ and $\bm{H}$, respectively.
 
@@ -233,7 +232,7 @@ NMF has also been used in variety of disciplines directly related to optical mic
 %==========================================
 
 \subsection{Hoyer's sparse NMF \label{sub:Hoyer}}
-The in-focus PSF (see left side of \autoref{fig:Simulted-PSF-different-focal-depths}) is a fairly compact structure with only few pixels of significant values. Constraints on sparsity of the estimated $\bm{w}_k$s (individual PSFs) would likely facilitate the estimation of the credible sources and might lead to a faster convergence to a better local minimum. 
+The in-focus PSF (see leftmost plots in  \autoref{fig:Simulted-PSF-different-focal-depths}) is a fairly compact structure with only few pixels of significant values. Constraints on sparsity of the estimated $\bm{w}_k$s (individual PSFs) would likely facilitate the estimation of the credible sources and might lead to a faster convergence to a better local minimum. 
 
 NMF with explicit sparsity constraints has been developed by Hoyer \cite{Hoyer2004}. The ``sparsity'' of a vector $\bm{x}$ was defined as 
 %
@@ -293,7 +292,6 @@ We used simulated data of randomly scattered sources with densities $10-50\,\um^
 
 \subsection{Independent component analysis\label{sub:ICA}}
 \begin{figure}[!htb] % this figure is copied from ~/DTC/paper/NMFLM.tex
-	\condcomment{\boolean{includefigs}}{
 	\newcommand{\sizefig}{.4}
 	\centering
 	\subfloat[NMF (noise)]{
@@ -310,7 +308,7 @@ We used simulated data of randomly scattered sources with densities $10-50\,\um^
 	\begin{tabular}{c}
 		\includegraphics[scale=\sizefig]{\qd S310/images/ica_noNoise_loc_c1} \tabularnewline
 		\includegraphics[scale=\sizefig]{\qd S310/images/ica_noNoise_loc_c2}\tabularnewline
-	\end{tabular}}}
+	\end{tabular}}
 	\caption{Comparison of the components separated with (a) NMF and (b) ICA for	simulated noisy data of two blinking QDs separated by $0.5 \unit{pixel}$ (which corresponds to $50\unit{nm}$ or $\lambda/12$). (c) ICA for noise-free data.  Blue pixels contain negative values. The true and the estimated positions are shown as red circles and green crosses, respectively. The airy disk is shown as a green circle (radius $333\unit{nm}$).}
 	\label{fig:Comparison of NMF and ICA}
 \end{figure}
@@ -347,7 +345,7 @@ Fish et al. \cite{Fish1995} use blind RL algorithm (updates on both $\bm{o}$ and
 In this section we describe how we generated the simulated datasets. Simulated data were used for testing the performance of the algorithm in different experimental settings.
 %Main competitors 3B \cite{Cox2011}, CSSTORM \cite{Zhu2012} and SOFI \cite{Dertinger2009}.	
 
-The parameters of the simulations were chosen to correspond to real experimental data with quantum dots (QD625, \emph{Invitrogen}).  \Autoref{tab:Simulations parameters} summarises the main simulation parameters. Radius of an Airy disk (classical resolution limit) for parameters from \autoref{tab:Simulations parameters} is $\delta=293 \unit{nm}$. FWHM of a Gaussian approximation of the in-focus PSF is $260\unit{nm}$ ($\sigma = 111\unit{nm}$) \cite{Zhang2007}. The pixels size in the image plane (80~nm) is below Nyquist limt (120~nm) estimated from the Abber reolution limit in \autoref{sec:Resolution limit}.
+The parameters of the simulations were chosen to correspond to real experimental data with quantum dots (QD625, \emph{Invitrogen}).  \Autoref{tab:Simulations parameters} summarises the main simulation parameters. Radius of an Airy disk (classical resolution limit) for parameters from \autoref{tab:Simulations parameters} is $\delta=293 \unit{nm}$. FWHM of a Gaussian approximation of the in-focus PSF is $260\unit{nm}$ ($\sigma = 111\unit{nm}$) \cite{Zhang2007}. The pixels size in the image plane (80~nm) is below Nyquist limit (120~nm) estimated from the Abbe resolution limit in \autoref{sec:Resolution limit}.
 %
 \begin{table}[!h]	
 	\centering
@@ -417,7 +415,7 @@ The ability of the algorithm to separate individual overlapping sources was test
 	\includegraphics[width=\widthfig]{\qd S455/images/dpixc_mean_dens30}}\hspace{.3cm}	
 	\subfloat[density $50\um^{-2}$]{
 	\includegraphics[width=\widthfig]{\qd S455/images/dpixc_mean_dens50}}		
-	\caption{Mean projection of the simulated frames \autoref{fig:simulated data random} shows the high overalp in the individual emitters. The sources' positions are marked with red dots. The area of the frame is $1.2\times1.2\unit{\um}$ ($15\times15$ pixels).}
+	\caption{Mean projection of the simulated frames \autoref{fig:simulated data random} shows the high overlap of the individual emitters. The sources' positions are marked with red dots. The area of the frame is $1.2\times1.2\unit{\um}$ ($15\times15$ pixels).}
 	\label{fig:simulated data random - mean}
 \end{figure} 
 
@@ -441,7 +439,7 @@ The ability of the algorithm to separate individual overlapping sources was test
 	\subfloat[linear density $12.5\um^{-1}$, distance between lines $d=100\unit{nm}$]{
 	\includegraphics[width=\widthfig]{\qd S575/figures/dpixc_1to8_dens10}}		
 
-	\caption{First eight frames of the simulated dataset. The area of the frame is $1.7\times1.7\um$ ($21\times21$ pixels). Note that sub-resolution features such as double line structure marked with red dots in \autoref{fig:simulated data hash - mean} canot be observed.}
+	\caption{First eight frames of the simulated dataset. The area of the frame is $1.7\times1.7\um$ ($21\times21$ pixels). Note that sub-resolution features such as double line structure marked with red dots in \autoref{fig:simulated data hash - mean} cannot be observed.}
 	\label{fig:simulated data hash}
 \end{figure} 
 
@@ -546,11 +544,11 @@ Average precision (AP) is then defined as the mean of interpolated precision:
 
 \section{NMF for realistic microscopy datasets \label{sec:NMF-for-real}}
 
-NMF becomes challenging when applied to a dataset with large number ($\sim 10^3$) of images, each containing more than $10^4$ pixels and more than $10^2$ QDs. Beside long computational time (teh computational complexity of the NMF updates scales linearly with the number of pixels - see \autoref{sec:NMF}), the local minima in NMF fitting complicate the optimisation \cite{Kim2008}. 
+NMF becomes challenging when applied to a dataset with large number ($\sim 10^3$) of images, each containing more than $10^4$ pixels and more than $10^2$ QDs. Beside long computational time (the computational complexity of the NMF updates scales linearly with the number of pixels - see \autoref{sec:NMF}), the local minima in NMF fitting complicate the optimisation \cite{Kim2008}. 
 
 We address this partly by dividing the data into overlapping patches, so that NMF is applied to each patch individually (see \autoref{sec:preproc}).  In the end, the results from the patches are ``stitched'' back together. 
 
-We have also developed methods to reduce local optima problems in the fitting procedure (\inmf{} algorithm discussed \autoref{sub: Iterative restarts}). 
+Several methods for estimation of the number of components in the NMF model is dicsussed in \autoref{sub:Estimation-of-number-of-sources}. We have also developed methods to reduce local optima problems in the fitting procedure (\inmf{} algorithm discussed \autoref{sub: Iterative restarts}). In \autoref{sub:Classification-of-sources} we show a simple approach to asses the quality of the individual estimated components. 
 
 The results of the NMF can be used in two different ways. The separated individual sources $\bm{w}_k$ can be localised and the estimated positions can be used either directly or to create a sub-resolution image very much like in the conventional LM techniques (see \autoref{sub:Localisation-and-stitching}). A different approach avoids the localisation step and creates the super-resolution image directly from the estimated $\bm{w}_k$s by combining their ``squeezed'' versions (see \autoref{sub:visualisation}). 
 
@@ -567,7 +565,7 @@ To detect patches with low signal, the maximum intensity pixel in the time avera
 %==========================================
 \subsection{Estimation of number of sources $K$\label{sub:Estimation-of-number-of-sources}}
 
-The NMF model requires prior knowledge about the number of sources $K$ to be separated. Estimation of $K$ is a difficult task for noisy datasets with parameters set to realistic experimental conditions. In preliminary work we explored this on simulated data ($\lambda_{em}=655\unit{nm}$, $NA=1.2$) with the NMF model fitted for a range of $K$ values. 
+The NMF model requires prior knowledge about the number of sources $K$ to be separated. Estimation of $K$ is a difficult task for noisy datasets with parameters set to realistic experimental conditions. In preliminary work we explored this on simulated data with the NMF model fitted for a range of $K$ values. We used following parameters for the simulation: $\lambda_{em}=655\unit{nm}$, $NA=1.2$, maximum intensity 1500 photons/source/frame, background 100 photons/frame/pixel. A frame of two sources with corresponding noise levels are shown in \autoref{fig:two sources int bg}.
 %
 \begin{figure}[!ht]
 	\centering
@@ -592,7 +590,7 @@ The NMF model requires prior knowledge about the number of sources $K$ to be sep
 	 \label{fig:K estimation data}
 \end{figure}
 
-\Autoref{fig:K estimation data} illustrates three different simulated datasets with 10 sources randomly scattered within an area of radius $2\delta$, $1.5\delta$ and $\delta$, where $\delta$ was equal to the diameter of an Airy disk (diffraction limit), shown as a green circle in \autoref{fig:K estimation data}\ccc{} ($\delta=0.61\lambda_{em}/\unit{NA}$). This corresponds to the sources densities of $2.4$, $4.4$ and $10$ sources per Airy disk or $7$, $13$ and $29$ sources per $\um^2$, respectively. The mean of the simulated frames, which corresponds to a wide-field image, is shown as a grey-value image. Red marks indicate the true positions of the sources. Ten datasets with different geometrical configurations of randomly scattered sources were simulated for each source density. 
+\Autoref{fig:K estimation data} illustrates three different simulated datasets with 10 sources randomly scattered within an area of radius $2\delta$, $1.5\delta$ and $\delta$, where $\delta$ was equal to the diameter of an Airy disk (diffraction limit), shown as a green circle in \autoref{fig:K estimation data}\ccc{} ($\delta=0.61\lambda_{em}/\unit{NA}$). This corresponds to the sources densities of $2.4$, $4.4$ and $10$ sources per Airy disk or $7$, $13$ and $29$ sources per $\um^2$, respectively. From my experience  all the methods delivered very precise estimate of $K$ for $2\delta$ situation. Therefore I chose this as the upper limit. For $1\delta$ all the methods more or less failed and therefore I set that value as a lower limit. I choose $1.5\delta$ as an intermediate value between $1\delta$ and $2\delta$. The mean of the simulated frames, which corresponds to a wide-field image, is shown as a grey-value image. Red marks indicate the true positions of the sources. Ten datasets with different geometrical configurations of randomly scattered sources were simulated for each source density. 
 
 \begin{figure}[!tb]
 	\centering
@@ -641,7 +639,7 @@ The NMF model requires prior knowledge about the number of sources $K$ to be sep
 		\includegraphics[width=\wf]{\qd S303/images/MaxCorrInResid_nc10_NMF}}
 	\end{tabular}
 	%
-	\caption{$K$ estimation for $10$ sources contained within a disk with radius \ima \ ({\it left column}), \imb \ ({\it middle column}) and \imc \ ({\it right column}). Lines for three datasets with different configuration of the sources are shown in different colors. $K_{true}$ is marked with red vertical line.}	\label{fig:K estimation}
+	\caption{$K$ estimation for $10$ sources contained within a disk with radius \ima \ ({\it left column}), \imb \ ({\it middle column}) and \imc \ ({\it right column}). Lines for three datasets with different configuration of the sources are shown in different colours. $K_{true}$ is marked with red vertical line.}	\label{fig:K estimation}
 \end{figure}
 
 The likelihood of the model \autoref{eq:NMF model likelihood} is increasing with higher $K$, because the noisy data can always be fitted better with a model containing higher number of components. The Bayesian Information Criterion (BIC) \cite{Bishop2006} is a simple model comparison method, adding a penalty term to the likelihood penalising for the $NK$ parameters contained in $\bm{W}$. The models with larger $K$ are therefore more heavily penalised. BIC, however, did not provide satisfactory results. 
@@ -679,7 +677,7 @@ We therefore tried to estimate the number of sources $K$ using:
 Underestimation of the number of sources ($K<K_{true}$) leads to correlations between some pixels as the model tries to explain multiple sources with one component. For $K\geq K_{true}$ the correlations are expected to drop to a base level and the residuals become uncorrelated. We can pick the value of $K$ for which the maximum of the residual correlations decreases to a certain level and where further increase of $K$ does not give any further improvement \autoref{fig:K estimation}\gggg-\iii.
 \end{enumerate}
 
-A reliable estimation of $K$ is a difficult task for higher source densities. \Autoref{fig:K estimation hist} shows the histograms of the estimated $K$s for ten different geometrical configurations of the sources with a given density. From the three methods presented in this section  (\autoref{fig:K estimation hist}\aaa-\ccc), the analysis of the correlations in residuals (ACR) shows the best performance. However, while ACR shows good performace for simulated datasets, it  can be challenging for analysis of real data.
+A reliable estimation of $K$ is a difficult task for higher source densities. \Autoref{fig:K estimation hist} shows the histograms of the estimated $K$s for ten different geometrical configurations of the sources with a given density. From the three methods presented in this section  (\autoref{fig:K estimation hist}\aaa-\ccc), the analysis of the correlations in residuals (ACR) shows the best performance. However, while ACR shows good performance for simulated datasets, it can be challenging for analysis of real data.
 %
 \begin{figure}[!hbt]
 	\newcommand{\sizef}{.4}		
@@ -704,7 +702,7 @@ In the following section we will be discussing an iterative procedure of the NMF
 
 \subsection{Tackling local optima in NMF fitting with iterative restarts \label{sub: Iterative restarts}}
 
-Although the Lee and Seung algorithm is convex with respect to $\bm{W}$ and $\bm{H}$ separately, it is non-convex in both simultaneously \cite{Lee2001}. Multiple restarts can be used to address the problem of local optima, but we have not found good solutions with this approach. NMF tends to get persistantly stuck in the local optima of the optimisation landscape. Instead, we exploit some prior knowledge about the problem, namely that the PSFs are likely to have a fairly compact structure (see \autoref{fig:Simulted-PSF-different-focal-depths}). As the estimated sources $\bm{w}_k$ are normalised to have the $L_1$ norm equal to one (i.e.,\ $\sum_j w_{jk}=1$, see \autoref{sec: NMF QD}), we use the inverse $L_2$ norm to rank the columns $\bm{w}_k$'s of the matrix $\bm{W}$. Note that Hoyer's sparsity \autoref{eq:Hoyers sparsity} is an $L_1/L_2$ measure normalised to the $[0..1]$ interval \cite{Kim2008}. 
+Although the Lee and Seung algorithm is convex with respect to $\bm{W}$ and $\bm{H}$ separately, it is non-convex in both simultaneously \cite{Lee2001}. Multiple restarts can be used to address the problem of local optima, but we have not found good solutions with this approach. NMF tends to get persistently stuck in the local optima of the optimisation landscape. Instead, we exploit some prior knowledge about the problem, namely that the PSFs are likely to have a fairly compact structure (see \autoref{fig:Simulted-PSF-different-focal-depths}). As the estimated sources $\bm{w}_k$ are normalised to have the $L_1$ norm equal to one (i.e.,\ $\sum_j w_{jk}=1$, see \autoref{sec: NMF QD}), we use the inverse $L_2$ norm to rank the columns $\bm{w}_k$'s of the matrix $\bm{W}$. Note that Hoyer's sparsity \autoref{eq:Hoyers sparsity} is an $L_1/L_2$ measure normalised to the $[0..1]$ interval \cite{Kim2008}. 
 
 This leads to an iterative NMF algorithm (we denote it as \inmf{}), where on iteration $(j+1)$ the first $j$ sorted sources $\{ \bm{w} \}_1^j$ in decreasing manner (and corresponding $\{ \bm{h} \}_1^j$) are used as initial values for the first $j$ columns of $\bm{W}$ (and the corresponding rows of $\bm{H}$). The remaining components are re-initialised from a uniform random distribution. Initial values of $\bm{W}$ and $\bm{H}$ for the $(j+1)$th iteration are therefore composed of the $j$ ``sparsest'' components of the previous iteration and $(K-j)$ randomly initialised components. The procedure runs until $j=K$. The \inmf{} algorithm is summarised in \autoref{alg:restarts}. 
 
@@ -727,7 +725,7 @@ User should be able to test the source estimation procedure on a patch where the
 		\item Iterate for $j=1:K$, where $K$ is the (over) estimated number of sources.
 		\begin{enumerate}
 			\item Run NMF with $\bm{W}_{init}$ and $\bm{H}_{init}$ as initial values.
-			\item Sort (decreasing) columns of $\bm{W}$ according to  $L_2$ norm and permute rows of $\bm{H}$ correspondingly.
+			\item Sort columns of $\bm{W}$ according to decreasing $L_2$ norm and permute rows of $\bm{H}$ correspondingly.
 			\item Replace first $j$ columns of $\bm{W}_{init}$ with first $j$ columns of sorted $\bm{W}$.
 			\item Replace last $j+1:K$ columns of $\bm{W}_{init}$ with positive random vectors.
 			\item Replace first $j$ rows of $\bm{H}_{init}$ with first $j$ rows of sorted $\bm{H}$.
@@ -736,9 +734,9 @@ User should be able to test the source estimation procedure on a patch where the
 	\end{enumerate}    
 \end{algorithm}
 
-The motivation for the iterative procedure \autoref{alg:restarts} is to progressively exploit the credible (and therefore sparse) components from the data while keeping full flexibility of NMF. It should be noted that in contrast to Hoyer's sparse NMF (\autoref{sub:Hoyer}), where the ``sparsity'' on the $\bm{w}_k$ is imposed as a ``hard'' constraint, \inmf{} leads to a ``soft'' enhancement of $\bm{w}_k$'s sparsity. The sparse components are preferably reused in the following iterative restarts but are still allowed to change during the further iterations. This leads to further refinemend of the already estimated sources. 
+The motivation for the iterative procedure \autoref{alg:restarts} is to progressively exploit the credible (and therefore sparse) components from the data while keeping full flexibility of NMF. It should be noted that in contrast to Hoyer's sparse NMF (\autoref{sub:Hoyer}), where the ``sparsity'' on the $\bm{w}_k$ is imposed as a ``hard'' constraint, \inmf{} leads to a ``soft'' enhancement of $\bm{w}_k$'s sparsity. The sparse components are preferably reused in the following iterative restarts but are still allowed to change during the further iterations. This leads to further refinement of the already estimated sources. 
 
-iNMF reduces the redundant sources introduced by overestimation of $K$. For example, a single emitter can be represented by multiple components $\bm{w}_k$s. The intensity profiles $\bm{h}_k$s of these redundant components will be correlated and their addition will yield the inteinsity of the inteinsity of the source in each frame. However, iNMF will keep only one component $\bm{w}_m$ from all redundant sources and randomize the rest. The source $\bm{w}_m$ has already approximately correct shape and during the next iterations the algorithm it will be moslty changing the profile $\bm{h}_m$. The several redundant sources will be therefore replaced by a single sources $\bm{w}_m$. This reducing mechanism can be observed in the step from \autoref{fig:Iterative restarts}\bbb{} to \ccc{}, for example.  
+iNMF reduces the redundant sources introduced by overestimation of $K$. For example, a single emitter can be represented by multiple components $\bm{w}_k$s. The intensity profiles $\bm{h}_k$s of these redundant components will be correlated and their addition will yield the intensity of the source in each frame. However, iNMF will keep only one component $\bm{w}_m$ from all redundant sources. The source $\bm{w}_m$ has already approximately correct shape and during the next iterations the algorithm it will be mostly changing the profile $\bm{h}_m$. The several redundant sources will be therefore replaced by a single sources $\bm{w}_m$. This mechanism can be observed in the step from \autoref{fig:Iterative restarts}\bbb{} to \ccc{}, for example.  
 
 \inmf{} is illustrated on simulated data of a slanted line with eight attached PSFs in \autoref{fig:Iterative restarts}. The parameters of the simulations are discussed in  \autoref{sec:results}. An illustration of typical frames of the dataset is shown in \autoref{fig:Data-true-estimations}\aaa{} and the true sources are displayed in \autoref{fig:Data-true-estimations}\bbb.
 
@@ -747,7 +745,6 @@ For this data we set $K=15$, with the last component reserved for background. Th
 \begin{figure}[!tb]
 	\newcommand{\widthfig}{.95\textwidth}
 	\newcommand{\barspace}{-.7cm}
-	\condcomment{\boolean{includefigs}}{ 
 	\centering
 		
 		\subfloat[run 1 ]{
@@ -775,9 +772,8 @@ For this data we set $K=15$, with the last component reserved for background. Th
 		\begin{tabular}{l}
 			\includegraphics[width=\widthfig]{\qd S382/images/w_restart13_1toEnd} \vspace{\barspace}\tabularnewline
 			\includegraphics[width=\widthfig]{\qd S382/images/w_restart13_1toEnd_intBars}\tabularnewline
-		\end{tabular}}		
-	}
-	\caption{Illustration of the iterative restart procedure for simulated of $K_{true}=8$ sources (see \autoref{fig:Data-true-estimations}) evaluated for $K=15$. Estimated sources after (a) 1, (b) 4, (c) 8 and (c) 14 runs of the algorithm. While the estimated sources after the first run are spread over all the availabel components (a),  the number meaningful sources progresively reduces during the runs of the iNMF procedure (c,d).  Note that some components estimted after first run represent multiple emitters (a). After fourteen runs (d), first eigth componets corespond to true sources. The rest of the components are used for reperesenation of noise (see \autoref{fig:Data-true-estimations} for more details).  Bars below the figures show the maximum of the intensity image $\bm{w}_k$.}
+		\end{tabular}}			
+	\caption{Illustration of the iterative restart procedure for simulated of $K_{true}=8$ sources (see \autoref{fig:Data-true-estimations}) evaluated for $K=15$. Estimated sources after (a) 1, (b) 4, (c) 8 and (c) 14 runs of the algorithm. While the estimated sources after the first run are spread over all the available components (a),  the number meaningful sources progressively reduces during the runs of the iNMF procedure (c,d).  Note that some components estimated after first run represent multiple emitters (a). After fourteen runs (d), first eight components correspond to true sources. The rest of the components are used for representation of noise (see \autoref{fig:Data-true-estimations} for more details).  Bars below the figures show the maximum of the intensity image $\bm{w}_k$.}
 	\label{fig:Iterative restarts}
 \end{figure}
 
@@ -810,7 +806,6 @@ The ``good'' sources, representing the individual PSFs, can be identified after 
 \begin{figure}[!tb]
 	\newcommand{\widthfig}{.95\textwidth}
 	\newcommand{\barspace}{-.7cm}
-	\condcomment{\boolean{includefigs}}{ 
 	\centering
 	\subfloat[$K=15$]{
 	\begin{tabular}{l}
@@ -834,8 +829,7 @@ The ``good'' sources, representing the individual PSFs, can be identified after 
 		\includegraphics[width=\widthfig]{\qd S382/images/w_nc45_16to30intBars}\tabularnewline
 		\includegraphics[width=\widthfig]{\qd S382/images/w_nc45_31to45}\vspace{\barspace}\tabularnewline
 		\includegraphics[width=\widthfig]{\qd S382/images/w_nc45_31to45intBars}\tabularnewline
-	\end{tabular}}		
-	}
+	\end{tabular}}			
 	\caption{\inmf{} evaluation of the simulated dataset \autoref{fig:Data-true-estimations}\aaa{} for different numbers of overestimated sources $K$. Bars below the figures show the maximum of the intensity image $\bm{w}_k$s multiplied with the mean intensity estimated from the corresponding $\bm{h}$s.}
 	\label{fig:iterative restarts robustness}
 \end{figure}
@@ -889,7 +883,7 @@ Only the sources with one major local maximum in the images of $w_k$s convolved 
 		\includegraphics[width=\fw]{\qd S455/images/resw_65to80_col}\vspace{\barspace}\tabularnewline
 		\includegraphics[width=\fw]{\qd S455/images/resw_65to80_col_barInt}\tabularnewline
 	\end{tabular}	
-	\caption{Selection of the credible $\bm{w}_k$s (here ordered by $L_1$ norm). The green and blue boxes indicate the estimated ``credible'' sources (with only one major global maximum). The sources with blue frame have the maximum closer than two pixels to the border and can be therefore considered as partly missing sources. The sources with red frame have two local maxima of comparable strength. Bars under the figures show the normalised maximum value of the estimated $\bm{w}_k$ multiplied with mean brightness of the source estimated from the intensity matrix $\bm{H}$. The true number of sources in this simulated dataset was $K_{true}=72$.}. 
+	\caption{Selection of the credible $\bm{w}_k$s (here ordered by $L_2$ norm). The green and blue boxes indicate the estimated ``credible'' sources (with only one major global maximum). The sources with blue frame have the maximum closer than two pixels to the border and can be therefore considered as partly missing sources. The sources with red frame have two local maxima of comparable strength. Bars under the figures show the normalised maximum value of the estimated $\bm{w}_k$ multiplied with mean brightness of the source estimated from the intensity matrix $\bm{H}$. The true number of sources in this simulated dataset was $K_{true}=72$.}. 
 	\label{fig:good w}	
 \end{figure}
 %
@@ -899,7 +893,7 @@ This approach would, however, fail if used on data with out-of-focus PSF, becaus
 
 One possibility is to compute a set of ``features'' on each estimated $\bm{w}_k$ (and possibly on the corresponding $\bm{h_k}$) and use a linear classifier to identify the class of each estimated source. The possible ``features'' can include, for example, the $L_2$ norm, the number of clusters in the thresholded image, the maximum of the cross-correlation with the PSF, a measure of smoothness of the estimated result, the distance of the global maximum from the edge, and many others. Each $\bm{w}_k$ then represents a point in a high-dimensional feature space. The linear classifier assumes that the individual classes can be separated with linear manifolds in the feature space.
 
-However, the linear classifier has to be trained on a set of labelled data. The training therefore requires a manual labelling of at least several hundreds of $\bm{w}_k$s (manual assignment of a class to each $\bm{w}_k$). In an ideal world, one training set would be sufficient for different datasets. The classifier, once trained, would be applicable for results from different datasets taken in a range of experimental conditions. However, our experience is that the classification performance varies significantly with the change of the experimental parameters (size of the patch, pixel-size, background levels). The performance, of course, depends on the quality of the features.  The development of some ``universal'' might be a topic of future work. 
+However, the linear classifier has to be trained on a set of labelled data. The training therefore requires a manual labelling of at least several hundreds of $\bm{w}_k$s (manual assignment of a class to each $\bm{w}_k$). In an ideal world, one training set would be sufficient for different datasets. The classifier, once trained, would be applicable for results from different datasets taken in a range of experimental conditions. However, our experience is that the classification performance varies significantly with the change of the experimental parameters (size of the patch, pixel-size, background levels). The performance, of course, depends on the quality of the features.  The development of some ``universal'' features might be a topic of future work. 
 
  
 %We use a linear classifier to automate the quality assessment of the estimated $\bm{w}_k$. We compute a set of features based on intensity values of $\bm{w}_k$, thresholded background image $\bm{b}_k=\bm{w}_k<t_b$, thresholded foreground image $\bm{f}_k=\bm{w}_k>t_f$ and an image of $\bm{w}_k$ smoothed with estimated in-focus PSF. The features are listed in \autoref{tab:Features}a and five classes for $\bm{w}_k$ are listed in \autoref{tab:Classes}b.
@@ -1550,7 +1544,6 @@ Note that these are only the parameters explicitly set by user. There are more p
 \begin{figure}[!tb]	
 	\newcommand{\widthfig}{0.95\textwidth}
 	\newcommand{\barspace}{-.5cm}
-	\condcomment{\boolean{includefigs}}{ 
 	\centering	
 	\subfloat[Data]{	
 	\begin{tabular}{l}
@@ -1571,7 +1564,7 @@ Note that these are only the parameters explicitly set by user. There are more p
 	\begin{tabular}{l}
 		\includegraphics[width=\widthfig]{\qd S382/images/resw_1to8}\vspace{\barspace}\tabularnewline
 		\includegraphics[width=\widthfig]{\qd S382/images/resw_1to8_intBars}\tabularnewline
-	\end{tabular}}}
+	\end{tabular}}
 	\caption{Simulated data of eight sources. (a) Eight frames (out of 500) of the simulated data set. (b) The true sources. (c) Noisy version of the true sources with their maximum intensity. (d) The first 8 estimated sources (see \autoref{fig:Iterative restarts}\ddd{} for all $\bm{w}_k$'s.) Bars under the figures show the maximum of the intensity image of $\bm{w}_k$. }
 	\label{fig:Data-true-estimations}
 \end{figure} 
@@ -1585,7 +1578,6 @@ The true sources (individual PSFs) are shown in \autoref{fig:Data-true-estimatio
 	\newcommand{\sizeresw}{.85}
 	\newcommand{\wf}{.95\textwidth}
 	\newcommand{\barspace}{-.6cm}
-	\condcomment{\boolean{includefigs}}{ 
 	\centering
 	\begin{tabular}{l}
 		\subfloat[Data]{
@@ -1600,7 +1592,6 @@ The true sources (individual PSFs) are shown in \autoref{fig:Data-true-estimatio
 		\includegraphics[width=\wf]{\qd S392/images/resw_23to33}\vspace{\barspace}\tabularnewline
 		\includegraphics[width=\wf]{\qd S392/images/resw_23to33_intBars}\tabularnewline			
 	\end{tabular}}	
-	}
 	\caption{Real data of randomly scattered QDs. (a) Eleven randomly selected frames (out of $1,000$) of the overlapping PSFs produced by blinking QDs. (b) Estimated sources $\bm{w}_k$ sorted according to their estimated mean brightness. Bars below each figure show the maximum of the $\bm{w}_k$ multiplied by the mean brightness of the source estimated from $\bm{H}$.}
 	\label{fig:Real-data-QDrandom}	
 \end{figure}
@@ -1672,8 +1663,7 @@ The time average of the dataset, which corresponds to the wide-field image, is s
 
 \begin{figure}[!htb]
 	\centering
-	\condcomment{\boolean{includefigs}}{ 
-	\includegraphics[scale=.9]{\qd S364/results/dataChunks}}
+	\includegraphics[scale=.9]{\qd S364/results/dataChunks}
 %	\includegraphics[scale=.9]{\qd S580/figures/chunks}	
 	\caption{Division of the dataset into smaller patches ($25\times25$ pixels, which corresponds to $\approx 2\times2 \um$). Time average of all frames is shown as a grey-valued image. Boxes with thick lines were used for \inmf{} evaluation (boxes with thin lines were considered to be empty). The index of the patches and the (over) estimated numbers of sources ($K$) are shown in each box.}
 	\label{fig:Patches}
@@ -1681,10 +1671,11 @@ The time average of the dataset, which corresponds to the wide-field image, is s
 %
 The dataset was divided into $25 \times 25$ patches (\autoref{fig:Patches}), and only patches with sufficiently strong signal (thick boxes in \autoref{fig:Patches}) were considered for further evaluation. The number of sources within each patch is over-estimated via principal components analysis (see \autoref{sub:Estimation-of-number-of-sources}). Each patch was evaluated with the \inmf{} algorithm.
 
-\begin{figure}[!tb]
-	\newcommand{\widthf}{.95\textwidth}
+Several time frames of the patch \texttt{B24} from \autoref{fig:Patches} are shown in \autoref{fig:Real-data-patch-B24}. \Autoref{fig:Real-data-patch-B24 estimated W} displays the \inmf{}-estimated $\bm{w}_k$s (for $K=56$).
+%
+\begin{figure}[!htb]
 	\newcommand{\barspace}{-.6cm}
-	\condcomment{\boolean{includefigs}}{ 
+	\newcommand{\widthf}{.95\textwidth}
 	\centering
 	\subfloat[Data]{			
 	\begin{tabular}{l}
@@ -1703,13 +1694,10 @@ The dataset was divided into $25 \times 25$ patches (\autoref{fig:Patches}), and
 		\includegraphics[width=\widthf]{\qd S364/results/resw_B24_43to56}\vspace{\barspace}\tabularnewline
 		\includegraphics[width=\widthf]{\qd S364/results/resw_B24_43to56_intBars}\tabularnewline			
 	\end{tabular}
-	\label{fig:Real-data-patch-B24 estimated W}}
-	}
+	\label{fig:Real-data-patch-B24 estimated W}}	
 	\caption{Real data - patch \texttt{B24} from \autoref{fig:Patches}. (a) 14 randomly selected frames (out of $10^3$) of the tubulin structure stained with QDs. (b) Estimated sources $\bm{w}_k$ sorted according to their $L_2$ norm (shown all $K=56$ sources). Bars below each figure show the maximum of the $\bm{w}_k$ intensity image multiplied with the mean intensity of the source estimated from the matrix $\bm{H}$.}
-	
+
 \end{figure}
-%
-Several time frames of the patch \texttt{B24} from \autoref{fig:Patches} are shown in \autoref{fig:Real-data-patch-B24}. \Autoref{fig:Real-data-patch-B24 estimated W} displays the \inmf{}-estimated $\bm{w}_k$s (for $K=56$).
 
 
 %\begin{figure}[!htb]
@@ -1931,7 +1919,7 @@ The ability to recover the individually different overlapping sources makes \inm
 
 The more promising strategy for determining the axial position of the emitters might be using a tailored PSF, such as the double helix PSF \cite{Quirin2011} or the PSF with introduced astigmatism \cite{Huang2008}. Such PSFs specifically change their shapes with the axial location. Moreover, the PSF, however distorted, remains fairly compact over an interval of several micrometres. The difference in the brightness of the in-focus and out-of-focus PSFs is less pronounced (the in-focus PSF is less bright than the one in the system without aberrations), facilitating the separation of individual overlapping emitters. Testing \inmf{} on data with tailored PSF \cite{Huang2008,Quirin2011} might be a subject for future work. 
 
-Note that \inmf{} assumes the sources are spatially fixed during the acquisition ($\sim 1$ min). Significant movement of the specimen during the data acquisition would produce artifacts. \inmf{} can therfore be used only to live cells with movement on the scale of minutes (``slowly'' moving cells). The total acquisition time can be shortened by reducing the number of frames. However, this can make recovery of individual sources from high density data difficult (\autoref{fig:AP subsampled}). As pointed out by Shroff et al. \cite{Shroff2008} there is a trade-off between the spatial and the temporal resolution in LM.
+Note that \inmf{} assumes the sources are spatially fixed during the acquisition ($\sim 1$ min). Significant movement of the specimen during the data acquisition would produce artifacts. \inmf{} can therefore be used only to live cells with movement on the scale of minutes (``slowly'' moving cells). The total acquisition time can be shortened by reducing the number of frames. However, this can make recovery of individual sources from high density data difficult (\autoref{fig:AP subsampled}). As pointed out by Shroff et al. \cite{Shroff2008} there is a trade-off between the spatial and the temporal resolution in LM.
 \afterpage{\clearpage} 
 %==========================================
 %==========================================

@@ -37,6 +37,7 @@
 \usepackage{natbib}
 \usepackage{graphicx}
 \usepackage{subfig}
+\usepackage{epstopdf}
 \usepackage{algorithm}
 \usepackage{ifthen} 
 \usepackage{bm}
@@ -118,9 +119,9 @@
 \newboolean{includefigs} 
 \setboolean{includefigs}{true} % set to {false} to make output without figures
 
-\newcommand{\fix}{\marginpar{FIX}}
-\newcommand{\new}{\marginpar{NEW}}
-\newcommand{\fixme}[1]{\textcolor{red}{*} \marginpar{FIX:\\ {\scriptsize \textcolor{red}{*}\emph{#1}}}}
+%\newcommand{\fix}{\marginpar{FIX}}
+%\newcommand{\new}{\marginpar{NEW}}
+%\newcommand{\fixme}[1]{\textcolor{red}{*} \marginpar{FIX:\\ {\scriptsize \textcolor{red}{*}\emph{#1}}}}
 %\newcommand{\home}{/Users/ondrejmandula/}
 \newcommand{\home}{/Users/ondrej/}
 \newcommand{\qd}{\home project/data/qdots/}
@@ -147,6 +148,7 @@
 \newcommand{\E}{\mathbb{E}}
 \newcommand{\LL}{\mathcal{L}}
 \newcommand{\superscript}[1]{\ensuremath{^{\textrm{#1}}}}
+\newcommand{\f}[1]{FREM\superscript{#1}}
 \newcommand{\ths}[0]{\superscript{th}}
 \newcommand{\st}[0]{\superscript{st}}
 \newcommand{\nd}[0]{\superscript{nd}}
