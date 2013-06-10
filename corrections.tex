@@ -212,11 +212,13 @@ And three more references to super-resolution techniques using photo-switchable 
 \tc{Page 44 - 46.  How do you assess ‘credibility’?  I am concerned that you are compromising some good and rigorous statistics with some vague or subjective assumptions. Please clarify a quantitative measure you could use to evaluate credibility and demonstrate it does: This need systematic evaluations over many runs and data samples not just visual inspection from one selected run.}
 - As I mention towards the end of the section 2.7.4 the 'credibility' of the sources can be assessed with linear classifier. However as I also mentioned that "the linear classifier has to be trained on a set of labelled data. The training therefore requires a manual labelling of at least several hundreds of Ws" and is therefore impractical.
 
+- For simulated data, where the true sources are known, I definded a ``crediblity index" as a maximum of the dot product between the estimated source and the true sources normalised to the $L_2$ norm of the true and the estimated source (Eq. 2.21). I added Fig. 2.22 showning the correlation between the ``credibility index" and the $L_2$ norm. This indicates that $L_2$ norm is a good measure of ``credibility". I commented on towards the end of section 2.7.4.
+
 \tc{Page 46 Not very visible. Visibility is not an issue. Clarify this statement. }
 - Visibility was used as an empirical criterion for setting the arbitrary threshold. I clarified the statement. 
 
 \tc{Page 49.  Example – figure 2.20.  The RHS *looks* better than the LHS, but do you have quantitative evidence to describe this numerically, for example?}
-- Fig. 2.29 shows that iNMF cannot recover all sources in very dense data. Therefore the results on the LHS (result of one iNMF evaluation) have discontinuities in the structure as some of the emitters are missing. Different runs on iNMF recover different subsets of the sources due to different randomness in the initialisation. The mean of several runs (shown on the RHS) shows more continuous representation of the structure.
+- I added a quantitative measure Eq. 2.23 (similar to the ``credibility index'' discussed above) to quantitatively describe the reconstructed figures in sec. 2.7.6. I added Tab. 2.2 to shown that the mean of several iNMF evaluation gives higher index of ``credibility'' when compared to a single evaluation.
 
 \tc{Page 51.  Does the ‘\#’ symbol really appear so bright in the ‘cross’ as in figure 2.22?  I suspect not.}
 - I am not sure I understand the comment. The \# symbol appears brighter at the 'cross' as the density is higher at the crossing - there are sources from the vertical and horizontal bars at the same time. 

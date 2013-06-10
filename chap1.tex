@@ -883,7 +883,7 @@ Only the sources with one major local maximum in the images of $w_k$s convolved 
 		\includegraphics[width=\fw]{\qd S455/images/resw_65to80_col}\vspace{\barspace}\tabularnewline
 		\includegraphics[width=\fw]{\qd S455/images/resw_65to80_col_barInt}\tabularnewline
 	\end{tabular}	
-	\caption{Selection of the credible $\bm{w}_k$s (here ordered by $L_2$ norm). The green and blue boxes indicate the estimated ``credible'' sources (with only one major global maximum). The sources with blue frame have the maximum closer than two pixels to the border and can be therefore considered as partly missing sources. The sources with red frame have two local maxima of comparable strength. Bars under the figures show the normalised maximum value of the estimated $\bm{w}_k$ multiplied with mean brightness of the source estimated from the intensity matrix $\bm{H}$. The true number of sources in this simulated dataset was $K_{true}=72$.}. 
+	\caption{Selection of the credible $\bm{w}_k$s (here ordered by $L_2$ norm). The green and blue boxes indicate the estimated ``credible'' sources (with only one major global maximum). The sources with blue frame have the maximum closer than two pixels to the border and can be therefore considered as partly missing sources. The sources with red frame have two local maxima of comparable strength. Bars under the figures show the normalised maximum value of the estimated $\bm{w}_k$ multiplied with mean brightness of the source estimated from the intensity matrix $\bm{H}$. The index of the component $k$ is printed in each frame. The true number of sources in this simulated dataset was $K_{true}=72$.}. 
 	\label{fig:good w}	
 \end{figure}
 %
@@ -894,6 +894,26 @@ This approach would, however, fail if used on data with out-of-focus PSF, becaus
 One possibility is to compute a set of ``features'' on each estimated $\bm{w}_k$ (and possibly on the corresponding $\bm{h_k}$) and use a linear classifier to identify the class of each estimated source. The possible ``features'' can include, for example, the $L_2$ norm, the number of clusters in the thresholded image, the maximum of the cross-correlation with the PSF, a measure of smoothness of the estimated result, the distance of the global maximum from the edge, and many others. Each $\bm{w}_k$ then represents a point in a high-dimensional feature space. The linear classifier assumes that the individual classes can be separated with linear manifolds in the feature space.
 
 However, the linear classifier has to be trained on a set of labelled data. The training therefore requires a manual labelling of at least several hundreds of $\bm{w}_k$s (manual assignment of a class to each $\bm{w}_k$). In an ideal world, one training set would be sufficient for different datasets. The classifier, once trained, would be applicable for results from different datasets taken in a range of experimental conditions. However, our experience is that the classification performance varies significantly with the change of the experimental parameters (size of the patch, pixel-size, background levels). The performance, of course, depends on the quality of the features.  The development of some ``universal'' features might be a topic of future work. 
+
+\begin{figure}[!b]
+	\newcommand{\fw}{.5\textwidth}
+	\centering
+	\subfloat[]{
+	\includegraphics[width=\fw]{\qd S455/images/credibilityVsL2_label}}
+	\subfloat[]{
+	\includegraphics[width=\fw]{\qd S455/images/credibilityVsL2_k}}
+	\caption{$L_2$ norm as a function of the ``credibility index" \autoref{eq:credibility} for sources from \autoref{fig:good w}. (a) Colours of the points correspond to the colors of the farames in \autoref{fig:good w}: the green and blue indicate the estimated ``credible'' sources (with only one major global maximum). The blue points correspond to sources considered as partly missing. The red points correspond to sources with two local maxima of comparable strength. The black points corresponds to ``noise'' contribution. (b) Colours of the points codes for the inedx $k$ of the components in in \autoref{fig:good w}.}
+	\label{fig:credibility}	
+\end{figure}
+%
+For simulated data we defined a ``credibility index'' as a maximum of the dot product between the estimated source and all the true sources normalised to the $L_2$ norm of the true and estimated sources:
+% 
+\begin{equation}
+	c_k=\max_l\left[\frac{\bm{w}_k\cdot\bm{w}^{true}_l}{\sqrt{\bm{w}^{true}_l\cdot\bm{w}^{true}_l}\sqrt{\bm{w}_k\cdot\bm{w}_k}}\right]
+	\label{eq:credibility}
+\end{equation} 
+%
+For an ideal estimated source ($\bm{w}_k=\bm{w}^{true}_l$) the crediblity index is equal to one. In \autoref{fig:credibility} we show the correlation between the $L_2$ norm and the ``crediblity index'' for sources from \autoref{fig:good w}. The sources with high ``crediblity index'' have high $L_2$ norm and $L_2$ norm can be used as a simple measure of ``crediblity".  For example in \autoref{fig:credibility} the ``good'' sources are above the threshold $L_2>0.02$. The scattered points in  \autoref{fig:credibility}\aaa{} are color-coded in the same manner as in  \autoref{fig:good w}. We can observe that the ``good" sources (blue and green points) cluster in upper right area of the graph. The sources with two local maxima of comparable strength (red) cluster together with noise contributions (black). \Autoref{fig:credibility}\bbb{} shows the saime scatter plot but points are coloured accoring to the index $k$ of the components $\bm{w}_k$ shown in \autoref{fig:good w}. The sources from \autoref{fig:good w} show the ``credibility index'' close to one up to approximately $k=45$.  
 
  
 %We use a linear classifier to automate the quality assessment of the estimated $\bm{w}_k$. We compute a set of features based on intensity values of $\bm{w}_k$, thresholded background image $\bm{b}_k=\bm{w}_k<t_b$, thresholded foreground image $\bm{f}_k=\bm{w}_k>t_f$ and an image of $\bm{w}_k$ smoothed with estimated in-focus PSF. The features are listed in \autoref{tab:Features}a and five classes for $\bm{w}_k$ are listed in \autoref{tab:Classes}b.
@@ -958,7 +978,7 @@ The sources close to the edge can be problematic to localise. If the source repr
 \subsection{Visualisation of the results\label{sub:visualisation}}
 
 \begin{figure}[!hbt]
-	\newcommand{\sizef}{.8}		
+	\newcommand{\sizef}{.6}		
 	\newcommand{\textgaussdiff}{Gaussian, $\sigma^2 \propto$ 1/intensity}
 	\newcommand{\textgauss}{Gaussian, $\sigma=3$ pixels}
 	\newcommand{\textpowers}{Powers, $p=30$}
@@ -966,8 +986,9 @@ The sources close to the edge can be problematic to localise. If the source repr
 	\subfloat[\textgaussdiff]{
 	\includegraphics[scale=\sizef]{\qd S575/figures/oneeval_gaussFiltered_coordsEstTrue_diffSigma_bar04um}}
 	\subfloat[\textgaussdiff]{
-	\includegraphics[scale=\sizef]{\qd S575/figures/gaussFiltered_coordsEstTrue_diffSigma_bar04um}\label{fig:visualisation gf}}\\	
-
+	\includegraphics[scale=\sizef]{\qd S575/figures/gaussFiltered_coordsEstTrue_diffSigma_bar04um}\label{fig:visualisation gf}}	
+	\subfloat[True - Gaussian]{
+		\includegraphics[scale=\sizef]{\qd S575/figures/resImTrue_gauss_bar04um}\label{fig:visualisation gf true}}\\
 %	\subfloat[\textgauss]{
 %	\includegraphics[scale=\sizef]{\qd S575/figures/oneeval_gaussFiltered_coordsEstTrue_bar04um}}
 %	\subfloat[\textgauss]{
@@ -977,6 +998,8 @@ The sources close to the edge can be problematic to localise. If the source repr
 	\includegraphics[scale=\sizef]{\qd S575/figures/res_truepos_bar04um}}
 	\subfloat[\textpowers]{
 	\includegraphics[scale=\sizef]{\qd S575/figures/res_meaniter_coordTrue_bar04um}}
+	\subfloat[True - Powers]{
+	\includegraphics[scale=\sizef]{\qd S575/figures/resImTrue_rf4_pow30_bar04um}\label{fig:visualisation pow true}}	
 	\caption{Visualisation of the results. {\it Left column} shows the results of one \inmf{} evaluation. {\it Right column} shows the sum of ten \inmf{} evaluations of the same dataset. (a,b) The conventional visualisation by placing Gaussians located at the positions of the estimated sources (green dots). (c,d) Powers of $\bm{w}_k$s. The true sources' locations are indicated with red dots.  Scale bar $400 \unit{nm}$.}
 	\label{fig:visualisation gaussf}
 \end{figure}
@@ -1011,9 +1034,31 @@ Up-sampling of $\bm{w}_k$s is needed before taking the higher powers $p$. We use
 
 If we normalise the $L_1$ norm of $\bm{w}^p$ to one ($\sum_x \bm{w}^p(x)=1$), we can reconstruct a ``super-resolution'' image by summing all $\bm{w}_k^p$, weighted by the corresponding mean intensity $\unit{mean}(\bm{h_k})$. 
 
-As we show in \autoref{fig:visualisation gaussf}\ccc, the visualisation of a single \inmf{} evaluation can lead to a rather discontinuous image of the underlying structure. This is often the case for structures with high density of sources because only a subset of the sources is recovered. Sum of multiple \inmf{} runs with different random initialisation is required to give smoother representation of the structure \autoref{fig:visualisation gaussf}\ddd. The number of \inmf{} runs has to be set by user and will depend on desired ``smoothness'' of the reconstructed images. The denser labelling requires more \inmf{} runs (see \autoref{sec:Discussion} for further discussion). 
+As we show in \autoref{fig:visualisation gaussf}\ccc, the visualisation of a single \inmf{} evaluation can lead to a rather discontinuous image of the underlying structure. This is often the case for structures with high density of sources because only a subset of the sources is recovered. Sum of multiple \inmf{} runs with different random initialisation is required to give smoother representation of the structure \autoref{fig:visualisation gaussf}\ddd. The number of \inmf{} runs has to be set by user and will depend on desired ``smoothness'' of the reconstructed images. The denser labelling requires more \inmf{} runs (see \autoref{sec:Discussion} for further discussion). Folowing the discussin in \autoref{sub:Classification-of-sources}, we can alse compute the ``credibility index" \autoref{eq:credibility} for the reconstructed images rather then for the individual sources by replacing $\bm{w}_k$ and $\bm{w}^{true}$ by the reconstructed image $\bm{I}$ and the ``true'' image $\bm{I}^{true}$, respectively:
+%
+\begin{equation}
+	c=\frac{\bm{I}\cdot\bm{I}^{true}}{\sqrt{\bm{I}^{true}\cdot\bm{I}^{true}}\sqrt{\bm{I}\cdot\bm{I}}}.
+	\label{eq:credibility images}
+\end{equation} 
+%
+$\bm{I}$ are the vectors created by concatenating the columns of the image into a vector \autoref{fig:reshape image}. The true images computed from the true positions and the true intensities are shown in \autoref{fig:visualisation gf true} and \autoref{fig:visualisation pow true}. 
+%
+\begin{table}[!h]
+	\begin{tabular}{|c|c|c|}
+		\hline
+						& one \inmf{} evaluation & mean of ten \inmf{} evaluations\\ \hline
+		
+		Gaussian (\autoref{fig:visualisation gaussf}\aaa-\ccc)		& 0.56  	& 0.73\\ \hline
+		Powers (\autoref{fig:visualisation gaussf}\ddd-\fff)		& 0.65  	& 0.87\\ \hline		
+	\end{tabular}
+ 	\caption{``Credibility index'' \autoref{eq:credibility images} computed for the results shown in \autoref{fig:visualisation gaussf}.  \label{tab:credibility index}}
+\end{table}
+%
+The computed indices for results from \autoref{fig:visualisation gaussf}  are shown in \autoref{tab:credibility index}. The mean of ten \inmf{} evaluation gives $1.12\times$ and $1.34\times$ higher values of the index compared to the single evaluation for Gaussinan and power - based visualisation (\autoref{fig:visualisation gaussf}). 
 
-\begin{figure}[!bt]
+The power parameter $p$ defines the final ``resolution'' in the reconstructed image. Larger values of $p$ give ``higher resolution'' but the reconstructed structures are more ``discontinuous''. \Autoref{fig:demo pow w result} shows the sum projection of ten \inmf{} runs for different values of $p$. This image can be compared with the conventional visualisation in \autoref{fig:visualisation gaussf}\ccc,\ddd. 
+%
+\begin{figure}[!h]
 	\newcommand{\sizef}{.48}			
 	\newcommand{\widthfig}{1\textwidth}	
 	\centering
@@ -1029,8 +1074,7 @@ As we show in \autoref{fig:visualisation gaussf}\ccc, the visualisation of a sin
 	\label{fig:demo pow w result}	
 \end{figure}
 
-The power parameter $p$ defines the final ``resolution'' in the reconstructed image. Larger values of $p$ give ``higher resolution'' but the reconstructed structures are more ``discontinuous''. \Autoref{fig:demo pow w result} shows the sum projection of ten \inmf{} runs for different values of $p$. This image can be compared with the conventional visualisation in \autoref{fig:visualisation gaussf}\ccc,\ddd. 
-\afterpage{\clearpage}
+\clearpage
 %==========================================
 %==========================================
 
